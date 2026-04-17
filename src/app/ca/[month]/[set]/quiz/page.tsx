@@ -176,7 +176,7 @@ export default async function QuizPage({
               marginBottom: 12,
             }}
           >
-            BPSC 365 · Quiz
+            BPSC Cosmos · Quiz
           </p>
 
           <h1

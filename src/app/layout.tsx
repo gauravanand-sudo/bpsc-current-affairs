@@ -25,18 +25,18 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  title: "BPSC 365 — Bihar Current Affairs",
+  title: "72nd BPSC PT365 — by BPSC Cosmos",
   description:
-    "Daily current affairs with static prelims linkages and Bihar focus for BPSC aspirants.",
+    "72nd BPSC PT365 by BPSC Cosmos — AI tutor, leaderboard, study partner, full CA + static content. One stop for BPSC Prelims.",
   manifest: "/manifest.json",
   appleWebApp: {
     capable: true,
     statusBarStyle: "default",
-    title: "BPSC 365",
+    title: "BPSC PT365",
   },
   openGraph: {
-    title: "BPSC 365 — Bihar Current Affairs",
-    description: "One card = current affair + static facts + Bihar angle + MCQ. Free, always.",
+    title: "72nd BPSC PT365 — by BPSC Cosmos",
+    description: "AI tutor, leaderboard, study partner, full CA + static. Free, always. One stop for BPSC Prelims.",
     type: "website",
   },
 };

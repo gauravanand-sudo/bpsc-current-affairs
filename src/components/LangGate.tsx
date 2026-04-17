@@ -62,7 +62,7 @@ export default function LangGate() {
           fontSize: 13, letterSpacing: "0.18em", textTransform: "uppercase",
           color: "var(--accent)", marginBottom: 20,
         }}>
-          BPSC 365
+          BPSC Cosmos
         </p>
 
         {/* Headline */}

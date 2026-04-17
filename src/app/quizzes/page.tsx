@@ -97,7 +97,7 @@ export default async function QuizzesPage() {
           fontFamily: "monospace", fontSize: 11, letterSpacing: "0.32em",
           textTransform: "uppercase", color: "var(--accent)", marginBottom: 16,
         }}>
-          BPSC 365 · Quiz Sets
+          BPSC Cosmos · Quiz Sets
         </p>
         <h1 style={{
           fontFamily: "var(--font-display)", fontSize: "clamp(1.8rem, 5vw, 3rem)",

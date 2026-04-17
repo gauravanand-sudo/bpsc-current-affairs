@@ -135,7 +135,7 @@ export default async function CALandingPage() {
             marginBottom: 20,
           }}
         >
-          BPSC 365 · Study Sets
+          BPSC Cosmos · Study Sets
         </p>
 
         <h1

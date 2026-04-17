@@ -121,7 +121,7 @@ export default function PartnerPage() {
   function getConnectUrl(r: PartnerRequest): string {
     const hint = r.contact_hint?.trim() ?? "";
     const msg = encodeURIComponent(
-      `Hi ${r.username}! I saw your BPSC 365 study partner card (${r.topic}). Want to study together? 🤝`
+      `Hi ${r.username}! I saw your BPSC Cosmos study partner card (${r.topic}). Want to study together? 🤝`
     );
     if (r.medium === "WhatsApp") {
       const digits = hint.replace(/\D/g, "");
