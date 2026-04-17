@@ -50,8 +50,13 @@ function monthLabel(ym: string) {
   return new Date(+y, +m - 1, 1).toLocaleDateString("en-IN", { month: "long", year: "numeric" });
 }
 
-function setLabel(s: string) {
-  return s.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+function setLabel(month: string, s: string) {
+  const monthName = new Date(+month.split("-")[0], +month.split("-")[1] - 1, 1).toLocaleDateString("en-IN", {
+    month: "long",
+  });
+  const setNum = s.match(/(\d+)/)?.[1] ?? "1";
+  const lang = s.endsWith("-english") ? " English" : s.endsWith("-hindi") ? " Hindi" : "";
+  return `${monthName} - Study Set ${setNum}/15${lang}`;
 }
 
 export default async function CASetPage({
@@ -153,7 +158,7 @@ export default async function CASetPage({
                     marginBottom: 4,
                   }}
                 >
-                  {setLabel(set)}
+                  {setLabel(month, set)}
                 </h1>
                 <p style={{ fontSize: 14, color: "var(--ink-soft)", marginBottom: 28 }}>
                   Current Affairs + Exhaustive Static Linked
@@ -307,7 +312,7 @@ export default async function CASetPage({
                     <span style={{ fontSize: "1.8rem", lineHeight: 1 }}>{item.emoji}</span>
                     <div>
                       <p style={{ fontFamily: "monospace", fontSize: 10, letterSpacing: "0.28em", textTransform: "uppercase", color: "var(--muted)" }}>
-                        {monthLabel(month)} · {setLabel(set)}
+                        {monthLabel(month)} · {setLabel(month, set)}
                       </p>
                       <p style={{ fontSize: 12, fontWeight: 600, color: "var(--ink-soft)", marginTop: 2 }}>
                         {index + 1} / {items.length}
@@ -486,7 +491,7 @@ export default async function CASetPage({
                   marginBottom: 10,
                 }}
               >
-                {setLabel(set)} — Done!
+                {setLabel(month, set)} — Done!
               </h2>
 
               <p style={{ fontSize: 14, color: "var(--ink-soft)", marginBottom: 8, maxWidth: 380 }}>

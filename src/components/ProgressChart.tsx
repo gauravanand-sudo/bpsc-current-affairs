@@ -1,129 +1,511 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import Link from "next/link";
+import { useEffect, useMemo, useState } from "react";
+import { getSupabaseBrowserClient } from "@/lib/supabase";
+import {
+  SETS_PER_MONTH,
+  formatQuizSetLabel,
+  formatSetLabel,
+  normalizeSetName,
+  plannedSetUniverse,
+  readLocalStudyProgress,
+  syncLocalProgressToSupabase,
+  type QuizProgressRow,
+  type StudySetProgressRow,
+} from "@/lib/progress";
 
-type CatStat = { cat: string; label: string; color: string; count: number };
-
-const CAT_META: Record<string, { label: string; color: string }> = {
-  polity:  { label: "Polity",      color: "#b86117" },
-  economy: { label: "Economy",     color: "#2d7a4f" },
-  history: { label: "History",     color: "#5b4fcf" },
-  bihar:   { label: "Bihar Focus", color: "#c04a00" },
-  geo:     { label: "Geography",   color: "#0e7490" },
-  st:      { label: "Sci & Tech",  color: "#6d28d9" },
-  env:     { label: "Environment", color: "#15803d" },
-  world:   { label: "World",       color: "#1d4ed8" },
+type QuizRecord = {
+  score?: number;
+  maxScore?: number;
+  qualified?: boolean;
+  month?: string;
+  setName?: string;
+  title?: string;
 };
 
-function buildArc(cx: number, cy: number, r: number, startAngle: number, endAngle: number) {
-  const rad = (deg: number) => (deg * Math.PI) / 180;
-  const x1 = cx + r * Math.cos(rad(startAngle));
-  const y1 = cy + r * Math.sin(rad(startAngle));
-  const x2 = cx + r * Math.cos(rad(endAngle));
-  const y2 = cy + r * Math.sin(rad(endAngle));
-  const large = endAngle - startAngle > 180 ? 1 : 0;
-  return `M ${x1} ${y1} A ${r} ${r} 0 ${large} 1 ${x2} ${y2}`;
+type SetSummary = {
+  id: string;
+  month: string;
+  setName: string;
+  label: string;
+  cardsCompleted?: number;
+  categories?: string[];
+  lastReadAt?: string;
+};
+
+function percent(value: number, total: number) {
+  return Math.round((value / Math.max(total, 1)) * 100);
 }
 
 export default function ProgressChart() {
-  const [total, setTotal] = useState(0);
-  const [stats, setStats] = useState<CatStat[]>([]);
+  const [readSets, setReadSets] = useState<SetSummary[]>([]);
+  const [quizRecords, setQuizRecords] = useState<Array<QuizRecord & { id: string; label: string; attemptsCount?: number; bestScore?: number }>>([]);
+  const [syncLabel, setSyncLabel] = useState("Syncing progress...");
+
+  const allPlannedSets = useMemo(() => plannedSetUniverse(), []);
 
   useEffect(() => {
-    const catCount: Record<string, number> = {};
-    let t = 0;
-    for (let i = 0; i < localStorage.length; i++) {
-      const key = localStorage.key(i);
-      if (!key?.startsWith("bpsc_")) continue;
-      const val = localStorage.getItem(key) ?? "";
-      t++;
-      val.split(",").forEach((cat) => {
-        if (cat) catCount[cat] = (catCount[cat] || 0) + 1;
-      });
+    let active = true;
+
+    async function loadProgress() {
+      const supabase = getSupabaseBrowserClient();
+      const { data } = await supabase.auth.getSession();
+
+      const session = data.session;
+
+      if (!session) {
+        const local = readLocalStudyProgress();
+        if (!active) return;
+        setReadSets(
+          local.studySets.map((item) => ({
+            id: `${item.month}:${normalizeSetName(item.setName)}`,
+            month: item.month,
+            setName: normalizeSetName(item.setName),
+            label: formatSetLabel(item.month, normalizeSetName(item.setName)),
+            cardsCompleted: item.cardsCompleted,
+            categories: item.categories,
+            lastReadAt: item.lastReadAt,
+          }))
+        );
+        setQuizRecords(
+          local.quizzes.map((item) => ({
+            id: `${item.month}:${normalizeSetName(item.setName)}`,
+            label: formatQuizSetLabel(item.month, normalizeSetName(item.setName)),
+            month: item.month,
+            setName: normalizeSetName(item.setName),
+            title: item.title,
+            score: item.bestScore ?? item.latestScore,
+            maxScore: item.maxScore,
+            qualified: item.qualified,
+            attemptsCount: item.attemptsCount,
+            bestScore: item.bestScore ?? item.latestScore,
+          }))
+        );
+        setSyncLabel("Showing device progress");
+        return;
+      }
+
+      await syncLocalProgressToSupabase(session, supabase);
+
+      const [{ data: studyRows }, { data: quizRows }] = await Promise.all([
+        supabase
+          .from("study_set_progress")
+          .select("user_id, month, set_name, marked_card_ids, categories, cards_completed, started_at, last_read_at")
+          .eq("user_id", session.user.id)
+          .order("last_read_at", { ascending: false }),
+        supabase
+          .from("quiz_progress")
+          .select("user_id, month, set_name, title, latest_score, max_score, percentage, qualified, time_taken, attempts_count, best_score, best_percentage, first_attempted_at, last_attempted_at")
+          .eq("user_id", session.user.id)
+          .order("last_attempted_at", { ascending: false }),
+      ]);
+
+      if (!active) return;
+
+      setReadSets(
+        ((studyRows ?? []) as StudySetProgressRow[]).map((row) => ({
+          id: `${row.month}:${normalizeSetName(row.set_name)}`,
+          month: row.month,
+          setName: normalizeSetName(row.set_name),
+          label: formatSetLabel(row.month, normalizeSetName(row.set_name)),
+          cardsCompleted: row.cards_completed,
+          categories: row.categories ?? [],
+          lastReadAt: row.last_read_at,
+        }))
+      );
+
+      setQuizRecords(
+        ((quizRows ?? []) as QuizProgressRow[]).map((row) => ({
+          id: `${row.month}:${normalizeSetName(row.set_name)}`,
+          label: formatQuizSetLabel(row.month, normalizeSetName(row.set_name)),
+          month: row.month,
+          setName: normalizeSetName(row.set_name),
+          title: row.title ?? undefined,
+          score: row.best_score,
+          maxScore: row.max_score,
+          qualified: row.qualified,
+          attemptsCount: row.attempts_count,
+          bestScore: row.best_score,
+        }))
+      );
+      setSyncLabel("Cloud sync active");
     }
-    setTotal(t);
-    const s = Object.entries(catCount)
-      .map(([cat, count]) => ({
-        cat,
-        label: CAT_META[cat]?.label ?? cat,
-        color: CAT_META[cat]?.color ?? "#888",
-        count,
-      }))
-      .sort((a, b) => b.count - a.count);
-    setStats(s);
+
+    void loadProgress();
+    return () => {
+      active = false;
+    };
   }, []);
 
-  if (total === 0) {
-    return (
-      <div style={{ textAlign: "center", padding: "32px 0" }}>
-        <p style={{ fontSize: 14, color: "var(--muted)" }}>No cards completed yet.</p>
-        <p style={{ fontSize: 12, color: "var(--muted)", marginTop: 6 }}>Start studying to see your progress here.</p>
-      </div>
-    );
-  }
+  const consolidatedReadSets = useMemo(() => {
+    const map = new Map<string, SetSummary>();
+    for (const item of readSets) {
+      const normalizedSetName = normalizeSetName(item.setName);
+      const id = `${item.month}:${normalizedSetName}`;
+      const existing = map.get(id);
+      if (!existing) {
+        map.set(id, {
+          ...item,
+          id,
+          setName: normalizedSetName,
+          label: formatSetLabel(item.month, normalizedSetName),
+          cardsCompleted: item.cardsCompleted ?? 0,
+        });
+      } else {
+        map.set(id, {
+          ...existing,
+          cardsCompleted: Math.max(existing.cardsCompleted ?? 0, item.cardsCompleted ?? 0),
+          lastReadAt:
+            existing.lastReadAt && item.lastReadAt
+              ? new Date(existing.lastReadAt) > new Date(item.lastReadAt)
+                ? existing.lastReadAt
+                : item.lastReadAt
+              : existing.lastReadAt ?? item.lastReadAt,
+        });
+      }
+    }
+    return Array.from(map.values()).sort((a, b) => (b.lastReadAt ?? "").localeCompare(a.lastReadAt ?? ""));
+  }, [readSets]);
 
-  // Build donut chart segments
-  const CX = 80, CY = 80, R = 58, INNER = 34;
-  const segments: { path: string; color: string; label: string; count: number }[] = [];
-  let angle = -90;
-  const catTotal = stats.reduce((s, x) => s + x.count, 0);
+  const consolidatedQuizRecords = useMemo(() => {
+    const map = new Map<string, QuizRecord & { id: string; label: string; attemptsCount?: number; bestScore?: number }>();
+    for (const item of quizRecords) {
+      const normalizedSetName = normalizeSetName(item.setName ?? "");
+      const label = formatQuizSetLabel(item.month ?? "", normalizedSetName);
+      const existing = map.get(label);
+      if (!existing) {
+        map.set(label, { ...item, id: label, setName: normalizedSetName, label });
+      } else {
+        const bestScore = Math.max(Number(existing.bestScore ?? existing.score ?? 0), Number(item.bestScore ?? item.score ?? 0));
+        map.set(label, {
+          ...existing,
+          score: bestScore,
+          bestScore,
+          maxScore: Math.max(Number(existing.maxScore ?? 0), Number(item.maxScore ?? 0)),
+          qualified: Boolean(existing.qualified || item.qualified),
+          attemptsCount: Math.max(Number(existing.attemptsCount ?? 1), Number(item.attemptsCount ?? 1)),
+        });
+      }
+    }
+    return Array.from(map.values()).sort((a, b) => a.label.localeCompare(b.label));
+  }, [quizRecords]);
 
-  for (const s of stats) {
-    const sweep = (s.count / catTotal) * 360;
-    if (sweep < 1) continue;
-    const endAngle = angle + sweep;
-    segments.push({ path: buildArc(CX, CY, R, angle, endAngle), color: s.color, label: s.label, count: s.count });
-    angle = endAngle;
-  }
+  const readSetIds = new Set(consolidatedReadSets.map((item) => item.id));
+  const pendingSets = allPlannedSets.filter((item) => !readSetIds.has(item.id));
+  const attemptedQuizIds = new Set(consolidatedQuizRecords.map((item) => `${item.month}:${normalizeSetName(item.setName ?? "")}`));
+  const pendingQuizSets = consolidatedReadSets.filter((item) => !attemptedQuizIds.has(item.id));
+  const avgScore = consolidatedQuizRecords.length
+    ? Math.round(
+        consolidatedQuizRecords.reduce((sum, item) => sum + ((item.score ?? 0) / Math.max(item.maxScore ?? 1, 1)) * 100, 0) /
+          consolidatedQuizRecords.length
+      )
+    : 0;
+
+  const latestReadSet = consolidatedReadSets[0];
+  const nextStudySet = pendingSets[0];
+  const nextQuizSet = pendingQuizSets[0];
+
+  const headline =
+    consolidatedReadSets.length === 0
+      ? "Start the first study set and your full-year progress line will begin."
+      : pendingSets.length === 0
+        ? "You are on track across the full planned current affairs cycle."
+        : `${pendingSets.length} study sets remain. Keep the line moving every day.`;
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 20 }}>
-      <div style={{ display: "flex", alignItems: "center", gap: 28, flexWrap: "wrap" }}>
-        {/* Donut SVG */}
-        <div style={{ position: "relative", flexShrink: 0 }}>
-          <svg width={160} height={160} viewBox="0 0 160 160">
-            {/* Background ring */}
-            <circle cx={CX} cy={CY} r={R} fill="none" stroke="var(--line)" strokeWidth={R - INNER} />
-            {/* Segments */}
-            {segments.map((seg, i) => (
-              <path
-                key={i}
-                d={seg.path}
-                fill="none"
-                stroke={seg.color}
-                strokeWidth={R - INNER}
-                strokeLinecap="butt"
-              />
-            ))}
-            {/* Inner label */}
-            <text x={CX} y={CY - 6} textAnchor="middle" fill="var(--ink-strong)" fontSize={20} fontWeight="700" fontFamily="var(--font-display)">
-              {total}
-            </text>
-            <text x={CX} y={CY + 12} textAnchor="middle" fill="var(--muted)" fontSize={9} letterSpacing="0.12em" fontFamily="monospace">
-              DONE
-            </text>
-          </svg>
-        </div>
+    <div style={{ display: "grid", gap: 18 }}>
+      <div
+        style={{
+          border: "1px solid var(--line)",
+          borderRadius: 24,
+          background: "var(--card)",
+          padding: "22px 20px",
+        }}
+      >
+        <p style={{ fontSize: 10, letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 10 }}>
+          Progress Overview
+        </p>
+        <p style={{ fontFamily: "var(--font-display)", fontSize: 30, fontWeight: 700, color: "var(--ink-strong)", lineHeight: 1.1 }}>
+          {percent(consolidatedReadSets.length, allPlannedSets.length)}% of your 72nd BPSC plan is tracked
+        </p>
+        <p style={{ marginTop: 8, fontSize: 14, color: "var(--ink-soft)", lineHeight: 1.65 }}>
+          {headline} {syncLabel}.
+        </p>
 
-        {/* Legend */}
-        <div style={{ display: "flex", flexDirection: "column", gap: 8, flex: 1 }}>
-          {stats.map((s) => (
-            <div key={s.cat} style={{ display: "flex", alignItems: "center", gap: 10 }}>
-              <span style={{ width: 10, height: 10, borderRadius: 3, background: s.color, flexShrink: 0 }} />
-              <span style={{ fontSize: 13, color: "var(--ink-strong)", flex: 1 }}>{s.label}</span>
-              <span
-                style={{
-                  fontFamily: "var(--font-display)",
-                  fontWeight: 700,
-                  fontSize: 14,
-                  color: s.color,
-                }}
-              >
-                {s.count}
-              </span>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(170px, 1fr))", gap: 12, marginTop: 18 }}>
+          {[
+            { label: "Study Sets Done", value: `${consolidatedReadSets.length}/${allPlannedSets.length}` },
+            { label: "Quiz Sets Attempted", value: `${consolidatedQuizRecords.length}` },
+            {
+              label: "Highest Marks",
+              value: consolidatedQuizRecords.length
+                ? `${Math.max(...consolidatedQuizRecords.map((item) => Number(item.bestScore ?? item.score ?? 0)))}/${Math.max(...consolidatedQuizRecords.map((item) => Number(item.maxScore ?? 0)), 0)}`
+                : "0",
+            },
+            { label: "Cloud Status", value: syncLabel },
+          ].map((item) => (
+            <div key={item.label} style={{ border: "1px solid var(--line)", borderRadius: 16, background: "var(--panel)", padding: "14px" }}>
+              <p style={{ fontSize: 10, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 6 }}>
+                {item.label}
+              </p>
+              <p style={{ fontFamily: "var(--font-display)", fontSize: 24, fontWeight: 700, color: "var(--ink-strong)" }}>{item.value}</p>
             </div>
           ))}
         </div>
+      </div>
+
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 14 }}>
+        <div style={{ border: "1px solid var(--line)", borderRadius: 20, background: "var(--card)", padding: "18px 16px" }}>
+          <p style={{ fontSize: 10, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 8 }}>
+            Continue Study
+          </p>
+          <p style={{ fontSize: 15, fontWeight: 700, color: "var(--ink-strong)", lineHeight: 1.5 }}>
+            {latestReadSet?.label ?? nextStudySet?.label ?? "Start your first study set"}
+          </p>
+          <p style={{ marginTop: 6, fontSize: 12, color: "var(--muted)", lineHeight: 1.65 }}>
+            {latestReadSet
+              ? `${latestReadSet.cardsCompleted ?? 0} card(s) revised so far in this set.`
+              : "Begin the first available set to activate your progress line."}
+          </p>
+          <Link
+            href={latestReadSet ? `/ca/${latestReadSet.month}/${latestReadSet.setName}` : nextStudySet ? `/ca/${nextStudySet.month}/${nextStudySet.setName}` : "/ca"}
+            style={{
+              marginTop: 14,
+              display: "inline-block",
+              borderRadius: 12,
+              background: "var(--accent)",
+              color: "#fff",
+              padding: "10px 14px",
+              fontSize: 13,
+              fontWeight: 700,
+            }}
+          >
+            Go To Study Sets
+          </Link>
+        </div>
+
+        <div style={{ border: "1px solid var(--line)", borderRadius: 20, background: "var(--card)", padding: "18px 16px" }}>
+          <p style={{ fontSize: 10, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 8 }}>
+            Next Quiz
+          </p>
+          <p style={{ fontSize: 15, fontWeight: 700, color: "var(--ink-strong)", lineHeight: 1.5 }}>
+            {nextQuizSet?.label ?? "You are caught up on available quiz sets"}
+          </p>
+          <p style={{ marginTop: 6, fontSize: 12, color: "var(--muted)", lineHeight: 1.65 }}>
+            {nextQuizSet
+              ? "Turn your revision into retention with the next pending test."
+              : "Open more study sets to unlock the next quiz milestone."}
+          </p>
+          <Link
+            href={nextQuizSet ? `/ca/${nextQuizSet.month}/${nextQuizSet.setName}/quiz` : "/quizzes"}
+            style={{
+              marginTop: 14,
+              display: "inline-block",
+              borderRadius: 12,
+              background: "var(--panel)",
+              color: "var(--ink-strong)",
+              border: "1px solid var(--line)",
+              padding: "10px 14px",
+              fontSize: 13,
+              fontWeight: 700,
+            }}
+          >
+            Go To Quizzes
+          </Link>
+        </div>
+      </div>
+
+      <div style={{ display: "grid", gap: 12 }}>
+        <details
+          style={{
+            border: "1px solid var(--line)",
+            borderRadius: 20,
+            background: "var(--card)",
+            overflow: "hidden",
+          }}
+        >
+          <summary
+            style={{
+              cursor: "pointer",
+              listStyle: "none",
+              padding: "18px 16px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              gap: 12,
+            }}
+          >
+            <div>
+              <p style={{ fontSize: 10, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 6 }}>
+                Quiz History
+              </p>
+              <p style={{ fontSize: 16, fontWeight: 700, color: "var(--ink-strong)" }}>
+                {consolidatedQuizRecords.length} quiz set(s) attempted
+              </p>
+            </div>
+            <p style={{ fontSize: 13, color: "var(--accent)", fontWeight: 700 }}>Open</p>
+          </summary>
+          <div style={{ borderTop: "1px solid var(--line)", padding: "4px 16px 16px", display: "grid", gap: 10 }}>
+            {consolidatedQuizRecords.length ? (
+              consolidatedQuizRecords.map((item) => {
+                const score = Number(item.score ?? 0);
+                const maxScore = Number(item.maxScore ?? 0);
+                return (
+                  <div key={item.id} style={{ padding: "12px 0", borderBottom: "1px solid var(--line)" }}>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
+                      <div style={{ minWidth: 0 }}>
+                        <p style={{ fontSize: 14, fontWeight: 700, color: "var(--ink-strong)", lineHeight: 1.45 }}>{item.label}</p>
+                        <p style={{ marginTop: 4, fontSize: 12, color: "var(--muted)", lineHeight: 1.6 }}>
+                          {Number(item.attemptsCount ?? 1)} attempt(s) · best {Number(item.bestScore ?? score)}/{maxScore}
+                        </p>
+                      </div>
+                      <span style={{ fontSize: 14, fontWeight: 700, color: item.qualified ? "#15803d" : "var(--accent)" }}>
+                        {score}/{maxScore}
+                      </span>
+                    </div>
+                    <div style={{ marginTop: 10 }}>
+                      <Link
+                        href={`/ca/${item.month}/${normalizeSetName(item.setName ?? "")}/quiz?review=best`}
+                        style={{
+                          display: "inline-block",
+                          fontSize: 12,
+                          fontWeight: 700,
+                          color: "var(--accent)",
+                        }}
+                      >
+                        Review Quiz →
+                      </Link>
+                    </div>
+                  </div>
+                );
+              })
+            ) : (
+              <p style={{ paddingTop: 12, fontSize: 13, color: "var(--muted)" }}>No quiz attempts yet.</p>
+            )}
+          </div>
+        </details>
+
+        <details
+          style={{
+            border: "1px solid var(--line)",
+            borderRadius: 20,
+            background: "var(--card)",
+            overflow: "hidden",
+          }}
+        >
+          <summary
+            style={{
+              cursor: "pointer",
+              listStyle: "none",
+              padding: "18px 16px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              gap: 12,
+            }}
+          >
+            <div>
+              <p style={{ fontSize: 10, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 6 }}>
+                Study History
+              </p>
+              <p style={{ fontSize: 16, fontWeight: 700, color: "var(--ink-strong)" }}>
+                {consolidatedReadSets.length} study set(s) opened
+              </p>
+            </div>
+            <p style={{ fontSize: 13, color: "var(--accent)", fontWeight: 700 }}>Open</p>
+          </summary>
+          <div style={{ borderTop: "1px solid var(--line)", padding: "4px 16px 16px", display: "grid", gap: 10 }}>
+            {consolidatedReadSets.length ? (
+              consolidatedReadSets.map((item) => {
+                return (
+                  <div key={item.id} style={{ padding: "12px 0", borderBottom: "1px solid var(--line)" }}>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
+                      <div style={{ minWidth: 0 }}>
+                        <p style={{ fontSize: 14, fontWeight: 700, color: "var(--ink-strong)", lineHeight: 1.45 }}>{item.label}</p>
+                        <p style={{ marginTop: 4, fontSize: 12, color: "var(--muted)", lineHeight: 1.6 }}>
+                          {item.cardsCompleted ?? 0} cards revised
+                        </p>
+                      </div>
+                      <span style={{ fontSize: 13, fontWeight: 700, color: "var(--accent)" }}>{item.cardsCompleted ?? 0}</span>
+                    </div>
+                    <div style={{ marginTop: 10 }}>
+                      <Link
+                        href={`/ca/${item.month}/${item.setName}`}
+                        style={{
+                          display: "inline-block",
+                          fontSize: 12,
+                          fontWeight: 700,
+                          color: "var(--accent)",
+                        }}
+                      >
+                        Continue Study →
+                      </Link>
+                    </div>
+                  </div>
+                );
+              })
+            ) : (
+              <p style={{ paddingTop: 12, fontSize: 13, color: "var(--muted)" }}>No study sets started yet.</p>
+            )}
+          </div>
+        </details>
+
+        <details
+          style={{
+            border: "1px solid var(--line)",
+            borderRadius: 20,
+            background: "var(--card)",
+            overflow: "hidden",
+          }}
+        >
+          <summary
+            style={{
+              cursor: "pointer",
+              listStyle: "none",
+              padding: "18px 16px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              gap: 12,
+            }}
+          >
+            <div>
+              <p style={{ fontSize: 10, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 6 }}>
+                Review Queue
+              </p>
+              <p style={{ fontSize: 16, fontWeight: 700, color: "var(--ink-strong)" }}>
+                {pendingQuizSets.length} pending quiz review path
+              </p>
+            </div>
+            <p style={{ fontSize: 13, color: "var(--accent)", fontWeight: 700 }}>Open</p>
+          </summary>
+          <div style={{ borderTop: "1px solid var(--line)", padding: "4px 16px 16px", display: "grid", gap: 10 }}>
+            {pendingQuizSets.length ? (
+              pendingQuizSets.map((item) => (
+                <div key={item.id} style={{ padding: "12px 0", borderBottom: "1px solid var(--line)", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
+                  <div>
+                    <p style={{ fontSize: 14, fontWeight: 700, color: "var(--ink-strong)", lineHeight: 1.45 }}>{formatQuizSetLabel(item.month, item.setName)}</p>
+                    <p style={{ marginTop: 4, fontSize: 12, color: "var(--muted)" }}>This study set is opened but its quiz is still pending.</p>
+                  </div>
+                  <Link
+                    href={`/ca/${item.month}/${item.setName}/quiz`}
+                    style={{
+                      whiteSpace: "nowrap",
+                      fontSize: 12,
+                      fontWeight: 700,
+                      color: "var(--accent)",
+                    }}
+                  >
+                    Take Quiz →
+                  </Link>
+                </div>
+              ))
+            ) : (
+              <p style={{ paddingTop: 12, fontSize: 13, color: "var(--muted)" }}>No pending quiz reviews right now.</p>
+            )}
+          </div>
+        </details>
       </div>
     </div>
   );

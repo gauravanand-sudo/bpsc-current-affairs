@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { saveStudyCardProgress } from "@/lib/progress";
 
 type Props = {
   month: string;
@@ -21,17 +22,19 @@ export default function MarkComplete({ month, setName, cardId, categories }: Pro
     setDone(!!localStorage.getItem(storageKey(month, setName, cardId)));
   }, [month, setName, cardId]);
 
-  function toggle() {
+  async function toggle() {
     const key = storageKey(month, setName, cardId);
     if (done) {
       localStorage.removeItem(key);
       setDone(false);
+      void saveStudyCardProgress({ month, setName, cardId, categories, done: false });
     } else {
       // Store categories so profile can show breakdown
       localStorage.setItem(key, categories.join(","));
       setDone(true);
       setFlash(true);
       setTimeout(() => setFlash(false), 600);
+      void saveStudyCardProgress({ month, setName, cardId, categories, done: true });
     }
   }
 

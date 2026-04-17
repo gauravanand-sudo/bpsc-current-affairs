@@ -51,6 +51,24 @@ export default function RootLayout({
       <body style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
         <Nav />
         <div style={{ flex: 1 }}>{children}</div>
+        <footer
+          style={{
+            borderTop: "1px solid rgba(120, 80, 30, 0.12)",
+            padding: "16px 20px 22px",
+            textAlign: "center",
+            background: "rgba(255, 253, 248, 0.72)",
+          }}
+        >
+          <p
+            style={{
+              fontSize: 13,
+              color: "#8a7260",
+              lineHeight: 1.6,
+            }}
+          >
+            Made with <span style={{ color: "#dc2626" }}>♥</span> for Bihar Students
+          </p>
+        </footer>
       </body>
     </html>
   );

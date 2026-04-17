@@ -103,16 +103,24 @@ function monthLabel(ym: string) {
   });
 }
 
-function setLabel(s: string) {
-  return s.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+function setLabel(month: string, s: string) {
+  const monthName = new Date(+month.split("-")[0], +month.split("-")[1] - 1, 1).toLocaleDateString("en-IN", {
+    month: "long",
+  });
+  const setNum = s.match(/(\d+)/)?.[1] ?? "1";
+  const lang = s.endsWith("-english") ? " English" : s.endsWith("-hindi") ? " Hindi" : "";
+  return `${monthName} - Quiz Set ${setNum}/15${lang}`;
 }
 
 export default async function QuizPage({
   params,
+  searchParams,
 }: {
   params: Promise<{ month: string; set: string }>;
+  searchParams?: Promise<{ review?: string }>;
 }) {
   const { month, set } = await params;
+  const resolvedSearchParams = searchParams ? await searchParams : undefined;
   const fileName = quizFileName(set);
   const filePath = path.join(process.cwd(), "data", "ca", month, fileName);
 
@@ -120,7 +128,7 @@ export default async function QuizPage({
   try {
     const raw = await fs.readFile(filePath, "utf8");
     const parsed = JSON.parse(raw);
-    const title = `${monthLabel(month)} — Set ${set.match(/\d+/)?.[0] ?? "1"}`;
+    const title = setLabel(month, set);
     quizData = normalizeQuiz(parsed, title);
   } catch {
     // file not available yet or unparseable
@@ -182,7 +190,7 @@ export default async function QuizPage({
               marginBottom: 12,
             }}
           >
-            {setLabel(set)} — Test
+            {setLabel(month, set)} — Test
           </h1>
 
           <p
@@ -289,6 +297,6 @@ export default async function QuizPage({
 
   /* ── Quiz ready ───────────────────────────────────────────── */
   return (
-    <QuizEngine data={quizData} month={month} setName={set} />
+    <QuizEngine data={quizData} month={month} setName={set} reviewMode={resolvedSearchParams?.review === "best"} />
   );
 }

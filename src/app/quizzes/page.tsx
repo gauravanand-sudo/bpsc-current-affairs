@@ -42,16 +42,10 @@ async function loadQuizMeta(): Promise<Record<string, QuizMeta[]>> {
         const num = parseInt(m[1]);
         const lang = m[2] as "english" | "hindi";
         try {
-          const raw = await fs.readFile(path.join(dir, file), "utf8");
-          const data = JSON.parse(raw);
-          // Has questions?
-          const hasQ = Array.isArray(data)
-            ? data.length > 0
-            : (data?.questions?.length ?? 0) > 0;
           if (!result[month][num]) {
             result[month][num] = { setNum: num, english: false, hindi: false, categories: [] };
           }
-          if (hasQ) result[month][num][lang] = true;
+          result[month][num][lang] = true;
         } catch { /* skip */ }
       }
       // Also pull categories from content file
@@ -145,7 +139,7 @@ export default async function QuizzesPage() {
                   {monthLabel(month)}
                 </h2>
                 <span style={{ fontSize: 12, color: "var(--muted)", fontFamily: "monospace" }}>
-                  {liveCount}/15 quizzes live
+                  {liveCount}/15 quizzes available
                 </span>
               </div>
 

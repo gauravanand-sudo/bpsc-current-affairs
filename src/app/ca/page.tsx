@@ -28,6 +28,13 @@ function monthLabel(ym: string) {
   });
 }
 
+function shortMonthLabel(ym: string) {
+  const [y, m] = ym.split("-");
+  return new Date(+y, +m - 1, 1).toLocaleDateString("en-IN", {
+    month: "long",
+  });
+}
+
 /* ─── Load sets grouped by month/setNum ─────────────────────── */
 async function loadGroupedSets(): Promise<Record<string, SetMeta[]>> {
   const base = path.join(process.cwd(), "data", "ca");
@@ -432,7 +439,7 @@ export default async function CALandingPage() {
                               marginBottom: 3,
                             }}
                           >
-                            Set {num}
+                            {shortMonthLabel(month)} - Study Set {num}/15
                           </p>
                           <p style={{ fontSize: 11, color: "var(--line-hi)", letterSpacing: "0.06em" }}>
                             Coming soon
@@ -471,7 +478,7 @@ export default async function CALandingPage() {
                             color: "var(--ink-strong)",
                           }}
                         >
-                          Set {num}
+                          {shortMonthLabel(month)} - Study Set {num}/15
                         </p>
                         <span
                           style={{

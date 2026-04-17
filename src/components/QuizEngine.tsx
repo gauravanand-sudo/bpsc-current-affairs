@@ -2,6 +2,8 @@
 
 import { useState, useEffect, useCallback, useRef } from "react";
 import Link from "next/link";
+import { saveQuizProgress } from "@/lib/progress";
+import { getSupabaseBrowserClient } from "@/lib/supabase";
 
 /* ─── Types ─────────────────────────────────────────────────── */
 export type QuizQuestion = {
@@ -25,6 +27,15 @@ type Answers = Record<number, number>;
 
 const LABELS = ["A", "B", "C", "D"];
 const BPSC_TOTAL = 150;
+const ESTIMATED_POOL = 500000;
+
+type TopicBucket = {
+  topic: string;
+  total: number;
+  correct: number;
+  wrong: number;
+  skipped: number;
+};
 
 function fmt(s: number) {
   const m = Math.floor(s / 60);
@@ -46,11 +57,82 @@ function calcResult(questions: QuizQuestion[], answers: Answers, neg: number) {
   return { score, rawScore, pct, outOf150, correct, wrong, unattempted };
 }
 
+function inferTopic(question: QuizQuestion) {
+  const text = `${question.question} ${question.explanation ?? ""} ${Object.values(question.statements ?? {}).join(" ")} ${question.options.join(" ")}`.toLowerCase();
+
+  const checks: Array<[string, string[]]> = [
+    ["Polity", ["article", "constitution", "parliament", "president", "governor", "supreme court", "fundamental", "schedule", "amendment", "upsc", "psc", "election", "ordinance", "rajya sabha", "lok sabha"]],
+    ["Economy", ["gdp", "inflation", "repo", "bank", "rbi", "budget", "fiscal", "monetary", "subsidy", "tax", "imf", "world bank", "niti aayog", "economy", "agriculture", "industry"]],
+    ["History", ["movement", "congress", "revolt", "act of", "viceroy", "governor-general", "dynasty", "maury", "gupta", "mughal", "freedom", "history", "buddha", "ashoka", "gandhi"]],
+    ["Geography", ["river", "plateau", "mountain", "soil", "climate", "monsoon", "delta", "plain", "valley", "desert", "ocean", "latitude", "longitude", "geography"]],
+    ["Environment", ["biosphere", "national park", "sanctuary", "wetland", "forest", "environment", "species", "pollution", "climate change", "biodiversity", "tiger reserve"]],
+    ["Science & Tech", ["isro", "dna", "atom", "vaccine", "satellite", "technology", "ai", "quantum", "missile", "space", "science", "biotechnology", "computer"]],
+    ["Bihar", ["bihar", "patna", "gaya", "nalanda", "mithila", "magadh", "koshi", "gandak", "son river", "bodh gaya", "chhath"]],
+  ];
+
+  for (const [topic, keywords] of checks) {
+    if (keywords.some((keyword) => text.includes(keyword))) return topic;
+  }
+  return "Current Affairs";
+}
+
+function analyzeTopics(questions: QuizQuestion[], answers: Answers) {
+  const buckets = new Map<string, TopicBucket>();
+
+  questions.forEach((question, index) => {
+    const topic = inferTopic(question);
+    const answer = answers[index];
+    const bucket = buckets.get(topic) ?? { topic, total: 0, correct: 0, wrong: 0, skipped: 0 };
+    bucket.total += 1;
+    if (answer === undefined) bucket.skipped += 1;
+    else if (answer === question.correct) bucket.correct += 1;
+    else bucket.wrong += 1;
+    buckets.set(topic, bucket);
+  });
+
+  return Array.from(buckets.values())
+    .map((bucket) => ({
+      ...bucket,
+      accuracy: bucket.total ? Math.round((bucket.correct / bucket.total) * 100) : 0,
+    }))
+    .sort((a, b) => b.total - a.total);
+}
+
+function estimatedRank(score: number, total: number) {
+  const normalized = score / Math.max(total, 1);
+  return Math.max(1, Math.min(ESTIMATED_POOL, Math.round(ESTIMATED_POOL - normalized * (ESTIMATED_POOL - 1))));
+}
+
+function coachSummary(args: {
+  pct: number;
+  correct: number;
+  wrong: number;
+  unattempted: number;
+  strongest?: string;
+  weakest?: string;
+}) {
+  const notes: string[] = [];
+
+  if (args.pct >= 65) notes.push("Your base is competitive. The next jump will come from reducing avoidable negatives.");
+  else if (args.pct >= 45) notes.push("You are in the workable zone. Revision depth and smarter selection can lift this score quickly.");
+  else notes.push("The foundation needs reinforcement. Focus on accuracy first, then speed.");
+
+  if (args.strongest) notes.push(`${args.strongest} is currently your strongest area. Keep it revision-ready so it remains a scoring zone.`);
+  if (args.weakest) notes.push(`${args.weakest} needs the most attention right now. Revise static basics there before taking the next quiz.`);
+
+  if (args.wrong > args.correct) notes.push("Wrong attempts are hurting more than lack of attempts. Tighten elimination and avoid guess-heavy answering.");
+  if (args.unattempted >= Math.max(3, Math.floor((args.correct + args.wrong + args.unattempted) * 0.25))) {
+    notes.push("A large skipped count suggests hesitation. After revision, push for better attempt quality on familiar questions.");
+  }
+
+  return notes.slice(0, 3);
+}
+
 /* ─── QuizEngine ────────────────────────────────────────────── */
 export default function QuizEngine({
-  data, month, setName,
+  data, month, setName, reviewMode = false,
 }: {
-  data: QuizData; month: string; setName: string;
+  data: QuizData; month: string; setName: string; reviewMode?: boolean;
 }) {
   const { questions, negativeMarking, cutoff, duration } = data;
   const total = questions.length;
@@ -63,10 +145,86 @@ export default function QuizEngine({
   const [timeTaken, setTimeTaken] = useState(0);
   const [showReview, setShowReview] = useState(false);
   const [flash, setFlash]         = useState<number | null>(null);
+  const [loadingBestReview, setLoadingBestReview] = useState(reviewMode);
   const timerRef   = useRef<ReturnType<typeof setInterval> | null>(null);
   const answersRef = useRef<Answers>({});
 
   useEffect(() => { answersRef.current = answers; }, [answers]);
+
+  useEffect(() => {
+    if (!reviewMode) return;
+    let active = true;
+
+    async function loadBestReview() {
+      const key = `bpsc_quiz_${month}_${setName}`;
+      let bestAnswers: Record<string, number> | null = null;
+      let bestTime: number | null = null;
+
+      try {
+        const raw = localStorage.getItem(key);
+        if (raw) {
+          const parsed = JSON.parse(raw) as {
+            bestAttemptAnswers?: Record<string, number>;
+            answers?: Record<string, number>;
+            bestTimeTaken?: number;
+            timeTaken?: number;
+          };
+          bestAnswers = parsed.bestAttemptAnswers ?? parsed.answers ?? null;
+          bestTime = parsed.bestTimeTaken ?? parsed.timeTaken ?? null;
+        }
+      } catch {
+        /* ignore */
+      }
+
+      try {
+        const supabase = getSupabaseBrowserClient();
+        const { data: sessionData } = await supabase.auth.getSession();
+        const userId = sessionData.session?.user.id;
+        if (userId) {
+          const { data } = await (supabase.from("quiz_progress") as unknown as {
+            select: (columns: string) => {
+              eq: (column: string, value: string) => {
+                eq: (column: string, value: string) => {
+                  eq: (column: string, value: string) => { maybeSingle: () => Promise<{ data: unknown }> };
+                };
+              };
+            };
+          })
+            .select("best_attempt_answers, best_time_taken")
+            .eq("user_id", userId)
+            .eq("month", month)
+            .eq("set_name", setName)
+            .maybeSingle();
+          const row = (data ?? null) as { best_attempt_answers?: Record<string, number> | null; best_time_taken?: number | null } | null;
+          if (row?.best_attempt_answers) {
+            bestAnswers = row.best_attempt_answers;
+            bestTime = row.best_time_taken ?? bestTime;
+          }
+        }
+      } catch {
+        /* ignore */
+      }
+
+      if (!active) return;
+
+      if (bestAnswers && Object.keys(bestAnswers).length > 0) {
+        const normalizedAnswers = Object.fromEntries(
+          Object.entries(bestAnswers).map(([questionIndex, answerIndex]) => [Number(questionIndex), Number(answerIndex)])
+        ) as Answers;
+        setAnswers(normalizedAnswers);
+        answersRef.current = normalizedAnswers;
+        setTimeTaken(bestTime ?? 0);
+        setShowReview(true);
+        setPhase("result");
+      }
+      setLoadingBestReview(false);
+    }
+
+    void loadBestReview();
+    return () => {
+      active = false;
+    };
+  }, [month, reviewMode, setName]);
 
   const submitQuiz = useCallback((elapsed: number) => {
     if (timerRef.current) clearInterval(timerRef.current);
@@ -74,17 +232,41 @@ export default function QuizEngine({
     setPhase("result");
     const r = calcResult(questions, answersRef.current, negativeMarking);
     try {
-      localStorage.setItem(`bpsc_quiz_${month}_${setName}`, JSON.stringify({
+      const key = `bpsc_quiz_${month}_${setName}`;
+      const existingRaw = localStorage.getItem(key);
+      const existing = existingRaw ? (JSON.parse(existingRaw) as {
+        bestScore?: number;
+        bestPercentage?: number;
+        bestAttemptAnswers?: Record<string, number>;
+        bestTimeTaken?: number;
+      }) : null;
+      const isBestAttempt = r.score >= (existing?.bestScore ?? Number.NEGATIVE_INFINITY);
+      localStorage.setItem(key, JSON.stringify({
         ...r, maxScore: total, qualified: r.score >= cutoff,
         timeTaken: elapsed, date: new Date().toISOString(),
         month, setName, title: data.title,
+        answers: answersRef.current,
+        bestScore: isBestAttempt ? r.score : existing?.bestScore ?? r.score,
+        bestPercentage: isBestAttempt ? r.pct : existing?.bestPercentage ?? r.pct,
+        bestAttemptAnswers: isBestAttempt ? answersRef.current : existing?.bestAttemptAnswers ?? answersRef.current,
+        bestTimeTaken: isBestAttempt ? elapsed : existing?.bestTimeTaken ?? elapsed,
       }));
     } catch { /* silent */ }
+    void saveQuizProgress({
+      month,
+      setName,
+      title: data.title,
+      score: r.score,
+      maxScore: total,
+      qualified: r.score >= cutoff,
+      timeTaken: elapsed,
+      answers: answersRef.current,
+    });
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cutoff, data.title, month, negativeMarking, questions, setName, total]);
 
   useEffect(() => {
-    if (phase !== "quiz") return;
+    if (phase !== "quiz" || reviewMode) return;
     timerRef.current = setInterval(() => {
       setTimeLeft(t => {
         if (t <= 1) { submitQuiz(duration); return 0; }
@@ -93,7 +275,20 @@ export default function QuizEngine({
     }, 1000);
     return () => { if (timerRef.current) clearInterval(timerRef.current); };
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [phase, duration]);
+  }, [phase, duration, reviewMode]);
+
+  if (loadingBestReview) {
+    return (
+      <div style={{ minHeight: "calc(100vh - 52px)", background: "var(--bg)", display: "flex", alignItems: "center", justifyContent: "center", padding: 24 }}>
+        <div style={{ textAlign: "center" }}>
+          <p style={{ fontSize: 11, color: "var(--muted)", letterSpacing: "0.18em", textTransform: "uppercase", marginBottom: 8 }}>
+            Best Attempt Review
+          </p>
+          <p style={{ fontSize: 14, color: "var(--ink-soft)" }}>Loading your saved answers and solutions...</p>
+        </div>
+      </div>
+    );
+  }
 
   function selectOption(idx: number) {
     setAnswers(prev =>
@@ -137,7 +332,7 @@ export default function QuizEngine({
   const timerColor = veryUrgent ? "#dc2626" : urgent ? "#d97706" : "#16a34a";
 
   return (
-    <div style={{
+    <div className="quiz-root" style={{
       minHeight: "calc(100vh - 52px)",
       background: "var(--bg)",
       display: "flex",
@@ -145,7 +340,7 @@ export default function QuizEngine({
     }}>
 
       {/* ── Top bar ─────────────────────────────────────────── */}
-      <div style={{
+      <div className="quiz-topbar" style={{
         background: "var(--card)",
         borderBottom: "1px solid var(--line)",
         padding: "10px 20px",
@@ -213,21 +408,21 @@ export default function QuizEngine({
       </div>
 
       {/* ── Body: LEFT question | RIGHT navigator ───────────── */}
-      <div style={{
+      <div className="quiz-layout" style={{
         flex: 1,
         display: "flex",
         overflow: "hidden",
       }}>
 
         {/* LEFT — question + options */}
-        <div style={{
+        <div className="quiz-main" style={{
           flex: 1,
           overflowY: "auto",
           padding: "24px 28px 24px 24px",
           display: "flex",
           flexDirection: "column",
           gap: 16,
-          maxWidth: 740,
+          minWidth: 0,
         }}>
 
           {/* Question card */}
@@ -316,7 +511,7 @@ export default function QuizEngine({
           </div>
 
           {/* Bottom nav */}
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10, paddingTop: 4, paddingBottom: 8 }}>
+          <div className="quiz-bottom-nav" style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10, paddingTop: 4, paddingBottom: 8 }}>
             <button
               onClick={() => setCurrent(c => Math.max(0, c - 1))}
               disabled={current === 0}
@@ -377,7 +572,7 @@ export default function QuizEngine({
         </div>
 
         {/* RIGHT — question navigator */}
-        <div style={{
+        <div className="quiz-sidebar" style={{
           width: 220,
           flexShrink: 0,
           borderLeft: "1px solid var(--line)",
@@ -393,7 +588,7 @@ export default function QuizEngine({
           </p>
 
           {/* Grid */}
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+          <div className="quiz-nav-grid" style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
             {questions.map((_, i) => {
               const isCurrent  = i === current;
               const isAnswered = answers[i] !== undefined;
@@ -494,6 +689,23 @@ function ResultScreen({
   const col = pct >= 70 ? "#16a34a" : pct >= 50 ? "#d97706" : "#dc2626";
   const CX = 60, R = 48, circ = 2 * Math.PI * R;
   const arcLen = Math.min((pct / 100) * circ, circ);
+  const topics = analyzeTopics(questions, answers);
+  const strongTopic = [...topics]
+    .filter((topic) => topic.correct > 0)
+    .sort((a, b) => b.accuracy - a.accuracy || b.correct - a.correct)[0];
+  const weakTopic = [...topics]
+    .filter((topic) => topic.wrong > 0 || topic.skipped > 0)
+    .sort((a, b) => b.wrong - a.wrong || b.skipped - a.skipped || a.accuracy - b.accuracy)[0];
+  const rank = estimatedRank(score, total);
+  const rankPct = Math.round(((ESTIMATED_POOL - rank) / Math.max(ESTIMATED_POOL - 1, 1)) * 100);
+  const notes = coachSummary({
+    pct,
+    correct,
+    wrong,
+    unattempted,
+    strongest: strongTopic?.topic,
+    weakest: weakTopic?.topic,
+  });
 
   return (
     <div style={{ minHeight: "calc(100vh - 52px)", background: "var(--bg)", overflowY: "auto" }}>
@@ -598,6 +810,105 @@ function ResultScreen({
             <span style={{ color: "#16a34a", fontWeight: 700 }}>+1</span> correct &nbsp;·&nbsp;
             <span style={{ color: "#dc2626", fontWeight: 700 }}>−{negativeMarking.toFixed(2)}</span> wrong &nbsp;·&nbsp;
             <span style={{ color: "var(--muted)" }}>0</span> skipped
+          </div>
+        </div>
+
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 12, marginBottom: 22 }}>
+          <div style={{ background: "var(--card)", border: "1px solid var(--line)", borderRadius: 16, padding: "16px" }}>
+            <p style={{ fontSize: 10, color: "var(--muted)", letterSpacing: "0.16em", textTransform: "uppercase", marginBottom: 6 }}>Estimated Rank</p>
+            <p style={{ fontFamily: "var(--font-display)", fontSize: 30, fontWeight: 700, color: "var(--ink-strong)", lineHeight: 1 }}>
+              #{rank}
+            </p>
+            <p style={{ marginTop: 6, fontSize: 12, color: "var(--ink-soft)", lineHeight: 1.6 }}>
+              Estimated position in a 5 lakh aspirant comparison, based on marks only.
+            </p>
+          </div>
+
+          <div style={{ background: "var(--card)", border: "1px solid var(--line)", borderRadius: 16, padding: "16px" }}>
+            <p style={{ fontSize: 10, color: "var(--muted)", letterSpacing: "0.16em", textTransform: "uppercase", marginBottom: 6 }}>What Went Well</p>
+            <p style={{ fontSize: 16, fontWeight: 700, color: "#15803d", lineHeight: 1.4 }}>
+              {strongTopic ? `${strongTopic.topic} looked strongest` : correct > 0 ? "Some correct picks created the base score" : "No strong zone yet in this attempt"}
+            </p>
+            <p style={{ marginTop: 6, fontSize: 12, color: "var(--ink-soft)", lineHeight: 1.6 }}>
+              {strongTopic
+                ? `${strongTopic.correct}/${strongTopic.total} correct with ${strongTopic.accuracy}% accuracy.`
+                : correct > 0
+                  ? `${correct} correct answers gave you the current score base.`
+                  : "This attempt did not create a clear scoring strength yet."}
+            </p>
+          </div>
+
+          <div style={{ background: "var(--card)", border: "1px solid var(--line)", borderRadius: 16, padding: "16px" }}>
+            <p style={{ fontSize: 10, color: "var(--muted)", letterSpacing: "0.16em", textTransform: "uppercase", marginBottom: 6 }}>Needs Improvement</p>
+            <p style={{ fontSize: 16, fontWeight: 700, color: "#b91c1c", lineHeight: 1.4 }}>
+              {weakTopic ? `${weakTopic.topic} needs the next revision block` : "Focus on building one reliable scoring area"}
+            </p>
+            <p style={{ marginTop: 6, fontSize: 12, color: "var(--ink-soft)", lineHeight: 1.6 }}>
+              {weakTopic
+                ? `${weakTopic.wrong} wrong and ${weakTopic.skipped} skipped in this topic bucket.`
+                : `${wrong} wrong answers and ${unattempted} skipped questions are the biggest drag on this score.`}
+            </p>
+          </div>
+        </div>
+
+        <div style={{ display: "grid", gridTemplateColumns: "1.2fr 0.8fr", gap: 14, marginBottom: 22 }}>
+          <div style={{ background: "var(--card)", border: "1px solid var(--line)", borderRadius: 16, padding: "16px" }}>
+            <p style={{ fontSize: 10, color: "var(--muted)", letterSpacing: "0.16em", textTransform: "uppercase", marginBottom: 10 }}>
+              AI Improvement Notes
+            </p>
+            <div style={{ display: "grid", gap: 10 }}>
+              {notes.map((note) => (
+                <div key={note} style={{ borderLeft: "3px solid var(--accent)", paddingLeft: 12, fontSize: 13, color: "var(--ink-soft)", lineHeight: 1.7 }}>
+                  {note}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div style={{ background: "var(--card)", border: "1px solid var(--line)", borderRadius: 16, padding: "16px" }}>
+            <p style={{ fontSize: 10, color: "var(--muted)", letterSpacing: "0.16em", textTransform: "uppercase", marginBottom: 10 }}>
+              Rank Signal
+            </p>
+            <div style={{ height: 10, borderRadius: 999, background: "var(--surface)", overflow: "hidden", marginBottom: 10 }}>
+              <div
+                style={{
+                  width: `${Math.max(6, rankPct)}%`,
+                  height: "100%",
+                  borderRadius: 999,
+                  background: `linear-gradient(90deg, ${col}, ${qualified ? "#16a34a" : "#d97706"})`,
+                }}
+              />
+            </div>
+            <p style={{ fontSize: 13, color: "var(--ink-soft)", lineHeight: 1.65 }}>
+              Better marks move you closer to rank 1. This is an estimated comparative rank, not a live leaderboard.
+            </p>
+          </div>
+        </div>
+
+        <div style={{ background: "var(--card)", border: "1px solid var(--line)", borderRadius: 16, padding: "16px", marginBottom: 22 }}>
+          <p style={{ fontSize: 10, color: "var(--muted)", letterSpacing: "0.16em", textTransform: "uppercase", marginBottom: 12 }}>
+            Topic Performance
+          </p>
+          <div style={{ display: "grid", gap: 10 }}>
+            {topics.slice(0, 6).map((topic) => (
+              <div key={topic.topic} style={{ display: "grid", gridTemplateColumns: "minmax(120px, 160px) 1fr auto", gap: 12, alignItems: "center" }}>
+                <div>
+                  <p style={{ fontSize: 13, fontWeight: 700, color: "var(--ink-strong)" }}>{topic.topic}</p>
+                  <p style={{ fontSize: 11, color: "var(--muted)" }}>{topic.correct}C · {topic.wrong}W · {topic.skipped}S</p>
+                </div>
+                <div style={{ height: 8, borderRadius: 999, background: "var(--surface)", overflow: "hidden" }}>
+                  <div
+                    style={{
+                      width: `${topic.accuracy}%`,
+                      height: "100%",
+                      borderRadius: 999,
+                      background: topic.accuracy >= 60 ? "#16a34a" : topic.accuracy >= 35 ? "#d97706" : "#dc2626",
+                    }}
+                  />
+                </div>
+                <div style={{ fontSize: 12, fontWeight: 700, color: "var(--ink-soft)" }}>{topic.accuracy}%</div>
+              </div>
+            ))}
           </div>
         </div>
 
