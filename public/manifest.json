@@ -3,6 +3,7 @@
   "short_name": "BPSC 365",
   "description": "Crack 72nd BPSC Prelims — Research lab trained on 15 years of BPSC questions. 15 months of current affairs, static linkages, and Bihar focus. 225+ study sets, 225+ quizzes, negative marking practice. Free. Always.",
   "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#f4efe8",
