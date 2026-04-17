@@ -68,8 +68,8 @@ export default function HomePage() {
         </h1>
 
         <p style={{ fontSize: "clamp(13px,1.8vw,16px)", lineHeight: 1.9, color: "var(--ink-soft)", maxWidth: 480, margin: "0 auto 8px" }}>
-          Current Affairs + Static Linkage + Bihar Angle — every card.<br />
-          Research lab trained on 15 years of BPSC Prelims questions.
+          Exhaustive CA + Static + Bihar Angle — every card.<br />
+          <span style={{ fontStyle: "italic" }}>Research lab trained on 15 years of BPSC Prelims.</span>
         </p>
 
         <p style={{ fontSize: 11, color: "var(--muted)", letterSpacing: "0.06em", marginBottom: 40 }}>
@@ -133,14 +133,20 @@ export default function HomePage() {
         <div style={{ maxWidth: 820, margin: "0 auto" }}>
 
           <div style={{ textAlign: "center", marginBottom: 36 }}>
-            <p style={{ fontFamily: "monospace", fontSize: 10, letterSpacing: "0.3em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 12 }}>
+            <p style={{ fontFamily: "monospace", fontSize: 10, letterSpacing: "0.3em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 14 }}>
               What&apos;s inside
             </p>
-            <p style={{ fontSize: 14, color: "var(--ink-soft)", lineHeight: 1.8, maxWidth: 480, margin: "0 auto 6px" }}>
-              Apr 2025 → Jun 2026 · Exhaustive Current Affairs + Static + Bihar in every set.
+            <p style={{
+              fontFamily: "var(--font-display)", fontSize: "clamp(1.15rem, 3vw, 1.45rem)",
+              fontWeight: 700, color: "var(--ink-strong)", lineHeight: 1.4,
+              maxWidth: 520, margin: "0 auto 10px",
+              letterSpacing: "-0.01em",
+            }}>
+              Exhaustive CA + Exhaustive Static + Bihar Angle —{" "}
+              <span style={{ color: "var(--accent)" }}>Cover it all in 3 months.</span>
             </p>
-            <p style={{ fontSize: 14, fontWeight: 700, color: "var(--ink-strong)" }}>
-              15 months of content = Cover in 3 months.
+            <p style={{ fontSize: 13, color: "var(--ink-soft)", lineHeight: 1.7, maxWidth: 440, margin: "0 auto" }}>
+              Research lab trained on 15 years of BPSC Prelims — every set built to maximise your score, not just your knowledge.
             </p>
           </div>
 
