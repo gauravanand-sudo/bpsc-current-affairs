@@ -18,7 +18,7 @@ export default function HomePage() {
     <main style={{ color: "var(--ink)" }}>
 
       {/* ── QUOTE ──────────────────────────────────────────────── */}
-      <section style={{ background: "#0c1220", padding: "28px 24px" }}>
+      <section style={{ background: "#0c1220", padding: "20px 24px", marginTop: -1 }}>
         <div style={{ maxWidth: 620, margin: "0 auto", borderLeft: "2px solid rgba(251,191,36,0.35)", paddingLeft: 16 }}>
           <p style={{ fontFamily: "var(--font-display)", fontSize: "clamp(13px,1.6vw,15px)", fontWeight: 500, color: "rgba(254,243,199,0.88)", lineHeight: 1.9, fontStyle: "italic", marginBottom: 8 }}>
             &ldquo;समर शेष है, नहीं पाप का भागी केवल व्याध,<br />
@@ -69,7 +69,7 @@ export default function HomePage() {
 
       {/* ── UNIQUE FEATURES ────────────────────────────────────── */}
       <section style={{ borderTop: "1px solid var(--line)", background: "var(--bg)", padding: "16px 16px" }}>
-        <div style={{ display: "flex", gap: 8, overflowX: "auto", scrollbarWidth: "none" }}>
+        <div className="hide-scrollbar" style={{ display: "flex", gap: 8, overflowX: "auto" }}>
           {[
             { href: "/ask",         label: "🧠 AI Tutor 24/7" },
             { href: "/partner",     label: "🤝 Find Study Partner" },

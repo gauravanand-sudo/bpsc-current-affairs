@@ -70,7 +70,7 @@ export default function RootLayout({
         <ServiceWorkerRegistrar />
         <Nav />
         <SupportButton />
-        <div style={{ flex: 1 }}>{children}</div>
+        <div style={{ flex: 1, minWidth: 0 }}>{children}</div>
         <footer
           style={{
             borderTop: "1px solid rgba(120, 80, 30, 0.12)",

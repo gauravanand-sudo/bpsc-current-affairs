@@ -30,16 +30,31 @@ html {
   scroll-behavior: smooth;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  height: 100%;
 }
 
 body {
-  min-height: 100vh;
+  min-height: 100%;
   background: var(--bg);
   color: var(--ink);
   font-family: var(--font-body), -apple-system, sans-serif;
   line-height: 1.6;
   overscroll-behavior-y: none;
+  /* Smooth momentum scrolling on iOS */
+  -webkit-overflow-scrolling: touch;
 }
+
+/* Smooth scroll on all scrollable containers */
+* {
+  scroll-behavior: smooth;
+}
+
+/* Hide scrollbars on horizontal pill rows */
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.hide-scrollbar::-webkit-scrollbar { display: none; }
 
 a { color: inherit; text-decoration: none; }
 button { font-family: inherit; }
