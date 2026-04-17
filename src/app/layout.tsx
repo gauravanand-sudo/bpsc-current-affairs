@@ -4,6 +4,7 @@ import Script from "next/script";
 import Nav from "@/components/Nav";
 import ExamCountdown from "@/components/ExamCountdown";
 import ServiceWorkerRegistrar from "@/components/ServiceWorkerRegistrar";
+import SupportButton from "@/components/SupportButton";
 import "./globals.css";
 
 const bodyFont = Plus_Jakarta_Sans({
@@ -70,6 +71,7 @@ export default function RootLayout({
         <ServiceWorkerRegistrar />
         <Nav />
         <ExamCountdown />
+        <SupportButton />
         <div style={{ flex: 1 }}>{children}</div>
         <footer
           style={{

@@ -4,26 +4,27 @@ import Link from "next/link";
 
 export default function SupportButton() {
   return (
-    <div>
-      <p style={{ fontSize: 20, marginBottom: 10 }}>💙</p>
-      <p style={{
-        fontFamily: "var(--font-display)", fontWeight: 700,
-        fontSize: 17, color: "var(--ink-strong)", marginBottom: 6,
-      }}>
-        Feeling overwhelmed?
-      </p>
-      <p style={{ fontSize: 13, color: "var(--ink-soft)", lineHeight: 1.7, marginBottom: 16, maxWidth: 340, margin: "0 auto 16px" }}>
-        Exam pressure is real. Talk to fellow aspirants who get it.
-      </p>
+    <div style={{
+      position: "fixed",
+      bottom: "calc(70px + env(safe-area-inset-bottom))",
+      right: 14,
+      zIndex: 190,
+      pointerEvents: "auto",
+    }}>
       <Link href="/support" style={{
-        display: "inline-flex", alignItems: "center", gap: 8,
-        background: "var(--card)", border: "1px solid var(--line)",
-        borderRadius: 50, padding: "10px 22px",
-        fontSize: 13, fontWeight: 700, color: "var(--ink-soft)",
+        display: "inline-flex", alignItems: "center", gap: 7,
+        background: "rgba(244,239,232,0.82)",
+        backdropFilter: "blur(10px)",
+        WebkitBackdropFilter: "blur(10px)",
+        border: "1px solid rgba(120,80,30,0.15)",
+        borderRadius: 50,
+        padding: "8px 14px",
+        fontSize: 12, fontWeight: 700,
+        color: "var(--ink-soft)",
         textDecoration: "none",
-        boxShadow: "0 2px 8px rgba(120,80,30,0.08)",
+        boxShadow: "0 2px 12px rgba(120,80,30,0.10)",
       }}>
-        💬 Talk to someone →
+        💙 Feeling sad?
       </Link>
     </div>
   );

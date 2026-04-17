@@ -1,5 +1,4 @@
 import Link from "next/link";
-import SupportButton from "@/components/SupportButton";
 
 const CA_SOURCES = [
   "PIB", "The Hindu", "Indian Express", "Yojana", "Kurukshetra",
@@ -229,11 +228,6 @@ export default function HomePage() {
             </div>
           </div>
         </div>
-      </section>
-
-      {/* ── SUPPORT ────────────────────────────────────────────── */}
-      <section style={{ borderTop: "1px solid var(--line)", background: "var(--panel)", padding: "36px 20px", textAlign: "center" }}>
-        <SupportButton />
       </section>
 
     </main>
