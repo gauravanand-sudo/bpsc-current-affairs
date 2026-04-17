@@ -42,28 +42,54 @@ export default function StudySetCard({
     setCompletedCount(count);
   }, [month, num]);
 
-  const isDone = cardCount > 0 && completedCount >= cardCount;
-  const isStarted = completedCount > 0;
+  const isDone    = cardCount > 0 && completedCount >= cardCount;
+  const isStarted = completedCount > 0 && !isDone;
+
+  // Three distinct visual states
+  const state = isDone ? "done" : isStarted ? "progress" : "new";
+
+  const style = {
+    done: {
+      cardBg:    "rgba(22,163,74,0.05)",
+      border:    "1.5px solid rgba(22,163,74,0.4)",
+      ctaBg:     "rgba(22,163,74,0.1)",
+      ctaBorder: "rgba(22,163,74,0.3)",
+      ctaColor:  "#16a34a",
+      ctaLabel:  "Review Set →",
+    },
+    progress: {
+      cardBg:    "rgba(217,119,6,0.04)",
+      border:    "1.5px solid rgba(217,119,6,0.35)",
+      ctaBg:     "rgba(217,119,6,0.08)",
+      ctaBorder: "rgba(217,119,6,0.3)",
+      ctaColor:  "#d97706",
+      ctaLabel:  "Continue →",
+    },
+    new: {
+      cardBg:    "var(--card)",
+      border:    "1px solid var(--line)",
+      ctaBg:     "linear-gradient(135deg, rgba(192,96,16,0.08), rgba(217,119,6,0.06))",
+      ctaBorder: "rgba(192,96,16,0.2)",
+      ctaColor:  "var(--ink-strong)",
+      ctaLabel:  "Study Now →",
+    },
+  }[state];
 
   return (
     <div style={{
-      border: isDone
-        ? "1.5px solid rgba(22,163,74,0.5)"
-        : "1px solid var(--line)",
+      border: style.border,
       borderRadius: 20,
       padding: "18px 16px",
-      background: isDone ? "rgba(22,163,74,0.04)" : "var(--card)",
+      background: style.cardBg,
       display: "flex",
       flexDirection: "column",
       gap: 12,
       position: "relative",
     }}>
+
       {/* Header */}
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-        <p style={{
-          fontFamily: "var(--font-display)", fontWeight: 700,
-          fontSize: 15, color: "var(--ink-strong)",
-        }}>
+        <p style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: 15, color: "var(--ink-strong)" }}>
           {shortMonthLabel(month)} - Set {num}/15
         </p>
         {isDone ? (
@@ -117,26 +143,17 @@ export default function StudySetCard({
         <Link
           href={`/ca/${month}/set-${num}-english`}
           style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            background: isDone
-              ? "rgba(22,163,74,0.08)"
-              : "linear-gradient(135deg, rgba(192,96,16,0.08), rgba(217,119,6,0.06))",
-            border: isDone
-              ? "1px solid rgba(22,163,74,0.25)"
-              : "1px solid rgba(192,96,16,0.2)",
+            display: "flex", alignItems: "center", justifyContent: "space-between",
+            background: style.ctaBg,
+            border: `1px solid ${style.ctaBorder}`,
             borderRadius: 10, padding: "10px 14px", textDecoration: "none",
           }}
         >
-          <span style={{
-            fontSize: 13, fontWeight: 700,
-            color: isDone ? "#16a34a" : "var(--ink-strong)",
-          }}>
-            {isDone ? "Review Set →" : isStarted ? "Continue →" : "Study Now →"}
+          <span style={{ fontSize: 13, fontWeight: 700, color: style.ctaColor }}>
+            {style.ctaLabel}
           </span>
           <span style={{ fontSize: 11, color: "var(--muted)", fontFamily: "monospace" }}>
-            {cardCount} cards
+            {isDone ? `${cardCount} cards` : isStarted ? `${cardCount - completedCount} left` : `${cardCount} cards`}
           </span>
         </Link>
       </div>
