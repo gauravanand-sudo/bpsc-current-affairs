@@ -38,15 +38,7 @@ export default function MarkComplete({ month, setName, cardId, categories }: Pro
   }
 
   return (
-    <div style={{
-      position: "sticky",
-      bottom: 0,
-      zIndex: 10,
-      display: "flex",
-      justifyContent: "flex-end",
-      padding: "10px 0 4px",
-      background: "linear-gradient(to bottom, transparent, rgba(255,250,240,0.97) 40%)",
-    }}>
+    <div style={{ display: "inline-flex" }}>
       <button
         onClick={toggle}
         style={{

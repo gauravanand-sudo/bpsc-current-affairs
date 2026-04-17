@@ -2,6 +2,8 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import Link from "next/link";
 import MarkComplete from "@/components/MarkComplete";
+import BookmarkButton from "@/components/BookmarkButton";
+import RecordActivity from "@/components/RecordActivity";
 
 /** Detect if a quiz JSON exists for this set */
 async function hasQuiz(month: string, set: string): Promise<boolean> {
@@ -99,6 +101,7 @@ export default async function CASetPage({
 
   return (
     <main style={{ minHeight: "100vh", background: "var(--bg)", color: "var(--ink)" }}>
+      <RecordActivity />
       <div className="feed-shell">
 
         {/* ════════════════════════════════════════
@@ -449,8 +452,20 @@ export default async function CASetPage({
                   </p>
                 </div>
 
-                {/* Mark Complete */}
-                <div style={{ flexShrink: 0, display: "flex", justifyContent: "flex-end" }}>
+                {/* Actions — sticky bottom of card */}
+                <div style={{
+                  position: "sticky", bottom: 0, zIndex: 10,
+                  display: "flex", justifyContent: "flex-end", gap: 8,
+                  padding: "10px 0 4px",
+                  background: "linear-gradient(to bottom, transparent, rgba(255,250,240,0.97) 40%)",
+                }}>
+                  <BookmarkButton
+                    month={month}
+                    setName={set}
+                    cardId={item.id}
+                    title={item.title}
+                    categories={item.categories}
+                  />
                   <MarkComplete
                     month={month}
                     setName={set}

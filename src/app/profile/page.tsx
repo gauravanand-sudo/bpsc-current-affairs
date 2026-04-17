@@ -6,6 +6,8 @@ import type { Session } from "@supabase/supabase-js";
 import ProgressChart from "@/components/ProgressChart";
 import { getSupabaseBrowserClient } from "@/lib/supabase";
 import { ensureProfileRow, syncLocalProgressToSupabase } from "@/lib/progress";
+import { getStreak } from "@/lib/streak";
+import { getBookmarks, type Bookmark } from "@/lib/bookmarks";
 
 type QuizResult = {
   setName: string;
@@ -57,6 +59,8 @@ export default function ProfilePage() {
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
   const [quizResults, setQuizResults] = useState<QuizResult[]>([]);
+  const [streak, setStreak] = useState({ streak: 0, longest: 0 });
+  const [bookmarks, setBookmarks] = useState<Bookmark[]>([]);
 
   useEffect(() => {
     const supabase = getSupabaseBrowserClient();
@@ -77,6 +81,8 @@ export default function ProfilePage() {
       }
     });
     setQuizResults(loadAllQuizResults());
+    setStreak(getStreak());
+    setBookmarks(getBookmarks());
     return () => subscription.unsubscribe();
   }, []);
 
@@ -187,12 +193,48 @@ export default function ProfilePage() {
         </div>
 
         {/* Stats grid */}
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(140px, 1fr))", gap: 10, marginBottom: 20 }}>
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(130px, 1fr))", gap: 10, marginBottom: 20 }}>
           <StatCard label="Days to Exam" value={String(daysLeft)} sub="26 Jul 2026" accent />
+          <StatCard label="Streak" value={`${streak.streak} 🔥`} sub={`Best: ${streak.longest} days`} />
           <StatCard label="Quizzes Taken" value={String(totalQuizzes)} sub="total attempts" />
-          <StatCard label="Avg Score" value={`${avgPct}%`} sub="across all sets" />
           <StatCard label="Best Score" value={`${bestPct}%`} sub="personal best" />
         </div>
+
+        {/* Bookmarks */}
+        {bookmarks.length > 0 && (
+          <div style={{ border: "1px solid var(--line)", borderRadius: 20, background: "var(--card)", padding: "18px 16px", marginBottom: 20 }}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 14 }}>
+              <p style={{ fontFamily: "monospace", fontSize: 10, letterSpacing: "0.28em", textTransform: "uppercase", color: "var(--muted)" }}>
+                Saved Cards
+              </p>
+              <span style={{ fontSize: 11, color: "var(--muted)" }}>{bookmarks.length} saved</span>
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+              {bookmarks.slice(0, 5).map((b, i) => (
+                <Link key={i} href={`/ca/${b.month}/${b.setName}`} style={{ textDecoration: "none" }}>
+                  <div style={{
+                    display: "flex", alignItems: "center", gap: 10,
+                    padding: "10px 12px", borderRadius: 12, background: "var(--panel)",
+                  }}>
+                    <span style={{ fontSize: 16, flexShrink: 0 }}>🔖</span>
+                    <div style={{ flex: 1, minWidth: 0 }}>
+                      <p style={{ fontSize: 13, fontWeight: 600, color: "var(--ink-strong)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                        {b.title}
+                      </p>
+                      <p style={{ fontSize: 11, color: "var(--muted)" }}>{b.month} · {b.setName}</p>
+                    </div>
+                    <span style={{ fontSize: 12, color: "var(--accent)", flexShrink: 0 }}>→</span>
+                  </div>
+                </Link>
+              ))}
+            </div>
+            {bookmarks.length > 5 && (
+              <p style={{ textAlign: "center", fontSize: 12, color: "var(--muted)", marginTop: 10 }}>
+                +{bookmarks.length - 5} more saved cards
+              </p>
+            )}
+          </div>
+        )}
 
         {/* Recent quiz history */}
         {recentResults.length > 0 && (
