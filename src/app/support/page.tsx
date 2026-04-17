@@ -109,10 +109,13 @@ export default function SupportPage() {
 
       {/* ── Fixed header ── */}
       <div style={{
+        position: "sticky", top: 0, zIndex: 50,
         flexShrink: 0,
         padding: "12px 16px",
         borderBottom: "1px solid var(--line)",
-        background: "var(--card)",
+        background: "rgba(244,239,232,0.97)",
+        backdropFilter: "blur(12px)",
+        WebkitBackdropFilter: "blur(12px)",
         display: "flex", alignItems: "center", justifyContent: "space-between",
       }}>
         <div>
