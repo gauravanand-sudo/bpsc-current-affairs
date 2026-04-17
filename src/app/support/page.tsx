@@ -42,6 +42,7 @@ export default function SupportPage() {
   const [online, setOnline] = useState(1);
   const [username, setUsername] = useState("");
   const [replyTo, setReplyTo] = useState<ReplyTo>(null);
+  const [loggedIn, setLoggedIn] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -49,8 +50,13 @@ export default function SupportPage() {
     const supabase = getSupabaseBrowserClient();
 
     supabase.auth.getSession().then(({ data }) => {
-      const name = data.session?.user?.user_metadata?.full_name;
-      setUsername(getOrCreateUsername(name));
+      const user = data.session?.user;
+      setLoggedIn(!!user);
+      setUsername(getOrCreateUsername(user?.user_metadata?.full_name));
+    });
+    supabase.auth.onAuthStateChange((_e, session) => {
+      setLoggedIn(!!session);
+      setUsername(getOrCreateUsername(session?.user?.user_metadata?.full_name));
     });
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -236,57 +242,82 @@ export default function SupportPage() {
         WebkitBackdropFilter: "blur(12px)",
         paddingBottom: "env(safe-area-inset-bottom)",
       }}>
-        {/* Reply banner */}
-        {replyTo && (
-          <div style={{
-            display: "flex", alignItems: "center", justifyContent: "space-between",
-            padding: "6px 14px",
-            background: "rgba(192,96,16,0.06)",
-            borderBottom: "1px solid var(--line)",
-            borderLeft: "3px solid var(--accent)",
-          }}>
-            <div style={{ minWidth: 0 }}>
-              <p style={{ fontSize: 10, fontWeight: 700, color: "var(--accent)" }}>Replying to {replyTo.username}</p>
-              <p style={{ fontSize: 12, color: "var(--ink-soft)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", maxWidth: 240 }}>
-                {replyTo.text}
-              </p>
-            </div>
-            <button onClick={() => setReplyTo(null)} style={{
-              fontSize: 18, color: "var(--muted)", background: "none",
-              border: "none", cursor: "pointer", flexShrink: 0, padding: "0 4px",
-            }}>×</button>
+        {!loggedIn ? (
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "12px 16px", gap: 12 }}>
+            <p style={{ fontSize: 13, color: "var(--ink-soft)", lineHeight: 1.5 }}>
+              Sign in to send a message
+            </p>
+            <button
+              onClick={async () => {
+                const supabase = getSupabaseBrowserClient();
+                await supabase.auth.signInWithOAuth({
+                  provider: "google",
+                  options: { redirectTo: `${window.location.origin}/support` },
+                });
+              }}
+              style={{
+                background: "var(--accent)", color: "#fff", border: "none",
+                borderRadius: 10, padding: "9px 18px", fontSize: 13,
+                fontWeight: 700, cursor: "pointer", fontFamily: "var(--font-display)",
+                flexShrink: 0,
+              }}
+            >
+              Sign in with Google
+            </button>
           </div>
+        ) : (
+          <>
+            {replyTo && (
+              <div style={{
+                display: "flex", alignItems: "center", justifyContent: "space-between",
+                padding: "6px 14px",
+                background: "rgba(192,96,16,0.06)",
+                borderBottom: "1px solid var(--line)",
+                borderLeft: "3px solid var(--accent)",
+              }}>
+                <div style={{ minWidth: 0 }}>
+                  <p style={{ fontSize: 10, fontWeight: 700, color: "var(--accent)" }}>Replying to {replyTo.username}</p>
+                  <p style={{ fontSize: 12, color: "var(--ink-soft)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", maxWidth: 240 }}>
+                    {replyTo.text}
+                  </p>
+                </div>
+                <button onClick={() => setReplyTo(null)} style={{
+                  fontSize: 18, color: "var(--muted)", background: "none",
+                  border: "none", cursor: "pointer", flexShrink: 0, padding: "0 4px",
+                }}>×</button>
+              </div>
+            )}
+            <div style={{ display: "flex", gap: 8, alignItems: "center", padding: "10px 12px" }}>
+              <input
+                ref={inputRef}
+                value={text}
+                onChange={e => setText(e.target.value)}
+                onKeyDown={e => e.key === "Enter" && !e.shiftKey && send()}
+                placeholder={replyTo ? `Reply to ${replyTo.username}...` : "Say something kind..."}
+                maxLength={500}
+                style={{
+                  flex: 1, background: "var(--card)", border: "1px solid var(--line)",
+                  borderRadius: 24, padding: "10px 16px", fontSize: 14,
+                  color: "var(--ink-strong)", outline: "none", fontFamily: "inherit",
+                }}
+              />
+              <button
+                onClick={send}
+                disabled={!text.trim() || sending}
+                style={{
+                  width: 42, height: 42, borderRadius: "50%",
+                  background: text.trim() ? "var(--accent)" : "var(--line)",
+                  border: "none", cursor: text.trim() ? "pointer" : "default",
+                  display: "flex", alignItems: "center", justifyContent: "center",
+                  fontSize: 18, flexShrink: 0, color: "#fff",
+                  transition: "background 0.15s",
+                }}
+              >
+                ↑
+              </button>
+            </div>
+          </>
         )}
-
-        <div style={{ display: "flex", gap: 8, alignItems: "center", padding: "10px 12px" }}>
-          <input
-            ref={inputRef}
-            value={text}
-            onChange={e => setText(e.target.value)}
-            onKeyDown={e => e.key === "Enter" && !e.shiftKey && send()}
-            placeholder={replyTo ? `Reply to ${replyTo.username}...` : "Say something kind..."}
-            maxLength={500}
-            style={{
-              flex: 1, background: "var(--card)", border: "1px solid var(--line)",
-              borderRadius: 24, padding: "10px 16px", fontSize: 14,
-              color: "var(--ink-strong)", outline: "none", fontFamily: "inherit",
-            }}
-          />
-          <button
-            onClick={send}
-            disabled={!text.trim() || sending}
-            style={{
-              width: 42, height: 42, borderRadius: "50%",
-              background: text.trim() ? "var(--accent)" : "var(--line)",
-              border: "none", cursor: text.trim() ? "pointer" : "default",
-              display: "flex", alignItems: "center", justifyContent: "center",
-              fontSize: 18, flexShrink: 0, color: "#fff",
-              transition: "background 0.15s",
-            }}
-          >
-            ↑
-          </button>
-        </div>
       </div>
 
     </main>
