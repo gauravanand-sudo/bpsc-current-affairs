@@ -216,30 +216,17 @@ export default async function QuizzesPage() {
                             display: "flex", alignItems: "center", justifyContent: "space-between",
                             background: "linear-gradient(135deg, rgba(192,96,16,0.08), rgba(217,119,6,0.06))",
                             border: "1px solid rgba(192,96,16,0.2)",
-                            borderRadius: 10, padding: "9px 12px", textDecoration: "none",
+                            borderRadius: 10, padding: "10px 14px", textDecoration: "none",
                           }}>
                             <span style={{ fontSize: 13, fontWeight: 700, color: "var(--ink-strong)" }}>
-                              Quiz — English
+                              Start Quiz →
                             </span>
-                            <span style={{ fontSize: 12, color: "var(--accent)", fontWeight: 700 }}>Start →</span>
-                          </Link>
-                        )}
-                        {live.hindi && (
-                          <Link href={`/ca/${month}/set-${num}-hindi/quiz`} style={{
-                            display: "flex", alignItems: "center", justifyContent: "space-between",
-                            background: "var(--panel)",
-                            border: "1px solid var(--line-hi)",
-                            borderRadius: 10, padding: "9px 12px", textDecoration: "none",
-                          }}>
-                            <span style={{ fontSize: 13, fontWeight: 700, color: "var(--ink-strong)" }}>
-                              Quiz — हिंदी
-                            </span>
-                            <span style={{ fontSize: 12, color: "var(--accent)", fontWeight: 700 }}>Start →</span>
+                            <span style={{ fontSize: 12, color: "var(--accent)", fontWeight: 700 }}>30 min</span>
                           </Link>
                         )}
 
-                        {/* Also study first nudge */}
-                        <Link href={`/ca/${month}/set-${num}-${live.english ? "english" : "hindi"}`} style={{
+                        {/* Study first nudge */}
+                        <Link href={`/ca/${month}/set-${num}-english`} style={{
                           fontSize: 11, color: "var(--muted)", textDecoration: "none",
                           textAlign: "center", letterSpacing: "0.04em",
                         }}>

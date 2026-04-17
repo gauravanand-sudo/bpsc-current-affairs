@@ -4,6 +4,7 @@ import Link from "next/link";
 import MarkComplete from "@/components/MarkComplete";
 import BookmarkButton from "@/components/BookmarkButton";
 import RecordActivity from "@/components/RecordActivity";
+import StickyQuizCTA from "@/components/StickyQuizCTA";
 
 /** Detect if a quiz JSON exists for this set */
 async function hasQuiz(month: string, set: string): Promise<boolean> {
@@ -616,6 +617,8 @@ export default async function CASetPage({
         </section>
 
       </div>
+
+      {quizAvailable && <StickyQuizCTA month={month} set={set} />}
     </main>
   );
 }

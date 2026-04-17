@@ -937,11 +937,39 @@ function ResultScreen({
         <AdBanner />
 
         {/* Action buttons */}
-        <div style={{ display: "flex", gap: 10, marginBottom: 24, marginTop: 22, flexWrap: "wrap" }}>
+        <div style={{ display: "flex", gap: 10, marginBottom: 16, marginTop: 22, flexWrap: "wrap" }}>
+          <Link
+            href="/leaderboard"
+            style={{
+              flex: 1, minWidth: 140, padding: "13px 16px", borderRadius: 11,
+              background: "linear-gradient(135deg, #0c1220, #1a2744)",
+              border: "1px solid rgba(251,191,36,0.25)",
+              color: "#fef3c7", fontSize: 13, fontWeight: 700,
+              textDecoration: "none", textAlign: "center",
+              fontFamily: "var(--font-display)", display: "block",
+            }}
+          >
+            🏆 Leaderboard
+          </Link>
+          <Link
+            href={`/ask?q=I+just+finished+a+BPSC+quiz+on+${encodeURIComponent(setName.replace(/-/g, " "))}+and+scored+${score.toFixed(1)}%25.+Help+me+review+my+weak+areas.`}
+            style={{
+              flex: 1, minWidth: 140, padding: "13px 16px", borderRadius: 11,
+              background: "linear-gradient(135deg, rgba(192,96,16,0.1), rgba(217,119,6,0.08))",
+              border: "1px solid var(--accent-border)",
+              color: "var(--accent)", fontSize: 13, fontWeight: 700,
+              textDecoration: "none", textAlign: "center",
+              fontFamily: "var(--font-display)", display: "block",
+            }}
+          >
+            🧠 Ask AI Tutor
+          </Link>
+        </div>
+        <div style={{ display: "flex", gap: 10, marginBottom: 24, flexWrap: "wrap" }}>
           <button
             onClick={() => setShowReview(!showReview)}
             style={{
-              flex: 1, minWidth: 180, padding: "12px", borderRadius: 11,
+              flex: 1, minWidth: 180, padding: "11px", borderRadius: 11,
               border: "1px solid var(--line-hi)",
               background: showReview ? "var(--accent-soft)" : "var(--card)",
               color: showReview ? "var(--accent)" : "var(--ink-soft)",
@@ -954,7 +982,7 @@ function ResultScreen({
           <Link
             href={`/ca/${month}/${setName}`}
             style={{
-              flex: 1, minWidth: 140, padding: "12px", borderRadius: 11,
+              flex: 1, minWidth: 120, padding: "11px", borderRadius: 11,
               border: "1px solid var(--line-hi)",
               background: "var(--card)", color: "var(--ink-soft)",
               fontSize: 13, fontWeight: 600, textDecoration: "none",
@@ -967,7 +995,7 @@ function ResultScreen({
           <Link
             href="/ca"
             style={{
-              flex: 1, minWidth: 120, padding: "12px", borderRadius: 11,
+              flex: 1, minWidth: 100, padding: "11px", borderRadius: 11,
               border: "1px solid var(--line-hi)",
               background: "var(--card)", color: "var(--muted)",
               fontSize: 13, fontWeight: 600, textDecoration: "none",

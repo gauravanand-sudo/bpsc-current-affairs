@@ -566,11 +566,9 @@ export default async function CALandingPage() {
                     );
                   }
 
-                  /* Live set — show both language links */
-                  const cats = [
-                    ...(live.english?.categories ?? []),
-                    ...(live.hindi?.categories ?? []),
-                  ].filter((c, i, arr) => arr.indexOf(c) === i).slice(0, 5);
+                  /* Live set — show English only */
+                  const cats = (live.english?.categories ?? [])
+                    .filter((c, i, arr) => arr.indexOf(c) === i).slice(0, 5);
 
                   return (
                     <div
@@ -637,53 +635,30 @@ export default async function CALandingPage() {
                         })}
                       </div>
 
-                      {/* Language links */}
-                      <div style={{ display: "flex", flexDirection: "column", gap: 7, marginTop: "auto" }}>
-                        {live.english && (
+                      {/* Study link — English only */}
+                      <div style={{ marginTop: "auto" }}>
+                        {live.english ? (
                           <Link
                             href={`/ca/${month}/set-${num}-english`}
                             style={{
                               display: "flex",
                               alignItems: "center",
                               justifyContent: "space-between",
-                              background: "var(--panel)",
-                              border: "1px solid var(--line)",
-                              borderRadius: 10,
-                              padding: "9px 12px",
-                              textDecoration: "none",
-                            }}
-                          >
-                            <span style={{ fontSize: 13, fontWeight: 600, color: "var(--ink-strong)" }}>
-                              English
-                            </span>
-                            <span style={{ fontSize: 11, color: "var(--muted)", fontFamily: "monospace" }}>
-                              {live.english.count} cards →
-                            </span>
-                          </Link>
-                        )}
-                        {live.hindi && (
-                          <Link
-                            href={`/ca/${month}/set-${num}-hindi`}
-                            style={{
-                              display: "flex",
-                              alignItems: "center",
-                              justifyContent: "space-between",
-                              background: "linear-gradient(135deg, rgba(192,96,16,0.06), rgba(217,119,6,0.06))",
+                              background: "linear-gradient(135deg, rgba(192,96,16,0.08), rgba(217,119,6,0.06))",
                               border: "1px solid rgba(192,96,16,0.2)",
                               borderRadius: 10,
-                              padding: "9px 12px",
+                              padding: "10px 14px",
                               textDecoration: "none",
                             }}
                           >
-                            <span style={{ fontSize: 13, fontWeight: 600, color: "var(--ink-strong)" }}>
-                              हिंदी
+                            <span style={{ fontSize: 13, fontWeight: 700, color: "var(--ink-strong)" }}>
+                              Study Now →
                             </span>
                             <span style={{ fontSize: 11, color: "var(--muted)", fontFamily: "monospace" }}>
-                              {live.hindi.count} cards →
+                              {live.english.count} cards
                             </span>
                           </Link>
-                        )}
-                        {!live.english && !live.hindi && (
+                        ) : (
                           <p style={{ fontSize: 12, color: "var(--muted)", textAlign: "center" }}>
                             Content loading…
                           </p>
