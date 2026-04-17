@@ -28,44 +28,29 @@ export default function ExamCountdown() {
 
   return (
     <div style={{
-      position: "fixed", bottom: 20, right: 16, zIndex: 200,
-      background: "var(--navy)",
-      border: "1px solid rgba(251,191,36,0.25)",
-      borderRadius: 16,
-      padding: "12px 16px",
-      boxShadow: "0 8px 32px rgba(0,0,0,0.28)",
-      minWidth: 160,
+      position: "fixed", top: 62, right: 14, zIndex: 200,
+      textAlign: "right",
+      pointerEvents: "none",
     }}>
       <p style={{
-        fontSize: 9, fontWeight: 700, letterSpacing: "0.18em",
-        textTransform: "uppercase", color: "rgba(251,191,36,0.7)",
-        marginBottom: 8, fontFamily: "monospace",
+        fontFamily: "monospace", fontSize: 9, fontWeight: 700,
+        letterSpacing: "0.16em", textTransform: "uppercase",
+        color: "var(--muted)", marginBottom: 3,
       }}>
-        72nd BPSC Prelims
+        Exam · 26 Jul
       </p>
-      <div style={{ display: "flex", gap: 6, alignItems: "flex-end" }}>
-        {[
-          { v: t.d, u: "d" },
-          { v: t.h, u: "h" },
-          { v: t.m, u: "m" },
-          { v: t.s, u: "s" },
-        ].map(({ v, u }) => (
-          <div key={u} style={{ textAlign: "center" }}>
-            <p style={{
-              fontFamily: "monospace", fontSize: 22, fontWeight: 700,
-              color: "#f1f5f9", lineHeight: 1,
-              minWidth: u === "d" ? 32 : 26,
-            }}>
-              {String(v).padStart(2, "0")}
-            </p>
-            <p style={{ fontSize: 9, color: "rgba(255,255,255,0.35)", letterSpacing: "0.08em", marginTop: 2 }}>
-              {u}
-            </p>
-          </div>
-        ))}
-      </div>
-      <p style={{ fontSize: 9, color: "rgba(255,255,255,0.3)", marginTop: 8, letterSpacing: "0.06em" }}>
-        26 July 2026
+      <p style={{
+        fontFamily: "monospace", fontSize: 17, fontWeight: 700,
+        color: "var(--accent)", lineHeight: 1, letterSpacing: "0.04em",
+      }}>
+        {String(t.d).padStart(2, "0")}
+        <span style={{ fontSize: 11, color: "var(--muted)", margin: "0 1px" }}>d</span>
+        {String(t.h).padStart(2, "0")}
+        <span style={{ fontSize: 11, color: "var(--muted)", margin: "0 1px" }}>h</span>
+        {String(t.m).padStart(2, "0")}
+        <span style={{ fontSize: 11, color: "var(--muted)", margin: "0 1px" }}>m</span>
+        {String(t.s).padStart(2, "0")}
+        <span style={{ fontSize: 11, color: "var(--muted)", margin: "0 1px" }}>s</span>
       </p>
     </div>
   );
