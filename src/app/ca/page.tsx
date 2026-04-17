@@ -1,6 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import Link from "next/link";
+import AdBanner from "@/components/AdBanner";
 
 /* ─── Types ──────────────────────────────────────────────────── */
 type SetMeta = {
@@ -370,6 +371,8 @@ export default async function CALandingPage() {
         >
           Study Sets — Apr 2025 to Apr 2026 · 15 Sets Each
         </p>
+
+        <AdBanner />
 
         {PLANNED_MONTHS.map((month) => {
           const liveSets = allSets[month] ?? [];

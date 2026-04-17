@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback, useRef } from "react";
 import Link from "next/link";
 import { saveQuizProgress } from "@/lib/progress";
 import { getSupabaseBrowserClient } from "@/lib/supabase";
+import AdBanner from "@/components/AdBanner";
 
 /* ─── Types ─────────────────────────────────────────────────── */
 export type QuizQuestion = {
@@ -932,8 +933,11 @@ function ResultScreen({
           </div>
         </div>
 
+        {/* Ad — shown between results and action buttons */}
+        <AdBanner />
+
         {/* Action buttons */}
-        <div style={{ display: "flex", gap: 10, marginBottom: 24, flexWrap: "wrap" }}>
+        <div style={{ display: "flex", gap: 10, marginBottom: 24, marginTop: 22, flexWrap: "wrap" }}>
           <button
             onClick={() => setShowReview(!showReview)}
             style={{
