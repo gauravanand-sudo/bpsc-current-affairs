@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Plus_Jakarta_Sans, Space_Grotesk } from "next/font/google";
+import Script from "next/script";
 import Nav from "@/components/Nav";
 import ExamCountdown from "@/components/ExamCountdown";
 import ServiceWorkerRegistrar from "@/components/ServiceWorkerRegistrar";
@@ -50,6 +51,21 @@ export default function RootLayout({
       lang="hi"
       className={`${bodyFont.variable} ${displayFont.variable} h-full antialiased`}
     >
+      <head>
+        <Script
+          id="sw-register-inline"
+          strategy="afterInteractive"
+          dangerouslySetInnerHTML={{
+            __html: `
+              if ('serviceWorker' in navigator) {
+                window.addEventListener('load', function () {
+                  navigator.serviceWorker.register('/sw.js').catch(function () {});
+                });
+              }
+            `,
+          }}
+        />
+      </head>
       <body style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
         <ServiceWorkerRegistrar />
         <Nav />
