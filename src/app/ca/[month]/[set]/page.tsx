@@ -19,8 +19,8 @@ async function hasQuiz(month: string, set: string): Promise<boolean> {
 
 /** Return language badge emoji + label for set name */
 function langBadge(set: string): { emoji: string; label: string } | null {
-  if (set.endsWith("-english")) return { emoji: "🇬🇧", label: "English" };
-  if (set.endsWith("-hindi")) return { emoji: "🇮🇳", label: "Hindi" };
+  if (set.endsWith("-english")) return { emoji: "EN", label: "English" };
+  if (set.endsWith("-hindi")) return { emoji: "HI", label: "हिंदी" };
   return null;
 }
 
@@ -123,12 +123,11 @@ export default async function CASetPage({
                     <span
                       style={{
                         background: "var(--chip)", color: "var(--ink-soft)",
-                        borderRadius: 20, padding: "3px 10px", fontSize: 11, fontWeight: 600,
-                        display: "flex", alignItems: "center", gap: 5,
+                        borderRadius: 8, padding: "3px 10px", fontSize: 11, fontWeight: 700,
+                        letterSpacing: "0.06em",
                       }}
                     >
-                      <span>{lang.emoji}</span>
-                      <span>{lang.label}</span>
+                      {lang.emoji}
                     </span>
                   )}
                   <span

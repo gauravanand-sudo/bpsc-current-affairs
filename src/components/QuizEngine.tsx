@@ -410,8 +410,6 @@ export default function QuizEngine({
       {/* ── Body: LEFT question | RIGHT navigator ───────────── */}
       <div className="quiz-layout" style={{
         flex: 1,
-        display: "flex",
-        overflow: "hidden",
       }}>
 
         {/* LEFT — question + options */}

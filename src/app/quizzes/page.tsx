@@ -76,7 +76,7 @@ async function loadQuizMeta(): Promise<Record<string, QuizMeta[]>> {
 const PLANNED_MONTHS = (() => {
   const months: string[] = [];
   const start = new Date(2025, 3, 1);
-  const end   = new Date(2026, 3, 1);
+  const end   = new Date(2026, 3, 1); // Apr 2026
   const cur = new Date(start);
   while (cur <= end) {
     months.push(`${cur.getFullYear()}-${String(cur.getMonth() + 1).padStart(2, "0")}`);
@@ -218,8 +218,8 @@ export default async function QuizzesPage() {
                             border: "1px solid rgba(192,96,16,0.2)",
                             borderRadius: 10, padding: "9px 12px", textDecoration: "none",
                           }}>
-                            <span style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 13, fontWeight: 700, color: "var(--ink-strong)" }}>
-                              <span>🇬🇧</span> English Quiz
+                            <span style={{ fontSize: 13, fontWeight: 700, color: "var(--ink-strong)" }}>
+                              Quiz — English
                             </span>
                             <span style={{ fontSize: 12, color: "var(--accent)", fontWeight: 700 }}>Start →</span>
                           </Link>
@@ -231,8 +231,8 @@ export default async function QuizzesPage() {
                             border: "1px solid var(--line-hi)",
                             borderRadius: 10, padding: "9px 12px", textDecoration: "none",
                           }}>
-                            <span style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 13, fontWeight: 700, color: "var(--ink-strong)" }}>
-                              <span>🇮🇳</span> Hindi Quiz
+                            <span style={{ fontSize: 13, fontWeight: 700, color: "var(--ink-strong)" }}>
+                              Quiz — हिंदी
                             </span>
                             <span style={{ fontSize: 12, color: "var(--accent)", fontWeight: 700 }}>Start →</span>
                           </Link>

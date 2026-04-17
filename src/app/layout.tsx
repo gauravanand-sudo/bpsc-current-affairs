@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Plus_Jakarta_Sans, Space_Grotesk } from "next/font/google";
 import Nav from "@/components/Nav";
+import ExamCountdown from "@/components/ExamCountdown";
 import "./globals.css";
 
 const bodyFont = Plus_Jakarta_Sans({
@@ -50,6 +51,7 @@ export default function RootLayout({
     >
       <body style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
         <Nav />
+        <ExamCountdown />
         <div style={{ flex: 1 }}>{children}</div>
         <footer
           style={{

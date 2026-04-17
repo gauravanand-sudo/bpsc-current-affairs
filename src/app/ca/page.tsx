@@ -95,7 +95,7 @@ async function loadGroupedSets(): Promise<Record<string, SetMeta[]>> {
 const PLANNED_MONTHS = (() => {
   const months: string[] = [];
   const start = new Date(2025, 3, 1); // April 2025
-  const end   = new Date(2026, 3, 1); // April 2026
+  const end   = new Date(2026, 3, 1); // Apr 2026
   const cur = new Date(start);
   while (cur <= end) {
     const y = cur.getFullYear();
@@ -536,8 +536,8 @@ export default async function CALandingPage() {
                               textDecoration: "none",
                             }}
                           >
-                            <span style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 13, fontWeight: 600, color: "var(--ink-strong)" }}>
-                              <span>🇬🇧</span> English
+                            <span style={{ fontSize: 13, fontWeight: 600, color: "var(--ink-strong)" }}>
+                              English
                             </span>
                             <span style={{ fontSize: 11, color: "var(--muted)", fontFamily: "monospace" }}>
                               {live.english.count} cards →
@@ -558,8 +558,8 @@ export default async function CALandingPage() {
                               textDecoration: "none",
                             }}
                           >
-                            <span style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 13, fontWeight: 600, color: "var(--ink-strong)" }}>
-                              <span>🇮🇳</span> हिंदी
+                            <span style={{ fontSize: 13, fontWeight: 600, color: "var(--ink-strong)" }}>
+                              हिंदी
                             </span>
                             <span style={{ fontSize: 11, color: "var(--muted)", fontFamily: "monospace" }}>
                               {live.hindi.count} cards →
