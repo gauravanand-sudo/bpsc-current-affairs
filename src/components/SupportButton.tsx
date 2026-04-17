@@ -22,7 +22,7 @@ export default function SupportButton() {
       });
   }, []);
 
-  const hidePartner = pathname === "/partner";
+  const hidePartner = pathname === "/partner" || pathname === "/support";
   const hideSupport = pathname === "/support";
 
   if (hidePartner && hideSupport) return null;
