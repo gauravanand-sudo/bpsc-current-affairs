@@ -277,6 +277,28 @@ export default function QuizEngine({
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [phase, duration, reviewMode]);
 
+  // Warn before leaving mid-quiz
+  useEffect(() => {
+    if (phase !== "quiz" || reviewMode) return;
+    const onBeforeUnload = (e: BeforeUnloadEvent) => {
+      e.preventDefault();
+      e.returnValue = "";
+    };
+    const onPopState = () => {
+      const leave = window.confirm("Quit quiz? Your progress will be lost.");
+      if (!leave) {
+        window.history.pushState(null, "", window.location.href);
+      }
+    };
+    window.addEventListener("beforeunload", onBeforeUnload);
+    window.history.pushState(null, "", window.location.href);
+    window.addEventListener("popstate", onPopState);
+    return () => {
+      window.removeEventListener("beforeunload", onBeforeUnload);
+      window.removeEventListener("popstate", onPopState);
+    };
+  }, [phase, reviewMode]);
+
   if (loadingBestReview) {
     return (
       <div style={{ minHeight: "calc(100vh - 52px)", background: "var(--bg)", display: "flex", alignItems: "center", justifyContent: "center", padding: 24 }}>
