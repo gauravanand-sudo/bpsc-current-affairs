@@ -1,6 +1,5 @@
 import Link from "next/link";
 import QuestionOfTheDay from "@/components/QuestionOfTheDay";
-import type { CSSProperties } from "react";
 
 const CA_SOURCES = [
   "PIB", "The Hindu", "Indian Express", "Yojana", "Kurukshetra",
@@ -69,82 +68,24 @@ export default function HomePage() {
       </section>
 
       {/* ── UNIQUE FEATURES ────────────────────────────────────── */}
-      <section style={{ borderTop: "1px solid var(--line)", background: "var(--bg)", padding: "52px 20px" }}>
-        <div style={{ maxWidth: 820, margin: "0 auto" }}>
-          <div style={{ textAlign: "center", marginBottom: 32 }}>
-            <p style={{ fontFamily: "monospace", fontSize: 10, letterSpacing: "0.3em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 10 }}>
-              Only on BPSC 365
-            </p>
-            <p style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: "clamp(1.1rem, 3vw, 1.4rem)", color: "var(--ink-strong)", lineHeight: 1.3 }}>
-              More than a study app.<br />A complete ecosystem.
-            </p>
-          </div>
-
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 12 }}>
-            {([
-              {
-                href: "/ask",
-                icon: "🧠",
-                tag: "NEW",
-                title: "AI Tutor — 24/7",
-                desc: "Ask any BPSC doubt, get an instant answer. Static linkage, Bihar angle, MCQ verdict. No waiting, no judgment.",
-                accent: true,
-              },
-              {
-                href: "/partner",
-                icon: "🤝",
-                tag: "LIVE",
-                title: "Find Study Partner",
-                desc: "Don't grind alone. Connect with aspirants studying the same topics. WhatsApp, Telegram, or group chat.",
-                accent: false,
-              },
-              {
-                href: "/support",
-                icon: "💙",
-                tag: "",
-                title: "You're Not Alone",
-                desc: "A safe space for BPSC aspirants only. When the pressure gets heavy, say something. Someone will listen.",
-                accent: false,
-              },
-              {
-                href: "/leaderboard",
-                icon: "🏆",
-                tag: "WEEKLY",
-                title: "Leaderboard",
-                desc: "See where you rank among all aspirants. First-attempt scores only — pure merit, no retake cheating.",
-                accent: false,
-              },
-            ] as Array<{ href: string; icon: string; tag: string; title: string; desc: string; accent: boolean }>).map(f => (
-              <Link key={f.href} href={f.href} style={{ textDecoration: "none" }}>
-                <div style={{
-                  border: `1.5px solid ${f.accent ? "var(--accent-border)" : "var(--line)"}`,
-                  borderRadius: 18,
-                  background: f.accent ? "var(--accent-soft)" : "var(--card)",
-                  padding: "20px 16px",
-                  height: "100%", boxSizing: "border-box" as CSSProperties["boxSizing"],
-                }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }}>
-                    <span style={{ fontSize: 24 }}>{f.icon}</span>
-                    {f.tag && (
-                      <span style={{
-                        fontSize: 9, fontWeight: 700, letterSpacing: "0.12em",
-                        color: f.accent ? "var(--accent)" : "#16a34a",
-                        background: f.accent ? "rgba(192,96,16,0.1)" : "rgba(22,163,74,0.1)",
-                        border: `1px solid ${f.accent ? "rgba(192,96,16,0.2)" : "rgba(22,163,74,0.2)"}`,
-                        borderRadius: 20, padding: "2px 7px",
-                      }}>{f.tag}</span>
-                    )}
-                  </div>
-                  <p style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: 14, color: f.accent ? "var(--accent)" : "var(--ink-strong)", marginBottom: 6 }}>
-                    {f.title}
-                  </p>
-                  <p style={{ fontSize: 12, color: "var(--ink-soft)", lineHeight: 1.65 }}>
-                    {f.desc}
-                  </p>
-                </div>
-              </Link>
-            ))}
-          </div>
+      <section style={{ borderTop: "1px solid var(--line)", background: "var(--bg)", padding: "16px 16px" }}>
+        <div style={{ display: "flex", gap: 8, overflowX: "auto", scrollbarWidth: "none" }}>
+          {[
+            { href: "/ask",         label: "🧠 AI Tutor 24/7" },
+            { href: "/partner",     label: "🤝 Find Study Partner" },
+            { href: "/support",     label: "💙 Feeling Sad?" },
+            { href: "/leaderboard", label: "🏆 Leaderboard" },
+          ].map(f => (
+            <Link key={f.href} href={f.href} style={{
+              display: "inline-flex", alignItems: "center", whiteSpace: "nowrap",
+              background: "var(--card)", border: "1px solid var(--line)",
+              borderRadius: 20, padding: "7px 14px",
+              fontSize: 13, fontWeight: 600, color: "var(--ink-soft)",
+              textDecoration: "none", flexShrink: 0,
+            }}>
+              {f.label}
+            </Link>
+          ))}
         </div>
       </section>
 
