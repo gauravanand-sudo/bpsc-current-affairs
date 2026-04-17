@@ -20,13 +20,14 @@ export default function QuestionOfTheDay() {
   const [selected, setSelected] = useState<string | null>(null);
   const [revealed, setRevealed] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [dismissed, setDismissed] = useState(false);
 
   useEffect(() => {
     fetch("/api/qotd")
       .then(r => r.json())
       .then((data: QOTD) => {
         setQ(data);
-        // Restore today's answer if already attempted
+        // If already answered today, don't show at all
         try {
           const saved = localStorage.getItem(STORAGE_KEY);
           if (saved) {
@@ -34,6 +35,7 @@ export default function QuestionOfTheDay() {
             if (day === data.day) {
               setSelected(answer);
               setRevealed(true);
+              setDismissed(true);
             }
           }
         } catch { /* ignore */ }
@@ -50,6 +52,7 @@ export default function QuestionOfTheDay() {
     try {
       localStorage.setItem(STORAGE_KEY, JSON.stringify({ day: q?.day, answer: key }));
     } catch { /* ignore */ }
+    setTimeout(() => setDismissed(true), 1200);
   }
 
   if (loading) return (
@@ -58,11 +61,16 @@ export default function QuestionOfTheDay() {
     </div>
   );
 
-  if (!q) return null;
+  if (!q || dismissed) return null;
 
   const isCorrect = selected === q.correctKey;
 
   return (
+    <section style={{ borderTop: "1px solid var(--line)", background: "var(--panel)", padding: "48px 20px" }}>
+      <div style={{ maxWidth: 860, margin: "0 auto" }}>
+        <p style={{ fontFamily: "monospace", fontSize: 10, letterSpacing: "0.28em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 20, textAlign: "center" }}>
+          Daily Practice
+        </p>
     <div style={{
       border: "1.5px solid var(--accent-border)",
       borderRadius: 20, background: "var(--card)",
@@ -141,5 +149,7 @@ export default function QuestionOfTheDay() {
         </div>
       )}
     </div>
+      </div>
+    </section>
   );
 }

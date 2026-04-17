@@ -68,14 +68,7 @@ export default function HomePage() {
       </section>
 
       {/* ── QOTD ───────────────────────────────────────────────── */}
-      <section style={{ borderTop: "1px solid var(--line)", background: "var(--panel)", padding: "48px 20px" }}>
-        <div style={{ maxWidth: 860, margin: "0 auto" }}>
-          <p style={{ fontFamily: "monospace", fontSize: 10, letterSpacing: "0.28em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 20, textAlign: "center" }}>
-            Daily Practice
-          </p>
-          <QuestionOfTheDay />
-        </div>
-      </section>
+      <QuestionOfTheDay />
 
       {/* ── SETS ───────────────────────────────────────────────── */}
       <section style={{ borderTop: "1px solid var(--line)", background: "var(--panel)", padding: "56px 20px" }}>
