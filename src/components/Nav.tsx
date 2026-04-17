@@ -82,6 +82,7 @@ export default function Nav() {
           { href: "/", label: "Home" },
           { href: "/ca", label: "Study Sets" },
           { href: "/quizzes", label: "Quiz Sets" },
+          { href: "/pyq", label: "PYQ" },
         ].map(({ href, label }) => (
           <Link
             key={href}
