@@ -44,7 +44,8 @@ export default function Nav() {
     { href: "/", label: "Home", icon: "⌂" },
     { href: "/ca", label: "Study", icon: "📖" },
     { href: "/quizzes", label: "Quiz", icon: "🎯" },
-    { href: "/profile", label: "Profile", icon: "👤" },
+    { href: "/ask", label: "Ask AI", icon: "🧠" },
+    { href: "/leaderboard", label: "Rank", icon: "🏆" },
   ];
 
   const isActive = (href: string) =>
@@ -72,7 +73,7 @@ export default function Nav() {
 
         {/* Desktop nav links — hidden on mobile */}
         <div className="desktop-nav" style={{ display: "flex", alignItems: "center", gap: 4 }}>
-          {tabs.slice(0, 3).map(({ href, label }) => (
+          {tabs.slice(0, 5).map(({ href, label }) => (
             <Link key={href} href={href} style={{
               fontSize: 13, fontWeight: isActive(href) ? 700 : 600,
               color: isActive(href) ? "var(--accent)" : "var(--ink-soft)",
