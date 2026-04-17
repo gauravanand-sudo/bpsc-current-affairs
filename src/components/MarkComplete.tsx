@@ -38,34 +38,34 @@ export default function MarkComplete({ month, setName, cardId, categories }: Pro
   }
 
   return (
-    <div style={{ display: "inline-flex" }}>
-      <button
-        onClick={toggle}
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: 8,
-          padding: "10px 20px",
-          borderRadius: 50,
-          border: done ? "1.5px solid var(--accent)" : "1.5px solid rgba(120,80,30,0.2)",
-          background: done
-            ? flash ? "var(--accent)" : "var(--accent-soft)"
-            : "rgba(244,239,232,0.97)",
-          backdropFilter: "blur(8px)",
-          WebkitBackdropFilter: "blur(8px)",
-          color: done ? (flash ? "#fff" : "var(--accent)") : "var(--ink-soft)",
-          fontSize: 13,
-          fontWeight: 700,
-          cursor: "pointer",
-          fontFamily: "var(--font-display)",
-          letterSpacing: "0.03em",
-          boxShadow: "0 2px 12px rgba(120,80,30,0.12)",
-          transition: "all 0.15s",
-        }}
-      >
-        <span style={{ fontSize: 15 }}>{done ? "✓" : "○"}</span>
-        {done ? "Completed" : "Mark done"}
-      </button>
-    </div>
+    <button
+      onClick={toggle}
+      style={{
+        flex: 1,
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: 8,
+        padding: "12px 16px",
+        borderRadius: 14,
+        border: done
+          ? `1.5px solid ${flash ? "transparent" : "rgba(22,163,74,0.4)"}`
+          : "1.5px solid rgba(120,80,30,0.18)",
+        background: done
+          ? flash ? "#16a34a" : "rgba(22,163,74,0.1)"
+          : "var(--card)",
+        color: done ? (flash ? "#fff" : "#16a34a") : "var(--ink-soft)",
+        fontSize: 13,
+        fontWeight: 700,
+        cursor: "pointer",
+        fontFamily: "var(--font-display)",
+        letterSpacing: "0.02em",
+        transition: "all 0.15s",
+        boxShadow: done && !flash ? "0 0 0 0" : "none",
+      }}
+    >
+      <span style={{ fontSize: 16 }}>{done ? "✓" : "○"}</span>
+      {done ? "Done" : "Mark done"}
+    </button>
   );
 }

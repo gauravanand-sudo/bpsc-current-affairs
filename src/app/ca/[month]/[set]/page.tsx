@@ -341,24 +341,19 @@ export default async function CASetPage({
                   </p>
                 </div>
 
-                {/* Actions — sticky bottom of card */}
-                <div style={{
-                  position: "sticky", bottom: 0, zIndex: 10,
-                  display: "flex", justifyContent: "flex-end", gap: 8,
-                  padding: "10px 0 4px",
-                  background: "linear-gradient(to bottom, transparent, rgba(255,250,240,0.97) 40%)",
-                }}>
+                {/* Card actions */}
+                <div style={{ flexShrink: 0, display: "flex", gap: 8 }}>
+                  <MarkComplete
+                    month={month}
+                    setName={set}
+                    cardId={item.id}
+                    categories={item.categories}
+                  />
                   <BookmarkButton
                     month={month}
                     setName={set}
                     cardId={item.id}
                     title={item.title}
-                    categories={item.categories}
-                  />
-                  <MarkComplete
-                    month={month}
-                    setName={set}
-                    cardId={item.id}
                     categories={item.categories}
                   />
                 </div>

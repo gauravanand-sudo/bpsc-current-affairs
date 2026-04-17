@@ -1,6 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import Link from "next/link";
+import QuizSetCard from "@/components/QuizSetCard";
 
 const CAT: Record<string, { label: string; color: string }> = {
   polity:  { label: "Polity",      color: "#b86117" },
@@ -170,70 +171,13 @@ export default async function QuizzesPage() {
                     );
                   }
 
-                  const cats = (live.categories ?? []).slice(0, 4);
-
                   return (
-                    <div key={num} style={{
-                      border: "1px solid var(--line)",
-                      borderRadius: 20, padding: "18px 16px",
-                      background: "var(--card)",
-                      display: "flex", flexDirection: "column", gap: 12,
-                    }}>
-                      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                        <p style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: 16, color: "var(--ink-strong)" }}>
-                          Quiz {num}
-                        </p>
-                        <span style={{
-                          background: "rgba(22,163,74,0.1)", color: "#16a34a",
-                          border: "1px solid rgba(22,163,74,0.25)",
-                          borderRadius: 20, padding: "2px 9px", fontSize: 10, fontWeight: 700,
-                        }}>
-                          LIVE
-                        </span>
-                      </div>
-
-                      {cats.length > 0 && (
-                        <div style={{ display: "flex", flexWrap: "wrap", gap: 5 }}>
-                          {cats.map(cat => {
-                            const c = CAT[cat];
-                            return (
-                              <span key={cat} style={{
-                                background: `${c?.color}14`, color: c?.color,
-                                border: `1px solid ${c?.color}33`,
-                                borderRadius: 20, padding: "2px 8px",
-                                fontSize: 9, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase",
-                              }}>
-                                {c?.label ?? cat}
-                              </span>
-                            );
-                          })}
-                        </div>
-                      )}
-
-                      <div style={{ display: "flex", flexDirection: "column", gap: 7, marginTop: "auto" }}>
-                        {live.english && (
-                          <Link href={`/ca/${month}/set-${num}-english/quiz`} style={{
-                            display: "flex", alignItems: "center", justifyContent: "space-between",
-                            background: "linear-gradient(135deg, rgba(192,96,16,0.08), rgba(217,119,6,0.06))",
-                            border: "1px solid rgba(192,96,16,0.2)",
-                            borderRadius: 10, padding: "10px 14px", textDecoration: "none",
-                          }}>
-                            <span style={{ fontSize: 13, fontWeight: 700, color: "var(--ink-strong)" }}>
-                              Start Quiz →
-                            </span>
-                            <span style={{ fontSize: 12, color: "var(--accent)", fontWeight: 700 }}>30 min</span>
-                          </Link>
-                        )}
-
-                        {/* Study first nudge */}
-                        <Link href={`/ca/${month}/set-${num}-english`} style={{
-                          fontSize: 11, color: "var(--muted)", textDecoration: "none",
-                          textAlign: "center", letterSpacing: "0.04em",
-                        }}>
-                          📖 Study the set first →
-                        </Link>
-                      </div>
-                    </div>
+                    <QuizSetCard
+                      key={num}
+                      month={month}
+                      num={num}
+                      cats={live.categories ?? []}
+                    />
                   );
                 })}
               </div>

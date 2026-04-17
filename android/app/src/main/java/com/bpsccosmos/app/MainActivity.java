@@ -1,4 +1,4 @@
-package app.vercel.bpsc365.capacitor;
+package com.bpsccosmos.app;
 
 import com.getcapacitor.BridgeActivity;
 

@@ -1,7 +1,7 @@
 <?xml version='1.0' encoding='utf-8'?>
 <resources>
-    <string name="app_name">BPSC 365</string>
-    <string name="title_activity_main">BPSC 365</string>
-    <string name="package_name">app.vercel.bpsc365.capacitor</string>
-    <string name="custom_url_scheme">app.vercel.bpsc365.capacitor</string>
+    <string name="app_name">BPSC Cosmos</string>
+    <string name="title_activity_main">BPSC Cosmos</string>
+    <string name="package_name">com.bpsccosmos.app</string>
+    <string name="custom_url_scheme">com.bpsccosmos.app</string>
 </resources>

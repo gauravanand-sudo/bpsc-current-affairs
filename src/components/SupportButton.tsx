@@ -22,9 +22,10 @@ export default function SupportButton() {
       });
   }, []);
 
-  // Hide all floating buttons on pages that have a bottom input bar
+  // Hide on pages with bottom input bars or quiz (dark exam mode)
   const pagesWithBottomInput = ["/support", "/partner", "/ask"];
   if (pagesWithBottomInput.includes(pathname)) return null;
+  if (pathname.endsWith("/quiz")) return null;
 
   const hidePartner = false;
   const hideSupport = false;
