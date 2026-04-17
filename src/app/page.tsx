@@ -16,116 +16,54 @@ export default function HomePage() {
   return (
     <main style={{ color: "var(--ink)" }}>
 
-      {/* ── QUOTES ─────────────────────────────────────────────── */}
-      <section style={{ background: "#0c1220", padding: "32px 20px 28px" }}>
-        <div style={{
-          maxWidth: 820, margin: "0 auto",
-          display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))",
-          gap: 24,
-        }}>
-          <div style={{ borderLeft: "2px solid rgba(251,191,36,0.35)", paddingLeft: 16 }}>
-            <p style={{ fontFamily: "var(--font-display)", fontSize: "clamp(13px,1.6vw,14.5px)", fontWeight: 500, color: "rgba(254,243,199,0.9)", lineHeight: 2, fontStyle: "italic", marginBottom: 10 }}>
-              &ldquo;समर शेष है, नहीं पाप का भागी केवल व्याध,<br />
-              जो तटस्थ हैं, समय लिखेगा उनके भी अपराध।&rdquo;
-            </p>
-            <p style={{ fontSize: 11, fontWeight: 700, color: "#fbbf24", letterSpacing: "0.04em" }}>Ramdhari Singh &lsquo;Dinkar&rsquo;</p>
-            <p style={{ fontSize: 10, color: "rgba(255,255,255,0.22)", marginTop: 2 }}>Rashtrakavi · Begusarai, Bihar</p>
-          </div>
-          <div style={{ borderLeft: "2px solid rgba(192,96,16,0.4)", paddingLeft: 16 }}>
-            <p style={{ fontFamily: "var(--font-display)", fontSize: "clamp(13px,1.6vw,14.5px)", fontWeight: 500, color: "rgba(254,215,170,0.9)", lineHeight: 2, fontStyle: "italic", marginBottom: 10 }}>
-              &ldquo;जे जन बिदेस गइले, ओहसे पूछा जाय —<br />
-              अपने मिट्टी के लगन से, बड़ा कुछ नाहीं।&rdquo;
-            </p>
-            <p style={{ fontSize: 11, fontWeight: 700, color: "#fb923c", letterSpacing: "0.04em" }}>Bhikari Thakur</p>
-            <p style={{ fontSize: 10, color: "rgba(255,255,255,0.22)", marginTop: 2 }}>Shakespeare of Bhojpuri · Saran, Bihar</p>
-          </div>
+      {/* ── QUOTE ──────────────────────────────────────────────── */}
+      <section style={{ background: "#0c1220", padding: "28px 24px" }}>
+        <div style={{ maxWidth: 620, margin: "0 auto", borderLeft: "2px solid rgba(251,191,36,0.35)", paddingLeft: 16 }}>
+          <p style={{ fontFamily: "var(--font-display)", fontSize: "clamp(13px,1.6vw,15px)", fontWeight: 500, color: "rgba(254,243,199,0.88)", lineHeight: 1.9, fontStyle: "italic", marginBottom: 8 }}>
+            &ldquo;समर शेष है, नहीं पाप का भागी केवल व्याध,<br />
+            जो तटस्थ हैं, समय लिखेगा उनके भी अपराध।&rdquo;
+          </p>
+          <p style={{ fontSize: 11, fontWeight: 700, color: "#fbbf24" }}>Ramdhari Singh &lsquo;Dinkar&rsquo; &nbsp;·&nbsp; <span style={{ fontWeight: 400, color: "rgba(255,255,255,0.3)" }}>Rashtrakavi · Begusarai, Bihar</span></p>
         </div>
       </section>
 
       {/* ── HERO ───────────────────────────────────────────────── */}
-      <section className="bpsc-hero" style={{ padding: "72px 20px 64px", textAlign: "center" }}>
-
-        <div style={{
-          display: "inline-flex", alignItems: "center", gap: 7,
-          background: "rgba(22,163,74,0.08)", border: "1px solid rgba(22,163,74,0.2)",
-          borderRadius: 20, padding: "5px 14px", marginBottom: 28,
-        }}>
-          <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#16a34a", display: "inline-block", boxShadow: "0 0 0 3px rgba(22,163,74,0.2)" }} />
-          <span style={{ fontSize: 11, fontWeight: 700, color: "#16a34a", letterSpacing: "0.1em", textTransform: "uppercase" }}>
-            5 lakh+ 72nd BPSC aspirants
-          </span>
-        </div>
+      <section className="bpsc-hero" style={{ padding: "60px 20px 56px", textAlign: "center" }}>
 
         <h1 style={{
           fontFamily: "var(--font-display)", fontWeight: 700,
-          fontSize: "clamp(2rem, 6vw, 3.6rem)",
-          lineHeight: 1.1, letterSpacing: "-0.03em",
+          fontSize: "clamp(2.1rem, 6.5vw, 3.8rem)",
+          lineHeight: 1.08, letterSpacing: "-0.03em",
           color: "var(--ink-strong)",
-          maxWidth: 680, margin: "0 auto 18px",
+          maxWidth: 700, margin: "0 auto 10px",
         }}>
-          72nd BPSC Prelims —<br />
-          <span style={{ color: "var(--accent)" }}>Every topic. One place. Free.</span>
+          72nd BPSC Prelims
         </h1>
-
-        <p style={{ fontSize: "clamp(13px,1.8vw,16px)", lineHeight: 1.9, color: "var(--ink-soft)", maxWidth: 480, margin: "0 auto 8px" }}>
-          Exhaustive CA + Static + Bihar Angle — every card.<br />
-          <span style={{ fontStyle: "italic" }}>Research lab trained on 15 years of BPSC Prelims.</span>
-        </p>
-
-        <p style={{ fontSize: 11, color: "var(--muted)", letterSpacing: "0.06em", marginBottom: 40 }}>
-          NO SIGNUP &nbsp;·&nbsp; ALWAYS ₹0
-        </p>
-
-        {/* CTA */}
-        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 12, marginBottom: 52 }}>
-          <Link href="/ca" style={{
-            background: "linear-gradient(135deg, #b86117, #d97706)",
-            color: "#fff", borderRadius: 14, padding: "15px 44px",
-            fontSize: 16, fontWeight: 700, fontFamily: "var(--font-display)",
-            boxShadow: "0 8px 28px rgba(192,96,16,0.32)",
-            display: "inline-block", textDecoration: "none",
-            letterSpacing: "0.01em",
-          }}>
-            Start Studying Free →
-          </Link>
-          <div style={{ display: "flex", gap: 8, flexWrap: "wrap", justifyContent: "center" }}>
-            <Link href="/quizzes" style={{
-              border: "1.5px solid var(--accent)", background: "transparent",
-              color: "var(--accent)", borderRadius: 9, padding: "8px 16px",
-              fontSize: 12, fontWeight: 700, textDecoration: "none", letterSpacing: "0.02em",
-            }}>Quiz Sets →</Link>
-            <Link href="/profile" style={{
-              border: "1.5px solid var(--line-hi)", background: "rgba(255,253,248,0.7)",
-              color: "var(--ink-soft)", borderRadius: 9, padding: "8px 16px",
-              fontSize: 12, fontWeight: 600, textDecoration: "none",
-            }}>Track Progress</Link>
-          </div>
-        </div>
-
-        {/* Stats bar */}
-        <div style={{
-          display: "inline-grid",
-          gridTemplateColumns: "repeat(4, auto)",
-          border: "1px solid var(--line-hi)", borderRadius: 16,
-          overflow: "hidden",
-          background: "rgba(255,253,248,0.95)",
-          boxShadow: "0 2px 20px rgba(120,80,30,0.07)",
+        <h2 style={{
+          fontFamily: "var(--font-display)", fontWeight: 700,
+          fontSize: "clamp(1.5rem, 4.5vw, 2.6rem)",
+          lineHeight: 1.1, letterSpacing: "-0.02em",
+          color: "var(--accent)",
+          maxWidth: 700, margin: "0 auto 28px",
         }}>
-          {[
-            { n: "15", sub: "Months" },
-            { n: "225+", sub: "Study Sets" },
-            { n: "225+", sub: "Quiz Sets" },
-            { n: "₹0", sub: "Forever" },
-          ].map(({ n, sub }, i) => (
-            <div key={sub} style={{
-              padding: "14px 22px", textAlign: "center",
-              borderLeft: i > 0 ? "1px solid var(--line)" : "none",
-            }}>
-              <p className="stat-shimmer" style={{ fontFamily: "var(--font-display)", fontSize: 20, fontWeight: 700, lineHeight: 1, marginBottom: 4 }}>{n}</p>
-              <p style={{ fontSize: 9, color: "var(--muted)", letterSpacing: "0.1em", textTransform: "uppercase" }}>{sub}</p>
-            </div>
-          ))}
-        </div>
+          Every topic. One place. Free.
+        </h2>
+
+        <Link href="/ca" style={{
+          background: "linear-gradient(135deg, #b86117, #d97706)",
+          color: "#fff", borderRadius: 14, padding: "16px 52px",
+          fontSize: 17, fontWeight: 700, fontFamily: "var(--font-display)",
+          boxShadow: "0 8px 32px rgba(192,96,16,0.35)",
+          display: "inline-block", textDecoration: "none",
+          letterSpacing: "0.01em",
+        }}>
+          Start Studying Free →
+        </Link>
+
+        <p style={{ fontSize: 11, color: "var(--muted)", letterSpacing: "0.06em", marginTop: 14 }}>
+          No signup &nbsp;·&nbsp; Always ₹0 &nbsp;·&nbsp; Research lab trained
+        </p>
+
       </section>
 
       {/* ── SETS ───────────────────────────────────────────────── */}
