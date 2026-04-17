@@ -52,7 +52,7 @@ button { font-family: inherit; }
 
 /* ── Scroll-snap feed ─────────────────────────────────────── */
 .feed-shell {
-  height: calc(100vh - 52px);
+  height: calc(100vh - 52px - 60px);
   overflow-y: auto;
   scroll-snap-type: y mandatory;
   -webkit-overflow-scrolling: touch;
@@ -60,14 +60,22 @@ button { font-family: inherit; }
 }
 .feed-shell::-webkit-scrollbar { display: none; }
 
+@media (min-width: 640px) {
+  .feed-shell { height: calc(100vh - 52px); }
+}
+
 .feed-slide {
-  min-height: calc(100vh - 52px);
+  min-height: calc(100vh - 52px - 60px);
   scroll-snap-align: start;
   scroll-snap-stop: always;
   display: flex;
   align-items: stretch;
   justify-content: center;
   padding: 12px;
+}
+
+@media (min-width: 640px) {
+  .feed-slide { min-height: calc(100vh - 52px); }
 }
 
 .card-frame {
