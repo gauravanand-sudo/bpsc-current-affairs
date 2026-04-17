@@ -1,0 +1,1316 @@
+{
+  "generatedAt": "2026-04-17T07:59:06.445Z",
+  "scope": "PIB + web news + revision coverage",
+  "requestedDate": "2026-04-17",
+  "dailyDeckTarget": 30,
+  "storage": {
+    "latest": "data/daily-deck.json",
+    "archiveDir": "data/decks"
+  },
+  "sources": [
+    {
+      "id": "pib-all",
+      "label": "PIB All Releases",
+      "family": "official",
+      "category": "Mixed",
+      "url": "https://www.pib.gov.in/allrelease.aspx?lang=1&reg=3",
+      "status": "ok",
+      "itemCount": 8,
+      "items": [
+        {
+          "id": "pib-all-1",
+          "title": "Vice-President pays tributes to former Prime Minister Chandra Shekhar on his 99th Birth Anniversary",
+          "link": "https://www.pib.gov.in/PressReleseDetail.aspx?PRID=2252857",
+          "ministry": "Vice President's Secretariat",
+          "category": "Polity",
+          "source": "PIB All Releases",
+          "listingDate": "17 Apr 2026",
+          "requestedDate": "2026-04-17",
+          "scrapedAt": "2026-04-17T07:59:07.321Z",
+          "postedOn": "17 APR 2026 11:47AM by PIB Delhi",
+          "summary": [
+            "The Vice-President of India, Shri C. P. Radhakrishnan, paid tributes to former Prime Minister Chandra Shekhar ji on the occasion of his 99th birth anniversary at Jannayak Sthal, New Delhi today.",
+            "The Vice-President attended the prayer meeting organised on the occasion and offered floral tributes at the Samadhi of the late leader.",
+            "Remembering Shri Chandra Shekhar, the Vice-President described him as a visionary leader, a fearless parliamentarian, and a steadfast champion of democratic values. He noted that Shri Chandra Shekhar stood for integrity in public life and remained deeply committed to the ideals of social justice and national unity."
+          ],
+          "fullSummary": [
+            "The Vice-President of India, Shri C. P. Radhakrishnan, paid tributes to former Prime Minister Chandra Shekhar ji on the occasion of his 99th birth anniversary at Jannayak Sthal, New Delhi today.",
+            "The Vice-President attended the prayer meeting organised on the occasion and offered floral tributes at the Samadhi of the late leader.",
+            "Remembering Shri Chandra Shekhar, the Vice-President described him as a visionary leader, a fearless parliamentarian, and a steadfast champion of democratic values. He noted that Shri Chandra Shekhar stood for integrity in public life and remained deeply committed to the ideals of social justice and national unity.",
+            "Highlighting the significance of the occasion, the Vice-President said that as the nation marks the beginning of his centenary year, it is an opportunity to renew collective resolve to uphold the principles he cherished - courage, simplicity, and an unyielding commitment to the nation’s welfare.",
+            "He expressed hope that the legacy of Shri Chandra Shekhar would continue to inspire generations to serve the nation with honesty and conviction."
+          ]
+        },
+        {
+          "id": "pib-all-2",
+          "title": "Text of PM’s remarks in the Rajya Sabha",
+          "link": "https://www.pib.gov.in/PressReleseDetail.aspx?PRID=2252896",
+          "ministry": "Prime Minister's Office",
+          "category": "Polity",
+          "source": "PIB All Releases",
+          "listingDate": "17 Apr 2026",
+          "requestedDate": "2026-04-17",
+          "scrapedAt": "2026-04-17T07:59:07.322Z",
+          "postedOn": "17 APR 2026 1:13PM by PIB Delhi",
+          "summary": [
+            "हरिवंश जी का जन्म यूपी के गांव में हुआ और सहज रूप से ग्रामीण पृष्ठभूमि के कारण उन्हें अपने गांव के विकास में विद्यार्थी काल से भी कुछ ना कुछ करते रहे। उनकी शिक्षा-दीक्षा काशी में हुई और इन सारे विषयों पर मुझे भूतकाल में बोलने का अवसर मिला, तो मैं काफी कुछ कह चुका हूं। इसलिए मैं आज इसको दोहराता नहीं हूं। एक बात का उल्लेख आज जरूर मैं करूंगा, आज 17 अप्रैल है और 17 अप्रैल 1927, हमारे पूर्व प्रधानमंत्री चंद्रशेखर जी की जन्म जयंती भी है और विशेषता यह है कि आज 17 अप्रैल को आप जब तीसरी बार इस दायित्व को संभालने जा रहे हैं और वह भी चंद्रशेखर जी की जन्म जयंती पर और चंद्रशेखर जी के साथ आपका जुड़ाव, उनके प्रति आपका लगाव और एक प्रकार से आप उनके सहयात्री रहे, उनके पूरे कार्यकाल में, तो यह एक अपने आप में एक बहुत ही बड़ा सुयोग है। अपने चंद्रशेखर जी के जीवन पर किताबें भी लिखी हैं और चंद्रशेखर जी के एक वृहद जीवन को नई पीढ़ी तक पहुंचाने का एक बहुत बड़ा काम भी आपने किया है और इसलिए आपके लिए एक बहुत बड़ा विशेष अवसर बन जाता है कि चंद्रशेखर जी की जन्म जयंती पर आपके तीसरा कार्यकाल का प्रारंभ हो रहा है। हरिवंश जी का सार्वजनिक जीवन केवल संसदीय कामों तक सीमित नहीं रहा है। पत्रकारिता के उच्च मानदंड, यह आज भी आदर्श के रूप में रेखांकित किए जाते हैं। लंबा जीवन पत्रकारिता का रहा है, लेकिन पत्रकारिता में भी उन्होंने उच्च मानदंड को हमेशा आधार माना। हम सब जानते हैं, उनके लेखनी में धार है, लेकिन उनकी वाणी में और व्यवहार में सौम्‍यता और शिष्‍टता भरी-भरी रहती है, यह अपने आप में और मैं जब गुजरात में था, तब भी मैं उनकी लेखों को पढ़ने की मेरी आदत रही थी और मैं देखता था कि वह अपना पक्ष बड़ी दृढ़ता के साथ रखते थे और मैं अनुभव करता था कि उसमें काफी अध्ययन के बाद उसका निचोड़ उसमें प्रकट होता था। पत्रकारिता में भी अंतिम व्यक्ति तक पहुंचाने का उनका निरंतर प्रयास रहा और एक सफल प्रयास भी रहा और हम देखते हैं, सदन में भी चाहे पॉलिसी हो या प्रोसेस हो, उन बातों का कहीं ना कहीं छाया हमें हमेशा नजर आती है और यह हम सबके लिए सुखद अनुभव है। वह समाज की वास्तविकताओं के साथ गहरे जुड़ाव के साथ काम करने वाले व्यक्ति रहे हैं। मैं तो कहूंगा, जो चाहे लोकसभा हो या राज्यसभा हो, जो नए सांसद आते हैं, जो हरिवंश जी से बहुत कुछ सीख सकते हैं, बहुत कुछ बातें करके उनसे जान सकते हैं, क्योंकि जब वह पत्रकारिता में थे, तो उनकी कॉलम चलती थी, हमारा सांसद कैसा हो, हमारा पार्लियामेंट मेंबर कैसा हो, तब उनको शायद पता नहीं होगा, कभी उनको ही बैठना पड़ेगा। लेकिन वह लिखते थे और वह बातों में बहुत व्यापकता रहती थी। सदन की गरिमा और बैठने वाले सदस्य का दायित्व, अब उसके आचार विचार को लेकर भी बहुत गहरा उनका अध्ययन रहता था और उन बातों का उपयोग आज हमारे सदन के साथी, उनके साथ बैठकर के बहुत कुछ जान सकते हैं, सीख सकते हैं। समय की पाबंदी एक डिसिप्लिन लाइफ में और अपने कर्तव्‍यों के प्रति गंभीरता, यह आपकी विशेषता रही है और शायद इसी के कारण आप सर्व स्वीकृत व्‍यक्‍तित्‍व आपका विकसित हुआ है। हमने देखा होगा जब से वह राज्यसभा के सदस्य बने हैं, मैं कह सकता हूं कि पूर्ण समय वह सदन में होते हैं। सभापति जी की अनुपस्थिति में सदन को संभालने का काम तो करते ही हैं, लेकिन बाकी समय भी यहां कमेटी का कोई भी व्यक्ति बैठा हो, तो भी वह सदन में हमेशा अपनी मौजूदगी रहती है। हर बात को सुनते हैं, उस समय सदन का जो संचालन करते हैं, उनके कार्य को भी देखते हैं और यह इसके पीछे उनको अपना जो दायित्व है, उसके प्रति उनकी जो प्रतिबद्धता है, उसके कारण यह संभव होता है और यह हम सबके लिए सीखने जैसा है और मैंने देखा है कि वह पूरा समय इन चीजों के लिए वह खपा देते हैं।",
+            "उपसभापति के तौर पर सदन को कैसे चलाया, सदन में सदस्य के तौर पर क्या योगदान दिया, इस बारे में हम स्वाभाविक रूप से एक सकारात्मक चर्चा करते रहते हैं। लेकिन सदन के बाहर, जनता के बीच वह कैसे अपने लोकतांत्रिक और सामाजिक दायित्‍वों को निभाते हैं, यह भी हम सार्वजनिक जीवन में जो लोग हैं, उनके लिए सचमुच में ध्यान आकर्षित करने वाले विषय हैं और हमें उसको देखना चाहिए। मैं अपने अनुभव से कह सकता हूं कि काम सराहनीय तो है ही हैं, अनुकरणीय भी हैं। हमारा देश युवा देश है और मैंने देखा है कि हरिवंश जी ने अपने समय का उपयोग सबसे ज्यादा युवाओं के बीच में बिताना पसंद किया है। युवाओं में लगातार गंभीर विषयों पर जागरूकता बने, एक प्रकार से लोक शिक्षा का काम निरंतर चलता रहे, यह अपने आप में वह लगातार करते रहते हैं, तो देश भर में उनका भ्रमण रहता है। वह मीडिया की नजरों में बहुत ज्यादा रहने का उनका शौक नहीं है, लेकिन भ्रमण और कार्यक्रमों की संख्या उनकी लगातार चलती रहती है। 2018 में, जब उन्होंने राज्यसभा के उपसभापति की भूमिका निभानी शुरू की, उसके बाद जो मेरी जानकारी है, कॉलेजेस और यूनिवर्सिटीज में 350 कार्यक्रम किए हैं। यह एक बहुत बड़ा काम है। देश की यूनिवर्सिटीज और कॉलेजेस में 350 से अधिक कार्यक्रम, जाना-आना, उनके साथ बैठना, बातें करना, उसके लिए विषयों की तैयारी करना, यह अपने आप में बहुत बड़ा, एक प्रकार से आपने बृहतस्य के रूप में इस काम को किया है और युवाओं से ही जुड़ने के लक्ष्य को आपने जरा भी ओझल नहीं होने दिया है। और विकसित भारत का सपना युवाओं के लिए भी क्यों होना चाहिए, इस मूल विषय को अलग-अलग तरीके से जिस प्रकार से विद्यार्थियों का मूड हों, वह बताते रहते हैं। विद्यार्थियों में, युवा पीढ़ी में एक आत्मविश्वास कैसे पैदा हो, निराशा से वह हमेशा-हमेशा बाहर रहें, इन सारे विषयों की चर्चा वह करते हैं। उनके कुछ ऐतिहासिक रेफरेंस के साथ बात करते हैं कि हम ऐसे क्या कारण हैं कि हम जितनी तेजी से जाना चाहिए था, आगे नहीं जा पाए, अब अवसर क्या आया है, सारी बातें हो और देश इतनी बड़ी छलांग लगा सकता है, उसका आत्मविश्वास भरने का काम उनके द्वारा होता है। आजकल देश में लिटरेचर फेस्टिवल, एक बड़ा सिलसिला चला है और अब तो वह टीयर-2, टीयर-3 सिटीज़ तक भी वह सिलसिला चला है। लिटरेचर फेस्टिवल्स में भी हरिवंश जी का अक्सर जाना होता है और उस समाज का, उस तबके को भी वह अपने विचारों से प्रभावित करते रहते हैं, प्रेरित करते रहते हैं।",
+            "मैंने उनके जीवन का एक प्रसंग जो सुना है, शायद हो सकता है, सार्वजनिक तौर में मेरी जानकारी सटीक ना भी हो। मैंने सुना है कि 1994 में हरिवंश जी पहली बार विदेश यात्रा की और वह अमेरिका गए। जब अमेरिका गए, तो अपने सारे कार्यक्रमों के अलावा उनसे पूछा गया कि आप कहीं और जाना चाहते हैं, कुछ करना चाहते हैं। तो उन्होंने आग्रह से कहा कि मैं जरूर यह विकसित देश है, तो मैं उसकी यूनिवर्सिटी को देखना-समझना चाहता हूं और वहाँ की ऐसी कौन सी शिक्षा और कल्चर है, जिसके कारण यह देश इतना आगे बढ़ रहा है और उन्होंने काफी समय अपने निर्धारित कार्यक्रमों के सिवाय वह पहली अमेरिका की यात्रा में सिर्फ और सिर्फ यूनिवर्सिटीज में बिताया, उसका अध्ययन करने का काम किया। यानी यह जो ललक थी उनके मन में, यह अगर यह विकसित देश की यूनिवर्सिटी से जो निकलता है, तो हिंदुस्तान की यूनिवर्सिटीज़ भी ऐसी हों, ताकि विकसित भारत का सपना वहीं से रेखांकित किया जा सके।"
+          ],
+          "fullSummary": [
+            "हरिवंश जी का जन्म यूपी के गांव में हुआ और सहज रूप से ग्रामीण पृष्ठभूमि के कारण उन्हें अपने गांव के विकास में विद्यार्थी काल से भी कुछ ना कुछ करते रहे। उनकी शिक्षा-दीक्षा काशी में हुई और इन सारे विषयों पर मुझे भूतकाल में बोलने का अवसर मिला, तो मैं काफी कुछ कह चुका हूं। इसलिए मैं आज इसको दोहराता नहीं हूं। एक बात का उल्लेख आज जरूर मैं करूंगा, आज 17 अप्रैल है और 17 अप्रैल 1927, हमारे पूर्व प्रधानमंत्री चंद्रशेखर जी की जन्म जयंती भी है और विशेषता यह है कि आज 17 अप्रैल को आप जब तीसरी बार इस दायित्व को संभालने जा रहे हैं और वह भी चंद्रशेखर जी की जन्म जयंती पर और चंद्रशेखर जी के साथ आपका जुड़ाव, उनके प्रति आपका लगाव और एक प्रकार से आप उनके सहयात्री रहे, उनके पूरे कार्यकाल में, तो यह एक अपने आप में एक बहुत ही बड़ा सुयोग है। अपने चंद्रशेखर जी के जीवन पर किताबें भी लिखी हैं और चंद्रशेखर जी के एक वृहद जीवन को नई पीढ़ी तक पहुंचाने का एक बहुत बड़ा काम भी आपने किया है और इसलिए आपके लिए एक बहुत बड़ा विशेष अवसर बन जाता है कि चंद्रशेखर जी की जन्म जयंती पर आपके तीसरा कार्यकाल का प्रारंभ हो रहा है। हरिवंश जी का सार्वजनिक जीवन केवल संसदीय कामों तक सीमित नहीं रहा है। पत्रकारिता के उच्च मानदंड, यह आज भी आदर्श के रूप में रेखांकित किए जाते हैं। लंबा जीवन पत्रकारिता का रहा है, लेकिन पत्रकारिता में भी उन्होंने उच्च मानदंड को हमेशा आधार माना। हम सब जानते हैं, उनके लेखनी में धार है, लेकिन उनकी वाणी में और व्यवहार में सौम्‍यता और शिष्‍टता भरी-भरी रहती है, यह अपने आप में और मैं जब गुजरात में था, तब भी मैं उनकी लेखों को पढ़ने की मेरी आदत रही थी और मैं देखता था कि वह अपना पक्ष बड़ी दृढ़ता के साथ रखते थे और मैं अनुभव करता था कि उसमें काफी अध्ययन के बाद उसका निचोड़ उसमें प्रकट होता था। पत्रकारिता में भी अंतिम व्यक्ति तक पहुंचाने का उनका निरंतर प्रयास रहा और एक सफल प्रयास भी रहा और हम देखते हैं, सदन में भी चाहे पॉलिसी हो या प्रोसेस हो, उन बातों का कहीं ना कहीं छाया हमें हमेशा नजर आती है और यह हम सबके लिए सुखद अनुभव है। वह समाज की वास्तविकताओं के साथ गहरे जुड़ाव के साथ काम करने वाले व्यक्ति रहे हैं। मैं तो कहूंगा, जो चाहे लोकसभा हो या राज्यसभा हो, जो नए सांसद आते हैं, जो हरिवंश जी से बहुत कुछ सीख सकते हैं, बहुत कुछ बातें करके उनसे जान सकते हैं, क्योंकि जब वह पत्रकारिता में थे, तो उनकी कॉलम चलती थी, हमारा सांसद कैसा हो, हमारा पार्लियामेंट मेंबर कैसा हो, तब उनको शायद पता नहीं होगा, कभी उनको ही बैठना पड़ेगा। लेकिन वह लिखते थे और वह बातों में बहुत व्यापकता रहती थी। सदन की गरिमा और बैठने वाले सदस्य का दायित्व, अब उसके आचार विचार को लेकर भी बहुत गहरा उनका अध्ययन रहता था और उन बातों का उपयोग आज हमारे सदन के साथी, उनके साथ बैठकर के बहुत कुछ जान सकते हैं, सीख सकते हैं। समय की पाबंदी एक डिसिप्लिन लाइफ में और अपने कर्तव्‍यों के प्रति गंभीरता, यह आपकी विशेषता रही है और शायद इसी के कारण आप सर्व स्वीकृत व्‍यक्‍तित्‍व आपका विकसित हुआ है। हमने देखा होगा जब से वह राज्यसभा के सदस्य बने हैं, मैं कह सकता हूं कि पूर्ण समय वह सदन में होते हैं। सभापति जी की अनुपस्थिति में सदन को संभालने का काम तो करते ही हैं, लेकिन बाकी समय भी यहां कमेटी का कोई भी व्यक्ति बैठा हो, तो भी वह सदन में हमेशा अपनी मौजूदगी रहती है। हर बात को सुनते हैं, उस समय सदन का जो संचालन करते हैं, उनके कार्य को भी देखते हैं और यह इसके पीछे उनको अपना जो दायित्व है, उसके प्रति उनकी जो प्रतिबद्धता है, उसके कारण यह संभव होता है और यह हम सबके लिए सीखने जैसा है और मैंने देखा है कि वह पूरा समय इन चीजों के लिए वह खपा देते हैं।",
+            "उपसभापति के तौर पर सदन को कैसे चलाया, सदन में सदस्य के तौर पर क्या योगदान दिया, इस बारे में हम स्वाभाविक रूप से एक सकारात्मक चर्चा करते रहते हैं। लेकिन सदन के बाहर, जनता के बीच वह कैसे अपने लोकतांत्रिक और सामाजिक दायित्‍वों को निभाते हैं, यह भी हम सार्वजनिक जीवन में जो लोग हैं, उनके लिए सचमुच में ध्यान आकर्षित करने वाले विषय हैं और हमें उसको देखना चाहिए। मैं अपने अनुभव से कह सकता हूं कि काम सराहनीय तो है ही हैं, अनुकरणीय भी हैं। हमारा देश युवा देश है और मैंने देखा है कि हरिवंश जी ने अपने समय का उपयोग सबसे ज्यादा युवाओं के बीच में बिताना पसंद किया है। युवाओं में लगातार गंभीर विषयों पर जागरूकता बने, एक प्रकार से लोक शिक्षा का काम निरंतर चलता रहे, यह अपने आप में वह लगातार करते रहते हैं, तो देश भर में उनका भ्रमण रहता है। वह मीडिया की नजरों में बहुत ज्यादा रहने का उनका शौक नहीं है, लेकिन भ्रमण और कार्यक्रमों की संख्या उनकी लगातार चलती रहती है। 2018 में, जब उन्होंने राज्यसभा के उपसभापति की भूमिका निभानी शुरू की, उसके बाद जो मेरी जानकारी है, कॉलेजेस और यूनिवर्सिटीज में 350 कार्यक्रम किए हैं। यह एक बहुत बड़ा काम है। देश की यूनिवर्सिटीज और कॉलेजेस में 350 से अधिक कार्यक्रम, जाना-आना, उनके साथ बैठना, बातें करना, उसके लिए विषयों की तैयारी करना, यह अपने आप में बहुत बड़ा, एक प्रकार से आपने बृहतस्य के रूप में इस काम को किया है और युवाओं से ही जुड़ने के लक्ष्य को आपने जरा भी ओझल नहीं होने दिया है। और विकसित भारत का सपना युवाओं के लिए भी क्यों होना चाहिए, इस मूल विषय को अलग-अलग तरीके से जिस प्रकार से विद्यार्थियों का मूड हों, वह बताते रहते हैं। विद्यार्थियों में, युवा पीढ़ी में एक आत्मविश्वास कैसे पैदा हो, निराशा से वह हमेशा-हमेशा बाहर रहें, इन सारे विषयों की चर्चा वह करते हैं। उनके कुछ ऐतिहासिक रेफरेंस के साथ बात करते हैं कि हम ऐसे क्या कारण हैं कि हम जितनी तेजी से जाना चाहिए था, आगे नहीं जा पाए, अब अवसर क्या आया है, सारी बातें हो और देश इतनी बड़ी छलांग लगा सकता है, उसका आत्मविश्वास भरने का काम उनके द्वारा होता है। आजकल देश में लिटरेचर फेस्टिवल, एक बड़ा सिलसिला चला है और अब तो वह टीयर-2, टीयर-3 सिटीज़ तक भी वह सिलसिला चला है। लिटरेचर फेस्टिवल्स में भी हरिवंश जी का अक्सर जाना होता है और उस समाज का, उस तबके को भी वह अपने विचारों से प्रभावित करते रहते हैं, प्रेरित करते रहते हैं।",
+            "मैंने उनके जीवन का एक प्रसंग जो सुना है, शायद हो सकता है, सार्वजनिक तौर में मेरी जानकारी सटीक ना भी हो। मैंने सुना है कि 1994 में हरिवंश जी पहली बार विदेश यात्रा की और वह अमेरिका गए। जब अमेरिका गए, तो अपने सारे कार्यक्रमों के अलावा उनसे पूछा गया कि आप कहीं और जाना चाहते हैं, कुछ करना चाहते हैं। तो उन्होंने आग्रह से कहा कि मैं जरूर यह विकसित देश है, तो मैं उसकी यूनिवर्सिटी को देखना-समझना चाहता हूं और वहाँ की ऐसी कौन सी शिक्षा और कल्चर है, जिसके कारण यह देश इतना आगे बढ़ रहा है और उन्होंने काफी समय अपने निर्धारित कार्यक्रमों के सिवाय वह पहली अमेरिका की यात्रा में सिर्फ और सिर्फ यूनिवर्सिटीज में बिताया, उसका अध्ययन करने का काम किया। यानी यह जो ललक थी उनके मन में, यह अगर यह विकसित देश की यूनिवर्सिटी से जो निकलता है, तो हिंदुस्तान की यूनिवर्सिटीज़ भी ऐसी हों, ताकि विकसित भारत का सपना वहीं से रेखांकित किया जा सके।",
+            "MPs को MPLAD फंड के संबंध में तो काफी चर्चा रहती है और एक बड़ा प्रसंगी का विषय भी रहता है MPs में और कभी-कभी तो यह भी संघर्ष रहता है कि MPLAD फंड इतना है और वहां उधर एमएलए फंड ज्यादा है, उसकी चर्चा रहती है। लेकिन एमपी फंड का उपयोग कैसे हो, MPLAD जो फंड की बातें हैं, उसमें हरिवंश जी के विचारों को तो मैंने स्वयं भी सुना है, मैं प्रभावित हूं इससे, लेकिन हमारी भी कुछ मजबूरी रही है। शायद हम उनकी अपेक्षा के अनुसार उसको कर नहीं पाए हैं, क्योंकि सबको ऐसे विषय में साथ लेना जरा कठिन होता है। लेकिन उन्होंने खुद की उस जिम्मेदारी को कैसे निभाया है, मैं समझता हूं वह भी हम लोगों ने, उन्होंने यह MPLAD फंड था, जो अपने जो विचार हैं, उसके विचार को भी नीचे धरातल पर उतारने के लिए उपयोग किया, शिक्षा क्षेत्र और युवा पीढ़ी, यह उसके सारे केंद्र में रहा, MPLAD फंड उन्होंने इस्तेमाल करने के लिए एक मिसाल पेश की है। उन्होंने विश्वविद्यालय, शिक्षण संस्थानों में ऐसे अध्ययन केंद्र स्थापित किया और उसका प्रभाव लंबे अरसे तक रहने वाला है और उसमें भी उन्होंने प्रोजेक्ट ओरिएंटेड, समस्या के समाधान को केंद्र में रखा। जैसे लुप्त होती जा रही भारतीय भाषाओं, उनके संरक्षण के लिए उन्होंने आईआईटी पटना में एक अध्ययन केंद्र के लिए MPLAD फंड का उपयोग किया, तो उस काम को वह लगातार वहां हो रहा है। एक और उन्होंने काम किया, जो बिहार में कुछ क्षेत्र हैं, जहां भयावह भूकंप की घटनाएं रोज घटती रहती हैं, नेपाल में भी एक छोटा सा भूकंप आ जाए, तो भी उस क्षेत्र का प्रभावित करता है। इस काम को ध्यान में रखते हुए उन्होंने MPLAD फंड से सेंटर फॉर अर्थक्वेक इंजीनियरिंग के रूप में एक स्टडी सेंटर रिसर्च के लिए खुलवाया है। यानी वह स्टडी का काम करना, रिसर्च करना, उस पर लगातार काम कर रहा है। हम जानते हैं कि जैसा मैंने कहा है, जय प्रकाश जी का गांव सिताब दियारा हरिवंश जी वहीं हैं और वहां गंगा और घाघरा दो नदी के बीच में एक गांव है, तो हमेशा ही जल के कारण जो कटाव की समस्या रहती है, वो गांव परेशान रहता है और नदी धारा भी बदलती रहती है, तो विनाश भी बहुत होता रहता है। उसको भी ध्यान में रखते हुए उन्होंने MPLAD फंड से इसके वैज्ञानिक अध्ययन के लिए उन्होंने पटना की आर्यभट्ट नॉलेज यूनिवर्सिटी में एक नदी अध्ययन केंद्र खुलवाया है। पटना के ही चंद्रगुप्त प्रबंधन संस्था में वो बिजनेस इनक्यूबेशन एंड इनोवेशन सेंटर बनवा रहे हैं। एआई के इस दौर में मगध विश्वविद्यालय में आर्टिफिशियल इंटेलिजेंस सेंटर बनाया है। यानी MPLAD फंड का एक निर्धारित दिशा में काम कैसे किया जा सकता है, इसका एक उदाहरण आपने प्रस्तुत किया है।",
+            "हरिवंश जी के सदन को चलाने की कुशलता को तो हम भली भांति देखे हैं, लेकिन साथ-साथ उन्होंने राज्यों की विधानसभाएं, विधान परिषदें और वहां जो प्रीसाइडिंग ऑफिसर्स हैं, उनको भी कैसे मदद रूप होना, उनके लिए किस प्रकार से आवश्यक उनके ट्रेनिंग के लिए काम किया जाना, उसके लिए भी काफी समय दिया और उन्होंने लगातार उनके लिए समय दिखाया। कॉमनवेल्थ पार्लियामेंट्री एसोसिएशन में भी उन्होंने भारत की डेमोक्रेटिक व्यवस्था की छाप छोड़ने में बहुत बड़ी सक्रिय भूमिका निभाई है। मुझे पूरा विश्वास है कि 21वीं सदी का यह दूसरा क्वार्टर यह सदन को बहुत कुछ कंट्रीब्यूट करना है। देश को प्रगति के पथ पर ले जाने में, विकास के लक्ष्य को प्राप्त करने में, मुझे विश्वास है कि सदन के द्वारा बहुत कुछ होगा और उसके कारण पीठाधीश सबका दायित्व बहुत बड़ा होता है। हम सबका बड़े विश्वास से मैं कह सकता हूं कि सभी साथी आप जो चाहते होंगे, उसको पूरा करने के लिए सहयोग करते रहेंगे और आपके काम को कठिनाइयों में ना परिवर्तित करें इसके लिए ताकि आप ज्यादा आउटकम दे सकते हैं और मुझे विश्वास है सब लोग इसको करेंगे और मैंने पहले भी कहा था कि हरि कृपा पर है सब कुछ और हरि तो यहां के भी है, हरि वहां के भी है और हरि यही बैठेंगे। तो हरि कृपा बनी रहे। इसी एक अपेक्षा के साथ मेरी आपको बहुत-बहुत शुभकामनाएं हैं।"
+          ]
+        },
+        {
+          "id": "pib-all-3",
+          "title": "Prime Minister pays tributes to former Prime Minister Chandra Shekhar on his birth anniversary",
+          "link": "https://www.pib.gov.in/PressReleseDetail.aspx?PRID=2252803",
+          "ministry": "Prime Minister's Office",
+          "category": "Polity",
+          "source": "PIB All Releases",
+          "listingDate": "17 Apr 2026",
+          "requestedDate": "2026-04-17",
+          "scrapedAt": "2026-04-17T07:59:07.322Z",
+          "postedOn": "17 APR 2026 8:53AM by PIB Delhi",
+          "summary": [
+            "The Prime Minister, Shri Narendra Modi has paid tributes to former Prime Minister, Shri Chandra Shekhar on his birth anniversary.",
+            "The Prime Minister noted that this year marks the beginning of Chandra Shekhar Ji’s 100th birth anniversary and said it is an occasion to reiterate the commitment to realising his vision for a prosperous and just India.",
+            "Recalling his legacy, the Prime Minister said that Chandra Shekhar Ji is remembered as a mass leader blessed with courage, conviction and a deep commitment to democratic values. He highlighted that firmly rooted in the soil of India and sensitive to the aspirations of ordinary citizens, Chandra Shekhar Ji brought simplicity and clarity to public life."
+          ],
+          "fullSummary": [
+            "The Prime Minister, Shri Narendra Modi has paid tributes to former Prime Minister, Shri Chandra Shekhar on his birth anniversary.",
+            "The Prime Minister noted that this year marks the beginning of Chandra Shekhar Ji’s 100th birth anniversary and said it is an occasion to reiterate the commitment to realising his vision for a prosperous and just India.",
+            "Recalling his legacy, the Prime Minister said that Chandra Shekhar Ji is remembered as a mass leader blessed with courage, conviction and a deep commitment to democratic values. He highlighted that firmly rooted in the soil of India and sensitive to the aspirations of ordinary citizens, Chandra Shekhar Ji brought simplicity and clarity to public life.",
+            "The Prime Minister also recalled the instances when he had the opportunity to meet Chandra Shekhar Ji and exchange perspectives for the development of the nation.",
+            "The Prime Minister called upon the youth of India to read more about the thoughts and efforts of Chandra Shekhar Ji towards India’s progress.",
+            "“Tributes to former Prime Minister Chandra Shekhar Ji on his birth anniversary. This year marks the start of his 100th birth anniversary and is a time to reiterate our commitment to realising his vision for a prosperous and just India. Chandra Shekhar Ji is remembered as a mass leader blessed with courage, conviction and a deep commitment to democratic values. Firmly rooted in the soil of India and sensitive to the aspirations of ordinary citizens, he brought simplicity and clarity to public life. I recall the instances when I had the opportunity to meet him and exchange perspectives for the development of our nation. I call upon the youth of India to read more about his thoughts and efforts towards India’s progress.”"
+          ]
+        },
+        {
+          "id": "pib-all-5",
+          "title": "Indian Institute of Corporate Affairs (IICA) Conducts One Week Induction Training Programme for IFSCA Officers",
+          "link": "https://www.pib.gov.in/PressReleseDetail.aspx?PRID=2252811",
+          "ministry": "Ministry of Corporate Affairs",
+          "category": "Polity",
+          "source": "PIB All Releases",
+          "listingDate": "17 Apr 2026",
+          "requestedDate": "2026-04-17",
+          "scrapedAt": "2026-04-17T07:59:07.340Z",
+          "postedOn": "17 APR 2026 9:25AM by PIB Delhi",
+          "summary": [
+            "International Financial Services Centres Authority (IFSCA) and the Indian Institute of Corporate Affairs (IICA), IICA has commenced a One Week Induction Training Programme for Assistant Managers of IFSCA from 13th to 18th April 2026 at its campus in Manesar.",
+            "The MoU, signed on 20th February 2026 at GIFT City, Gujarat, between Shri Gyaneshwar Kumar Singh, Director General & Chief Executive Officer, IICA, and Shri K. Rajaraman, Chairperson, IFSCA, aims to strengthen India’s international financial services ecosystem through capacity building, policy research, and knowledge partnership.",
+            "The present induction training programme marks a significant step towards operationalising this collaboration by equipping IFSCA officers with a comprehensive understanding of corporate laws, governance frameworks, financial regulations, and cross-border transactions."
+          ],
+          "fullSummary": [
+            "International Financial Services Centres Authority (IFSCA) and the Indian Institute of Corporate Affairs (IICA), IICA has commenced a One Week Induction Training Programme for Assistant Managers of IFSCA from 13th to 18th April 2026 at its campus in Manesar.",
+            "The MoU, signed on 20th February 2026 at GIFT City, Gujarat, between Shri Gyaneshwar Kumar Singh, Director General & Chief Executive Officer, IICA, and Shri K. Rajaraman, Chairperson, IFSCA, aims to strengthen India’s international financial services ecosystem through capacity building, policy research, and knowledge partnership.",
+            "The present induction training programme marks a significant step towards operationalising this collaboration by equipping IFSCA officers with a comprehensive understanding of corporate laws, governance frameworks, financial regulations, and cross-border transactions.",
+            "The inaugural address was delivered by Shri Gyaneshwar Kumar Singh, DG & CEO, IICA, who shared his insights on the Future of IFSC Regulation and the Way Forward. Emphasising the vision behind the establishment of IFSCA, he noted that the creation of a unified regulator within a short span of five years is nothing short of a “miracle” and a testament to India’s regulatory foresight.",
+            "In his address, Shri Singh highlighted the importance of fostering innovation through fintech and underscored the role of IFSCA in contributing to the vision of Viksit Bharat. He stressed that officers must develop a strong understanding of multidimensional regulatory frameworks, including laws governed by authorities such as SEBI and PFRDA, to effectively regulate and guide the evolving financial ecosystem.",
+            "Further, he encouraged participants to make the most of the week-long programme through productive and immersive learning, ensuring practical understanding alongside theoretical knowledge.",
+            "The programme proceeded with a Welcome Address by Dr. Neeraj Gupta, and a detailed Programme Overview by Dr. Pyla Narayana Rao, highlighting the structure, objectives, and expected outcomes of the training.",
+            "As part of the programme, the participants are also visiting Sansad Pride on 16th and 17th April 2026, aimed at providing them with practical exposure to parliamentary proceedings and legislative processes, thereby enriching their understanding of governance and regulatory functioning.",
+            "The training programme features expert-led sessions by eminent professionals and academicians covering a wide range of topics including corporate governance, securities regulations, corporate finance, financial reporting, cross-border insolvency, and IFSC-specific regulatory frameworks.",
+            "The initiative reflects IICA’s continued commitment to capacity building and policy support for regulatory institutions, while reinforcing its role as a premier think tank under the Ministry of Corporate Affairs.",
+            "The programme will conclude on 18th April 2026 with a valedictory session and certificate distribution ceremony."
+          ]
+        },
+        {
+          "id": "pib-all-6",
+          "title": "Ministry of Corporate Affairs (MCA) invites public comments for reviewing the Companies (Incorporation) Rules, 2014 and for the rationalisation of the filing framework under the Companies Act, 2013",
+          "link": "https://www.pib.gov.in/PressReleseDetail.aspx?PRID=2252805",
+          "ministry": "Ministry of Corporate Affairs",
+          "category": "Economy",
+          "source": "PIB All Releases",
+          "listingDate": "17 Apr 2026",
+          "requestedDate": "2026-04-17",
+          "scrapedAt": "2026-04-17T07:59:07.341Z",
+          "postedOn": "17 APR 2026 9:05AM by PIB Delhi",
+          "summary": [
+            "A draft notification titled the Companies (Incorporation) Amendment Rules, 2026, proposing amendments to the Companies (Incorporation) Rules, 2014, has been prepared vide a public notice dated 8th April, 2026. The notification is placed on the website www.mca.gov.in for information of stakeholders for the purpose of public consultations. Suggestions/comments on the proposed amendments, along with brief justification, may be submitted through the e-Consultation Module available on the website of the Ministry of Corporate Affairs latest by 9th May, 2026.",
+            "In addition, MCA, through the Indian Institute of Corporate Affairs (IICA), is undertaking consultation to seek stakeholder inputs on the rationalization of the filing/compliance framework under the Companies Act, 2013. Concept note for the same is placed on the website www.mca.gov.in and https://iica.nic.in for the information of stakeholders for the purpose of public consultation. The consultation covers the full corporate lifecycle across three stages – entry, operations and exit. Responses may be submitted electronically using the weblink - https://iica.nic.in/mcaeodbform. The last date to submit the comments is 15th May, 2026."
+          ],
+          "fullSummary": [
+            "A draft notification titled the Companies (Incorporation) Amendment Rules, 2026, proposing amendments to the Companies (Incorporation) Rules, 2014, has been prepared vide a public notice dated 8th April, 2026. The notification is placed on the website www.mca.gov.in for information of stakeholders for the purpose of public consultations. Suggestions/comments on the proposed amendments, along with brief justification, may be submitted through the e-Consultation Module available on the website of the Ministry of Corporate Affairs latest by 9th May, 2026.",
+            "In addition, MCA, through the Indian Institute of Corporate Affairs (IICA), is undertaking consultation to seek stakeholder inputs on the rationalization of the filing/compliance framework under the Companies Act, 2013. Concept note for the same is placed on the website www.mca.gov.in and https://iica.nic.in for the information of stakeholders for the purpose of public consultation. The consultation covers the full corporate lifecycle across three stages – entry, operations and exit. Responses may be submitted electronically using the weblink - https://iica.nic.in/mcaeodbform. The last date to submit the comments is 15th May, 2026."
+          ]
+        },
+        {
+          "id": "pib-all-7",
+          "title": "ARMY COMMANDERS’ CONFERENCE CONCLUDES IN NEW DELHI",
+          "link": "https://www.pib.gov.in/PressReleseDetail.aspx?PRID=2252846",
+          "ministry": "Ministry of Defence",
+          "category": "Science & Tech",
+          "source": "PIB All Releases",
+          "listingDate": "17 Apr 2026",
+          "requestedDate": "2026-04-17",
+          "scrapedAt": "2026-04-17T07:59:07.342Z",
+          "postedOn": "17 APR 2026 11:27AM by PIB Delhi",
+          "summary": [
+            "The biannual Army Commanders’ Conference (ACC) which commenced on 13 April 26, culminated on 16 April 26. The conference chaired by Chief of the Army Staff (COAS), was attended by apex military leadership and was addressed by senior functionaries in the government including the Cabinet Secretary, Chief of the Defence Staff, Defence Secretary and Chairman NSAB besides Chief of the Naval Staff. Aligned with the vision of evolving into a ‘Future Ready Force’, the Indian Army has designated the year 2026 as the year of “Networking and Data Centricity”.",
+            "The conference discussed a wide array of issues pertaining to modernisation, technology infusion in combat operations, doctrinal and training requirements besides networking and data centricity to enhance operational readiness and address emerging security challenges. Based on the lessons learnt from Operation Sindoor, and in keeping with the current operational dynamics globally, senior army leadership also focussed on operational capability requirements including employment of Unmanned Aerial Systems (UAS) and Counter Unmanned Aerial Systems (C-UAS).",
+            "The distinguished speakers highlighted the evolving geopolitical landscape and emerging global, regional and internal security dynamics. With specific reference to lessons emerging from global conflicts, the speakers alluded to the need for Hard Power for Guaranteed Protection of India’s strategic and security interests while emphasising on inter ministerial coordination, enhanced synergy between civil and military institutions and a whole of nation approach for a coordinated national response to complex security challenges. It emerged during the discussions that there is an urgent need to accelerate indigenous production capabilities, for strengthening self-reliance in defence and ensuring long-term strategic resilience in view of current supply chain crisis."
+          ],
+          "fullSummary": [
+            "The biannual Army Commanders’ Conference (ACC) which commenced on 13 April 26, culminated on 16 April 26. The conference chaired by Chief of the Army Staff (COAS), was attended by apex military leadership and was addressed by senior functionaries in the government including the Cabinet Secretary, Chief of the Defence Staff, Defence Secretary and Chairman NSAB besides Chief of the Naval Staff. Aligned with the vision of evolving into a ‘Future Ready Force’, the Indian Army has designated the year 2026 as the year of “Networking and Data Centricity”.",
+            "The conference discussed a wide array of issues pertaining to modernisation, technology infusion in combat operations, doctrinal and training requirements besides networking and data centricity to enhance operational readiness and address emerging security challenges. Based on the lessons learnt from Operation Sindoor, and in keeping with the current operational dynamics globally, senior army leadership also focussed on operational capability requirements including employment of Unmanned Aerial Systems (UAS) and Counter Unmanned Aerial Systems (C-UAS).",
+            "The distinguished speakers highlighted the evolving geopolitical landscape and emerging global, regional and internal security dynamics. With specific reference to lessons emerging from global conflicts, the speakers alluded to the need for Hard Power for Guaranteed Protection of India’s strategic and security interests while emphasising on inter ministerial coordination, enhanced synergy between civil and military institutions and a whole of nation approach for a coordinated national response to complex security challenges. It emerged during the discussions that there is an urgent need to accelerate indigenous production capabilities, for strengthening self-reliance in defence and ensuring long-term strategic resilience in view of current supply chain crisis."
+          ]
+        },
+        {
+          "id": "pib-all-8",
+          "title": "10 Cutting-Edge Indian Startups Selected for Cohort II of the IndiaAI Startups Global Acceleration Programme",
+          "link": "https://www.pib.gov.in/PressReleseDetail.aspx?PRID=2252858",
+          "ministry": "Ministry of Electronics & IT",
+          "category": "Economy",
+          "source": "PIB All Releases",
+          "listingDate": "17 Apr 2026",
+          "requestedDate": "2026-04-17",
+          "scrapedAt": "2026-04-17T07:59:07.343Z",
+          "postedOn": "17 APR 2026 11:50AM by PIB Delhi",
+          "summary": [
+            "In a continued commitment to advancing India's AI capabilities on the world stage, the IndiaAI Mission, under the Ministry of Electronics and Information Technology (MeitY), has announced the selection of 10 cutting-edge Indian AI startups for the second cohort of the IndiaAI Startups Global Acceleration Programme, an international initiative developed in partnership with Station F, Paris and HEC Paris.",
+            "The IndiaAI Startups Global Acceleration Programme was initiated by the IndiaAI Mission, MeitY, under its Startup Financing Pillar, in collaboration with Station F, the world’s largest startup campus and HEC Paris, one of Europe’s premier business schools. Each cohort equips 10 selected Indian AI startups with resources, expertise and strategic connections necessary to scale internationally.",
+            "The program aligns with India’s National AI Strategy, emphasizing cross-border knowledge exchange, exposure to advanced entrepreneurial ecosystems and global market integration. By facilitating access to international markets, fostering innovation and attracting global investments, the initiative supports India’s vision of becoming a leader in AI-driven solutions."
+          ],
+          "fullSummary": [
+            "In a continued commitment to advancing India's AI capabilities on the world stage, the IndiaAI Mission, under the Ministry of Electronics and Information Technology (MeitY), has announced the selection of 10 cutting-edge Indian AI startups for the second cohort of the IndiaAI Startups Global Acceleration Programme, an international initiative developed in partnership with Station F, Paris and HEC Paris.",
+            "The IndiaAI Startups Global Acceleration Programme was initiated by the IndiaAI Mission, MeitY, under its Startup Financing Pillar, in collaboration with Station F, the world’s largest startup campus and HEC Paris, one of Europe’s premier business schools. Each cohort equips 10 selected Indian AI startups with resources, expertise and strategic connections necessary to scale internationally.",
+            "The program aligns with India’s National AI Strategy, emphasizing cross-border knowledge exchange, exposure to advanced entrepreneurial ecosystems and global market integration. By facilitating access to international markets, fostering innovation and attracting global investments, the initiative supports India’s vision of becoming a leader in AI-driven solutions.",
+            "Selected Startups for ISG Cohort II",
+            "These 10 startups have been chosen through a rigorous multi-stage selection process and will represent India's dynamic AI innovation ecosystem at Station F, for an immersive programme designed to support their global scale-up. The programme includes a 3 week online preparation module followed by a three-month immersive residency in Paris, France.",
+            "This initiative forms a part of the IndiaAI Mission's broader vision to catalyze India's leadership in responsible, scalable and inclusive AI. Designed by HEC Paris, the programme will provide startups with unparalleled access to resources, mentorship and networking opportunities with leading French and European ecosystem players during their residency."
+          ]
+        },
+        {
+          "id": "pib-all-10",
+          "title": "Union Public Service Commission announces Recruitment Results for the month of March, 2026",
+          "link": "https://www.pib.gov.in/PressReleseDetail.aspx?PRID=2252861",
+          "ministry": "UPSC",
+          "category": "Polity",
+          "source": "PIB All Releases",
+          "listingDate": "17 Apr 2026",
+          "requestedDate": "2026-04-17",
+          "scrapedAt": "2026-04-17T07:59:07.352Z",
+          "postedOn": "17 APR 2026 11:54AM by PIB Delhi",
+          "summary": [
+            "The following Recruitment Results have been finalized by the Union Public Service Commission during the month of March, 2026. The recommended candidates have been informed individually by post. Applications of other candidates were duly considered but regretted that it has not been possible to call them for interview/recommend them for the post."
+          ],
+          "fullSummary": [
+            "The following Recruitment Results have been finalized by the Union Public Service Commission during the month of March, 2026. The recommended candidates have been informed individually by post. Applications of other candidates were duly considered but regretted that it has not been possible to call them for interview/recommend them for the post."
+          ]
+        }
+      ]
+    },
+    {
+      "id": "polity",
+      "label": "Google News Polity",
+      "status": "ok",
+      "itemCount": 1,
+      "url": "https://news.google.com/rss/search?q=India%20constitution%20president%20vice-president%20parliament%20UPSC%20OR%20PSC%20when%3A7d&hl=en-IN&gl=IN&ceid=IN:en",
+      "family": "news"
+    },
+    {
+      "id": "economy",
+      "label": "Google News Economy",
+      "status": "ok",
+      "itemCount": 0,
+      "url": "https://news.google.com/rss/search?q=India%20economy%20regulator%20companies%20act%20RBI%20SEBI%20MCA%20IFSCA%20when%3A7d&hl=en-IN&gl=IN&ceid=IN:en",
+      "family": "news"
+    },
+    {
+      "id": "history",
+      "label": "Google News History",
+      "status": "ok",
+      "itemCount": 2,
+      "url": "https://news.google.com/rss/search?q=India%20birth%20anniversary%20freedom%20movement%20national%20leader%20history%20when%3A7d&hl=en-IN&gl=IN&ceid=IN:en",
+      "family": "news"
+    },
+    {
+      "id": "geography",
+      "label": "Google News Geography",
+      "status": "ok",
+      "itemCount": 0,
+      "url": "https://news.google.com/rss/search?q=India%20biodiversity%20river%20climate%20forest%20geography%20environment%20when%3A7d&hl=en-IN&gl=IN&ceid=IN:en",
+      "family": "news"
+    },
+    {
+      "id": "science",
+      "label": "Google News Science",
+      "status": "ok",
+      "itemCount": 0,
+      "url": "https://news.google.com/rss/search?q=India%20science%20technology%20AI%20mission%20research%20black%20hole%20startup%20MeitY%20when%3A7d&hl=en-IN&gl=IN&ceid=IN:en",
+      "family": "news"
+    },
+    {
+      "id": "bihar",
+      "label": "Google News Bihar",
+      "status": "ok",
+      "itemCount": 0,
+      "url": "https://news.google.com/rss/search?q=Bihar%20governance%20exam%20current%20affairs%20economy%20polity%20environment%20when%3A7d&hl=en-IN&gl=IN&ceid=IN:en",
+      "family": "news"
+    }
+  ],
+  "cards": [
+    {
+      "id": "pib-card-vice-president-pays-tributes-to-former-prime-minister-chandra-shekhar-on-his-99th-birth-anniversary-1",
+      "title": "Vice-President pays tributes to former Prime Minister Chandra Shekhar on his 99th Birth Anniversary",
+      "category": "Polity",
+      "ministry": "Vice President's Secretariat",
+      "source": "PIB",
+      "date": "2026-04-17",
+      "rawLink": "https://www.pib.gov.in/PressReleseDetail.aspx?PRID=2252857",
+      "postedOn": "17 APR 2026 11:47AM by PIB Delhi",
+      "examAngle": "Polity, Indian Polity, Vice President's Secretariat",
+      "whyItMatters": "This matters for BPSC because it links Indian Polity and Constitutional Bodies with a live official development from Vice President's Secretariat.",
+      "summary": "The Vice-President of India, Shri C. P. Radhakrishnan, paid tributes to former Prime Minister Chandra Shekhar ji on the occasion of his 99th birth anniversary at Jannayak Sthal, New Delhi...",
+      "tags": [
+        "Indian Polity",
+        "Constitutional Bodies",
+        "Parliament & Executive",
+        "Vice",
+        "President"
+      ],
+      "difficulty": "Easy",
+      "quizPrompt": "How can this PIB update be linked to Indian Polity in a BPSC answer?",
+      "staticSyllabusLinks": [
+        "Indian Polity",
+        "Constitutional Bodies",
+        "Parliament & Executive"
+      ],
+      "similarAskedInBpsc": "#Similar Asked in 70th BPSC style: Similar themes often appear in BPSC around constitutional offices, institutions, and practical governance reforms.",
+      "factsToRemember": [
+        "Chandra Shekhar was the 8th Prime Minister of India and served from 1990 to 1991.",
+        "He belonged to Uttar Pradesh and is remembered for the Samajwadi Janata political stream.",
+        "He was associated with the Bharat Yatra and is remembered in post-Independence Indian politics.",
+        "Former Prime Ministers are commonly asked in prelims through chronology, tenure, and office held.",
+        "Article 63 of the Constitution provides that there shall be a Vice-President of India.",
+        "Under Article 64, the Vice-President is the ex officio Chairman of the Rajya Sabha.",
+        "The Vice-President is elected by members of both Houses of Parliament.",
+        "Article 65 provides that the Vice-President acts as President when the office of President falls vacant.",
+        "The Vice-President can be removed by a resolution of the Rajya Sabha agreed to by the Lok Sabha.",
+        "Laxmikanth-style prelims coverage focuses on article, office, election method, term, removal, and powers."
+      ],
+      "prelimsTrap": "Do not stop at the personality or event; revise the related constitutional office, role, and institutional linkage.",
+      "mainsAngle": "Use this as a current example in answers on Indian Polity by showing how Vice President's Secretariat connects policy intent with on-ground governance or institutional reform."
+    },
+    {
+      "id": "pib-card-prime-minister-pays-tributes-to-former-prime-minister-chandra-shekhar-on-his-birth-anniversary-3",
+      "title": "Prime Minister pays tributes to former Prime Minister Chandra Shekhar on his birth anniversary",
+      "category": "Polity",
+      "ministry": "Prime Minister's Office",
+      "source": "PIB",
+      "date": "2026-04-17",
+      "rawLink": "https://www.pib.gov.in/PressReleseDetail.aspx?PRID=2252803",
+      "postedOn": "17 APR 2026 8:53AM by PIB Delhi",
+      "examAngle": "Polity, Indian Polity, Prime Minister's Office",
+      "whyItMatters": "This matters for BPSC because it links Indian Polity and Constitutional Bodies with a live official development from Prime Minister's Office.",
+      "summary": "The Prime Minister, Shri Narendra Modi has paid tributes to former Prime Minister, Shri Chandra Shekhar on his birth anniversary.",
+      "tags": [
+        "Indian Polity",
+        "Constitutional Bodies",
+        "Parliament & Executive",
+        "Prime",
+        "Minister"
+      ],
+      "difficulty": "Easy",
+      "quizPrompt": "How can this PIB update be linked to Indian Polity in a BPSC answer?",
+      "staticSyllabusLinks": [
+        "Indian Polity",
+        "Constitutional Bodies",
+        "Parliament & Executive"
+      ],
+      "similarAskedInBpsc": "#Similar Asked in 70th BPSC style: Similar themes often appear in BPSC around constitutional offices, institutions, and practical governance reforms.",
+      "factsToRemember": [
+        "Chandra Shekhar was the 8th Prime Minister of India and served from 1990 to 1991.",
+        "He belonged to Uttar Pradesh and is remembered for the Samajwadi Janata political stream.",
+        "He was associated with the Bharat Yatra and is remembered in post-Independence Indian politics.",
+        "Former Prime Ministers are commonly asked in prelims through chronology, tenure, and office held.",
+        "Article 74 provides for a Council of Ministers with the Prime Minister at the head to aid and advise the President.",
+        "Under Article 75, the Prime Minister is appointed by the President.",
+        "The Prime Minister is the real executive head in the parliamentary system.",
+        "The Council of Ministers is collectively responsible to the Lok Sabha.",
+        "Laxmikanth-style prelims coverage focuses on article, office, election method, term, removal, and powers."
+      ],
+      "prelimsTrap": "Do not stop at the personality or event; revise the related constitutional office, role, and institutional linkage.",
+      "mainsAngle": "Use this as a current example in answers on Indian Polity by showing how Prime Minister's Office connects policy intent with on-ground governance or institutional reform."
+    },
+    {
+      "id": "pib-card-indian-institute-of-corporate-affairs-iica-conducts-one-week-induction-training-programme-for-ifsca-officers-4",
+      "title": "Indian Institute of Corporate Affairs (IICA) Conducts One Week Induction Training Programme for IFSCA Officers",
+      "category": "Economy",
+      "ministry": "Ministry of Corporate Affairs",
+      "source": "PIB",
+      "date": "2026-04-17",
+      "rawLink": "https://www.pib.gov.in/PressReleseDetail.aspx?PRID=2252811",
+      "postedOn": "17 APR 2026 9:25AM by PIB Delhi",
+      "examAngle": "Polity, Indian Economy, Ministry of Corporate Affairs",
+      "whyItMatters": "This matters for BPSC because it links Indian Economy and Banking & Regulation with a live official development from Ministry of Corporate Affairs.",
+      "summary": "International Financial Services Centres Authority (IFSCA) and the Indian Institute of Corporate Affairs (IICA), IICA has commenced a One Week Induction Training Programme for Assistant M...",
+      "tags": [
+        "Indian Economy",
+        "Banking & Regulation",
+        "Acts & Institutions",
+        "Ministry",
+        "Corporate"
+      ],
+      "difficulty": "Medium",
+      "quizPrompt": "How can this PIB update be linked to Indian Economy in a BPSC answer?",
+      "staticSyllabusLinks": [
+        "Indian Economy",
+        "Banking & Regulation",
+        "Acts & Institutions"
+      ],
+      "similarAskedInBpsc": "#Similar Asked in 70th BPSC style: BPSC regularly connects current affairs with economic reforms, compliance systems, and sectoral growth.",
+      "factsToRemember": [
+        "The Companies Act, 2013 is the principal law governing incorporation, regulation, and winding up of companies in India.",
+        "The Ministry of Corporate Affairs administers the Companies Act, 2013 and the Limited Liability Partnership Act, 2008.",
+        "IFSCA is the unified regulator for financial products, services, and institutions in International Financial Services Centres under the IFSCA Act, 2019.",
+        "IICA stands for Indian Institute of Corporate Affairs and functions under the Ministry of Corporate Affairs.",
+        "GIFT City in Gujarat is India's major International Financial Services Centre.",
+        "Important prelims angles here are parent Act, regulator, nodal ministry, and headquarters/location.",
+        "Economy prelims usually asks Act, regulator, institution, full form, and location/headquarters."
+      ],
+      "prelimsTrap": "Do not confuse an announcement, MoU, or training programme with a new statutory scheme or law.",
+      "mainsAngle": "Use this in mains answers on Indian Economy to show that institutional capacity building is as important as policy announcement for effective governance."
+    },
+    {
+      "id": "pib-card-ministry-of-corporate-affairs-mca-invites-public-comments-for-reviewing-the-companies-incorporation-rules-2014-and-for-the-rationalisation-of-the-filing-framework-under-the-companies-act-2013-5",
+      "title": "Ministry of Corporate Affairs (MCA) invites public comments for reviewing the Companies (Incorporation) Rules, 2014 and for the rationalisation of the filing framework under the Companies Act, 2013",
+      "category": "Economy",
+      "ministry": "Ministry of Corporate Affairs",
+      "source": "PIB",
+      "date": "2026-04-17",
+      "rawLink": "https://www.pib.gov.in/PressReleseDetail.aspx?PRID=2252805",
+      "postedOn": "17 APR 2026 9:05AM by PIB Delhi",
+      "examAngle": "Economy, Indian Economy, Ministry of Corporate Affairs",
+      "whyItMatters": "This matters for BPSC because it links Indian Economy and Banking & Regulation with a live official development from Ministry of Corporate Affairs.",
+      "summary": "A draft notification titled the Companies (Incorporation) Amendment Rules, 2026, proposing amendments to the Companies (Incorporation) Rules, 2014, has been prepared vide a public notice...",
+      "tags": [
+        "Indian Economy",
+        "Banking & Regulation",
+        "Acts & Institutions",
+        "Ministry",
+        "Corporate"
+      ],
+      "difficulty": "Medium",
+      "quizPrompt": "How can this PIB update be linked to Indian Economy in a BPSC answer?",
+      "staticSyllabusLinks": [
+        "Indian Economy",
+        "Banking & Regulation",
+        "Acts & Institutions"
+      ],
+      "similarAskedInBpsc": "#Similar Asked in 70th BPSC style: BPSC regularly connects current affairs with economic reforms, compliance systems, and sectoral growth.",
+      "factsToRemember": [
+        "The Companies Act, 2013 is the principal law governing incorporation, regulation, and winding up of companies in India.",
+        "The Ministry of Corporate Affairs administers the Companies Act, 2013 and the Limited Liability Partnership Act, 2008.",
+        "IFSCA is the unified regulator for financial products, services, and institutions in International Financial Services Centres under the IFSCA Act, 2019.",
+        "IICA stands for Indian Institute of Corporate Affairs and functions under the Ministry of Corporate Affairs.",
+        "GIFT City in Gujarat is India's major International Financial Services Centre.",
+        "Important prelims angles here are parent Act, regulator, nodal ministry, and headquarters/location.",
+        "Economy prelims usually asks Act, regulator, institution, full form, and location/headquarters."
+      ],
+      "prelimsTrap": "Distinguish between a draft amendment, consultation notice, and a final notified rule; prelims can test the parent Act and rule-making power.",
+      "mainsAngle": "Use this in mains answers on Indian Economy to show how consultation-led rule making improves compliance, transparency, and administrative responsiveness."
+    },
+    {
+      "id": "pib-card-army-commanders-conference-concludes-in-new-delhi-6",
+      "title": "ARMY COMMANDERS’ CONFERENCE CONCLUDES IN NEW DELHI",
+      "category": "Science & Tech",
+      "ministry": "Ministry of Defence",
+      "source": "PIB",
+      "date": "2026-04-17",
+      "rawLink": "https://www.pib.gov.in/PressReleseDetail.aspx?PRID=2252846",
+      "postedOn": "17 APR 2026 11:27AM by PIB Delhi",
+      "examAngle": "Science & Tech, Science & Technology, Ministry of Defence",
+      "whyItMatters": "This matters for BPSC because it links Science & Technology and Space & Physics with a live official development from Ministry of Defence.",
+      "summary": "The biannual Army Commanders’ Conference (ACC) which commenced on 13 April 26, culminated on 16 April 26. The conference chaired by Chief of the Army Staff (COAS), was attended by apex mi...",
+      "tags": [
+        "Science & Technology",
+        "Space & Physics",
+        "Institutions & Missions",
+        "Ministry",
+        "Defence"
+      ],
+      "difficulty": "Medium",
+      "quizPrompt": "How can this PIB update be linked to Science & Technology in a BPSC answer?",
+      "staticSyllabusLinks": [
+        "Science & Technology",
+        "Space & Physics",
+        "Institutions & Missions"
+      ],
+      "similarAskedInBpsc": "#Similar Asked in 70th BPSC style: BPSC tends to ask science current affairs through application, institution, and policy-use angles.",
+      "factsToRemember": [
+        "Army Commanders' Conference is a biannual apex-level institutional conference of the Indian Army leadership.",
+        "COAS stands for Chief of the Army Staff, the professional head of the Indian Army.",
+        "UAS means Unmanned Aerial Systems, while C-UAS refers to Counter-Unmanned Aerial Systems.",
+        "Defence prelims usually tests abbreviations, commands, chiefs, systems, and indigenous capability.",
+        "Science prelims usually asks institution, scientific concept, mission, and use case."
+      ],
+      "prelimsTrap": "Prelims may test the institution, application area, or regulator behind the update rather than the headline phrase itself.",
+      "mainsAngle": "Use this in mains answers on Science & Technology to show that institutional capacity building is as important as policy announcement for effective governance."
+    },
+    {
+      "id": "pib-card-10-cutting-edge-indian-startups-selected-for-cohort-ii-of-the-indiaai-startups-global-acceleration-programme-7",
+      "title": "10 Cutting-Edge Indian Startups Selected for Cohort II of the IndiaAI Startups Global Acceleration Programme",
+      "category": "Science & Tech",
+      "ministry": "Ministry of Electronics & IT",
+      "source": "PIB",
+      "date": "2026-04-17",
+      "rawLink": "https://www.pib.gov.in/PressReleseDetail.aspx?PRID=2252858",
+      "postedOn": "17 APR 2026 11:50AM by PIB Delhi",
+      "examAngle": "Economy, Science & Technology, Ministry of Electronics & IT",
+      "whyItMatters": "This matters for BPSC because it links Science & Technology and Space & Physics with a live official development from Ministry of Electronics & IT.",
+      "summary": "In a continued commitment to advancing India's AI capabilities on the world stage, the IndiaAI Mission, under the Ministry of Electronics and Information Technology (MeitY), has announced...",
+      "tags": [
+        "Science & Technology",
+        "Space & Physics",
+        "Institutions & Missions",
+        "Ministry",
+        "Electronics"
+      ],
+      "difficulty": "Medium",
+      "quizPrompt": "How can this PIB update be linked to Science & Technology in a BPSC answer?",
+      "staticSyllabusLinks": [
+        "Science & Technology",
+        "Space & Physics",
+        "Institutions & Missions"
+      ],
+      "similarAskedInBpsc": "#Similar Asked in 70th BPSC style: BPSC tends to ask science current affairs through application, institution, and policy-use angles.",
+      "factsToRemember": [
+        "MeitY stands for the Ministry of Electronics and Information Technology.",
+        "The IndiaAI Mission functions under MeitY and is linked with India's AI ecosystem and innovation push.",
+        "Artificial intelligence refers to computer systems performing tasks that normally require human intelligence such as learning, reasoning, or pattern recognition.",
+        "In science prelims, institution, concept, mission, and application are more important than the headline event.",
+        "Science prelims usually asks institution, scientific concept, mission, and use case."
+      ],
+      "prelimsTrap": "Do not confuse an announcement, MoU, or training programme with a new statutory scheme or law.",
+      "mainsAngle": "Use this as a current example in answers on Science & Technology by showing how Ministry of Electronics & IT connects policy intent with on-ground governance or institutional reform."
+    },
+    {
+      "id": "pib-card-union-public-service-commission-announces-recruitment-results-for-the-month-of-march-2026-8",
+      "title": "Union Public Service Commission announces Recruitment Results for the month of March, 2026",
+      "category": "Polity",
+      "ministry": "UPSC",
+      "source": "PIB",
+      "date": "2026-04-17",
+      "rawLink": "https://www.pib.gov.in/PressReleseDetail.aspx?PRID=2252861",
+      "postedOn": "17 APR 2026 11:54AM by PIB Delhi",
+      "examAngle": "Polity, Indian Polity, UPSC",
+      "whyItMatters": "This matters for BPSC because it links Indian Polity and Constitutional Bodies with a live official development from UPSC.",
+      "summary": "The following Recruitment Results have been finalized by the Union Public Service Commission during the month of March, 2026. The recommended candidates have been informed individually by...",
+      "tags": [
+        "Indian Polity",
+        "Constitutional Bodies",
+        "Parliament & Executive",
+        "UPSC"
+      ],
+      "difficulty": "Easy",
+      "quizPrompt": "How can this PIB update be linked to Indian Polity in a BPSC answer?",
+      "staticSyllabusLinks": [
+        "Indian Polity",
+        "Constitutional Bodies",
+        "Parliament & Executive"
+      ],
+      "similarAskedInBpsc": "#Similar Asked in 70th BPSC style: Similar themes often appear in BPSC around constitutional offices, institutions, and practical governance reforms.",
+      "factsToRemember": [
+        "UPSC is a constitutional body under Article 315 of the Constitution.",
+        "Articles 315 to 323 deal with Public Service Commissions.",
+        "The Chairman and members of UPSC are appointed by the President of India.",
+        "UPSC submits its annual report to the President under Article 323.",
+        "UPSC conducts examinations for appointments to the services of the Union.",
+        "UPSC is the central recruiting agency for Union services and also plays a role in recruitment to All India Services.",
+        "State Public Service Commissions are also constitutional bodies under the same constitutional scheme.",
+        "Article 312 provides for the creation of All India Services by Parliament if the Rajya Sabha passes a resolution supported by not less than two-thirds of members present and voting.",
+        "The three All India Services are IAS, IPS, and Indian Forest Service.",
+        "All India Services serve both the Union and the States."
+      ],
+      "prelimsTrap": "Focus on the institution, purpose, and policy significance behind the headline instead of memorizing only the event wording.",
+      "mainsAngle": "Use this as a current example in answers on Indian Polity by showing how UPSC connects policy intent with on-ground governance or institutional reform."
+    },
+    {
+      "id": "news-card-daily-briefing-women-s-quota-delimitation-bills-to-be-put-to-vote-in-lok-sabha-today-1",
+      "title": "Daily Briefing: Women’s quota, delimitation Bills to be put to vote in Lok Sabha today",
+      "category": "Science & Tech",
+      "ministry": "The Indian Express",
+      "source": "Google News",
+      "date": "2026-04-17",
+      "rawLink": "https://news.google.com/rss/articles/CBMiygFBVV95cUxQY0pkQVBmcmF1THZ5eFZwUXhwQnJqOVJkYnZMQmhteUJ3ZTMwUzNmdEFRM05fQjZ1cTBZY2prVjE4MkdQcDdlX3EzZ0xaYk8zTzJfWHpKV0ZHaG9DWDdHOW1yZW14VnJSeUVJcWNhTDVEY2RzVFpwM004VFNyUkxJSEtWVjVGYk5leHo0cW5uQTVXcGpYWnliaVdyaU1vSTFrRWR5b1prRE9IYWM0WHVKLXdHanRUMGFQaXZicXlhT2VkeFBseExqaTRR0gHKAUFVX3lxTFBjSmRBUGZyYXVMdnl4VnBReHBCcmo5UmRidkxCaG15QndlMzBTM2Z0QVEzTl9CNnVxMFljamtWMTgyR1BwN2VfcTNnTFpiTzNPMl9YekpXRkdob0NYN0c5bXJlbXhWclJ5RUlxY2FMNURjZHNUWnAzTThUU3JSTElIS1ZWNUZiTmV4ejRxbm5BNVdwalhaeWJpV3JpTW9JMWtFZHlvWmtET0hhYzRYdUotd0dqdFQwYVBpdmJxeWFPZWR4UGx4TGppNFE?oc=5",
+      "postedOn": "Fri, 17 Apr 2026 03:32:22 GMT",
+      "examAngle": "Science & Tech, Science & Technology, The Indian Express",
+      "whyItMatters": "Selected for BPSC prelims relevance from The Indian Express.",
+      "summary": "Daily Briefing: Women’s quota, delimitation Bills to be put to vote in Lok Sabha today &nbsp;&nbsp; The Indian Express",
+      "tags": [
+        "Science & Technology",
+        "Institutions & Missions",
+        "Applications"
+      ],
+      "difficulty": "Medium",
+      "quizPrompt": "How can this topic be linked with Science & Technology?",
+      "staticSyllabusLinks": [
+        "Science & Technology",
+        "Institutions & Missions",
+        "Applications"
+      ],
+      "similarAskedInBpsc": "#Similar Asked in BPSC style: Science & Technology / Institutions & Missions / Applications",
+      "factsToRemember": [
+        "MeitY stands for the Ministry of Electronics and Information Technology.",
+        "Artificial intelligence refers to systems performing tasks associated with human intelligence.",
+        "Science prelims usually asks institution, concept, mission, and application."
+      ],
+      "prelimsTrap": "Revise the related static concept rather than memorizing only the headline.",
+      "mainsAngle": "Use as a current hook for Science & Technology and related static themes."
+    },
+    {
+      "id": "news-card-the-dravidian-deception-tamil-nadus-glorious-role-in-indias-freedom-struggle-from-rajaji-to-kamaraj-part-1-2",
+      "title": "The Dravidian Deception Tamil Nadus Glorious Role in Indias Freedom Struggle From Rajaji to Kamaraj Part 1",
+      "category": "History",
+      "ministry": "myind.net",
+      "source": "Google News",
+      "date": "2026-04-17",
+      "rawLink": "https://news.google.com/rss/articles/CBMi2AFBVV95cUxQSi1wQTJ0YTlHek1lUjhLUWp1cU9xRlMwdGI3Umk3RXBXLVdtRHBzajhkc0I5UWFlYTBYQUlid3pacEpRSVB4RVRoc2Jsd092d2Vuc0k2X2ZibnRpdjhER0pySEt3NTY4MVNNcGdpSWNULTVraF9xVFZ4NzRiTjI3NXJIUGM2UWs0YXBsbXkzclpTa0taT0FPbVYwb1hUT2dZdFZqX0lvZDJwVFUtMmRJMm9ISl9leTZOWVlxVTJLUk5qRU5ITEdRRnUxOTJieE5SR2l0dW00bEQ?oc=5",
+      "postedOn": "Fri, 17 Apr 2026 06:08:35 GMT",
+      "examAngle": "History, Modern Indian History, myind.net",
+      "whyItMatters": "Selected for BPSC prelims relevance from myind.net.",
+      "summary": "The Dravidian Deception Tamil Nadus Glorious Role in Indias Freedom Struggle From Rajaji to Kamaraj Part 1 &nbsp;&nbsp; myind.net",
+      "tags": [
+        "Modern Indian History",
+        "National Movement",
+        "Post-Independence India"
+      ],
+      "difficulty": "Easy",
+      "quizPrompt": "How can this topic be linked with Modern Indian History?",
+      "staticSyllabusLinks": [
+        "Modern Indian History",
+        "National Movement",
+        "Post-Independence India"
+      ],
+      "similarAskedInBpsc": "#Similar Asked in BPSC style: Modern Indian History / National Movement / Post-Independence India",
+      "factsToRemember": [
+        "Spectrum-style revision covers person, year, movement, ideology, and office held."
+      ],
+      "prelimsTrap": "Revise the related static concept rather than memorizing only the headline.",
+      "mainsAngle": "Use as a current hook for Modern Indian History and related static themes."
+    },
+    {
+      "id": "news-card-country-will-not-forgive-those-who-oppose-bill-for-women-s-reservation-bjp-leader-dilip-ghosh-3",
+      "title": "\"Country will not forgive those who oppose Bill for women's reservation\": BJP leader Dilip Ghosh",
+      "category": "History",
+      "ministry": "India's News.Net",
+      "source": "Google News",
+      "date": "2026-04-17",
+      "rawLink": "https://news.google.com/rss/articles/CBMizgFBVV95cUxPWUVWbV9KSl9pcTFxdzNkQ3NmdEIwZFkyX3lPc0RnR0pjQ0UzR2NqWlBxWVFNSHhVUGRxT1dJLVBrMjJremtMVmk2dTJlVklWTlJRMEpIbldXR2Y3YjQ1WXprNEhZZ2g3Wi1JQnBnTUd6UHpoRUFuVTFpM0hHUjRyMS04TEVQclZOYUNVdUgtZWU5aC1tamNaUzJSc0NGMkVwdVU4SUliWFoyQ3JCU1RjY2NjYkNkbXNvNnFENlpyODEwZjBvREd5TlFuTGpjUQ?oc=5",
+      "postedOn": "Fri, 17 Apr 2026 04:03:03 GMT",
+      "examAngle": "History, Modern Indian History, India's News.Net",
+      "whyItMatters": "Selected for BPSC prelims relevance from India's News.Net.",
+      "summary": "\"Country will not forgive those who oppose Bill for women's reservation\": BJP leader Dilip Ghosh &nbsp;&nbsp; India's News.Net",
+      "tags": [
+        "Modern Indian History",
+        "National Movement",
+        "Post-Independence India"
+      ],
+      "difficulty": "Easy",
+      "quizPrompt": "How can this topic be linked with Modern Indian History?",
+      "staticSyllabusLinks": [
+        "Modern Indian History",
+        "National Movement",
+        "Post-Independence India"
+      ],
+      "similarAskedInBpsc": "#Similar Asked in BPSC style: Modern Indian History / National Movement / Post-Independence India",
+      "factsToRemember": [
+        "Spectrum-style revision covers person, year, movement, ideology, and office held."
+      ],
+      "prelimsTrap": "Revise the related static concept rather than memorizing only the headline.",
+      "mainsAngle": "Use as a current hook for Modern Indian History and related static themes."
+    },
+    {
+      "id": "booster-polity-upsc",
+      "title": "BPSC Booster: UPSC, State PSCs and All India Services",
+      "category": "Polity",
+      "ministry": "BPSC Deck Engine",
+      "source": "Revision Deck",
+      "date": "2026-04-17",
+      "rawLink": null,
+      "postedOn": "2026-04-17",
+      "examAngle": "Polity, BPSC prelims, revision coverage",
+      "whyItMatters": "Added to ensure full prelims-oriented daily coverage when live-source volume is thin.",
+      "summary": "Quick static revision on Public Service Commissions and All India Services for BPSC prelims.",
+      "tags": [
+        "Polity",
+        "BPSC",
+        "Revision"
+      ],
+      "difficulty": "Easy",
+      "quizPrompt": "How can this revision card strengthen Polity basics?",
+      "staticSyllabusLinks": [
+        "Polity",
+        "BPSC Prelims"
+      ],
+      "similarAskedInBpsc": "#Similar Asked in BPSC style: Static basics from Polity often appear in objective questions.",
+      "factsToRemember": [
+        "Article 315 provides for Union and State Public Service Commissions.",
+        "Articles 315 to 323 deal with composition, appointment, removal, functions, and reports of Public Service Commissions.",
+        "UPSC is a constitutional body and State PSCs are also constitutional bodies.",
+        "The Chairman and members of UPSC are appointed by the President; State PSC heads are appointed by the Governor.",
+        "Article 312 deals with creation of All India Services.",
+        "IAS, IPS, and Indian Forest Service are the present All India Services.",
+        "All India Services serve both the Union and the States.",
+        "BPSC prelims often asks article numbers, appointing authority, and which services fall under AIS."
+      ],
+      "prelimsTrap": "Revise article, institution, chronology, location, or concept depending on the topic family.",
+      "mainsAngle": "Useful as a compact static base for Polity."
+    },
+    {
+      "id": "booster-polity-executive",
+      "title": "BPSC Booster: President, Vice-President and Prime Minister",
+      "category": "Polity",
+      "ministry": "BPSC Deck Engine",
+      "source": "Revision Deck",
+      "date": "2026-04-17",
+      "rawLink": null,
+      "postedOn": "2026-04-17",
+      "examAngle": "Polity, BPSC prelims, revision coverage",
+      "whyItMatters": "Added to ensure full prelims-oriented daily coverage when live-source volume is thin.",
+      "summary": "Static revision on Union Executive offices often asked in BPSC prelims.",
+      "tags": [
+        "Polity",
+        "BPSC",
+        "Revision"
+      ],
+      "difficulty": "Easy",
+      "quizPrompt": "How can this revision card strengthen Polity basics?",
+      "staticSyllabusLinks": [
+        "Polity",
+        "BPSC Prelims"
+      ],
+      "similarAskedInBpsc": "#Similar Asked in BPSC style: Static basics from Polity often appear in objective questions.",
+      "factsToRemember": [
+        "Article 52 provides that there shall be a President of India.",
+        "Article 63 provides that there shall be a Vice-President of India.",
+        "Article 74 provides for a Council of Ministers with the Prime Minister at the head.",
+        "Under Article 75, the Prime Minister is appointed by the President.",
+        "Under Article 64, the Vice-President is ex officio Chairman of the Rajya Sabha.",
+        "Article 65 deals with the Vice-President acting as President.",
+        "Article 56 gives the President a term of five years.",
+        "BPSC prelims often asks office, election, term, powers, and removal."
+      ],
+      "prelimsTrap": "Revise article, institution, chronology, location, or concept depending on the topic family.",
+      "mainsAngle": "Useful as a compact static base for Polity."
+    },
+    {
+      "id": "booster-economy-regulators",
+      "title": "BPSC Booster: Acts, Regulators and Financial Institutions",
+      "category": "Economy",
+      "ministry": "BPSC Deck Engine",
+      "source": "Revision Deck",
+      "date": "2026-04-17",
+      "rawLink": null,
+      "postedOn": "2026-04-17",
+      "examAngle": "Economy, BPSC prelims, revision coverage",
+      "whyItMatters": "Added to ensure full prelims-oriented daily coverage when live-source volume is thin.",
+      "summary": "Economy static facts focused on laws, regulators, institutions, and headquarters.",
+      "tags": [
+        "Economy",
+        "BPSC",
+        "Revision"
+      ],
+      "difficulty": "Easy",
+      "quizPrompt": "How can this revision card strengthen Economy basics?",
+      "staticSyllabusLinks": [
+        "Economy",
+        "BPSC Prelims"
+      ],
+      "similarAskedInBpsc": "#Similar Asked in BPSC style: Static basics from Economy often appear in objective questions.",
+      "factsToRemember": [
+        "Economy prelims commonly tests Act, regulator, institution, full form, and headquarters.",
+        "The Companies Act, 2013 is the principal corporate law framework in India.",
+        "RBI is India's central bank and SEBI regulates the securities market.",
+        "IFSCA regulates financial products and institutions in International Financial Services Centres.",
+        "GIFT City in Gujarat is India's major IFSC location.",
+        "MCA stands for Ministry of Corporate Affairs.",
+        "Questions often ask which regulator governs which sector.",
+        "BPSC frequently links current affairs with static economy institutions."
+      ],
+      "prelimsTrap": "Revise article, institution, chronology, location, or concept depending on the topic family.",
+      "mainsAngle": "Useful as a compact static base for Economy."
+    },
+    {
+      "id": "booster-history-spectrum",
+      "title": "BPSC Booster: Modern History Personality Mapping",
+      "category": "History",
+      "ministry": "BPSC Deck Engine",
+      "source": "Revision Deck",
+      "date": "2026-04-17",
+      "rawLink": null,
+      "postedOn": "2026-04-17",
+      "examAngle": "History, BPSC prelims, revision coverage",
+      "whyItMatters": "Added to ensure full prelims-oriented daily coverage when live-source volume is thin.",
+      "summary": "Spectrum-style revision on how personalities are asked in prelims.",
+      "tags": [
+        "History",
+        "BPSC",
+        "Revision"
+      ],
+      "difficulty": "Easy",
+      "quizPrompt": "How can this revision card strengthen History basics?",
+      "staticSyllabusLinks": [
+        "History",
+        "BPSC Prelims"
+      ],
+      "similarAskedInBpsc": "#Similar Asked in BPSC style: Static basics from History often appear in objective questions.",
+      "factsToRemember": [
+        "Modern history questions usually connect personality, year, movement, ideology, and office held.",
+        "Post-Independence personalities are often asked through chronology and tenure.",
+        "BPSC can connect a current anniversary with a national leader's political role.",
+        "Remember office held, associated movement, and time period.",
+        "Spectrum-style revision means concise personality-event-year linkage.",
+        "Former Prime Ministers are often asked through tenure and sequence.",
+        "Chronology-based elimination is common in prelims.",
+        "National movement and post-Independence politics both matter for BPSC."
+      ],
+      "prelimsTrap": "Revise article, institution, chronology, location, or concept depending on the topic family.",
+      "mainsAngle": "Useful as a compact static base for History."
+    },
+    {
+      "id": "booster-geography-environment",
+      "title": "BPSC Booster: Geography, Environment and Mapping Facts",
+      "category": "Environment",
+      "ministry": "BPSC Deck Engine",
+      "source": "Revision Deck",
+      "date": "2026-04-17",
+      "rawLink": null,
+      "postedOn": "2026-04-17",
+      "examAngle": "Environment, BPSC prelims, revision coverage",
+      "whyItMatters": "Added to ensure full prelims-oriented daily coverage when live-source volume is thin.",
+      "summary": "Static geography revision focused on location, state, river, and protected area linkage.",
+      "tags": [
+        "Environment",
+        "BPSC",
+        "Revision"
+      ],
+      "difficulty": "Easy",
+      "quizPrompt": "How can this revision card strengthen Environment basics?",
+      "staticSyllabusLinks": [
+        "Environment",
+        "BPSC Prelims"
+      ],
+      "similarAskedInBpsc": "#Similar Asked in BPSC style: Static basics from Environment often appear in objective questions.",
+      "factsToRemember": [
+        "Geography and environment prelims usually ask location, state, river basin, protected area, and species linkage.",
+        "National parks, sanctuaries, biosphere reserves, and Ramsar sites are recurring themes.",
+        "Climate and ecology questions often link current events with static geography.",
+        "Map-based elimination is a common prelims strategy.",
+        "River-based questions may ask tributary, basin, source, and state through which it flows.",
+        "Protected area questions may ask state, flagship species, and category.",
+        "Biodiversity hotspots and climate agreements are frequent static linkages.",
+        "BPSC often prefers factual location-based recall."
+      ],
+      "prelimsTrap": "Revise article, institution, chronology, location, or concept depending on the topic family.",
+      "mainsAngle": "Useful as a compact static base for Environment."
+    },
+    {
+      "id": "booster-science-tech",
+      "title": "BPSC Booster: Science and Technology Recall Sheet",
+      "category": "Science & Tech",
+      "ministry": "BPSC Deck Engine",
+      "source": "Revision Deck",
+      "date": "2026-04-17",
+      "rawLink": null,
+      "postedOn": "2026-04-17",
+      "examAngle": "Science & Tech, BPSC prelims, revision coverage",
+      "whyItMatters": "Added to ensure full prelims-oriented daily coverage when live-source volume is thin.",
+      "summary": "Static science revision focused on institution, concept, mission, and application.",
+      "tags": [
+        "Science & Tech",
+        "BPSC",
+        "Revision"
+      ],
+      "difficulty": "Easy",
+      "quizPrompt": "How can this revision card strengthen Science & Tech basics?",
+      "staticSyllabusLinks": [
+        "Science & Tech",
+        "BPSC Prelims"
+      ],
+      "similarAskedInBpsc": "#Similar Asked in BPSC style: Static basics from Science & Tech often appear in objective questions.",
+      "factsToRemember": [
+        "Science prelims usually asks institution, concept, mission, and application.",
+        "In technology current affairs, nodal ministry and implementing institution matter a lot.",
+        "For AI, revise full form, application area, and ministry handling the mission.",
+        "In astronomy, galaxy type, black hole type, and cosmic structure are common fact zones.",
+        "Defence technology questions often test abbreviations and system use.",
+        "Mission-based science questions may ask objective, institution, and application.",
+        "BPSC usually prefers factual science over technical depth.",
+        "Short concept-to-application linkage works best in revision cards."
+      ],
+      "prelimsTrap": "Revise article, institution, chronology, location, or concept depending on the topic family.",
+      "mainsAngle": "Useful as a compact static base for Science & Tech."
+    },
+    {
+      "id": "booster-generic-7",
+      "title": "BPSC Booster 7: Static Revision Drill",
+      "category": "Polity",
+      "ministry": "BPSC Deck Engine",
+      "source": "Revision Deck",
+      "date": "2026-04-17",
+      "rawLink": null,
+      "postedOn": "2026-04-17",
+      "examAngle": "BPSC prelims static reinforcement",
+      "whyItMatters": "Added to complete a balanced daily revision pack across core prelims domains.",
+      "summary": "Static revision booster generated to ensure the day covers multiple BPSC prelims dimensions.",
+      "tags": [
+        "BPSC",
+        "Revision"
+      ],
+      "difficulty": "Easy",
+      "quizPrompt": "How does this booster help static recall?",
+      "staticSyllabusLinks": [
+        "BPSC Prelims"
+      ],
+      "similarAskedInBpsc": "#Similar Asked in BPSC style: Static one-liners often support elimination in prelims.",
+      "factsToRemember": [
+        "Prelims revision works best when each topic is reduced to article, institution, year, location, or concept.",
+        "Polity asks article, office, election, term, removal, and powers.",
+        "Economy asks Act, regulator, institution, full form, and location/headquarters.",
+        "History asks person, year, movement, ideology, and office held.",
+        "Geography and environment ask location, state, river, sanctuary, park, and species linkage.",
+        "Science asks institution, concept, mission, and application."
+      ],
+      "prelimsTrap": "Do not revise only current affairs; always attach a static anchor.",
+      "mainsAngle": "This is primarily a prelims reinforcement card."
+    },
+    {
+      "id": "booster-generic-8",
+      "title": "BPSC Booster 8: Static Revision Drill",
+      "category": "Science & Tech",
+      "ministry": "BPSC Deck Engine",
+      "source": "Revision Deck",
+      "date": "2026-04-17",
+      "rawLink": null,
+      "postedOn": "2026-04-17",
+      "examAngle": "BPSC prelims static reinforcement",
+      "whyItMatters": "Added to complete a balanced daily revision pack across core prelims domains.",
+      "summary": "Static revision booster generated to ensure the day covers multiple BPSC prelims dimensions.",
+      "tags": [
+        "BPSC",
+        "Revision"
+      ],
+      "difficulty": "Easy",
+      "quizPrompt": "How does this booster help static recall?",
+      "staticSyllabusLinks": [
+        "BPSC Prelims"
+      ],
+      "similarAskedInBpsc": "#Similar Asked in BPSC style: Static one-liners often support elimination in prelims.",
+      "factsToRemember": [
+        "Prelims revision works best when each topic is reduced to article, institution, year, location, or concept.",
+        "Polity asks article, office, election, term, removal, and powers.",
+        "Economy asks Act, regulator, institution, full form, and location/headquarters.",
+        "History asks person, year, movement, ideology, and office held.",
+        "Geography and environment ask location, state, river, sanctuary, park, and species linkage.",
+        "Science asks institution, concept, mission, and application."
+      ],
+      "prelimsTrap": "Do not revise only current affairs; always attach a static anchor.",
+      "mainsAngle": "This is primarily a prelims reinforcement card."
+    },
+    {
+      "id": "booster-generic-9",
+      "title": "BPSC Booster 9: Static Revision Drill",
+      "category": "History",
+      "ministry": "BPSC Deck Engine",
+      "source": "Revision Deck",
+      "date": "2026-04-17",
+      "rawLink": null,
+      "postedOn": "2026-04-17",
+      "examAngle": "BPSC prelims static reinforcement",
+      "whyItMatters": "Added to complete a balanced daily revision pack across core prelims domains.",
+      "summary": "Static revision booster generated to ensure the day covers multiple BPSC prelims dimensions.",
+      "tags": [
+        "BPSC",
+        "Revision"
+      ],
+      "difficulty": "Easy",
+      "quizPrompt": "How does this booster help static recall?",
+      "staticSyllabusLinks": [
+        "BPSC Prelims"
+      ],
+      "similarAskedInBpsc": "#Similar Asked in BPSC style: Static one-liners often support elimination in prelims.",
+      "factsToRemember": [
+        "Prelims revision works best when each topic is reduced to article, institution, year, location, or concept.",
+        "Polity asks article, office, election, term, removal, and powers.",
+        "Economy asks Act, regulator, institution, full form, and location/headquarters.",
+        "History asks person, year, movement, ideology, and office held.",
+        "Geography and environment ask location, state, river, sanctuary, park, and species linkage.",
+        "Science asks institution, concept, mission, and application."
+      ],
+      "prelimsTrap": "Do not revise only current affairs; always attach a static anchor.",
+      "mainsAngle": "This is primarily a prelims reinforcement card."
+    },
+    {
+      "id": "booster-generic-10",
+      "title": "BPSC Booster 10: Static Revision Drill",
+      "category": "Environment",
+      "ministry": "BPSC Deck Engine",
+      "source": "Revision Deck",
+      "date": "2026-04-17",
+      "rawLink": null,
+      "postedOn": "2026-04-17",
+      "examAngle": "BPSC prelims static reinforcement",
+      "whyItMatters": "Added to complete a balanced daily revision pack across core prelims domains.",
+      "summary": "Static revision booster generated to ensure the day covers multiple BPSC prelims dimensions.",
+      "tags": [
+        "BPSC",
+        "Revision"
+      ],
+      "difficulty": "Easy",
+      "quizPrompt": "How does this booster help static recall?",
+      "staticSyllabusLinks": [
+        "BPSC Prelims"
+      ],
+      "similarAskedInBpsc": "#Similar Asked in BPSC style: Static one-liners often support elimination in prelims.",
+      "factsToRemember": [
+        "Prelims revision works best when each topic is reduced to article, institution, year, location, or concept.",
+        "Polity asks article, office, election, term, removal, and powers.",
+        "Economy asks Act, regulator, institution, full form, and location/headquarters.",
+        "History asks person, year, movement, ideology, and office held.",
+        "Geography and environment ask location, state, river, sanctuary, park, and species linkage.",
+        "Science asks institution, concept, mission, and application."
+      ],
+      "prelimsTrap": "Do not revise only current affairs; always attach a static anchor.",
+      "mainsAngle": "This is primarily a prelims reinforcement card."
+    },
+    {
+      "id": "booster-generic-11",
+      "title": "BPSC Booster 11: Static Revision Drill",
+      "category": "Polity",
+      "ministry": "BPSC Deck Engine",
+      "source": "Revision Deck",
+      "date": "2026-04-17",
+      "rawLink": null,
+      "postedOn": "2026-04-17",
+      "examAngle": "BPSC prelims static reinforcement",
+      "whyItMatters": "Added to complete a balanced daily revision pack across core prelims domains.",
+      "summary": "Static revision booster generated to ensure the day covers multiple BPSC prelims dimensions.",
+      "tags": [
+        "BPSC",
+        "Revision"
+      ],
+      "difficulty": "Easy",
+      "quizPrompt": "How does this booster help static recall?",
+      "staticSyllabusLinks": [
+        "BPSC Prelims"
+      ],
+      "similarAskedInBpsc": "#Similar Asked in BPSC style: Static one-liners often support elimination in prelims.",
+      "factsToRemember": [
+        "Prelims revision works best when each topic is reduced to article, institution, year, location, or concept.",
+        "Polity asks article, office, election, term, removal, and powers.",
+        "Economy asks Act, regulator, institution, full form, and location/headquarters.",
+        "History asks person, year, movement, ideology, and office held.",
+        "Geography and environment ask location, state, river, sanctuary, park, and species linkage.",
+        "Science asks institution, concept, mission, and application."
+      ],
+      "prelimsTrap": "Do not revise only current affairs; always attach a static anchor.",
+      "mainsAngle": "This is primarily a prelims reinforcement card."
+    },
+    {
+      "id": "booster-generic-12",
+      "title": "BPSC Booster 12: Static Revision Drill",
+      "category": "Science & Tech",
+      "ministry": "BPSC Deck Engine",
+      "source": "Revision Deck",
+      "date": "2026-04-17",
+      "rawLink": null,
+      "postedOn": "2026-04-17",
+      "examAngle": "BPSC prelims static reinforcement",
+      "whyItMatters": "Added to complete a balanced daily revision pack across core prelims domains.",
+      "summary": "Static revision booster generated to ensure the day covers multiple BPSC prelims dimensions.",
+      "tags": [
+        "BPSC",
+        "Revision"
+      ],
+      "difficulty": "Easy",
+      "quizPrompt": "How does this booster help static recall?",
+      "staticSyllabusLinks": [
+        "BPSC Prelims"
+      ],
+      "similarAskedInBpsc": "#Similar Asked in BPSC style: Static one-liners often support elimination in prelims.",
+      "factsToRemember": [
+        "Prelims revision works best when each topic is reduced to article, institution, year, location, or concept.",
+        "Polity asks article, office, election, term, removal, and powers.",
+        "Economy asks Act, regulator, institution, full form, and location/headquarters.",
+        "History asks person, year, movement, ideology, and office held.",
+        "Geography and environment ask location, state, river, sanctuary, park, and species linkage.",
+        "Science asks institution, concept, mission, and application."
+      ],
+      "prelimsTrap": "Do not revise only current affairs; always attach a static anchor.",
+      "mainsAngle": "This is primarily a prelims reinforcement card."
+    },
+    {
+      "id": "booster-generic-13",
+      "title": "BPSC Booster 13: Static Revision Drill",
+      "category": "Polity",
+      "ministry": "BPSC Deck Engine",
+      "source": "Revision Deck",
+      "date": "2026-04-17",
+      "rawLink": null,
+      "postedOn": "2026-04-17",
+      "examAngle": "BPSC prelims static reinforcement",
+      "whyItMatters": "Added to complete a balanced daily revision pack across core prelims domains.",
+      "summary": "Static revision booster generated to ensure the day covers multiple BPSC prelims dimensions.",
+      "tags": [
+        "BPSC",
+        "Revision"
+      ],
+      "difficulty": "Easy",
+      "quizPrompt": "How does this booster help static recall?",
+      "staticSyllabusLinks": [
+        "BPSC Prelims"
+      ],
+      "similarAskedInBpsc": "#Similar Asked in BPSC style: Static one-liners often support elimination in prelims.",
+      "factsToRemember": [
+        "Prelims revision works best when each topic is reduced to article, institution, year, location, or concept.",
+        "Polity asks article, office, election, term, removal, and powers.",
+        "Economy asks Act, regulator, institution, full form, and location/headquarters.",
+        "History asks person, year, movement, ideology, and office held.",
+        "Geography and environment ask location, state, river, sanctuary, park, and species linkage.",
+        "Science asks institution, concept, mission, and application."
+      ],
+      "prelimsTrap": "Do not revise only current affairs; always attach a static anchor.",
+      "mainsAngle": "This is primarily a prelims reinforcement card."
+    },
+    {
+      "id": "booster-generic-14",
+      "title": "BPSC Booster 14: Static Revision Drill",
+      "category": "Economy",
+      "ministry": "BPSC Deck Engine",
+      "source": "Revision Deck",
+      "date": "2026-04-17",
+      "rawLink": null,
+      "postedOn": "2026-04-17",
+      "examAngle": "BPSC prelims static reinforcement",
+      "whyItMatters": "Added to complete a balanced daily revision pack across core prelims domains.",
+      "summary": "Static revision booster generated to ensure the day covers multiple BPSC prelims dimensions.",
+      "tags": [
+        "BPSC",
+        "Revision"
+      ],
+      "difficulty": "Easy",
+      "quizPrompt": "How does this booster help static recall?",
+      "staticSyllabusLinks": [
+        "BPSC Prelims"
+      ],
+      "similarAskedInBpsc": "#Similar Asked in BPSC style: Static one-liners often support elimination in prelims.",
+      "factsToRemember": [
+        "Prelims revision works best when each topic is reduced to article, institution, year, location, or concept.",
+        "Polity asks article, office, election, term, removal, and powers.",
+        "Economy asks Act, regulator, institution, full form, and location/headquarters.",
+        "History asks person, year, movement, ideology, and office held.",
+        "Geography and environment ask location, state, river, sanctuary, park, and species linkage.",
+        "Science asks institution, concept, mission, and application."
+      ],
+      "prelimsTrap": "Do not revise only current affairs; always attach a static anchor.",
+      "mainsAngle": "This is primarily a prelims reinforcement card."
+    },
+    {
+      "id": "booster-generic-15",
+      "title": "BPSC Booster 15: Static Revision Drill",
+      "category": "Environment",
+      "ministry": "BPSC Deck Engine",
+      "source": "Revision Deck",
+      "date": "2026-04-17",
+      "rawLink": null,
+      "postedOn": "2026-04-17",
+      "examAngle": "BPSC prelims static reinforcement",
+      "whyItMatters": "Added to complete a balanced daily revision pack across core prelims domains.",
+      "summary": "Static revision booster generated to ensure the day covers multiple BPSC prelims dimensions.",
+      "tags": [
+        "BPSC",
+        "Revision"
+      ],
+      "difficulty": "Easy",
+      "quizPrompt": "How does this booster help static recall?",
+      "staticSyllabusLinks": [
+        "BPSC Prelims"
+      ],
+      "similarAskedInBpsc": "#Similar Asked in BPSC style: Static one-liners often support elimination in prelims.",
+      "factsToRemember": [
+        "Prelims revision works best when each topic is reduced to article, institution, year, location, or concept.",
+        "Polity asks article, office, election, term, removal, and powers.",
+        "Economy asks Act, regulator, institution, full form, and location/headquarters.",
+        "History asks person, year, movement, ideology, and office held.",
+        "Geography and environment ask location, state, river, sanctuary, park, and species linkage.",
+        "Science asks institution, concept, mission, and application."
+      ],
+      "prelimsTrap": "Do not revise only current affairs; always attach a static anchor.",
+      "mainsAngle": "This is primarily a prelims reinforcement card."
+    },
+    {
+      "id": "booster-generic-16",
+      "title": "BPSC Booster 16: Static Revision Drill",
+      "category": "Science & Tech",
+      "ministry": "BPSC Deck Engine",
+      "source": "Revision Deck",
+      "date": "2026-04-17",
+      "rawLink": null,
+      "postedOn": "2026-04-17",
+      "examAngle": "BPSC prelims static reinforcement",
+      "whyItMatters": "Added to complete a balanced daily revision pack across core prelims domains.",
+      "summary": "Static revision booster generated to ensure the day covers multiple BPSC prelims dimensions.",
+      "tags": [
+        "BPSC",
+        "Revision"
+      ],
+      "difficulty": "Easy",
+      "quizPrompt": "How does this booster help static recall?",
+      "staticSyllabusLinks": [
+        "BPSC Prelims"
+      ],
+      "similarAskedInBpsc": "#Similar Asked in BPSC style: Static one-liners often support elimination in prelims.",
+      "factsToRemember": [
+        "Prelims revision works best when each topic is reduced to article, institution, year, location, or concept.",
+        "Polity asks article, office, election, term, removal, and powers.",
+        "Economy asks Act, regulator, institution, full form, and location/headquarters.",
+        "History asks person, year, movement, ideology, and office held.",
+        "Geography and environment ask location, state, river, sanctuary, park, and species linkage.",
+        "Science asks institution, concept, mission, and application."
+      ],
+      "prelimsTrap": "Do not revise only current affairs; always attach a static anchor.",
+      "mainsAngle": "This is primarily a prelims reinforcement card."
+    },
+    {
+      "id": "booster-generic-17",
+      "title": "BPSC Booster 17: Static Revision Drill",
+      "category": "Polity",
+      "ministry": "BPSC Deck Engine",
+      "source": "Revision Deck",
+      "date": "2026-04-17",
+      "rawLink": null,
+      "postedOn": "2026-04-17",
+      "examAngle": "BPSC prelims static reinforcement",
+      "whyItMatters": "Added to complete a balanced daily revision pack across core prelims domains.",
+      "summary": "Static revision booster generated to ensure the day covers multiple BPSC prelims dimensions.",
+      "tags": [
+        "BPSC",
+        "Revision"
+      ],
+      "difficulty": "Easy",
+      "quizPrompt": "How does this booster help static recall?",
+      "staticSyllabusLinks": [
+        "BPSC Prelims"
+      ],
+      "similarAskedInBpsc": "#Similar Asked in BPSC style: Static one-liners often support elimination in prelims.",
+      "factsToRemember": [
+        "Prelims revision works best when each topic is reduced to article, institution, year, location, or concept.",
+        "Polity asks article, office, election, term, removal, and powers.",
+        "Economy asks Act, regulator, institution, full form, and location/headquarters.",
+        "History asks person, year, movement, ideology, and office held.",
+        "Geography and environment ask location, state, river, sanctuary, park, and species linkage.",
+        "Science asks institution, concept, mission, and application."
+      ],
+      "prelimsTrap": "Do not revise only current affairs; always attach a static anchor.",
+      "mainsAngle": "This is primarily a prelims reinforcement card."
+    },
+    {
+      "id": "booster-generic-18",
+      "title": "BPSC Booster 18: Static Revision Drill",
+      "category": "History",
+      "ministry": "BPSC Deck Engine",
+      "source": "Revision Deck",
+      "date": "2026-04-17",
+      "rawLink": null,
+      "postedOn": "2026-04-17",
+      "examAngle": "BPSC prelims static reinforcement",
+      "whyItMatters": "Added to complete a balanced daily revision pack across core prelims domains.",
+      "summary": "Static revision booster generated to ensure the day covers multiple BPSC prelims dimensions.",
+      "tags": [
+        "BPSC",
+        "Revision"
+      ],
+      "difficulty": "Easy",
+      "quizPrompt": "How does this booster help static recall?",
+      "staticSyllabusLinks": [
+        "BPSC Prelims"
+      ],
+      "similarAskedInBpsc": "#Similar Asked in BPSC style: Static one-liners often support elimination in prelims.",
+      "factsToRemember": [
+        "Prelims revision works best when each topic is reduced to article, institution, year, location, or concept.",
+        "Polity asks article, office, election, term, removal, and powers.",
+        "Economy asks Act, regulator, institution, full form, and location/headquarters.",
+        "History asks person, year, movement, ideology, and office held.",
+        "Geography and environment ask location, state, river, sanctuary, park, and species linkage.",
+        "Science asks institution, concept, mission, and application."
+      ],
+      "prelimsTrap": "Do not revise only current affairs; always attach a static anchor.",
+      "mainsAngle": "This is primarily a prelims reinforcement card."
+    },
+    {
+      "id": "booster-generic-19",
+      "title": "BPSC Booster 19: Static Revision Drill",
+      "category": "Polity",
+      "ministry": "BPSC Deck Engine",
+      "source": "Revision Deck",
+      "date": "2026-04-17",
+      "rawLink": null,
+      "postedOn": "2026-04-17",
+      "examAngle": "BPSC prelims static reinforcement",
+      "whyItMatters": "Added to complete a balanced daily revision pack across core prelims domains.",
+      "summary": "Static revision booster generated to ensure the day covers multiple BPSC prelims dimensions.",
+      "tags": [
+        "BPSC",
+        "Revision"
+      ],
+      "difficulty": "Easy",
+      "quizPrompt": "How does this booster help static recall?",
+      "staticSyllabusLinks": [
+        "BPSC Prelims"
+      ],
+      "similarAskedInBpsc": "#Similar Asked in BPSC style: Static one-liners often support elimination in prelims.",
+      "factsToRemember": [
+        "Prelims revision works best when each topic is reduced to article, institution, year, location, or concept.",
+        "Polity asks article, office, election, term, removal, and powers.",
+        "Economy asks Act, regulator, institution, full form, and location/headquarters.",
+        "History asks person, year, movement, ideology, and office held.",
+        "Geography and environment ask location, state, river, sanctuary, park, and species linkage.",
+        "Science asks institution, concept, mission, and application."
+      ],
+      "prelimsTrap": "Do not revise only current affairs; always attach a static anchor.",
+      "mainsAngle": "This is primarily a prelims reinforcement card."
+    },
+    {
+      "id": "booster-generic-20",
+      "title": "BPSC Booster 20: Static Revision Drill",
+      "category": "Environment",
+      "ministry": "BPSC Deck Engine",
+      "source": "Revision Deck",
+      "date": "2026-04-17",
+      "rawLink": null,
+      "postedOn": "2026-04-17",
+      "examAngle": "BPSC prelims static reinforcement",
+      "whyItMatters": "Added to complete a balanced daily revision pack across core prelims domains.",
+      "summary": "Static revision booster generated to ensure the day covers multiple BPSC prelims dimensions.",
+      "tags": [
+        "BPSC",
+        "Revision"
+      ],
+      "difficulty": "Easy",
+      "quizPrompt": "How does this booster help static recall?",
+      "staticSyllabusLinks": [
+        "BPSC Prelims"
+      ],
+      "similarAskedInBpsc": "#Similar Asked in BPSC style: Static one-liners often support elimination in prelims.",
+      "factsToRemember": [
+        "Prelims revision works best when each topic is reduced to article, institution, year, location, or concept.",
+        "Polity asks article, office, election, term, removal, and powers.",
+        "Economy asks Act, regulator, institution, full form, and location/headquarters.",
+        "History asks person, year, movement, ideology, and office held.",
+        "Geography and environment ask location, state, river, sanctuary, park, and species linkage.",
+        "Science asks institution, concept, mission, and application."
+      ],
+      "prelimsTrap": "Do not revise only current affairs; always attach a static anchor.",
+      "mainsAngle": "This is primarily a prelims reinforcement card."
+    }
+  ]
+}

@@ -1,0 +1,272 @@
+[
+  {
+    "type": "single_correct",
+    "question": "Which of the following correctly explains why the implementation of women's reservation in Lok Sabha is not immediate despite the 106th Constitutional Amendment Act, 2023?",
+    "options": {
+      "A": "Because it requires ratification by at least half of the State Legislatures every five years",
+      "B": "Because the reservation will operate only after a fresh census and subsequent delimitation exercise",
+      "C": "Because the Election Commission has not yet issued a statutory notification under Article 324",
+      "D": "Because Rajya Sabha has only suspended, not approved, the operational part of the amendment"
+    },
+    "answer": "B",
+    "explanation": "The key constitutional and political fact is that the Nari Shakti Vandan framework is linked to delimitation after a fresh census. Your notes clearly state that reservation will become operative only after delimitation, and that such delimitation has not yet occurred. Option A is wrong because this is not a recurring ratification requirement. Option C is a trap: Article 324 concerns conduct of elections by the Election Commission, not activation of a constitutional reservation provision. Option D is factually incorrect because the constitutional amendment was enacted; the issue is operational timing, not Rajya Sabha suspension."
+  },
+  {
+    "type": "statement_based",
+    "question": "Consider the following statements regarding constitutional provisions connected with representation and reservation:",
+    "statements": {
+      "A": "Article 82 provides for readjustment of territorial constituencies after each census.",
+      "B": "Articles 330 to 332 deal with reservation of seats for Scheduled Castes and Scheduled Tribes in legislatures.",
+      "C": "Women's reservation under the 106th Amendment is entirely outside the SC/ST reserved category framework.",
+      "D": "Bihar was the first state to provide 50% reservation to women in Panchayati Raj institutions."
+    },
+    "options": {
+      "1": "A, B & D only",
+      "2": "A & C only",
+      "3": "B, C & D only",
+      "4": "A, B, C & D"
+    },
+    "answer": "1",
+    "explanation": "A is correct because Article 82 is the constitutional anchor for delimitation after census. B is also correct: Articles 330–332 relate to SC/ST reservation in Lok Sabha and State Assemblies. C is incorrect and is the main trap here. Your notes explicitly say women's reservation is within SC/ST reserved seats, not something placed outside or over and above them. D is correct because Bihar was indeed the first state to provide 50% reservation to women in Panchayati Raj institutions in 2006. So the correct combination is A, B and D."
+  },
+  {
+    "type": "single_correct",
+    "question": "In the context of the Union Budget, which one of the following pairs is incorrectly matched?",
+    "options": {
+      "A": "Article 112 — Annual Financial Statement",
+      "B": "Article 266 — Consolidated Fund of India",
+      "C": "Article 267 — Contingency Fund of India",
+      "D": "Article 280 — Election Commission"
+    },
+    "answer": "D",
+    "explanation": "This question is designed to test close constitutional mapping. Article 112 deals with the Annual Financial Statement, which is the formal constitutional term for the Budget. Article 266 deals with the Consolidated Fund of India. Article 267 concerns the Contingency Fund. Article 280 does not establish the Election Commission; it provides for the Finance Commission. The Election Commission is under Article 324. This is a classic exam trap because both Article 280 and Article 324 are frequently asked in polity MCQs."
+  },
+  {
+    "type": "statement_based",
+    "question": "Consider the following statements regarding fiscal concepts and the Budget:",
+    "statements": {
+      "A": "Revenue Deficit is the excess of Revenue Expenditure over Revenue Receipts.",
+      "B": "Capital Budget includes borrowings and asset-creating expenditure.",
+      "C": "Rajya Sabha can reject a Money Bill in full by passing a special majority resolution within 14 days.",
+      "D": "The FRBM framework was amended in 2018 to adopt a debt-to-GDP target."
+    },
+    "options": {
+      "1": "A, B & D only",
+      "2": "A & C only",
+      "3": "B, C & D only",
+      "4": "A, B, C & D"
+    },
+    "answer": "1",
+    "explanation": "A is correct: Revenue Deficit means the government's revenue expenditure exceeds its revenue receipts. B is also correct: capital receipts include borrowings and capital expenditure includes asset creation and loans. C is incorrect because Rajya Sabha cannot reject a Money Bill; it can only recommend changes and delay it for up to 14 days. D is correct because the FRBM framework was amended in 2018 to incorporate debt-based fiscal targets. This question is tough because it mixes accounting terms with constitutional procedure."
+  },
+  {
+    "type": "single_correct",
+    "question": "Which one of the following best captures Bihar's distinctive position in the agricultural marketing system of India?",
+    "options": {
+      "A": "Bihar was the first state to fully integrate all mandis with e-NAM under a unified state trading portal.",
+      "B": "Bihar abolished its APMC Act in 2006, allowing farmers to sell directly outside regulated mandis.",
+      "C": "Bihar follows the Model APMC Act, 2003 more completely than Punjab and Haryana.",
+      "D": "Bihar's agricultural marketing is constitutionally regulated by the Union under Entry 28 of the Union List."
+    },
+    "answer": "B",
+    "explanation": "B is the defining fact. Your notes emphasize that Bihar abolished its APMC Act in 2006 and was the only state to do so. That makes Bihar structurally different from the mandi-driven systems of many other states. A is false because Bihar's APMC structure was dismantled, so the idea of full mandi integration is misleading. C is wrong because Bihar moved away from the APMC model rather than implementing it more completely. D is incorrect because agriculture and markets/fairs fall in the State List, not Union List."
+  },
+  {
+    "type": "single_correct",
+    "question": "Which of the following is the most accurate constitutional interpretation of why the Centre cannot directly redesign APMC structures across all states in the same way?",
+    "options": {
+      "A": "Because agricultural markets are protected under the basic structure doctrine",
+      "B": "Because agriculture and markets/fairs fall in the State List",
+      "C": "Because the Supreme Court prohibited Parliament from legislating on farm trade after 2021",
+      "D": "Because only NITI Aayog can recommend agricultural market reforms"
+    },
+    "answer": "B",
+    "explanation": "Your notes clearly mention that Agriculture is in State List Entry 14 and Markets & Fairs in State List Entry 28. That is the core federal reason. A is an invented constitutional claim. C is false; the 2020 farm laws were repealed politically, not because of a blanket Supreme Court prohibition on Parliament ever legislating in the area. D is incorrect because NITI Aayog is only a policy think tank, not a constitutional veto point."
+  },
+  {
+    "type": "statement_based",
+    "question": "Consider the following statements regarding e-NAM and related farm institutions:",
+    "statements": {
+      "A": "e-NAM is a pan-India online trading portal under SFAC.",
+      "B": "MSP is recommended by the CACP.",
+      "C": "FPOs may be registered under company law or cooperative law frameworks.",
+      "D": "Bihar's abolition of APMC means that its farm trade structure differs fundamentally from the mandi-linked e-NAM model."
+    },
+    "options": {
+      "1": "A, B & C only",
+      "2": "A, B, C & D",
+      "3": "B & D only",
+      "4": "A & D only"
+    },
+    "answer": "2",
+    "explanation": "All four statements are correct. A is right because e-NAM is run under the Small Farmers Agribusiness Consortium. B is correct because MSP recommendations are made by the Commission for Agricultural Costs and Prices. C is correct because Farmer Producer Organizations can be formed under company or cooperative structures. D is also correct and reflects a deeper institutional distinction: Bihar's 2006 move changed the marketing architecture itself, which is why its relationship to mandi-based integration is different."
+  },
+  {
+    "type": "single_correct",
+    "question": "Which one of the following pairs is correctly matched?",
+    "options": {
+      "A": "NPCI — Statutory constitutional authority under Article 280",
+      "B": "UPI — Launched by RBI as a direct sovereign payment instrument under the Finance Ministry",
+      "C": "BHIM — Government-backed reference UPI application",
+      "D": "JAM Trinity — Jan Dhan, Aadhaar and MGNREGA"
+    },
+    "answer": "C",
+    "explanation": "BHIM is correctly identified as the government's reference UPI app. A is wrong because NPCI is not a constitutional authority; it is a not-for-profit company set up under the aegis of RBI and IBA. B is misleading because UPI was launched by NPCI, not as a direct sovereign instrument of the Finance Ministry. D is wrong because JAM stands for Jan Dhan, Aadhaar and Mobile, not MGNREGA."
+  },
+  {
+    "type": "statement_based",
+    "question": "Consider the following statements regarding digital payments in India:",
+    "statements": {
+      "A": "NPCI was set up under the aegis of RBI and Indian Banks' Association.",
+      "B": "UPI eliminates the need to share account number or IFSC due to the VPA system.",
+      "C": "Tokenization means replacing real card/account details with a surrogate token for security.",
+      "D": "India's real-time payments share is lower than that of China."
+    },
+    "options": {
+      "1": "A, B & C only",
+      "2": "A & D only",
+      "3": "B, C & D only",
+      "4": "A, B, C & D"
+    },
+    "answer": "1",
+    "explanation": "A is correct. B is correct because UPI's Virtual Payment Address structure reduces dependence on sharing bank identifiers. C is correct because tokenization is exactly a substitution security mechanism. D is false according to your notes: India leads global real-time payments share, ahead of China and the USA. This makes the question more difficult because D sounds plausible to anyone who assumes China is still first."
+  },
+  {
+    "type": "single_correct",
+    "question": "Which one of the following is the correct sequence in the historical evolution of exchange mentioned in your notes?",
+    "options": {
+      "A": "Barter → Punch-marked coins → Cowrie shells → Paper currency → Digital payments",
+      "B": "Cowrie shells → Barter → Paper currency → Coins → Digital payments",
+      "C": "Barter → Cowrie shells → Punch-marked coins → Paper currency → Digital payments",
+      "D": "Barter → Paper currency → Cowrie shells → Coins → Digital payments"
+    },
+    "answer": "C",
+    "explanation": "The sequence in your notes is Barter system, then Cowrie shells, then Coins including punch-marked coins, then Paper currency, then Digital payments. This is exactly the type of fact-sequence question BPSC likes because every wrong option contains mostly correct elements but in wrong order."
+  },
+  {
+    "type": "single_correct",
+    "question": "Which one of the following correctly identifies the East Central Railway headquarters and its state-level significance?",
+    "options": {
+      "A": "Gaya — major Buddhist tourism and railway divisional headquarters",
+      "B": "Patna — administrative capital and headquarters of East Central Railway",
+      "C": "Hajipur — headquarters of East Central Railway and linked with Bihar's transport geography",
+      "D": "Muzaffarpur — headquarters of East Central Railway and GI-linked litchi hub"
+    },
+    "answer": "C",
+    "explanation": "Your notes clearly state that East Central Railway has its headquarters at Hajipur in Vaishali district, Bihar. The question is designed to mislead with well-known Bihar cities like Patna, Gaya, and Muzaffarpur. Hajipur is also geographically important due to links with Patna via major bridge connectivity, making it a classic factual trap."
+  },
+  {
+    "type": "statement_based",
+    "question": "Consider the following statements regarding Indian Railways and related transport infrastructure:",
+    "statements": {
+      "A": "Broad Gauge in India measures 1.676 metres.",
+      "B": "Kavach is an Automatic Train Protection system developed by RDSO.",
+      "C": "MAHSR uses Japanese Shinkansen technology.",
+      "D": "The Western Dedicated Freight Corridor connects Ludhiana to Dankuni."
+    },
+    "options": {
+      "1": "A, B & C only",
+      "2": "A & D only",
+      "3": "B, C & D only",
+      "4": "A, B, C & D"
+    },
+    "answer": "1",
+    "explanation": "A is correct: Indian Broad Gauge is 1.676 m. B is correct: Kavach is an ATP system developed by the Research Designs and Standards Organisation. C is correct because the Mumbai-Ahmedabad High Speed Rail project uses Shinkansen technology. D is false because Ludhiana to Dankuni is the Eastern DFC, not the Western DFC. Western DFC runs from Dadri to JNPT."
+  },
+  {
+    "type": "single_correct",
+    "question": "Which of the following best explains Bihar's strategic advantage under inland waterway development despite being landlocked?",
+    "options": {
+      "A": "It has direct access to the Arabian Sea through the Son river system",
+      "B": "National Waterway-1 passes through key Bihar stretches along the Ganga",
+      "C": "It hosts two of India's 12 major ports on inland river islands",
+      "D": "It shares maritime customs jurisdiction with West Bengal"
+    },
+    "answer": "B",
+    "explanation": "Bihar is landlocked, but that does not eliminate transport advantage because NW-1 on the Ganga passes through important Bihar stretches such as Buxar, Patna, Munger and Bhagalpur. A is geographically absurd. C is false because Bihar has no major seaport. D is also false because landlocked states do not share maritime customs jurisdiction in that way."
+  },
+  {
+    "type": "single_correct",
+    "question": "Which one of the following is correctly matched regarding defence and maritime geography?",
+    "options": {
+      "A": "Eastern Naval Command — Kochi",
+      "B": "Southern Naval Command — Visakhapatnam",
+      "C": "India's only tri-services command — Port Blair",
+      "D": "Western Naval Command — Chennai"
+    },
+    "answer": "C",
+    "explanation": "The Andaman & Nicobar Command at Port Blair is India's only tri-services command. Eastern Naval Command is at Visakhapatnam, Southern Naval Command is at Kochi, and Western Naval Command is at Mumbai. All other options deliberately swap commands with cities."
+  },
+  {
+    "type": "statement_based",
+    "question": "Consider the following statements regarding ANRF and scientific governance:",
+    "statements": {
+      "A": "ANRF replaced SERB.",
+      "B": "Its governing board is chaired by the Prime Minister.",
+      "C": "Article 51A(h) is relevant because it speaks of scientific temper.",
+      "D": "All of ANRF's proposed corpus is to come exclusively from the Union Budget."
+    },
+    "options": {
+      "1": "A, B & C only",
+      "2": "A & D only",
+      "3": "B, C & D only",
+      "4": "A, B, C & D"
+    },
+    "answer": "1",
+    "explanation": "A is correct because ANRF replaced SERB. B is correct because the governing board is chaired by the Prime Minister. C is correct because Article 51A(h) explicitly mentions development of scientific temper, humanism, and the spirit of inquiry and reform. D is false because your notes mention a mixed funding design: part from government and a large part from industry/private sector."
+  },
+  {
+    "type": "single_correct",
+    "question": "The International Solar Alliance is best understood as:",
+    "options": {
+      "A": "A UN specialised agency created under the UNFCCC framework",
+      "B": "A treaty-based international organisation jointly initiated by India and France",
+      "C": "A multilateral development bank for solar park financing only",
+      "D": "A G20 working group headquartered in New Delhi"
+    },
+    "answer": "B",
+    "explanation": "Your notes identify ISA as a treaty-based organisation jointly founded by India and France at COP21 in Paris, with headquarters at Gurugram. A is wrong because ISA is not a UN specialised agency. C is too narrow and inaccurate. D is completely incorrect."
+  },
+  {
+    "type": "statement_based",
+    "question": "Consider the following statements regarding lithium and critical minerals:",
+    "statements": {
+      "A": "Lithium is the lightest metal and has atomic number 3.",
+      "B": "The so-called Lithium Triangle includes Argentina, Bolivia and Chile.",
+      "C": "India discovered significant lithium reserves in Reasi district of Jammu & Kashmir.",
+      "D": "Extraction of lithium from brine deposits is free from major environmental controversy because it uses no groundwater."
+    },
+    "options": {
+      "1": "A, B & C only",
+      "2": "A & D only",
+      "3": "B, C & D only",
+      "4": "A, B, C & D"
+    },
+    "answer": "1",
+    "explanation": "A is correct. B is correct. C is correct according to your notes on the Reasi discovery. D is false and is the main trap: brine extraction is environmentally controversial specifically because it can deplete groundwater in arid regions. This is exactly the kind of question where the last statement sounds technical enough to fool a candidate."
+  },
+  {
+    "type": "single_correct",
+    "question": "Which one of the following most accurately captures the distinction between GRAP and the Air Act, 1981?",
+    "options": {
+      "A": "Both are constitutional provisions under Article 21 jurisprudence",
+      "B": "GRAP is a graded emergency response framework, whereas the Air Act is a primary legislative framework on air pollution control",
+      "C": "GRAP replaced the Air Act after the creation of CAQM",
+      "D": "The Air Act operates only in rural India, while GRAP operates only in urban India"
+    },
+    "answer": "B",
+    "explanation": "This is a conceptual distinction question. GRAP is a graded response mechanism linked to AQI categories in the Delhi-NCR region, while the Air (Prevention and Control of Pollution) Act, 1981 is a general legislative framework. A is wrong because neither is a constitutional provision. C is false because GRAP did not replace the Air Act. D is legally and administratively meaningless."
+  },
+  {
+    "type": "single_correct",
+    "question": "Which of the following is the most precise Bihar-specific linkage mentioned in your notes regarding flood geography?",
+    "options": {
+      "A": "Bihar is unaffected by Himalayan river systems because it lies entirely in peninsular drainage",
+      "B": "About three-fourths of North Bihar is flood-prone, with the Kosi being called the Sorrow of Bihar",
+      "C": "Only South Bihar is flood-prone because North Bihar has embankment immunity",
+      "D": "Flooding in Bihar is mainly caused by coastal cyclones entering through the Bay of Bengal shoreline"
+    },
+    "answer": "B",
+    "explanation": "Your notes explicitly mention that 76% of North Bihar is flood-prone and that the Kosi is known as the Sorrow of Bihar. A is geographically false. C is an overstatement because embankments do not eliminate flood vulnerability. D is impossible because Bihar is landlocked and has no coastline."
+  }
+]

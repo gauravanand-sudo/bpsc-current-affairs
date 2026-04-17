@@ -1,36 +1,83 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# BPSC Pulse
 
-## Getting Started
+A current-affairs web app concept for BPSC aspirants with:
 
-First, run the development server:
+- a card-first daily current-affairs feed
+- category-wise and date-wise browsing
+- daily quiz blocks
+- an official-source crawler path for PIB, PMO, and President Secretariat content
+
+## Product direction
+
+The UI is intentionally designed to feel streak-based and habit-forming:
+
+- `20 cards per day` style revision flow
+- bold, mobile-friendly card stacks
+- quick recall quiz rail
+- exam-angle summaries instead of raw article dumps
+
+## Run locally
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Then open `http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Crawl official sources
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run crawl:official
+```
 
-## Learn More
+Crawler output is written to:
 
-To learn more about Next.js, take a look at the following resources:
+```txt
+data/official-updates.json
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+The app also exposes a simple endpoint:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```txt
+/api/official-feed
+```
 
-## Deploy on Vercel
+If the crawler output does not exist yet, that endpoint falls back to preview content.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Important note on official sites
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+During the first live integration pass:
+
+- `presidentofindia.nic.in` responded to browser-like requests
+- `pib.gov.in` returned `401/403` to straightforward server fetches
+- one guessed `pmo.gov.in` listing URL was stale and needs refinement
+
+That means the next crawler-hardening step is:
+
+1. switch PIB fetching to stronger browser-like request handling
+2. finalize a stable PMO listing endpoint
+3. optionally use Playwright for sources that block normal HTTP clients
+
+## Main files
+
+- `src/app/page.tsx`
+  The main hooked homepage/dashboard UI
+- `src/lib/content.ts`
+  Mock current-affairs cards and quiz data
+- `src/lib/official-sources.ts`
+  Source registry for official endpoints
+- `scripts/fetch-official-updates.mjs`
+  First-pass crawler script
+- `src/app/api/official-feed/route.ts`
+  JSON route for crawler output
+
+## Current working name
+
+`BPSC Pulse`
+
+Backup name ideas:
+
+- `CurrentEdge BPSC`
+- `BPSC Daily Stack`
+- `AffairsSprint`

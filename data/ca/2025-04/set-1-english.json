@@ -1,0 +1,855 @@
+[
+    {
+      "id": 1,
+      "emoji": "🏛",
+      "categories": ["polity", "bihar"],
+      "title": "Constitution (131st Amendment) Bill 2026 — Women's Reservation",
+      "summary": "Lok Sabha passed bill expanding seats 543→816 with 33% women's reservation. Nari Shakti Vandan Adhiniyam implementation deferred to 2029 elections. Requires fresh delimitation first.",
+      "static_linkages": {
+        "polity": [
+          "Article 81 fixes Lok Sabha seats at not more than 530 from states + 20 from UTs + 2 Anglo-Indians (abolished by 104th Amendment 2019)",
+          "Women's reservation in Lok Sabha/state legislatures was first proposed in 1996 under HD Deve Gowda government — lapsed 8 times before 106th Amendment 2023",
+          "106th Constitutional Amendment Act 2023 = Nari Shakti Vandan Adhiniyam — one-third reservation for women in Lok Sabha, state assemblies, Delhi assembly",
+          "Reservation will be operative only AFTER delimitation — which hasn't happened since 2026 census isn't complete",
+          "Articles 330–332 reserve seats for SC/ST in Lok Sabha and state assemblies — women's reservation is WITHIN these, not additional",
+          "Delimitation Commission is constituted under Article 82 after every census — last functional delimitation was post-2001 census"
+        ],
+        "history": [
+          "Indian National Congress Karachi Session 1931 — first demand for women's political rights in India",
+          "Sarojini Naidu was first woman Governor (UP, 1947) and first woman President of INC (1925)",
+          "73rd Amendment 1992 mandated 1/3 reservation for women in Panchayats — Bihar later increased it to 50%",
+          "Committee on Status of Women in India (CSWI) 1974 — 'Towards Equality' report first recommended legislative reservation"
+        ],
+        "bihar": [
+          "Bihar was FIRST state to give 50% reservation to women in Panchayati Raj institutions (2006)",
+          "Bihar has 243 assembly seats and sends 40 MPs to Lok Sabha — 6 to Rajya Sabha",
+          "JEEViKA (Bihar Rural Livelihoods Project) has mobilised 1.3 crore women into 1.2 lakh SHGs across Bihar"
+        ]
+      },
+      "possible_mcq": "Which Constitutional Amendment Act is also known as Nari Shakti Vandan Adhiniyam? → 106th Amendment Act 2023"
+    },
+    {
+      "id": 2,
+      "emoji": "💰",
+      "categories": ["economy", "polity"],
+      "title": "Union Budget 2026-27 — ₹53.5 Lakh Crore Total Expenditure",
+      "summary": "Debt-to-GDP at 55.6%. MAT reduced from 15% to 14% and made final tax. Biopharma SHAKTI ₹10,000 cr. India Semiconductor Mission 2.0 launched. Railway capital outlay ₹2.78 lakh crore.",
+      "static_linkages": {
+        "polity": [
+          "Article 112 — Annual Financial Statement (Budget) must be laid before Parliament; NOT submitted, but laid",
+          "Article 110 — Money Bill definition; Budget is a Money Bill under Article 110(1)(a) — cannot be rejected by Rajya Sabha, only delayed 14 days",
+          "Article 266 — Consolidated Fund of India; all revenues, loans, repayments flow into it — cannot be withdrawn without Parliamentary appropriation",
+          "Article 267 — Contingency Fund of India; placed at disposal of President for unforeseen expenditure (corpus ₹500 crore)",
+          "Finance Commission (Article 280) — constituted every 5 years; 16th Finance Commission Chairman is Dr. Arvind Panagariya (2026–2031)",
+          "FRBM Act 2003 — mandates fiscal deficit target; amended in 2018 to adopt debt-to-GDP target (60% combined Centre+States)"
+        ],
+        "economy": [
+          "Fiscal Deficit 2026-27 = 4.4% of GDP (BE); Revenue Deficit = difference between Revenue Expenditure and Revenue Receipts",
+          "Capital Budget = Capital Receipts (borrowings, disinvestment) + Capital Expenditure (asset creation, loans to states)",
+          "MAT = Minimum Alternate Tax under Section 115JB of Income Tax Act — applies when a company's tax liability < 15% of book profit",
+          "Disinvestment target 2026-27 = ₹47,000 crore; Strategic disinvestment involves transfer of management control",
+          "India's Debt-to-GDP ratio at 55.6% vs IMF's recommended threshold of 60% for emerging economies"
+        ],
+        "bihar": [
+          "Bihar receives highest share of central taxes among states — dependent on devolution (Finance Commission awards ~10.9% share to Bihar)",
+          "Bihar has no coastline and limited own tax base — GSDP growth ~11% but per capita income well below national average",
+          "Pradhan Mantri Awaas Yojana (Urban+Rural) — Bihar is top beneficiary state for PMAY-G housing units"
+        ]
+      },
+      "possible_mcq": "Which Article of the Constitution deals with the Annual Financial Statement? → Article 112"
+    },
+    {
+      "id": 3,
+      "emoji": "🌾",
+      "categories": ["economy", "bihar"],
+      "title": "e-NAM Expands to 1,656 Mandis — ₹4.84 Lakh Crore Cumulative Trade",
+      "summary": "e-NAM launched on 14 April 2016. Now covers 1,656 APMC mandis. 4,724 FPOs integrated. AI-based quality assaying added. Platform of Platforms (PoP) launched July 2022.",
+      "static_linkages": {
+        "economy": [
+          "e-NAM = Electronic National Agriculture Market — pan-India online trading portal under Small Farmers Agribusiness Consortium (SFAC)",
+          "APMC = Agricultural Produce Market Committee — regulated under State laws; 'Agriculture' is in State List (Entry 14)",
+          "MSP (Minimum Support Price) recommended by CACP (Commission for Agricultural Costs and Prices) — currently covers 23 crops",
+          "FPO (Farmer Producer Organizations) registered under Companies Act or Cooperative Societies Act; NABARD and SFAC promote them",
+          "Model APMC Act 2003 allowed direct purchase from farmers, contract farming, single-point levy — but adoption varies by state",
+          "Essential Commodities Act 1955 — amended 2020 to remove cereals, pulses, oilseeds, onions, potatoes from ECA list (except extraordinary circumstances)"
+        ],
+        "bihar": [
+          "Bihar ABOLISHED its APMC Act in 2006 — only state to do so; farmers can sell directly to buyers without going through mandis",
+          "Bihar's major crops: Rice (kharif), Wheat (rabi), Maize (Kosi region — India's maize bowl), Litchi (Muzaffarpur — GI tag), Makhana (Darbhanga, Madhubani — GI tag)",
+          "Makhana (Fox Nut/Euryale ferox) — Bihar produces 90% of world's makhana; grown in Mithila region wetlands",
+          "Shahi Litchi from Muzaffarpur has GI Tag (Geographical Indication) since 2018",
+          "Kosi region (Supaul, Saharsa, Madhepura) = flood-prone but fertile; known for maize and makhana cultivation"
+        ],
+        "polity": [
+          "Agriculture = State List Entry 14; Markets & Fairs = State List Entry 28 — Centre cannot legislate directly on APMC",
+          "Farm Laws 2020 (The Farmers' Produce Trade and Commerce Act + The Farmers Agreement Act) — passed, then REPEALED in Nov 2021 due to farmer protests",
+          "Cooperative Societies = Article 43B (DPSP) — state shall promote voluntary formation of cooperative societies (added by 97th Amendment 2011)"
+        ]
+      },
+      "possible_mcq": "Bihar was the first state in India to abolish the APMC Act — in which year? → 2006"
+    },
+    {
+      "id": 4,
+      "emoji": "📱",
+      "categories": ["economy", "st"],
+      "title": "UPI Hits 21.7 Billion Transactions — India Leads 49% of Global Real-Time Payments",
+      "summary": "UPI value ₹28.33 lakh crore in Jan 2026. 691 banks integrated. RBI mandates enhanced Two-Factor Authentication from April 1, 2026. UPI now operational in France, UAE, Singapore, Bhutan, Nepal.",
+      "static_linkages": {
+        "economy": [
+          "NPCI = National Payments Corporation of India — set up in 2008 under RBI and IBA; a not-for-profit company under Section 8 of Companies Act",
+          "UPI launched April 11, 2016 by NPCI; uses Virtual Payment Address (VPA) — no need to share account number or IFSC",
+          "JAM Trinity = Jan Dhan (financial inclusion) + Aadhaar (biometric ID) + Mobile (digital payments) — conceptualised in Economic Survey 2014-15",
+          "PMJDY (Pradhan Mantri Jan Dhan Yojana) launched August 28, 2014 — over 53 crore accounts opened as of 2026",
+          "RBI regulates payment systems under Payment and Settlement Systems Act 2007",
+          "India's real-time payment share = 49% of global volume; ahead of China (17%) and USA (4%) per IMF 2025 data"
+        ],
+        "st": [
+          "Two-Factor Authentication (2FA) = something you know (PIN) + something you have (device/OTP) — security protocol",
+          "UPI Lite = offline near-field communication (NFC) based low-value payments up to ₹500 without internet",
+          "BHIM app = Bharat Interface for Money — government's reference UPI app; BHIM stands for Bharat Interface for Money",
+          "Tokenization = replacing actual card/account data with a unique token for secure digital payments — RBI mandated from Oct 2022",
+          "Account Aggregator framework — RBI-regulated; allows sharing financial data with consent for credit assessment"
+        ],
+        "history": [
+          "Hawala system (informal value transfer) — pre-banking era; contrasted with formal digital payment systems",
+          "Barter system → Cowrie shells → Coins (Punch-marked coins, 6th century BC, earliest in India) → Paper currency → Digital payments: evolution of exchange"
+        ]
+      },
+      "possible_mcq": "NPCI was set up under the aegis of which two institutions? → RBI and Indian Banks' Association (IBA)"
+    },
+    {
+      "id": 5,
+      "emoji": "🚂",
+      "categories": ["economy", "history", "geo"],
+      "title": "Indian Railways — 173 Years: 99.6% Electrification, Kavach ATP System Rollout",
+      "summary": "PIB highlights near-complete broad gauge electrification. Capital outlay ₹2.78 lakh crore (Budget 2026-27). Kavach prevents train collisions. MAHSR (Mumbai–Ahmedabad) at 320 km/h. ECR HQ at Hajipur, Bihar.",
+      "static_linkages": {
+        "history": [
+          "First train in India: April 16, 1853 — Bombay to Thane (34 km), Great Indian Peninsula Railway (GIPR), under Governor-General Lord Dalhousie",
+          "Lord Dalhousie's 'Minute on Railways' (1853) — laid the blueprint for Indian rail network; also known for Doctrine of Lapse",
+          "Railways in India used for extraction of raw materials and movement of British troops — 'drain of wealth' argument by Dadabhai Naoroji connected to railway profits going to Britain",
+          "National Railway Museum in New Delhi — established 1977; Fairy Queen (1855) is world's oldest working steam locomotive, kept here",
+          "First railway in Bihar: Howrah–Rajmahal line passed through Bihar (1860s); Hajipur–Muzaffarpur line opened 1875"
+        ],
+        "geo": [
+          "Indian Railways gauge types: Broad Gauge (BG) = 1.676 m (most common); Metre Gauge = 1.0 m; Narrow Gauge = 0.762 m or 0.610 m",
+          "East Central Railway (ECR) — HQ at Hajipur (Vaishali district, Bihar); covers Bihar, Jharkhand, parts of UP",
+          "Hajipur is notable as HQ of ECR AND for banana cultivation (GI tag pending); connected to Patna via Gandhi Setu and Mahatma Gandhi Setu",
+          "Dedicated Freight Corridor: Eastern DFC (Ludhiana to Dankuni, 1,875 km) + Western DFC (Dadri to JNPT, 1,506 km)",
+          "Konkan Railway crosses highest number of tunnels and bridges in India; passes through Maharashtra, Goa, Karnataka"
+        ],
+        "st": [
+          "Kavach = Automatic Train Protection (ATP) system; developed by RDSO (Research Designs and Standards Organisation, Lucknow); prevents Signal Passed at Danger (SPAD)",
+          "Vande Bharat Express = semi-high speed (160 km/h); indigenously designed by ICF (Integral Coach Factory, Chennai)",
+          "MAHSR = Mumbai–Ahmedabad High Speed Rail; uses Shinkansen (Japanese bullet train) E5 technology; 508 km route; 320 km/h design speed"
+        ]
+      },
+      "possible_mcq": "The headquarters of East Central Railway (ECR), which covers Bihar, is located at which city? → Hajipur"
+    },
+    {
+      "id": 6,
+      "emoji": "🛳",
+      "categories": ["economy", "geo"],
+      "title": "Sagarmala 2.0 — 845 Projects ₹6.06 Lakh Crore; Major Ports Handle Record 915 MT",
+      "summary": "Port vessel turnaround fell from 96 hrs (2014) to 49.5 hrs (2025). 9 Indian ports in global top 100. Inland waterways cargo grew 700% since 2013-14. Sagarmala 2.0 has ₹85,482 crore support.",
+      "static_linkages": {
+        "geo": [
+          "India's total coastline = 7,516 km (mainland 5,422 km + island territories 2,094 km); 9 coastal states + 4 UTs",
+          "12 Major Ports in India (now called Major Port Authorities post-2021 Act): Mumbai, JNPT, Mormugao, New Mangalore, Cochin, Chennai, Ennore (Kamarajar), Tuticorin (VO Chidambaranar), Visakhapatnam, Paradip, Kolkata (includes Haldia), Deendayal (Kandla)",
+          "Paradip Port (Odisha) = nearest major port to Bihar; Kolkata Port = historically important for Bihar's trade",
+          "National Waterway-1 (NW-1) = Allahabad to Haldia via Ganga river (1,620 km) — passes through Varanasi, Patna, Bhagalpur, Kolkata",
+          "EEZ (Exclusive Economic Zone) = 200 nautical miles from baseline; India's EEZ area = ~2.37 million sq km",
+          "Indian Ocean Region (IOR) — India's SAGAR doctrine: Security and Growth for All in the Region"
+        ],
+        "economy": [
+          "Sagarmala Programme launched 2015 — Ministry of Ports, Shipping and Waterways; 4 pillars: Port Modernisation, Port-Led Industrialisation, Port Connectivity, Coastal Community Development",
+          "India's logistics cost = ~13-14% of GDP vs global best practice of ~8%; Sagarmala aims to reduce it",
+          "Major Ports under Union List (Entry 27); Minor/Intermediate Ports under State List (Entry 31)",
+          "IWAI = Inland Waterways Authority of India — statutory body under Inland Waterways Authority Act 1985; HQ Noida"
+        ],
+        "bihar": [
+          "NW-1 (Ganga) passes through Buxar, Patna, Munger, Bhagalpur in Bihar — Bihar is a landlocked state but benefits from inland waterways",
+          "Kalughat (Patna) and Kahalgaon (Bhagalpur) are important riverine trade points on Ganga in Bihar",
+          "Bihar has no seaport — exports go primarily through Kolkata port or via road/rail to JNPT"
+        ]
+      },
+      "possible_mcq": "National Waterway-1 connects Allahabad to Haldia along which river? → Ganga (Passes through Patna in Bihar)"
+    },
+    {
+      "id": 7,
+      "emoji": "⚓",
+      "categories": ["st", "geo"],
+      "title": "INS Taragiri Commissioned — Project 17A Stealth Frigate (Mazagon Dock)",
+      "summary": "Commissioned April 3, 2026 at Visakhapatnam by Raksha Mantri Rajnath Singh. 4th ship of Project 17A class. Designed by Warship Design Bureau. 75%+ indigenous content. Reduced radar cross-section stealth technology.",
+      "static_linkages": {
+        "st": [
+          "Project 17A = Nilgiri class frigates; first ship INS Nilgiri; built at Mazagon Dock Shipbuilders (MDS), Mumbai and GRSE (Garden Reach Shipbuilders), Kolkata",
+          "Stealth technology in warships = angled hull surfaces + radar-absorbent materials to reduce RCS (Radar Cross Section)",
+          "Frigate vs Destroyer vs Corvette: Frigate (3,000–5,000 tonnes, multi-role) < Destroyer (6,000–10,000 tonnes, anti-air/sub) < Cruiser; Corvette is smallest warship",
+          "DRDO's missile systems on Project 17A: BrahMos supersonic cruise missile (India-Russia JV), Barak-8 SAM (Israel-India JV)",
+          "MSME involvement in warship construction = 75%+ indigenous content aligns with Atmanirbhar Bharat in defence"
+        ],
+        "geo": [
+          "Eastern Naval Command HQ = Visakhapatnam (Andhra Pradesh); Western Naval Command HQ = Mumbai; Southern Naval Command = Kochi (Training)",
+          "Visakhapatnam = India's only major port and naval base on east coast with natural deep harbour",
+          "Strait of Malacca = critical chokepoint connecting Indian Ocean to Pacific; ~80% of China's oil imports pass through it — strategic relevance of Indian Navy",
+          "Andaman & Nicobar Command = India's only tri-services command (Army+Navy+Air Force); located at Port Blair"
+        ],
+        "history": [
+          "INS Vikrant (original) = India's first aircraft carrier; commissioned 1961, decommissioned 1997; built in UK (Vickers Armstrong)",
+          "INS Vikrant (new) = India's first indigenously built aircraft carrier; commissioned 2022; built at Cochin Shipyard",
+          "Operation Trident (1971): Indian Navy attacked Karachi harbour using Styx missiles — celebrated as Navy Day on December 4"
+        ]
+      },
+      "possible_mcq": "India's only tri-services command is located at which place? → Port Blair (Andaman & Nicobar Command)"
+    },
+    {
+      "id": 8,
+      "emoji": "🔬",
+      "categories": ["st", "economy"],
+      "title": "ANRF Launches SARAL AI — Scientific Research in 18 Indian Languages",
+      "summary": "Anusandhan National Research Foundation Act 2023 (Presidential assent Aug 12, 2023; in force Feb 5, 2024). Replaces SERB (2008). SARAL AI converts research into podcasts/videos in 18 languages. Evaluated 20,000 applications in 4 months.",
+      "static_linkages": {
+        "st": [
+          "ANRF replaces SERB (Science and Engineering Research Board, est. 2008); ANRF has broader mandate including industry-academia collaboration",
+          "SARAL AI built on BHASHINI platform (Digital India Bhashini Division) — multilingual AI for 22 Indian scheduled languages",
+          "India's R&D expenditure = ~0.64% of GDP (2024) vs China ~2.4%, USA ~3.4%; NEP 2020 targets 2% of GDP for R&D by 2030",
+          "ANRF governing board chaired by Prime Minister; executive council chaired by Principal Scientific Adviser to Govt of India",
+          "Science and Technology Policy timeline: Scientific Policy Resolution 1958 → Technology Policy Statement 1983 → STIP 2003 → STI Policy 2013 → STIP 2020 (draft)"
+        ],
+        "polity": [
+          "Education shifted from State List to Concurrent List by 42nd Amendment 1976 — Centre can now legislate on higher education",
+          "Article 51A(h) = Fundamental Duty to develop scientific temper, humanism, and spirit of inquiry",
+          "ANRF Act 2023 passed under Concurrent List Entry 25 (education including technical education) and Entry 66 (coordination of standards in universities)",
+          "Principal Scientific Adviser to Govt of India — currently Prof. Ajay Kumar Sood (as of 2024-25)"
+        ],
+        "economy": [
+          "ANRF corpus = ₹50,000 crore over 5 years (2023-28); government contribution ₹10,000 crore + ₹40,000 crore from industry/private sector",
+          "India's patent filings: India crossed 100,000 patent applications in 2023 for first time (IP India data); still far behind China (1.6 million) and USA",
+          "Start-up India: India 3rd largest start-up ecosystem globally (100+ unicorns); direct linkage with ANRF's innovation push"
+        ]
+      },
+      "possible_mcq": "ANRF (Anusandhan National Research Foundation) was established replacing which earlier body? → SERB (Science and Engineering Research Board)"
+    },
+    {
+      "id": 9,
+      "emoji": "☀️",
+      "categories": ["env", "economy"],
+      "title": "PM Surya Ghar Muft Bijli Yojana — Record Rooftop Solar Installations",
+      "summary": "UP recorded 52,729 monthly installations. Total 1,524.61 MW installed capacity under scheme. ₹4,000 crore subsidies disbursed. Households with up to 300 units/month get near-zero bills.",
+      "static_linkages": {
+        "env": [
+          "India's renewable energy target = 500 GW by 2030; current installed RE capacity ~200 GW (2025); Solar alone ~90 GW",
+          "Solar energy works on photovoltaic (PV) effect — discovered by Edmond Becquerel (1839); silicon-based PV cells most common",
+          "India's NDC (Nationally Determined Contribution) under Paris Agreement 2015: 45% reduction in emissions intensity of GDP by 2030 (vs 2005 levels)",
+          "India ratified Paris Agreement in October 2016; UNFCCC COP26 (Glasgow 2021) — India announced Net Zero by 2070",
+          "International Solar Alliance (ISA): HQ Gurugram; founded jointly by India and France at COP21 Paris (2015); 120+ member countries; treaty-based organisation"
+        ],
+        "economy": [
+          "PM Surya Ghar scheme launched Feb 2024; replaces earlier MNRE rooftop solar scheme; target = 1 crore households by 2027",
+          "Net metering = rooftop solar households can sell surplus electricity back to grid; regulated by respective State Electricity Regulatory Commissions (SERCs)",
+          "MNRE = Ministry of New and Renewable Energy; SECI (Solar Energy Corporation of India) = PSU under MNRE",
+          "Green Hydrogen Mission: India targets 5 MMT green hydrogen production by 2030; ₹19,744 crore outlay"
+        ],
+        "bihar": [
+          "Bihar's solar potential: receives ~5-5.5 kWh/sq.m/day solar radiation; solar parks in Nawada (250 MW), Banka, Bhagalpur districts",
+          "Bihar has power deficit — depends heavily on central grid; BSPHCL (Bihar State Power Holding Company Ltd) manages electricity in Bihar",
+          "Bihar ranks in bottom quartile of states for per capita electricity consumption (~350 kWh vs national average ~1,200 kWh)"
+        ]
+      },
+      "possible_mcq": "The International Solar Alliance (ISA) has its headquarters in which city of India? → Gurugram (Haryana)"
+    },
+    {
+      "id": 10,
+      "emoji": "🧬",
+      "categories": ["st", "env"],
+      "title": "KABIL Gets Clearance for Lithium Exploration in Argentina",
+      "summary": "Khanij Bidesh India Limited (KABIL) received environmental clearance from Argentina's government for deep exploration of 5 brine-based lithium blocks in April 2026.",
+      "static_linkages": {
+        "st": [
+          "KABIL = joint venture of NALCO (40%) + HCL — Hindustan Copper Limited (30%) + MECL — Mineral Exploration & Consultancy Ltd (30%); formed 2019 under Ministry of Mines",
+          "Lithium = 'White Gold'; critical for lithium-ion batteries used in EVs, phones, energy storage; lightest metal (atomic number 3)",
+          "Lithium Triangle = Argentina + Bolivia + Chile; contains ~60% of world's known lithium reserves; found in salt flats (salares) as brine deposits",
+          "India discovered its own lithium reserves in 2023 at Salal–Haimana area, Reasi district, J&K — estimated 5.9 million tonnes",
+          "Lithium is NOT covered under Mines and Minerals (Development and Regulation) Act 1957 originally; added to atomic minerals list requiring special approval"
+        ],
+        "economy": [
+          "Critical Minerals list (India, 2023) = 30 minerals including Lithium, Cobalt, Nickel, Graphite, Titanium — essential for clean energy and defence",
+          "National Mineral Policy 2019 promotes private sector participation; District Mineral Foundation (DMF) funds local area development near mines",
+          "PM Gati Shakti National Master Plan — includes mining connectivity for critical mineral extraction",
+          "India imports ~70% of its lithium requirements; reducing import dependence is key for EV policy goals"
+        ],
+        "env": [
+          "Lithium mining from brines involves pumping lithium-rich groundwater — environmental concern: water depletion in arid regions (Atacama Desert controversy)",
+          "Mines and Minerals (Development and Regulation) Amendment Act 2021 — auctioned captive mines; removed end-use restrictions",
+          "Environmental clearance (EC) for mining in India given under EIA Notification 2006 (under Environment Protection Act 1986)"
+        ]
+      },
+      "possible_mcq": "KABIL is a joint venture of three PSUs — NALCO, MECL, and which third PSU? → HCL (Hindustan Copper Limited)"
+    },
+    {
+      "id": 11,
+      "emoji": "🧠",
+      "categories": ["st", "polity"],
+      "title": "AI Governance & Economic Group (AIGEG) Constituted by Government",
+      "summary": "Government constituted AIGEG to lead India's national AI strategy. India is positioning itself as global AI hub. Earlier, IndiaAI Mission launched with ₹10,372 crore outlay (2024).",
+      "static_linkages": {
+        "st": [
+          "IndiaAI Mission (2024) = ₹10,372 crore over 5 years; 7 pillars including AI compute infrastructure, datasets, application development, startups, skills, safety",
+          "NITI Aayog released National Strategy for AI in 2018 — coined 'AI for All' approach; focus on 5 sectors: healthcare, agriculture, education, smart cities, smart mobility",
+          "Generative AI regulation globally: EU AI Act 2024 = world's first comprehensive AI law; classifies AI by risk levels (prohibited, high-risk, limited-risk, minimal-risk)",
+          "Deep learning uses artificial neural networks modelled on human brain; GPT = Generative Pre-trained Transformer architecture",
+          "India's Aadhaar-based AI: uses biometric matching algorithms (fingerprint + iris); managed by UIDAI under Aadhaar Act 2016"
+        ],
+        "polity": [
+          "India has no dedicated AI law as of 2026 (unlike EU); IT Act 2000 (amended 2008) and DPDP Act 2023 provide partial framework",
+          "Digital Personal Data Protection Act 2023 (DPDP Act) — governs personal data processing; Data Fiduciary must obtain consent; Data Protection Board adjudicates disputes",
+          "Article 19(1)(g) = right to practise any profession; AI regulation must balance innovation with fundamental rights",
+          "MEITY (Ministry of Electronics and Information Technology) is nodal ministry for AI, digital governance, and IT policy"
+        ],
+        "economy": [
+          "AI could add $957 billion to India's GDP by 2035 (Accenture report); productivity gains primarily in IT, BFSI, healthcare",
+          "India has 4th largest developer community globally for AI — after USA, China, EU",
+          "Nasscom estimates AI/ML sector in India employs 4.2 lakh professionals (2025); Bengaluru, Hyderabad, Pune are AI hubs"
+        ]
+      },
+      "possible_mcq": "The Digital Personal Data Protection Act was passed in which year? → 2023"
+    },
+    {
+      "id": 12,
+      "emoji": "🌊",
+      "categories": ["env", "geo"],
+      "title": "State of India's Environment 2026 — Extreme Weather on 99% of Days in 2025",
+      "summary": "CSE (Centre for Science and Environment) report: 4,419 deaths from extreme weather in 2025. Record frequency of heatwaves, cold waves, floods. Calls for nature-based solutions and climate science integration.",
+      "static_linkages": {
+        "env": [
+          "CSE = Centre for Science and Environment; founded 1980 by Anil Agarwal; HQ New Delhi; publishes 'Down to Earth' magazine annually",
+          "Heat wave definition (IMD): when max temperature ≥40°C in plains AND ≥4.5°C above normal; or ≥45°C irrespective of normal",
+          "IPCC (Intergovernmental Panel on Climate Change): set up 1988 by WMO+UNEP; AR6 report (2021-22) confirmed 1.1°C warming above pre-industrial levels",
+          "La Niña = cooling of central/eastern Pacific → above normal rainfall in India; El Niño = warming → drought/deficit monsoon in India",
+          "India's disaster vulnerability: 59% land prone to earthquakes; 12% to floods; 76% of coastline to cyclones; 68% to drought"
+        ],
+        "geo": [
+          "Western Disturbances = extra-tropical cyclones originating in Mediterranean Sea; bring winter rains to NW India (Punjab, Haryana, HP, J&K)",
+          "India receives 75-90% of annual rainfall during SW Monsoon (June-September); NE Monsoon affects Tamil Nadu, coastal AP (Oct-Dec)",
+          "Ganga-Brahmaputra-Meghna basin = world's 3rd largest river system by discharge; heavily flood-prone",
+          "Bihar flood situation: 76% of North Bihar is flood-prone; Kosi river called 'Sorrow of Bihar'; Gandak, Bagmati, Kamla-Balan are other flood-causing rivers",
+          "Himalayan rivers (snow-fed + rain-fed) vs Peninsular rivers (only rain-fed) — Himalayan rivers perennial; peninsular rivers seasonal"
+        ],
+        "bihar": [
+          "Kosi River = originates in Nepal (Saptakoshi), enters Bihar at Birpur (Supaul); known as 'Sorrow of Bihar' due to frequent course-changing floods",
+          "Bihar receives average 1,200 mm rainfall annually; North Bihar > South Bihar in rainfall; Kishanganj (NE Bihar) receives ~2,500 mm",
+          "Flood management in Bihar: Embankments along Kosi; Kosi Barrage at Bhimnagar (Nepal border); Gandak Barrage at Valmikinagar"
+        ]
+      },
+      "possible_mcq": "The river known as the 'Sorrow of Bihar' is — → Kosi (Koshi) River"
+    },
+    {
+      "id": 13,
+      "emoji": "🏫",
+      "categories": ["bihar", "polity"],
+      "title": "Bihar Plans Global Model Education City Near Patna — 250 Acres, ₹547 Crore",
+      "summary": "DPR prepared for world-class academic hub near Patna. 250+ acres. Shared campus model for multiple universities. Initial cost ₹547 crore. Bihar also planning high-security jail in Kaimur Hills.",
+      "static_linkages": {
+        "bihar": [
+          "Nalanda International University (New Nalanda) — re-established 2010 near Rajgir (Nalanda district); first PM was Nobel laureate Amartya Sen",
+          "Ancient Nalanda University (5th century AD – 1200 AD) — one of world's first residential universities; destroyed by Bakhtiyar Khilji (1200 AD)",
+          "IIT Patna = established 2008 at Bihta (Patna); IIM Bodh Gaya = established 2015; AIIMS Patna = established 2012",
+          "Bihar Student Credit Card Scheme: loans up to ₹4 lakh for higher education; interest 1% for girls/disabled, 4% for others",
+          "Patna University = oldest university in Bihar, established 1917; Magadh University (Bodh Gaya), Lalit Narayan Mithila University (Darbhanga) are other key universities"
+        ],
+        "polity": [
+          "University Grants Commission (UGC) established under UGC Act 1956 — statutory body; recently NCERT awarded 'Deemed University' status (April 2026)",
+          "NCERT = National Council of Educational Research and Training; set up 1961; prepares curriculum for school education under NEP 2020",
+          "NEP 2020 replaces NPE 1986; introduces 5+3+3+4 school structure; recommends mother tongue as medium up to Grade 5",
+          "Right to Education Act 2009 (Article 21A) — free and compulsory education for children 6-14 years; no detention policy (amended 2019 to allow detention from Grade 5)",
+          "Central Universities established by Parliament; State Universities by state legislature; Deemed Universities recognised by UGC under Section 3 of UGC Act"
+        ],
+        "history": [
+          "Nalanda (ancient) had students from China (Xuanzang, Yijing), Korea, Japan, Persia, Turkey, Sri Lanka — Bihar's ancient intellectual glory",
+          "Vikramshila University (8th-12th century) in Bhagalpur district, Bihar — another great ancient university; destroyed by Bakhtiyar Khilji",
+          "Education in ancient India: Gurukul system (residential, Sanskrit medium) → Madrasas (Islamic period) → Colonial-era English education (Macaulay's Minute 1835)"
+        ]
+      },
+      "possible_mcq": "Vikramshila University, one of the great ancient universities destroyed by Bakhtiyar Khilji, was located in which present-day district of Bihar? → Bhagalpur"
+    },
+    {
+      "id": 14,
+      "emoji": "⚡",
+      "categories": ["economy", "st"],
+      "title": "PM E-DRIVE Scheme Extended to March 2028 — ₹10,900 Crore EV Push",
+      "summary": "PM E-DRIVE (Electric Drive Revolution in Innovative Vehicle Enhancement) extended. E-2W subsidy till July 2026. E-rickshaws/e-carts till March 2028. E20 petrol (20% ethanol blend) rolled out nationwide from April 1, 2026.",
+      "static_linkages": {
+        "economy": [
+          "PM E-DRIVE = launched Sept 2024 by Ministry of Heavy Industries; ₹10,900 crore outlay; succeeds FAME I (2015) and FAME II (2019-2024) schemes",
+          "FAME = Faster Adoption and Manufacturing of Hybrid and Electric Vehicles; FAME II had outlay of ₹11,500 crore",
+          "E20 fuel = 20% ethanol blended with 80% petrol; India target was E20 by 2025 (achieved partially from Apr 2026); reduces petrol import by 15-20%",
+          "Ethanol blending programme: India's blending rate ~15% in 2024; produced from sugarcane juice, grain (rice, maize), agricultural residue",
+          "PLI scheme for Advanced Chemistry Cell (ACC) batteries: ₹18,100 crore; target 50 GWh domestic battery manufacturing capacity"
+        ],
+        "env": [
+          "Transport sector = ~13% of India's total CO2 emissions; EV transition critical for NDC targets",
+          "Life Cycle Assessment (LCA) of EVs: manufacturing phase has higher emissions than ICE vehicles; operational phase is cleaner IF powered by renewable energy",
+          "E20 reduces particulate matter emissions; ethanol burns more completely than petrol; reduces CO emissions by ~30%",
+          "India's crude oil import dependency ~85%; 1 billion litres of ethanol blended = saves ~600 crore in forex"
+        ],
+        "st": [
+          "Lithium-ion battery: anode = graphite; cathode = LiCoO2 or LFP; electrolyte = lithium salt in organic solvent; operates via lithium-ion movement",
+          "EV range anxiety solved by: solid-state batteries (next gen), fast charging (DC fast chargers, 150 kW+), battery swapping",
+          "India's first electric highway project: Delhi–Jaipur electric highway; uses overhead catenary system for electric trucks"
+        ]
+      },
+      "possible_mcq": "E20 fuel refers to petrol blended with what percentage of ethanol? → 20%"
+    },
+    {
+      "id": 15,
+      "emoji": "🗳️",
+      "categories": ["polity", "bihar"],
+      "title": "West Bengal Elections 2026 — 2,926 Candidates; ECI Impeachment Motion Rejected",
+      "summary": "West Bengal assembly elections 2026: 2,926 candidates for 294 seats. Parliament rejected impeachment motion against Chief Election Commissioner Gyanesh Kumar (April 7, 2026).",
+      "static_linkages": {
+        "polity": [
+          "Election Commission of India = constitutional body under Article 324; superintends, directs, controls elections to Parliament, State Legislatures, President, VP",
+          "Chief Election Commissioner (CEC) removal: same procedure as removal of a Supreme Court judge — address by both Houses of Parliament + special majority (Article 324(5))",
+          "CEC and Other Election Commissioners Act 2023: made appointment process transparent; search committee headed by PM; includes Leader of Opposition",
+          "Model Code of Conduct (MCC) = operational from date of election announcement; NOT a statutory code but based on Article 324 powers",
+          "EVM (Electronic Voting Machine): used since 1982 (pilot Parur, Kerala); fully adopted 2004; VVPAT introduced nationwide from 2019 to allow paper trail verification",
+          "Representation of People Act 1950: delimitation of constituencies, electoral rolls; RP Act 1951: conduct of elections, disqualification of MPs/MLAs"
+        ],
+        "bihar": [
+          "Bihar Vidhan Sabha = 243 seats; Bihar Vidhan Parishad (Legislative Council) = 75 seats — Bihar is one of 6 states with bicameral legislature",
+          "Bihar election history: Nitish Kumar has been CM since 2005 (except 2014-15); JD(U)-BJP alliance dominates; RJD is principal opposition",
+          "Panchayati Raj elections in Bihar: Bihar State Election Commission conducts; Mukhiya → Panchayat Samiti → Zila Parishad — 3-tier system"
+        ],
+        "history": [
+          "First General Elections in India: 1951-52; first CEC = Sukumar Sen; 17.3 crore voters participated",
+          "JP Movement (1974): Jayaprakash Narayan led movement against corruption from Bihar; led to Emergency (1975-77) and fall of Indira Gandhi in 1977 elections",
+          "Emergency 1975-77: 42nd Amendment passed during this period — most changes to Constitution; called 'Mini Constitution'"
+        ]
+      },
+      "possible_mcq": "Which Article of the Constitution establishes the Election Commission of India? → Article 324"
+    },
+    {
+      "id": 16,
+      "emoji": "🚰",
+      "categories": ["polity", "geo"],
+      "title": "Jal Jeevan Mission 2.0 — Approved March 2026; Decentralised Gram Panchayat Water Management",
+      "summary": "JJM 2.0 approved by Cabinet in March 2026. Gram Panchayats and VWSCs (Village Water & Sanitation Committees) to manage village water systems. District Water Sanitation Missions prepare village-level action plans.",
+      "static_linkages": {
+        "polity": [
+          "Jal Jeevan Mission (JJM) Phase 1 launched August 15, 2019 — target: Har Ghar Jal (tap water to all rural households) by 2024; covers rural India",
+          "11th Schedule of Constitution (added by 73rd Amendment 1992) lists 29 functions of Panchayats — Item 11: drinking water",
+          "Article 243G: Panchayats may be given powers for economic development and social justice for 29 matters in 11th Schedule",
+          "Jal Shakti Ministry (created 2019) = merger of Ministry of Water Resources + Ministry of Drinking Water and Sanitation; first minister = Gajendra Singh Shekhawat",
+          "Swajal scheme and National Rural Drinking Water Programme (NRDWP) were predecessors to JJM"
+        ],
+        "geo": [
+          "India's water stress: 4% of world's freshwater but 18% of world's population; annual per capita availability fallen from 5,177 cubic metres (1951) to ~1,486 cubic metres (2021)",
+          "India receives ~4,000 BCM (Billion Cubic Metres) of precipitation; utilisable water = ~1,123 BCM (surface + groundwater)",
+          "Ganga basin = largest river basin in India (26% of geographic area); most densely populated; Bihar lies almost entirely in Ganga basin",
+          "Central Ground Water Board (CGWB) monitors groundwater; many North Bihar districts face BOTH flood (surface) AND groundwater arsenic contamination",
+          "Arsenic contamination in Bihar: Bhojpur, Patna, Vaishali, Saran, Buxar districts have arsenic >10 ppb in groundwater — WHO permissible limit"
+        ],
+        "bihar": [
+          "Bihar's JJM coverage: ~83% rural tap water connections achieved before Phase 2; fully completing NE Bihar (Kishanganj, Araria, Purnia) remains challenge",
+          "Ganga, Sone, Gandak, Kosi, Bagmati, Burhi Gandak, Kamla-Balan are major rivers of Bihar",
+          "Rajgir (Nalanda district) water crisis: famous hot springs but faces groundwater depletion; Rajgir Wildlife Sanctuary nearby"
+        ]
+      },
+      "possible_mcq": "What is the 11th Schedule of the Indian Constitution related to? → Powers and responsibilities of Panchayati Raj Institutions (added by 73rd Amendment 1992)"
+    },
+    {
+      "id": 17,
+      "emoji": "🏭",
+      "categories": ["economy", "st"],
+      "title": "India Approves First Semiconductor Fab SEZ — Semiconductor Mission 2.0",
+      "summary": "India approved SEZ for first semiconductor fabrication plant. India Semiconductor Mission 2.0 launched in Budget 2026-27. Tata Electronics building fab in Dholera (Gujarat), Micron fab in Sanand (Gujarat).",
+      "static_linkages": {
+        "st": [
+          "Semiconductor = material with electrical conductivity between conductor and insulator; Silicon (Si) most common; others: Germanium, GaAs",
+          "Integrated Circuit (IC) = multiple electronic components on single chip; Moore's Law = transistor count doubles every ~2 years (Gordon Moore, 1965)",
+          "Semiconductor fabrication ('fab') requires Class 1 cleanrooms — fewer than 1 particle per cubic foot; extremely capital-intensive (₹50,000+ crore per fab)",
+          "TSMC (Taiwan Semiconductor Mfg Company) controls ~53% of global foundry market; TSMC's fabs are reason Taiwan is geopolitically critical",
+          "nm (nanometer) node refers to transistor size: 28nm, 14nm, 7nm, 3nm — smaller = more powerful + efficient; Intel, TSMC, Samsung compete at 2-3nm"
+        ],
+        "economy": [
+          "India Semiconductor Mission (ISM) Phase 1: approved 2022 with ₹76,000 crore incentive scheme; 50% fiscal support on project cost",
+          "SEZ (Special Economic Zone) governed by SEZ Act 2005; provides tax benefits, duty-free imports, single-window clearance",
+          "Global semiconductor market = $600+ billion (2024); India's domestic consumption = $15 billion; imports ~100% currently",
+          "Dholera Special Investment Region (DSIR), Gujarat = planned smart city and industrial zone; designated for semiconductor manufacturing",
+          "China+1 strategy = companies diversifying supply chains away from China; India benefiting from this in semiconductors, electronics"
+        ],
+        "geo": [
+          "Gujarat = manufacturing powerhouse; Dholera (Ahmedabad district) = greenfield smart city; Sanand (Ahmedabad) = auto-electronics hub",
+          "Semiconductor supply chain geography: Silicon from sand (SiO2) → wafer fab (Taiwan, Korea, USA) → packaging (China, Malaysia) → final products (global)",
+          "India's rare earth elements (REEs): deposits in Odisha, AP, Kerala; critical for semiconductors, magnets, EV motors"
+        ]
+      },
+      "possible_mcq": "India's first semiconductor fabrication plant is being set up in which state? → Gujarat (Dholera by Tata Electronics)"
+    },
+    {
+      "id": 18,
+      "emoji": "🚗",
+      "categories": ["economy", "geo"],
+      "title": "Western Dedicated Freight Corridor (WDFC) Completed — Dadri to JNPT",
+      "summary": "Western DFC completed April 2026. Runs Dadri (UP) to JNPT (Mumbai), 1,506 km. Separates freight from passenger rail — will reduce logistics cost significantly. Eastern DFC: Ludhiana to Dankuni (1,875 km).",
+      "static_linkages": {
+        "economy": [
+          "Dedicated Freight Corridor Corporation of India Ltd (DFCCIL) = set up 2006 under Ministry of Railways; WDFC funded partly by World Bank and Japanese JICA loans",
+          "India's logistics cost = ~13% of GDP; US = 8%, Germany = 6%; each % point reduction = ₹2 lakh crore savings",
+          "DFC allows 25-tonne axle load (vs current 22.9T on Indian Railways) and Double-Stack Container trains (DS trains) — doubles capacity per trip",
+          "Sagarmala + DFC + PM GatiShakti = three interconnected infrastructure programmes for logistics improvement",
+          "JNPT (Jawaharlal Nehru Port Trust) near Mumbai = India's largest container port; handles ~55% of India's container traffic"
+        ],
+        "geo": [
+          "WDFC route: Dadri (UP) → Rewari (Haryana) → Phulera (Rajasthan) → Vadodara → Surat → JNPT; passes through industrial heartland",
+          "EDFC route: Ludhiana (Punjab) → Ambala → Delhi → Allahabad → Mughalsarai → Dankuni (West Bengal); key for coal/fertilizer movement",
+          "DFC connects to all major industrial clusters: Delhi NCR (WDFC/EDFC), Rajasthan (WDFC), Gujarat (WDFC), Bihar/UP (EDFC)",
+          "EDFC passes through Bihar at Sasaram, Dehri-on-Sone, Gaya, Nawadah, Jamui — critical for Bihar's industrial connectivity"
+        ],
+        "history": [
+          "Indian Railways nationalised in 1950-51 under Jawaharlal Nehru; merged all private/regional railway companies",
+          "First Railway Budget in India: presented separately from Union Budget since 1924 (Acworth Committee recommendation); merged back with Union Budget from 2017"
+        ]
+      },
+      "possible_mcq": "The Western Dedicated Freight Corridor connects Dadri to which port? → JNPT (Jawaharlal Nehru Port Trust, Mumbai)"
+    },
+    {
+      "id": 19,
+      "emoji": "🌿",
+      "categories": ["env", "bihar"],
+      "title": "GRAP Stage-I Invoked in Delhi-NCR — Air Quality in 'Poor' Category",
+      "summary": "CAQM (Commission for Air Quality Management) invoked GRAP Stage-I in Delhi-NCR as AQI hit 'Poor' category. PM2.5 and PM10 are primary pollutants. Delhi average AQI among world's worst.",
+      "static_linkages": {
+        "env": [
+          "GRAP = Graded Response Action Plan; 4 stages based on AQI: Stage I (Poor: 201-300), Stage II (Very Poor: 301-400), Stage III (Severe: 401-450), Stage IV (Severe+: 450+)",
+          "AQI (Air Quality Index) in India: based on 8 pollutants — PM2.5, PM10, NO2, SO2, CO, O3, NH3, Pb; worst reading of any determines overall AQI",
+          "PM2.5 = particulate matter ≤2.5 micrometres; penetrates deep into lungs and bloodstream; most dangerous air pollutant; WHO safe limit = 15 µg/m³ annual; India's = 40 µg/m³",
+          "CAQM (Commission for Air Quality Management for NCR and Adjoining Areas) = statutory body; est. 2021 by Act of Parliament; replaced Environment Pollution Control Authority",
+          "Air (Prevention and Control of Pollution) Act 1981 — primary legislation; National Clean Air Programme (NCAP) launched 2019 with target of 40% reduction in PM by 2024"
+        ],
+        "geo": [
+          "Delhi's pollution geography: North India's indo-Gangetic Plain = bowl-shaped geographically; winter temperature inversion traps pollutants near surface",
+          "Stubble burning (Punjab, Haryana) contributes 25-30% to Delhi's winter PM2.5 during Oct-Nov; detected by ISRO/NASA satellite imagery",
+          "North Bihar cities (Patna, Muzaffarpur, Darbhanga) consistently rank among India's most polluted cities — same IGP geography as Delhi",
+          "Wind direction in winter = northwesterly in NW India; brings pollution from Punjab/Haryana fields toward Delhi and further into Bihar/UP"
+        ],
+        "bihar": [
+          "Muzaffarpur and Patna regularly appear in WHO/Greenpeace lists of India's most polluted cities; PM2.5 often exceeds 150 µg/m³ in winter",
+          "Bihar State Pollution Control Board (BSPCB) = nodal agency; established under Water Act 1974 and Air Act 1981",
+          "Vehicle pollution in Patna: auto-rickshaws, two-wheelers dominate; BS-VI norms (Bharat Stage 6) mandatory since April 2020 for new vehicles nationally"
+        ]
+      },
+      "possible_mcq": "GRAP (Graded Response Action Plan) is used to manage air quality in which region? → Delhi-NCR (National Capital Region)"
+    },
+    {
+      "id": 20,
+      "emoji": "🏺",
+      "categories": ["history", "bihar"],
+      "title": "Dr. B.R. Ambedkar Jayanti — April 14 (135th Birth Anniversary 2026)",
+      "summary": "Nation celebrated 135th birth anniversary of Babasaheb Dr. B.R. Ambedkar on April 14, 2026. He was Chairman of the Drafting Committee of Indian Constitution, first Law Minister, and champion of Dalit rights.",
+      "static_linkages": {
+        "history": [
+          "Dr. B.R. Ambedkar: born April 14, 1891, Mhow (MP); died Dec 6, 1956 (Mahaparinirvan Diwas); converted to Buddhism on Oct 14, 1956 with ~6 lakh followers",
+          "Poona Pact 1932: Gandhi and Ambedkar; abandoned separate electorates for Depressed Classes; joint electorates with reserved seats instead; Gandhi ended fast-unto-death",
+          "Ambedkar established: Bahishkrit Hitakarini Sabha (1924), Independent Labour Party (1936), Scheduled Castes Federation (1942), Republican Party of India (1956)",
+          "Ambedkar's works: 'Annihilation of Caste' (1936), 'Who Were the Shudras?' (1946), 'The Buddha and His Dhamma' (1957 posthumous)",
+          "Ambedkar on Finance Commission: played key role in its constitutional provision; also championed 8-hour workday as Labour Member of Viceroy's Executive Council"
+        ],
+        "polity": [
+          "Drafting Committee of Constitution: Chairman = Dr. B.R. Ambedkar; 7 members including K.M. Munshi, Alladi Krishnaswami Ayyar",
+          "Constitution adopted Nov 26, 1949 (Constitution Day); came into force Jan 26, 1950 (Republic Day); took 2 years, 11 months, 17 days to draft",
+          "Article 17 = Abolition of Untouchability (justiciable Fundamental Right); Protection of Civil Rights Act 1955 enforces it",
+          "Article 46 (DPSP) = state shall promote educational and economic interests of weaker sections especially SC/ST",
+          "Scheduled Castes and Scheduled Tribes (Prevention of Atrocities) Act 1989 (POA Act) — protects SC/ST from discrimination and atrocities"
+        ],
+        "bihar": [
+          "Bihar has significant SC (about 15.9%) and ST (about 1.3%) population as per Census 2011; Musahar, Chamar, Dusadh are major SC communities",
+          "Bahujan Samaj Party (BSP) founded by Kanshi Ram in 1984 on Ambedkarite principles — has limited presence in Bihar",
+          "Nalanda district in Bihar: Buddhist connection; near Rajgir (Buddha gave many sermons here), Bodh Gaya (in Gaya district) = where Buddha attained enlightenment under Bodhi tree"
+        ]
+      },
+      "possible_mcq": "The Poona Pact (1932) was signed between Dr. B.R. Ambedkar and which leader? → Mahatma Gandhi"
+    },
+    {
+      "id": 21,
+      "emoji": "🌏",
+      "categories": ["world", "geo"],
+      "title": "China Deploys Floating Barrier at Scarborough Shoal — South China Sea Tensions",
+      "summary": "Satellite imagery (April 2026) shows China deployed floating barrier + vessels blocking Scarborough Shoal entrance. Philippines and China both claim it. Critical maritime dispute in South China Sea.",
+      "static_linkages": {
+        "geo": [
+          "Scarborough Shoal = triangular chain of reefs/rocks in South China Sea; ~220 km west of Luzon (Philippines); known as Huangyan Island (China) and Bajo de Masinloc (Philippines)",
+          "South China Sea = semi-enclosed sea bordered by China, Vietnam, Philippines, Malaysia, Brunei, Indonesia, Taiwan; ~3.5 million sq km",
+          "UNCLOS (UN Convention on Law of the Sea) 1982: defines territorial sea (12 nm), Contiguous Zone (24 nm), EEZ (200 nm), Continental Shelf",
+          "2016 Permanent Court of Arbitration (PCA) ruling: Philippines vs China; ruled China's 'Nine-Dash Line' claim has no legal basis under UNCLOS; China rejected ruling",
+          "Strait of Malacca connects Indian Ocean to South China Sea; ~2.5 miles wide at narrowest; 80,000 vessels/year; energy security chokepoint"
+        ],
+        "world": [
+          "ASEAN (Association of Southeast Asian Nations) = 10 members; HQ Jakarta; founded 1967 Bangkok Declaration; India is ASEAN Dialogue Partner",
+          "QUAD = India + USA + Japan + Australia; informal security grouping; focus on free and open Indo-Pacific; China's rise is primary concern",
+          "India's Act East Policy: connects Northeast India with ASEAN; replaced Look East Policy in 2014; important for trade and strategic interests",
+          "Belt and Road Initiative (BRI) = China's global infrastructure investment programme; India is ONLY major power that hasn't joined BRI"
+        ],
+        "polity": [
+          "India's position on South China Sea: supports freedom of navigation under UNCLOS; does not take sides in territorial disputes",
+          "ITLOS = International Tribunal for the Law of the Sea; Hamburg, Germany; deals with UNCLOS disputes",
+          "India ratified UNCLOS in 1995; India's EEZ = ~2.37 million sq km including Andaman & Nicobar and Lakshadweep islands"
+        ]
+      },
+      "possible_mcq": "UNCLOS grants a coastal state exclusive rights over resources in its Exclusive Economic Zone (EEZ) up to how many nautical miles? → 200 nautical miles"
+    },
+    {
+      "id": 22,
+      "emoji": "🧬",
+      "categories": ["env", "st"],
+      "title": "Deep-Sea Biology Centre Notified as National Repository — Under Biological Diversity Act 2002",
+      "summary": "Ministry of Environment notified Deep-Sea Biology Centre as National Repository on March 30, 2026. Houses 3,500+ taxonomically identified specimens. Aligns with UN Decade of Ocean Science (2021-2030).",
+      "static_linkages": {
+        "env": [
+          "Biological Diversity Act 2002 = India's domestic law implementing CBD (Convention on Biological Diversity, 1992); National Biodiversity Authority (NBA) = nodal body; HQ Chennai",
+          "ABS = Access and Benefit Sharing; Nagoya Protocol (2010) under CBD regulates access to genetic resources and sharing of benefits with local communities",
+          "IRCC = Internationally Recognised Certificate of Compliance; issued when national permit for genetic resource access is uploaded to ABS Clearing House",
+          "India ratified CBD in 1994; India ratified Nagoya Protocol in 2012; India has 4th largest biodiversity in world (mega-diverse country)",
+          "India's National Biodiversity Action Plan (NBAP): protects India's 47,000+ plant species and 90,000+ animal species",
+          "Deep Sea Mission (India): ₹4,077 crore; Ministry of Earth Sciences; aims to explore deep ocean for minerals (poly-metallic nodules), marine biodiversity, and energy"
+        ],
+        "geo": [
+          "India's deep-sea resources: Poly-metallic nodules (manganese, nickel, copper, cobalt) found at 4,000-6,000m depth in Central Indian Ocean Basin (CIOB)",
+          "India has been allocated an exclusive exploration area of 75,000 sq km in CIOB by International Seabed Authority (ISA; HQ Kingston, Jamaica)",
+          "EEZ (200 nm) + Extended Continental Shelf (up to 350 nm if proven) = India's maritime jurisdiction area"
+        ],
+        "st": [
+          "Taxonomy = science of classifying organisms; Carl Linnaeus (1707-1778) developed binomial nomenclature (Genus species) used globally",
+          "DNA barcoding = using short DNA sequences to identify species; helps in cataloguing biodiversity",
+          "India's research vessel: Sagar Nidhi = first ice-class vessel; Sagar Kanya; Sagar Sampada — operated by NIOT (National Institute of Ocean Technology, Chennai)"
+        ]
+      },
+      "possible_mcq": "The National Biodiversity Authority (NBA), established under the Biological Diversity Act 2002, is headquartered in which city? → Chennai"
+    },
+    {
+      "id": 23,
+      "emoji": "⚖️",
+      "categories": ["polity", "history"],
+      "title": "Jan Vishwas Amendment Bill 2026 — 784 Legal Provisions Decriminalised",
+      "summary": "Jan Vishwas (Amendment of Provisions) Act 2026 passed. 784 criminal provisions across 100+ laws converted to civil penalties or removed. Aims to ease doing business, remove colonial-era penal clauses.",
+      "static_linkages": {
+        "polity": [
+          "Jan Vishwas Act 2023 (first) decriminalised 183 provisions across 42 Acts; 2026 amendment extends scope massively to 784 provisions",
+          "Decriminalisation = converting criminal offence (jail + fine) to civil penalty (fine only); reduces harassment of businesses and citizens by enforcement agencies",
+          "BNS (Bharatiya Nyaya Sanhita) 2023 replaced IPC 1860; BNSS replaced CrPC 1973; BSA replaced Evidence Act 1872 — effective July 1, 2024",
+          "IPC 1860 had several colonial-era provisions criminalising ordinary business activities; Section 420 (cheating), 415-424 all in IPC; now in BNS",
+          "Ease of Doing Business (EoDB): India's rank improved from 142 (2014) to 63 (2020) in World Bank's Doing Business Index; index discontinued after 2021 controversy"
+        ],
+        "history": [
+          "Indian Penal Code (IPC) 1860: drafted by First Law Commission under Lord Macaulay; came into force 1862; based on English penal system",
+          "Code of Criminal Procedure (CrPC) 1973: governs criminal proceedings; replaced CrPC 1898; now replaced by BNSS 2023",
+          "Indian Evidence Act 1872: drafted by Sir James Fitzjames Stephen; governs admissibility of evidence in courts; now replaced by BSA 2023",
+          "Law Commission of India: established in 1955; 22nd Law Commission (2020-present); not a constitutional body; advisory to government"
+        ],
+        "economy": [
+          "Inspector Raj = excessive regulatory inspections/harassment of businesses; Jan Vishwas aims to reduce this",
+          "Compliance burden index: India has 25,000+ compliances and 3,000+ Acts; simplification is key for FDI attraction",
+          "FDI inflows: India received $83 billion FDI in FY2024-25; Mauritius, Singapore, USA are top sources; Services, Computer, Telecom are top sectors"
+        ]
+      },
+      "possible_mcq": "The Bharatiya Nyaya Sanhita (BNS) 2023 replaced which legislation? → Indian Penal Code (IPC) 1860"
+    },
+    {
+      "id": 24,
+      "emoji": "🎵",
+      "categories": ["history", "bihar"],
+      "title": "Asha Bhosle (1933–2026) — Guinness Record Holder: Most Recorded Artist in Music History",
+      "summary": "Legendary playback singer Asha Bhosle passed away April 12, 2026 at age 92. Recorded 11,000-12,000+ songs in 20+ languages. Guinness Record 2011. Younger sister of Lata Mangeshkar. Last rites at Shivaji Park, Mumbai.",
+      "static_linkages": {
+        "history": [
+          "Asha Bhosle born Sept 8, 1933, Sangli, Maharashtra; family background in classical music — father Pandit Deenanath Mangeshkar was classical vocalist",
+          "Shivaji Park, Dadar, Mumbai: historic ground where Bal Gangadhar Tilak held Ganesh Utsav (revived 1893); also venue for Ambedkar's mass conversion to Buddhism (1956)",
+          "Playback singing system in Indian cinema introduced in 1930s; replaced by direct recording of actors' voices; K.L. Saigal, Lata Mangeshkar, Kishore Kumar were pioneers",
+          "Padma Vibhushan (2nd highest civilian honour) — Asha Bhosle received Padma Vibhushan in 2008; Lata Mangeshkar received Bharat Ratna in 2001",
+          "Dadasaheb Phalke Award: India's highest film honour; given for lifetime contribution to cinema; Lata Mangeshkar won in 1989"
+        ],
+        "polity": [
+          "State honours (State Funeral/State Honours): accorded to prominent citizens by state government; different from Bharat Ratna (civilian) or military honours",
+          "Bharat Ratna = highest civilian award; Art. 18 of Constitution abolishes titles EXCEPT military and academic distinctions; Bharat Ratna is not a 'title' per Supreme Court",
+          "Copyright Act 1957 (amended 2012): protects musical works for 60 years from publication; moral rights of authors/composers remain even after economic rights transfer"
+        ],
+        "bihar": [
+          "Bihar's classical music traditions: Maithili music (Vidyapati songs from 14th-15th century), Bhojpuri folk music, Angika music, Bajjika music",
+          "Vidyapati (1352-1448): greatest Maithili poet; wrote Padavali (devotional songs to Krishna and Shiva); born in Madhubani district, Bihar",
+          "Bishnupur Gharana and Banaras Gharana influence in Bihar's classical music scene; Khayal, Thumri, Dadra are prominent forms"
+        ]
+      },
+      "possible_mcq": "Vidyapati, the famous poet of Maithili literature, was associated with which present-day district of Bihar? → Madhubani"
+    },
+    {
+      "id": 25,
+      "emoji": "💊",
+      "categories": ["economy", "st"],
+      "title": "India Pharma 2026 — 9th Edition; Theme: 'Discover in India: Leapfrogging Life-Sciences Innovation'",
+      "summary": "India Pharma 2026 held April 13-14 in New Delhi. Biopharma SHAKTI announced in Budget (₹10,000 crore). India = pharmacy of the world. Transition from volume-driven to innovation-led pharma hub.",
+      "static_linkages": {
+        "economy": [
+          "India = world's largest supplier of generic medicines by volume (20% of global supply); 3rd largest by volume and 14th by value in global pharma",
+          "India exports medicines to 200+ countries; USA is largest export destination (31%); medicines are India's 3rd largest export commodity",
+          "PLI (Production Linked Incentive) for pharmaceuticals: ₹15,000 crore; targets API (Active Pharmaceutical Ingredients) and complex generics",
+          "API (Active Pharmaceutical Ingredient) dependency on China: India imports ~68% APIs from China; COVID-19 exposed vulnerability; Bulk Drug Parks scheme launched to reduce this",
+          "Department of Pharmaceuticals under Ministry of Chemicals & Fertilizers; NPPA (National Pharmaceutical Pricing Authority) controls drug prices under DPCO"
+        ],
+        "st": [
+          "Generic vs Branded drugs: same active ingredient, dosage, route, same effect — generics go off-patent; Hatch-Waxman Act (USA 1984) created generic drug market",
+          "CDSCO (Central Drugs Standard Control Organisation) = India's drug regulatory authority; under MoHFW; equivalent of USA's FDA",
+          "Biosimilars = biologic drugs similar to already-approved reference biological product; trickier to replicate than chemical generics; India is growing in biosimilars",
+          "Clinical Trials in India: governed by New Drugs and Clinical Trials Rules 2019; India has advantage of large, diverse patient population",
+          "mRNA vaccine technology (used in COVID-19 vaccines by Pfizer-BioNTech, Moderna) — India developing own mRNA vaccines through biotechnology firms"
+        ],
+        "bihar": [
+          "BIADA (Bihar Industrial Area Development Authority) promotes pharmaceutical units in Hajipur industrial area",
+          "Hajipur (Vaishali district) = India's first EPIP (Export Promotion Industrial Park); has pharmaceutical, food processing industries",
+          "Bihar produces significant quantities of herbal/ayurvedic raw materials: Ashwagandha, Tulsi, Giloy — medicinal plant cultivation promoted under NABARD schemes"
+        ]
+      },
+      "possible_mcq": "India supplies approximately what percentage of the world's generic medicines by volume? → About 20%"
+    },
+    {
+      "id": 26,
+      "emoji": "🌐",
+      "categories": ["world", "economy"],
+      "title": "India-New Zealand Free Trade Agreement to be Signed April 27, 2026",
+      "summary": "India and New Zealand set to sign landmark FTA on April 27 in New Delhi. India's recent FTAs: with UAE (2022), Australia (IA-ECTA, 2022), UK (in progress). India in 16 existing FTAs.",
+      "static_linkages": {
+        "economy": [
+          "FTA = Free Trade Agreement; eliminates/reduces tariffs, quotas, NTBs between countries; unlike Customs Union (common external tariff not required)",
+          "India's major FTAs: SAFTA (South Asian), ASEAN FTA (2009), India-Singapore CECA (2005), India-South Korea CEPA (2010), India-Japan CEPA (2011)",
+          "CEPA = Comprehensive Economic Partnership Agreement (broader than FTA — covers services, investment, IPR); CECA = Comprehensive Economic Cooperation Agreement",
+          "WTO (World Trade Organization): est. 1995 replacing GATT (1947); HQ Geneva; 164 members; India founding member; governs global trade rules",
+          "India-UK FTA negotiations since Jan 2022; sticking points = whisky import tariff, immigration; India-Canada FTA stalled post diplomatic tensions"
+        ],
+        "geo": [
+          "New Zealand: island nation in SW Pacific Ocean; 4 million population; Wellington is capital; Auckland is largest city; Maori are indigenous people",
+          "New Zealand is part of CPTPP (Comprehensive and Progressive Agreement for Trans-Pacific Partnership); India not a member",
+          "Pacific Ocean: largest ocean by area (165 million sq km); Pacific Ring of Fire = volcanic belt around Pacific where 75% of world's volcanoes and 90% of earthquakes occur",
+          "New Zealand's geography: Southern Alps spine on South Island; geothermal activity in North Island (Rotorua); exports dairy (Fonterra), wool, kiwifruit"
+        ],
+        "world": [
+          "RCEP = Regional Comprehensive Economic Partnership; India withdrew from RCEP negotiations in 2019; concern about Chinese goods flooding market",
+          "G20: India held G20 Presidency Sept 2022 – Nov 2023; New Delhi Declaration adopted Sept 2023; India's signature contribution: African Union added as permanent member",
+          "IPEF (Indo-Pacific Economic Framework): launched 2022 by USA; 14 members including India; covers trade, supply chains, clean economy, fair economy"
+        ]
+      },
+      "possible_mcq": "India withdrew from which major trade agreement in 2019 due to concerns about Chinese imports? → RCEP (Regional Comprehensive Economic Partnership)"
+    },
+    {
+      "id": 27,
+      "emoji": "🏥",
+      "categories": ["world", "polity"],
+      "title": "BRICS Health Working Group 2026 — First Meeting Hosted by India in New Delhi",
+      "summary": "India hosted first BRICS Health Working Group meeting 2026. Theme: 'Building for Resilience, Innovation, Cooperation and Sustainability.' Nine priority areas identified including two new pillars introduced by India.",
+      "static_linkages": {
+        "world": [
+          "BRICS = Brazil, Russia, India, China, South Africa (original 5); BRICS expanded in 2024: added Ethiopia, Egypt, Iran, UAE (Saudi Arabia declined); now called BRICS+",
+          "BRICS NDB (New Development Bank): HQ Shanghai; est. 2015; initial capital $100 billion; funds infrastructure in developing countries; India's KV Kamath was first President",
+          "CRA (Contingent Reserve Arrangement) = BRICS financial safety net of $100 billion; alternative to IMF borrowing",
+          "BRICS GDP = ~25% of world GDP; population = ~40% of world; trade = ~18% of world; primary driver is China and India's weight",
+          "India holds BRICS Chairmanship in 2021 (hosted summit virtually); Russia held 2024 Kazan Summit"
+        ],
+        "polity": [
+          "WHO (World Health Organization): UN specialised agency; est. 1948; HQ Geneva; India is founding member; Director General = Tedros Adhanom (Ethiopia); funds from member states",
+          "Universal Health Coverage (UHC): SDG Goal 3.8 — ensuring all people have access to quality health services without financial hardship",
+          "Ayushman Bharat PM-JAY: world's largest government-funded health insurance scheme; ₹5 lakh/family/year; covers 50 crore beneficiaries (bottom 40% population)",
+          "NHM (National Health Mission): combines NRHM (rural) + NUHM (urban); launched 2005; focus on maternal health, child health, disease control"
+        ],
+        "bihar": [
+          "Bihar under Ayushman Bharat: one of top beneficiary states; high maternal mortality rate (MMR) and infant mortality rate (IMR) compared to national average",
+          "Bihar's IMR (Infant Mortality Rate) = ~35 per 1,000 live births (SRS 2021) vs national 28; MMR = ~130 per lakh live births vs national 97",
+          "AIIMS Patna: established 2012; provides tertiary care; Bihar also has 38 district hospitals under IGIMS (Indira Gandhi Institute of Medical Sciences) framework"
+        ]
+      },
+      "possible_mcq": "The New Development Bank (NDB), often called the BRICS Bank, is headquartered in which city? → Shanghai (China)"
+    },
+    {
+      "id": 28,
+      "emoji": "📜",
+      "categories": ["polity", "history"],
+      "title": "Constitution in Sindhi Released on Sindhi Bhasha Diwas — April 10, 2026",
+      "summary": "VP C.P. Radhakrishnan released Constitution of India in Sindhi language (Devanagari + Persian scripts) on Sindhi Bhasha Diwas, April 10. Sindhi is 1 of 22 scheduled languages in 8th Schedule.",
+      "static_linkages": {
+        "polity": [
+          "8th Schedule of Indian Constitution: lists 22 official languages; originally 14 languages in 1950; added: Sindhi (21st Amendment 1967), Konkani, Manipuri, Nepali (71st Amendment 1992), Bodo, Dogri, Maithili, Santhali (92nd Amendment 2003)",
+          "Maithili added to 8th Schedule by 92nd Amendment 2003 — significant for Bihar (spoken in Mithila region)",
+          "Article 343 = Hindi in Devanagari script as Official Language of the Union; Article 344 = Official Languages Commission",
+          "Sindhi has no exclusive state — spoken mainly in Rajasthan, Gujarat, MP by Sindhi diaspora after Partition (1947); uses both Perso-Arabic and Devanagari scripts",
+          "Classical Languages in India: Tamil (2004), Sanskrit (2005), Kannada (2008), Telugu (2008), Malayalam (2013), Odia (2014); criteria includes 1,500+ years of literature"
+        ],
+        "history": [
+          "Sindh province before 1947: now in Pakistan; capital Karachi; Sindhi civilisation = Indus Valley Civilisation centres (Mohenjo-daro, now in Sindh, Pakistan)",
+          "Partition 1947: Sindhi Hindus migrated to India primarily to Rajasthan and Gujarat — no exclusive homeland; thus no state for Sindhi language",
+          "Indus Valley Civilisation (2600-1900 BC): Harappa (Punjab, Pakistan), Mohenjo-daro (Sindh, Pakistan), Lothal (Gujarat), Dholavira (Gujarat), Rakhigarhi (Haryana)",
+          "Sindhi Bhasha Diwas = April 10; marks the occasion when Sindhi was added to 8th Schedule by 21st Constitutional Amendment in 1967"
+        ],
+        "bihar": [
+          "Maithili language (spoken in North Bihar — Mithila region: Darbhanga, Madhubani, Sitamarhi, Muzaffarpur) was added to 8th Schedule by 92nd Amendment 2003 — great pride for Bihar",
+          "Maithili is oldest among modern Indo-Aryan languages with written literature; Vidyapati (14th century) composed in Maithili",
+          "Bihar's scheduled languages include Hindi, Urdu, Maithili; large Urdu-speaking Muslim population in Bihar (16.9% Muslim as per Census 2011)"
+        ]
+      },
+      "possible_mcq": "By which Constitutional Amendment was Maithili added to the 8th Schedule of the Indian Constitution? → 92nd Constitutional Amendment Act 2003"
+    },
+    {
+      "id": 29,
+      "emoji": "🧪",
+      "categories": ["st", "geo"],
+      "title": "Andhra Pradesh Launches India's First Quantum Test Facilities — Amaravati Quantum Valley",
+      "summary": "AP launched India's first quantum test facilities under Amaravati Quantum Valley initiative in April 2026. Supported by TIFR, IISc, and DRDO. India's National Quantum Mission has ₹6,003 crore outlay.",
+      "static_linkages": {
+        "st": [
+          "National Quantum Mission (NQM): approved April 2023; ₹6,003.65 crore over 8 years (2023-2031); targets 50-1000 qubit quantum computers in 8 years",
+          "Qubit = quantum bit; unlike classical bit (0 or 1), qubit can be 0, 1, or both simultaneously (superposition); quantum entanglement enables quantum teleportation",
+          "Quantum supremacy: Google's Sycamore processor (2019) performed a calculation in 200 seconds that would take classical computer 10,000 years",
+          "TIFR = Tata Institute of Fundamental Research; HQ Mumbai; under Dept of Atomic Energy; premier research institute for physics, chemistry, biology, maths",
+          "IISc = Indian Institute of Science; Bengaluru; founded 1909 (Jamsetji Tata + Maharaja of Mysore); only Indian university in Times Higher Education top 300"
+        ],
+        "geo": [
+          "Amaravati = Andhra Pradesh's new capital city (on Krishna river); construction stalled 2019-2022 under Jagan Reddy govt; resumed 2024 under Chandrababu Naidu",
+          "Andhra Pradesh (post-bifurcation 2014): capital Amaravati (administrative); Visakhapatnam = judicial capital; Kurnool = legislative capital (proposed)",
+          "AP-Bihar comparison: Both are large states; AP 4th largest by area; Bihar 12th; Bihar landlocked, AP has 974 km coastline on Bay of Bengal"
+        ],
+        "polity": [
+          "Andhra Pradesh Reorganisation Act 2014 bifurcated AP into AP + Telangana; AP was denied Special Category Status despite Chandrababu Naidu's demands",
+          "Amaravati capital city project: Land Pooling Scheme controversies — farmers who pooled land want plots back; ongoing legal battles in High Court",
+          "Science and Technology (Research and Development) under List III (Concurrent) — both Centre and States can legislate"
+        ]
+      },
+      "possible_mcq": "India's National Quantum Mission (NQM) was approved in 2023 with an outlay of approximately how many crore rupees? → ₹6,003 crore"
+    },
+    {
+      "id": 30,
+      "emoji": "🌱",
+      "categories": ["bihar", "history", "geo"],
+      "title": "Bihar Global Education City Near Patna + Nalanda International University — Bihar's Academic Renaissance",
+      "summary": "Bihar government preparing DPR for 250-acre Global Education City near Patna (₹547 crore). Connects to Bihar's ancient legacy: Nalanda (5th century) and Vikramshila (8th century) universities — destroyed by Bakhtiyar Khilji ~1200 AD.",
+      "static_linkages": {
+        "history": [
+          "Nalanda University (5th century AD–1200 AD): founded during Gupta period (possibly under Kumaragupta I); peak under Harsha (7th century); Chinese pilgrim Xuanzang studied here 634-644 AD",
+          "Vikramshila University: founded by Pala king Dharmapala (8th century AD) at Antichak, Bhagalpur district; destroyed by Bakhtiyar Khilji 1203 AD",
+          "Odantapuri University: another ancient Bihar university near modern Bihar Sharif (Nalanda district); also destroyed by Bakhtiyar Khilji",
+          "Bakhtiyar Khilji's invasion of Bihar (1200 AD): commander of Muhammad of Ghor; destroyed Buddhist monasteries and universities; marks decline of Buddhism in India",
+          "Pataliputra (modern Patna): capital of Magadha Empire, Nanda Empire, Maurya Empire (Chandragupta Maurya, Ashoka), Gupta Empire; one of world's largest ancient cities"
+        ],
+        "geo": [
+          "Bihar geography: lies between 24°20'N to 27°31'N latitude; 83°19'E to 88°17'E longitude; bordered by UP (W), Nepal (N), West Bengal (E), Jharkhand (S)",
+          "Patna (Pataliputra): on Ganga river; at confluence of Ganga, Sone, Punpun, Gandak; highest population density district in Bihar",
+          "Nalanda district: south of Patna; home to ancient Nalanda, new Nalanda University (Rajgir), Bodh Gaya nearby; tourism hub",
+          "Bihar's physical divisions: North Bihar Plains (Ganga and its northern tributaries); South Bihar Plains (Ganga and Son river drainage); Chota Nagpur Plateau (now in Jharkhand post-2000)"
+        ],
+        "polity": [
+          "Jharkhand separated from Bihar on November 15, 2000 — Bihar lost 45% of its area and significant mineral resources",
+          "Bihar Reorganisation Act 2000: created Jharkhand (26 districts from South Bihar); Bihar retained 38 districts",
+          "Article 3 — Parliament can form new states, alter boundaries, change names; requires recommendation of President after referring to State Legislature concerned",
+          "New Nalanda University Act 2010: established by Parliament; international treaty-based; funded jointly by India, China, Japan and other Asian nations"
+        ]
+      },
+      "possible_mcq": "Bihar was bifurcated in 2000 to create which new state, and on which date? → Jharkhand, created on November 15, 2000"
+    }
+  ]
+  
