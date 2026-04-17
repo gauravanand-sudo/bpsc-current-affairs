@@ -147,10 +147,14 @@ export default function QuizEngine({
   const [showReview, setShowReview] = useState(false);
   const [flash, setFlash]         = useState<number | null>(null);
   const [loadingBestReview, setLoadingBestReview] = useState(reviewMode);
-  const timerRef   = useRef<ReturnType<typeof setInterval> | null>(null);
-  const answersRef = useRef<Answers>({});
+  const [showExitModal, setShowExitModal] = useState(false);
+  const [pendingHref, setPendingHref]     = useState<string | null>(null);
+  const timerRef    = useRef<ReturnType<typeof setInterval> | null>(null);
+  const answersRef  = useRef<Answers>({});
+  const timeLeftRef = useRef(duration);
 
   useEffect(() => { answersRef.current = answers; }, [answers]);
+  useEffect(() => { timeLeftRef.current = timeLeft; }, [timeLeft]);
 
   useEffect(() => {
     if (!reviewMode) return;
@@ -278,25 +282,47 @@ export default function QuizEngine({
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [phase, duration, reviewMode]);
 
-  // Warn before leaving mid-quiz
+  // Guard all navigation while quiz is in progress
   useEffect(() => {
     if (phase !== "quiz" || reviewMode) return;
+
+    // Browser tab close / refresh
     const onBeforeUnload = (e: BeforeUnloadEvent) => {
       e.preventDefault();
       e.returnValue = "";
     };
+
+    // Hardware back button
     const onPopState = () => {
-      const leave = window.confirm("Quit quiz? Your progress will be lost.");
-      if (!leave) {
-        window.history.pushState(null, "", window.location.href);
-      }
+      window.history.pushState(null, "", window.location.href);
+      setShowExitModal(true);
+      setPendingHref(null);
     };
+
+    // In-app <Link> / <a> clicks (Next.js App Router)
+    const onDocClick = (e: MouseEvent) => {
+      const anchor = (e.target as Element).closest("a");
+      if (!anchor) return;
+      const href = anchor.getAttribute("href");
+      // Only block internal navigation links, ignore #anchors and external
+      if (!href || href.startsWith("#") || href.startsWith("http") || href.startsWith("mailto")) return;
+      // Don't block clicks inside the quiz area itself (submit / nav buttons)
+      if (anchor.closest(".quiz-root")) return;
+      e.preventDefault();
+      e.stopPropagation();
+      setPendingHref(href);
+      setShowExitModal(true);
+    };
+
     window.addEventListener("beforeunload", onBeforeUnload);
     window.history.pushState(null, "", window.location.href);
     window.addEventListener("popstate", onPopState);
+    document.addEventListener("click", onDocClick, true);
+
     return () => {
       window.removeEventListener("beforeunload", onBeforeUnload);
       window.removeEventListener("popstate", onPopState);
+      document.removeEventListener("click", onDocClick, true);
     };
   }, [phase, reviewMode]);
 
@@ -690,6 +716,78 @@ export default function QuizEngine({
           </button>
         </div>
       </div>
+
+      {/* ── Exit guard modal ─────────────────────────────────── */}
+      {showExitModal && (
+        <div
+          style={{
+            position: "fixed", inset: 0, zIndex: 9999,
+            background: "rgba(0,0,0,0.65)",
+            display: "flex", alignItems: "center", justifyContent: "center",
+            padding: 24,
+          }}
+          onClick={() => setShowExitModal(false)}
+        >
+          <div
+            style={{
+              background: "var(--card)",
+              border: "1px solid var(--line-hi)",
+              borderRadius: 24,
+              padding: "32px 28px",
+              maxWidth: 380,
+              width: "100%",
+              textAlign: "center",
+              boxShadow: "0 20px 60px rgba(0,0,0,0.4)",
+            }}
+            onClick={e => e.stopPropagation()}
+          >
+            <div style={{ fontSize: 36, marginBottom: 14 }}>⏸️</div>
+            <h2 style={{
+              fontFamily: "var(--font-display)", fontWeight: 700, fontSize: 19,
+              color: "var(--ink-strong)", marginBottom: 10, letterSpacing: "-0.01em",
+            }}>
+              Quiz in progress
+            </h2>
+            <p style={{ fontSize: 14, color: "var(--ink-soft)", lineHeight: 1.65, marginBottom: 28 }}>
+              Submit your quiz before leaving — your answers won&apos;t be saved if you leave now.
+            </p>
+            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+              <button
+                onClick={() => {
+                  submitQuiz(duration - timeLeftRef.current);
+                  setShowExitModal(false);
+                  if (pendingHref) {
+                    // small delay so result screen renders, then navigate
+                    setTimeout(() => { window.location.href = pendingHref; }, 800);
+                  }
+                }}
+                style={{
+                  width: "100%", padding: "13px", borderRadius: 12,
+                  border: "none",
+                  background: "linear-gradient(135deg, #16a34a, #15803d)",
+                  color: "#fff", fontSize: 14, fontWeight: 700,
+                  cursor: "pointer", fontFamily: "var(--font-display)",
+                }}
+              >
+                Submit Quiz ✓
+              </button>
+              <button
+                onClick={() => setShowExitModal(false)}
+                style={{
+                  width: "100%", padding: "12px", borderRadius: 12,
+                  border: "1px solid var(--line-hi)",
+                  background: "var(--panel)",
+                  color: "var(--ink-soft)", fontSize: 14, fontWeight: 600,
+                  cursor: "pointer", fontFamily: "var(--font-display)",
+                }}
+              >
+                Stay in Quiz
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }
