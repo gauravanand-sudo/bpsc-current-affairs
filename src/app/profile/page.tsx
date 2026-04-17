@@ -15,6 +15,8 @@ type QuizResult = {
   pct?: number;
   bestPercentage?: number;
   score?: number;
+  bestScore?: number;
+  maxScore?: number;
   outOf150?: number;
   timeTaken?: number;
   date?: string;
@@ -263,10 +265,14 @@ export default function ProfilePage() {
             </p>
             <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
               {quizResults.slice(0, 8).map((r, i) => {
-                const pct = Math.round(r.bestPercentage ?? r.pct ?? 0);
-                const color = pct >= 60 ? "#16a34a" : pct >= 40 ? "var(--accent)" : "#dc2626";
-                const bg = pct >= 60 ? "rgba(22,163,74,0.08)" : pct >= 40 ? "rgba(192,96,16,0.08)" : "rgba(220,38,38,0.06)";
-                const border = pct >= 60 ? "rgba(22,163,74,0.2)" : pct >= 40 ? "rgba(192,96,16,0.2)" : "rgba(220,38,38,0.15)";
+                // Compute /150 score from bestScore/maxScore or outOf150
+                const out150 = r.bestScore !== undefined && r.maxScore
+                  ? Math.round((r.bestScore / r.maxScore) * 150 * 10) / 10
+                  : r.outOf150 ?? Math.round((r.bestPercentage ?? r.pct ?? 0) * 1.5);
+                const display = `${Math.max(0, out150)}/150`;
+                const color = out150 >= 90 ? "#16a34a" : out150 >= 60 ? "var(--accent)" : "#dc2626";
+                const bg = out150 >= 90 ? "rgba(22,163,74,0.08)" : out150 >= 60 ? "rgba(192,96,16,0.08)" : "rgba(220,38,38,0.06)";
+                const border = out150 >= 90 ? "rgba(22,163,74,0.2)" : out150 >= 60 ? "rgba(192,96,16,0.2)" : "rgba(220,38,38,0.15)";
                 return (
                   <div key={i} style={{
                     display: "flex", alignItems: "center", justifyContent: "space-between",
@@ -284,11 +290,11 @@ export default function ProfilePage() {
                       )}
                     </div>
                     <span style={{
-                      fontFamily: "var(--font-display)", fontSize: 15, fontWeight: 700,
+                      fontFamily: "var(--font-display)", fontSize: 14, fontWeight: 700,
                       color, background: bg, border: `1px solid ${border}`,
                       borderRadius: 10, padding: "3px 10px", flexShrink: 0,
                     }}>
-                      {pct}%
+                      {display}
                     </span>
                   </div>
                 );

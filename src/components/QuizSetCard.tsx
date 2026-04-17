@@ -23,28 +23,42 @@ export default function QuizSetCard({
   num: number;
   cats: string[];
 }) {
-  const [score, setScore] = useState<number | null>(null);
+  // out of 150 score (can be < 0 with negative marking)
+  const [out150, setOut150] = useState<number | null>(null);
 
   useEffect(() => {
     try {
       const raw = localStorage.getItem(`bpsc_quiz_${month}_set-${num}-english`);
       if (raw) {
-        const parsed = JSON.parse(raw) as { pct?: number; bestPercentage?: number };
-        setScore(Math.round(parsed.bestPercentage ?? parsed.pct ?? 0));
+        const parsed = JSON.parse(raw) as {
+          bestScore?: number; maxScore?: number;
+          outOf150?: number; score?: number;
+        };
+        // Prefer bestScore/maxScore for accurate best-attempt /150
+        if (parsed.bestScore !== undefined && parsed.maxScore) {
+          setOut150(Math.round((parsed.bestScore / parsed.maxScore) * 150 * 10) / 10);
+        } else if (parsed.outOf150 !== undefined) {
+          setOut150(parsed.outOf150);
+        }
       }
     } catch { /* ignore */ }
   }, [month, num]);
 
-  const isDone = score !== null;
-  const scoreColor = score !== null
-    ? score >= 60 ? "#16a34a" : score >= 40 ? "#d97706" : "#dc2626"
+  const isDone = out150 !== null;
+  // thresholds on /150 scale: 90 = 60%, 60 = 40%
+  const scoreColor = out150 !== null
+    ? out150 >= 90 ? "#16a34a" : out150 >= 60 ? "#d97706" : "#dc2626"
     : "var(--accent)";
-  const scoreBg = score !== null
-    ? score >= 60 ? "rgba(22,163,74,0.1)" : score >= 40 ? "rgba(217,119,6,0.1)" : "rgba(220,38,38,0.06)"
+  const scoreBg = out150 !== null
+    ? out150 >= 90 ? "rgba(22,163,74,0.1)" : out150 >= 60 ? "rgba(217,119,6,0.1)" : "rgba(220,38,38,0.06)"
     : "var(--accent-soft)";
-  const scoreBorder = score !== null
-    ? score >= 60 ? "rgba(22,163,74,0.3)" : score >= 40 ? "rgba(217,119,6,0.25)" : "rgba(220,38,38,0.2)"
+  const scoreBorder = out150 !== null
+    ? out150 >= 90 ? "rgba(22,163,74,0.3)" : out150 >= 60 ? "rgba(217,119,6,0.25)" : "rgba(220,38,38,0.2)"
     : "var(--accent-border)";
+
+  const displayScore = out150 !== null
+    ? `${out150 > 0 ? out150 : 0}/150`
+    : null;
 
   return (
     <div style={{
@@ -53,7 +67,7 @@ export default function QuizSetCard({
         : "1px solid var(--line)",
       borderRadius: 20,
       padding: "18px 16px",
-      background: isDone && score! >= 60
+      background: isDone && out150! >= 90
         ? "rgba(22,163,74,0.03)"
         : "var(--card)",
       display: "flex",
@@ -75,7 +89,7 @@ export default function QuizSetCard({
             borderRadius: 20, padding: "2px 10px",
             fontSize: 11, fontWeight: 700,
           }}>
-            {score}%
+            {displayScore}
           </span>
         ) : (
           <span style={{
@@ -121,7 +135,7 @@ export default function QuizSetCard({
             {isDone ? "Retake Quiz →" : "Start Quiz →"}
           </span>
           <span style={{ fontSize: 12, fontWeight: 600, color: isDone ? scoreColor : "var(--accent)" }}>
-            {isDone ? `Score: ${score}%` : "30 min"}
+            {isDone ? displayScore : "30 min"}
           </span>
         </Link>
         <Link href={`/ca/${month}/set-${num}-english`} style={{
