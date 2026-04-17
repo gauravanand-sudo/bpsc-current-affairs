@@ -60,9 +60,10 @@ export default function SupportPage() {
         setTimeout(() => bottomRef.current?.scrollIntoView({ behavior: "smooth" }), 100);
       });
 
-    // Realtime subscription
+    // Realtime subscription — unique key per user for accurate presence count
+    const presenceKey = `user-${Math.random().toString(36).slice(2, 10)}`;
     const channel = supabase
-      .channel("support-room", { config: { presence: { key: "support" } } })
+      .channel("support-room", { config: { presence: { key: presenceKey } } })
       .on("postgres_changes", {
         event: "INSERT",
         schema: "public",
