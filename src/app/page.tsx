@@ -68,8 +68,8 @@ export default function HomePage() {
       </section>
 
       {/* ── UNIQUE FEATURES ────────────────────────────────────── */}
-      <section style={{ borderTop: "1px solid var(--line)", background: "var(--bg)", padding: "16px 16px" }}>
-        <div className="hide-scrollbar" style={{ display: "flex", gap: 8, overflowX: "auto" }}>
+      <section style={{ borderTop: "1px solid var(--line)", background: "var(--bg)", padding: "12px 16px" }}>
+        <div style={{ display: "flex", flexWrap: "wrap", gap: 6, justifyContent: "center" }}>
           {[
             { href: "/ask",         label: "🧠 AI Tutor 24/7" },
             { href: "/partner",     label: "🤝 Find Study Partner" },
@@ -79,9 +79,9 @@ export default function HomePage() {
             <Link key={f.href} href={f.href} style={{
               display: "inline-flex", alignItems: "center", whiteSpace: "nowrap",
               background: "var(--card)", border: "1px solid var(--line)",
-              borderRadius: 20, padding: "7px 14px",
-              fontSize: 13, fontWeight: 600, color: "var(--ink-soft)",
-              textDecoration: "none", flexShrink: 0,
+              borderRadius: 20, padding: "5px 12px",
+              fontSize: 12, fontWeight: 600, color: "var(--ink-soft)",
+              textDecoration: "none",
             }}>
               {f.label}
             </Link>
