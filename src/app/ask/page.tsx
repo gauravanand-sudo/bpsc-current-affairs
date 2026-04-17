@@ -56,7 +56,7 @@ export default function AskPage() {
   }
 
   return (
-    <main style={{ height: "100dvh", background: "var(--bg)", display: "flex", flexDirection: "column", overflow: "hidden" }}>
+    <main className="chat-shell" style={{ background: "var(--bg)", display: "flex", flexDirection: "column", overflow: "hidden" }}>
 
       {/* Header */}
       <div style={{

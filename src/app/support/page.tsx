@@ -113,11 +113,10 @@ function SupportPageInner() {
   }
 
   return (
-    <main style={{ height: "100dvh", background: "var(--bg)", display: "flex", flexDirection: "column", overflow: "hidden" }}>
+    <main className="chat-shell" style={{ background: "var(--bg)", display: "flex", flexDirection: "column", overflow: "hidden" }}>
 
       {/* ── Fixed header ── */}
       <div style={{
-        position: "sticky", top: 0, zIndex: 50,
         flexShrink: 0,
         padding: "12px 16px",
         borderBottom: "1px solid var(--line)",

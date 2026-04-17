@@ -51,6 +51,14 @@ button { font-family: inherit; }
 ::-webkit-scrollbar-track { background: var(--bg); }
 ::-webkit-scrollbar-thumb { background: var(--line-hi); border-radius: 4px; }
 
+/* ── Chat pages (ask / support / partner) ─────────────────── */
+.chat-shell {
+  height: calc(100dvh - 52px - 60px);
+}
+@media (min-width: 640px) {
+  .chat-shell { height: calc(100dvh - 52px); }
+}
+
 /* ── Scroll-snap feed ─────────────────────────────────────── */
 .feed-shell {
   height: calc(100vh - 52px - 60px);
