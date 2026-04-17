@@ -56,10 +56,13 @@ export default function AskPage() {
         body: JSON.stringify({ question: q }),
       });
       const data = await res.json() as { answer?: string; error?: string };
-      setMessages(prev => [...prev, {
-        role: "ai",
-        text: data.answer ?? "Sorry, couldn't get an answer. Try again.",
-      }]);
+      let text = data.answer ?? "";
+      if (!text) {
+        if (data.error === "AI not configured") text = "⚠️ AI is not configured yet. The admin needs to add the GROQ_API_KEY to Vercel environment variables.";
+        else if (data.error === "AI unavailable") text = "⚠️ AI service is temporarily unavailable. Please try again in a moment.";
+        else text = "Sorry, couldn't get an answer. Please try again.";
+      }
+      setMessages(prev => [...prev, { role: "ai", text }]);
     } catch {
       setMessages(prev => [...prev, { role: "ai", text: "Connection error. Please try again." }]);
     }
