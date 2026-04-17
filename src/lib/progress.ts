@@ -365,6 +365,7 @@ export async function saveQuizProgress(args: {
     QuizProgressRow,
     "attempts_count" | "best_score" | "best_percentage" | "first_attempted_at" | "best_attempt_answers" | "best_time_taken"
   > | null;
+  const isFirstAttempt = !existing || (existing.attempts_count ?? 0) === 0;
   const isBestAttempt = score >= (existing?.best_score ?? Number.NEGATIVE_INFINITY);
 
   await quizTable.upsert({
@@ -379,6 +380,8 @@ export async function saveQuizProgress(args: {
     time_taken: timeTaken,
     latest_attempt_answers: answers,
     attempts_count: (existing?.attempts_count ?? 0) + 1,
+    // first_score is set once and never updated — used for leaderboard to prevent retake cheating
+    ...(isFirstAttempt ? { first_score: score } : {}),
     best_score: Math.max(existing?.best_score ?? 0, score),
     best_percentage: Math.max(existing?.best_percentage ?? 0, percentage),
     best_attempt_answers: isBestAttempt ? answers : existing?.best_attempt_answers ?? null,
