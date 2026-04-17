@@ -2,7 +2,6 @@ import type { Metadata, Viewport } from "next";
 import { Plus_Jakarta_Sans, Space_Grotesk } from "next/font/google";
 import Script from "next/script";
 import Nav from "@/components/Nav";
-import ExamCountdown from "@/components/ExamCountdown";
 import ServiceWorkerRegistrar from "@/components/ServiceWorkerRegistrar";
 import SupportButton from "@/components/SupportButton";
 import "./globals.css";
@@ -70,7 +69,6 @@ export default function RootLayout({
       <body style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
         <ServiceWorkerRegistrar />
         <Nav />
-        <ExamCountdown />
         <SupportButton />
         <div style={{ flex: 1 }}>{children}</div>
         <footer

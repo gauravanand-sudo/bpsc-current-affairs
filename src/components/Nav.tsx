@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import type { Session } from "@supabase/supabase-js";
 import { getSupabaseBrowserClient } from "@/lib/supabase";
+import ExamCountdown from "@/components/ExamCountdown";
 
 export default function Nav() {
   const [session, setSession] = useState<Session | null>(null);
@@ -84,8 +85,9 @@ export default function Nav() {
           ))}
         </div>
 
-        {/* Auth area */}
+        {/* Countdown + Auth area */}
         <div style={{ display: "flex", alignItems: "center", gap: 8, flexShrink: 0 }}>
+          <ExamCountdown />
           {user ? (
             <>
               <Link href="/profile" style={{ textDecoration: "none", display: "flex", alignItems: "center" }}>
