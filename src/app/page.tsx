@@ -109,7 +109,7 @@ export default function HomePage() {
                   Study Sets
                 </p>
                 <p style={{ fontSize: 12, color: "var(--accent)", fontWeight: 700, marginBottom: 18, letterSpacing: "0.04em" }}>
-                  225+ sets · 15 per month
+                  225+ sets
                 </p>
                 {[
                   "Every Current Affairs topic — nothing skipped",
@@ -146,7 +146,7 @@ export default function HomePage() {
                   Quiz Sets
                 </p>
                 <p style={{ fontSize: 12, color: "var(--ink-soft)", fontWeight: 700, marginBottom: 18, letterSpacing: "0.04em" }}>
-                  225+ quizzes · 15 per month
+                  225+ quizzes
                 </p>
                 {[
                   "Built from 15 years of BPSC CA + static patterns",
