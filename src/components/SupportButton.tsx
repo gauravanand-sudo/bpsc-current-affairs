@@ -22,10 +22,12 @@ export default function SupportButton() {
       });
   }, []);
 
-  const hidePartner = pathname === "/partner" || pathname === "/support";
-  const hideSupport = pathname === "/support";
+  // Hide all floating buttons on pages that have a bottom input bar
+  const pagesWithBottomInput = ["/support", "/partner", "/ask"];
+  if (pagesWithBottomInput.includes(pathname)) return null;
 
-  if (hidePartner && hideSupport) return null;
+  const hidePartner = false;
+  const hideSupport = false;
 
   return (
     <div style={{

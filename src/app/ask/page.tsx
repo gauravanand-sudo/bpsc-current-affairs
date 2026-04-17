@@ -7,20 +7,6 @@ type Message = {
   text: string;
 };
 
-function formatAnswer(text: string) {
-  // Split on bold headers like **Answer**, **Static Linkage**, etc.
-  const parts = text.split(/(\*\*[^*]+\*\*)/g);
-  return parts.map((part, i) => {
-    if (part.startsWith("**") && part.endsWith("**")) {
-      return (
-        <span key={i} style={{ fontWeight: 700, color: "var(--accent)", display: "block", marginTop: i === 0 ? 0 : 14, marginBottom: 4, fontSize: 11, letterSpacing: "0.08em", textTransform: "uppercase" }}>
-          {part.slice(2, -2)}
-        </span>
-      );
-    }
-    return <span key={i} style={{ whiteSpace: "pre-wrap" }}>{part}</span>;
-  });
-}
 
 const SUGGESTIONS = [
   "What is Article 356 and how is it relevant to Bihar?",
@@ -169,7 +155,7 @@ export default function AskPage() {
                     BPSC AI Tutor
                   </span>
                 </div>
-                {formatAnswer(m.text)}
+                <span style={{ whiteSpace: "pre-wrap" }}>{m.text}</span>
               </div>
             )}
           </div>
