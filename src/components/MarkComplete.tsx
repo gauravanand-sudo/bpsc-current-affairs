@@ -39,40 +39,39 @@ export default function MarkComplete({ month, setName, cardId, categories }: Pro
 
   return (
     <div style={{
-      position: "fixed",
-      bottom: "calc(60px + env(safe-area-inset-bottom))",
-      left: 0, right: 0,
-      zIndex: 150,
+      position: "sticky",
+      bottom: 0,
+      zIndex: 10,
       display: "flex",
-      justifyContent: "center",
-      pointerEvents: "none",
+      justifyContent: "flex-end",
+      padding: "10px 0 4px",
+      background: "linear-gradient(to bottom, transparent, rgba(255,250,240,0.97) 40%)",
     }}>
       <button
         onClick={toggle}
         style={{
-          pointerEvents: "auto",
           display: "flex",
           alignItems: "center",
           gap: 8,
-          padding: "12px 28px",
+          padding: "10px 20px",
           borderRadius: 50,
           border: done ? "1.5px solid var(--accent)" : "1.5px solid rgba(120,80,30,0.2)",
           background: done
-            ? flash ? "var(--accent)" : "rgba(184,97,23,0.12)"
+            ? flash ? "var(--accent)" : "var(--accent-soft)"
             : "rgba(244,239,232,0.97)",
-          backdropFilter: "blur(12px)",
-          WebkitBackdropFilter: "blur(12px)",
+          backdropFilter: "blur(8px)",
+          WebkitBackdropFilter: "blur(8px)",
           color: done ? (flash ? "#fff" : "var(--accent)") : "var(--ink-soft)",
           fontSize: 13,
           fontWeight: 700,
           cursor: "pointer",
           fontFamily: "var(--font-display)",
           letterSpacing: "0.03em",
-          boxShadow: "0 4px 20px rgba(120,80,30,0.15)",
+          boxShadow: "0 2px 12px rgba(120,80,30,0.12)",
           transition: "all 0.15s",
         }}
       >
-        <span style={{ fontSize: 16 }}>{done ? "✓" : "○"}</span>
+        <span style={{ fontSize: 15 }}>{done ? "✓" : "○"}</span>
         {done ? "Completed" : "Mark done"}
       </button>
     </div>
