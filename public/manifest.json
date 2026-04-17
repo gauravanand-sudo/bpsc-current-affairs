@@ -2,8 +2,8 @@
   "name": "BPSC 365 — Bihar Current Affairs",
   "short_name": "BPSC 365",
   "description": "Daily current affairs with static prelims linkages and Bihar focus for BPSC aspirants.",
-  "start_url": "/ca",
-  "display": "standalone",
+  "start_url": "/",
+  "display": "browser",
   "orientation": "portrait",
   "background_color": "#f4efe8",
   "theme_color": "#b86117",
@@ -11,6 +11,11 @@
   "lang": "hi-IN",
   "icons": [],
   "screenshots": [
-    { "src": "/screenshot-mobile.png", "sizes": "390x844", "type": "image/png", "form_factor": "narrow" }
+    {
+      "src": "/screenshot-mobile.png",
+      "sizes": "390x844",
+      "type": "image/png",
+      "form_factor": "narrow"
+    }
   ]
 }
