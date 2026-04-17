@@ -213,6 +213,120 @@ export default async function CALandingPage() {
         </div>
       </section>
 
+      {/* ── Mission Banner ───────────────────────────────────── */}
+      <section style={{
+        background: "linear-gradient(135deg, #0c1220 0%, #1a2744 100%)",
+        padding: "28px 24px",
+        borderTop: "1px solid rgba(251,191,36,0.15)",
+        borderBottom: "1px solid rgba(251,191,36,0.15)",
+      }}>
+        <div style={{ maxWidth: 860, margin: "0 auto" }}>
+          <div style={{
+            display: "flex",
+            flexWrap: "wrap",
+            alignItems: "center",
+            gap: 20,
+            justifyContent: "space-between",
+          }}>
+            <div>
+              <p style={{
+                fontFamily: "var(--font-display)",
+                fontSize: "clamp(1.1rem, 3vw, 1.5rem)",
+                fontWeight: 700,
+                color: "#fef3c7",
+                letterSpacing: "-0.01em",
+                marginBottom: 6,
+              }}>
+                🎯 Mission 108/150 — हम साथ पार करेंगे
+              </p>
+              <p style={{
+                fontSize: 13,
+                color: "rgba(254,243,199,0.65)",
+                lineHeight: 1.7,
+                maxWidth: 520,
+              }}>
+                Content being added daily to cover every gap. Close every other tab —
+                CA, Static, Bihar Angle, Quizzes, AI Tutor. Everything is right here. Free. Always.
+              </p>
+            </div>
+            <div style={{
+              display: "flex",
+              flexDirection: "column",
+              gap: 8,
+              flexShrink: 0,
+            }}>
+              {[
+                { icon: "📖", text: "225+ Study Sets" },
+                { icon: "🎯", text: "225+ Quiz Sets" },
+                { icon: "🧠", text: "AI Tutor 24/7" },
+                { icon: "🔄", text: "Updated Daily" },
+              ].map(({ icon, text }) => (
+                <div key={text} style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 8,
+                  fontSize: 12,
+                  fontWeight: 600,
+                  color: "rgba(254,243,199,0.8)",
+                }}>
+                  <span style={{ fontSize: 14 }}>{icon}</span>
+                  <span>{text}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Progress bar towards mission */}
+          <div style={{ marginTop: 20 }}>
+            <div style={{
+              display: "flex",
+              justifyContent: "space-between",
+              marginBottom: 6,
+              fontSize: 11,
+              color: "rgba(251,191,36,0.7)",
+              fontWeight: 600,
+              letterSpacing: "0.06em",
+            }}>
+              <span>CONTENT COVERAGE</span>
+              <span>BUILDING DAILY →</span>
+            </div>
+            <div style={{
+              height: 4,
+              background: "rgba(255,255,255,0.08)",
+              borderRadius: 4,
+              overflow: "hidden",
+            }}>
+              <div style={{
+                height: "100%",
+                width: "72%",
+                background: "linear-gradient(90deg, #fbbf24, #f97316)",
+                borderRadius: 4,
+                position: "relative",
+              }}>
+                <div style={{
+                  position: "absolute",
+                  right: 0,
+                  top: 0,
+                  bottom: 0,
+                  width: 20,
+                  background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.4))",
+                  animation: "pulse 2s ease-in-out infinite",
+                }} />
+              </div>
+            </div>
+            <p style={{
+              marginTop: 6,
+              fontSize: 11,
+              color: "rgba(254,243,199,0.4)",
+              textAlign: "right",
+              letterSpacing: "0.04em",
+            }}>
+              Aiming to cover the full 72nd BPSC PT365 syllabus before exam day
+            </p>
+          </div>
+        </div>
+      </section>
+
       {/* ── Sources + Training ───────────────────────────────── */}
       <section style={{
         borderTop: "1px solid var(--line)",
