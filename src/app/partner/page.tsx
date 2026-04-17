@@ -91,8 +91,39 @@ export default function PartnerPage() {
     return () => { supabase.removeChannel(channel); };
   }, []);
 
+  const contactRequired = medium !== "This chat";
+  const contactPlaceholder = medium === "WhatsApp"
+    ? "10-digit mobile number e.g. 9876543210"
+    : medium === "Telegram"
+    ? "@your_telegram_handle"
+    : "";
+  const contactLabel = medium === "WhatsApp"
+    ? "Your WhatsApp number (required)"
+    : medium === "Telegram"
+    ? "Your Telegram handle (required)"
+    : "";
+
+  function getConnectUrl(r: PartnerRequest): string {
+    const hint = r.contact_hint?.trim() ?? "";
+    const msg = encodeURIComponent(
+      `Hi ${r.username}! I saw your BPSC 365 study partner card (${r.topic}). Want to study together? 🤝`
+    );
+    if (r.medium === "WhatsApp") {
+      const digits = hint.replace(/\D/g, "");
+      const num = digits.length === 10 ? `91${digits}` : digits;
+      return `https://wa.me/${num}?text=${msg}`;
+    }
+    if (r.medium === "Telegram") {
+      const handle = hint.startsWith("@") ? hint.slice(1) : hint;
+      return `https://t.me/${handle}`;
+    }
+    // This chat — open support with pre-fill via query param
+    return `/support?say=${encodeURIComponent(`Hey ${r.username}! Saw your study partner card for ${r.topic} — want to grind together? 🤝`)}`;
+  }
+
   async function post() {
     if (sending || posted) return;
+    if (contactRequired && !contact.trim()) return;
     setSending(true);
     const supabase = getSupabaseBrowserClient();
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -229,35 +260,43 @@ export default function PartnerPage() {
                 </div>
               </div>
 
-              {/* Contact hint */}
-              <div>
-                <label style={{ fontSize: 11, fontWeight: 700, color: "var(--muted)", letterSpacing: "0.1em", textTransform: "uppercase", display: "block", marginBottom: 6 }}>
-                  Contact hint <span style={{ fontWeight: 400, textTransform: "none", letterSpacing: 0 }}>(optional — @handle, last 4 digits, etc.)</span>
-                </label>
-                <input
-                  value={contact}
-                  onChange={e => setContact(e.target.value)}
-                  placeholder="e.g. @ravi_bpsc or WhatsApp 9876"
-                  maxLength={40}
-                  style={{
-                    width: "100%", boxSizing: "border-box",
-                    background: "var(--panel)", border: "1px solid var(--line)",
-                    borderRadius: 10, padding: "9px 14px", fontSize: 13,
-                    color: "var(--ink-strong)", outline: "none", fontFamily: "inherit",
-                  }}
-                />
-              </div>
+              {/* Contact — shown only for WhatsApp / Telegram */}
+              {contactRequired && (
+                <div>
+                  <label style={{ fontSize: 11, fontWeight: 700, color: "var(--muted)", letterSpacing: "0.1em", textTransform: "uppercase", display: "block", marginBottom: 6 }}>
+                    {contactLabel}
+                  </label>
+                  <input
+                    value={contact}
+                    onChange={e => setContact(e.target.value)}
+                    placeholder={contactPlaceholder}
+                    maxLength={40}
+                    style={{
+                      width: "100%", boxSizing: "border-box",
+                      background: "var(--panel)",
+                      border: `1px solid ${contactRequired && !contact.trim() ? "rgba(220,38,38,0.4)" : "var(--line)"}`,
+                      borderRadius: 10, padding: "9px 14px", fontSize: 13,
+                      color: "var(--ink-strong)", outline: "none", fontFamily: "inherit",
+                    }}
+                  />
+                  <p style={{ fontSize: 11, color: "var(--muted)", marginTop: 4 }}>
+                    Only shown to people who view your card — not stored publicly beyond this board.
+                  </p>
+                </div>
+              )}
 
               <button
                 onClick={post}
-                disabled={sending}
+                disabled={sending || (contactRequired && !contact.trim())}
                 style={{
                   background: "linear-gradient(135deg, #b86117, #d97706)",
                   color: "#fff", border: "none", borderRadius: 12,
                   padding: "13px 24px", fontSize: 14, fontWeight: 700,
-                  cursor: "pointer", fontFamily: "var(--font-display)",
-                  letterSpacing: "0.02em",
+                  cursor: sending || (contactRequired && !contact.trim()) ? "not-allowed" : "pointer",
+                  fontFamily: "var(--font-display)", letterSpacing: "0.02em",
                   boxShadow: "0 4px 16px rgba(192,96,16,0.3)",
+                  opacity: contactRequired && !contact.trim() ? 0.5 : 1,
+                  transition: "opacity 0.15s",
                 }}
               >
                 {sending ? "Posting..." : "🔥 Post my card — find me a partner"}
@@ -345,16 +384,25 @@ export default function PartnerPage() {
                 }}>
                   ⏱ {r.hours}
                 </span>
-                {r.contact_hint && (
-                  <span style={{
-                    fontSize: 12, fontWeight: 600, color: "var(--ink-soft)",
-                    background: "var(--chip)", border: "1px solid var(--line)",
-                    borderRadius: 20, padding: "4px 10px",
-                  }}>
-                    📱 {r.contact_hint}
-                  </span>
-                )}
               </div>
+
+              <a
+                href={getConnectUrl(r)}
+                target={r.medium !== "This chat" ? "_blank" : undefined}
+                rel="noopener noreferrer"
+                style={{
+                  display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
+                  background: mediumColor[r.medium] ?? "var(--accent)",
+                  color: "#fff", borderRadius: 12, padding: "11px 16px",
+                  fontSize: 13, fontWeight: 700, textDecoration: "none",
+                  fontFamily: "var(--font-display)",
+                  boxShadow: `0 3px 12px ${mediumColor[r.medium] ?? "var(--accent)"}40`,
+                }}
+              >
+                {r.medium === "WhatsApp" && "💬 Connect on WhatsApp"}
+                {r.medium === "Telegram" && "✈️ Open on Telegram"}
+                {r.medium === "This chat" && "💙 Say hi in group chat"}
+              </a>
             </div>
           ))}
         </div>

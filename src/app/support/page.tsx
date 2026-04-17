@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import { getSupabaseBrowserClient } from "@/lib/supabase";
 
 type Message = {
@@ -35,9 +36,10 @@ function timeAgo(iso: string) {
 
 type ReplyTo = { id: number; text: string; username: string } | null;
 
-export default function SupportPage() {
+function SupportPageInner() {
+  const searchParams = useSearchParams();
   const [messages, setMessages] = useState<Message[]>([]);
-  const [text, setText] = useState("");
+  const [text, setText] = useState(searchParams.get("say") ?? "");
   const [sending, setSending] = useState(false);
   const [online, setOnline] = useState(1);
   const [username, setUsername] = useState("");
@@ -321,5 +323,13 @@ export default function SupportPage() {
       </div>
 
     </main>
+  );
+}
+
+export default function SupportPage() {
+  return (
+    <Suspense>
+      <SupportPageInner />
+    </Suspense>
   );
 }
