@@ -29,18 +29,6 @@ function timeAgo(iso: string) {
   return `${Math.floor(diff / 86400000)}d ago`;
 }
 
-function getUsername(): string {
-  try {
-    const s = localStorage.getItem("bpsc_support_username");
-    if (s) return s;
-    const n = `Aspirant #${Math.floor(1000 + Math.random() * 9000)}`;
-    localStorage.setItem("bpsc_support_username", n);
-    return n;
-  } catch {
-    return `Aspirant #${Math.floor(1000 + Math.random() * 9000)}`;
-  }
-}
-
 export default function PartnerPage() {
   const [requests, setRequests] = useState<PartnerRequest[]>([]);
   const [topic, setTopic] = useState(TOPICS[0]);
@@ -50,10 +38,37 @@ export default function PartnerPage() {
   const [sending, setSending] = useState(false);
   const [posted, setPosted] = useState(false);
   const [activeCount, setActiveCount] = useState(0);
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [displayName, setDisplayName] = useState("");
   const channelRef = useRef<ReturnType<typeof getSupabaseBrowserClient>["channel"] | null>(null);
 
   useEffect(() => {
     const supabase = getSupabaseBrowserClient();
+
+    supabase.auth.getSession().then(({ data }) => {
+      const user = data.session?.user;
+      if (user) {
+        setLoggedIn(true);
+        setDisplayName(
+          (user.user_metadata?.full_name as string | undefined)?.split(" ")[0]
+          ?? user.email
+          ?? "Aspirant"
+        );
+      }
+    });
+    supabase.auth.onAuthStateChange((_e, session) => {
+      if (session?.user) {
+        setLoggedIn(true);
+        setDisplayName(
+          (session.user.user_metadata?.full_name as string | undefined)?.split(" ")[0]
+          ?? session.user.email
+          ?? "Aspirant"
+        );
+      } else {
+        setLoggedIn(false);
+        setDisplayName("");
+      }
+    });
 
     // Load last 24h requests
     const cutoff = new Date(Date.now() - 86400000).toISOString();
@@ -128,7 +143,7 @@ export default function PartnerPage() {
     const supabase = getSupabaseBrowserClient();
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     await (supabase as any).from("study_partner_requests").insert({
-      username: getUsername(),
+      username: displayName,
       topic,
       hours,
       medium,
@@ -202,8 +217,37 @@ export default function PartnerPage() {
               Post your card
             </p>
             <p style={{ fontSize: 12, color: "var(--muted)", marginBottom: 18 }}>
-              Expires in 24 hours · shown to all aspirants on this page
+              Expires in 24 hours · your name shown as <strong>{loggedIn ? displayName : "your Google first name"}</strong>
             </p>
+
+            {!loggedIn && (
+              <div style={{
+                background: "rgba(192,96,16,0.06)", border: "1px solid var(--accent-border)",
+                borderRadius: 12, padding: "14px 16px", marginBottom: 18,
+                display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12,
+              }}>
+                <p style={{ fontSize: 13, color: "var(--ink-soft)", lineHeight: 1.5 }}>
+                  Sign in so aspirants know who they&apos;re connecting with.
+                </p>
+                <button
+                  onClick={async () => {
+                    const supabase = getSupabaseBrowserClient();
+                    await supabase.auth.signInWithOAuth({
+                      provider: "google",
+                      options: { redirectTo: `${window.location.origin}/partner` },
+                    });
+                  }}
+                  style={{
+                    background: "var(--accent)", color: "#fff", border: "none",
+                    borderRadius: 10, padding: "9px 16px", fontSize: 12,
+                    fontWeight: 700, cursor: "pointer", fontFamily: "var(--font-display)",
+                    flexShrink: 0,
+                  }}
+                >
+                  Sign in with Google
+                </button>
+              </div>
+            )}
 
             <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
               {/* Topic */}
@@ -287,15 +331,15 @@ export default function PartnerPage() {
 
               <button
                 onClick={post}
-                disabled={sending || (contactRequired && !contact.trim())}
+                disabled={sending || !loggedIn || (contactRequired && !contact.trim())}
                 style={{
                   background: "linear-gradient(135deg, #b86117, #d97706)",
                   color: "#fff", border: "none", borderRadius: 12,
                   padding: "13px 24px", fontSize: 14, fontWeight: 700,
-                  cursor: sending || (contactRequired && !contact.trim()) ? "not-allowed" : "pointer",
+                  cursor: sending || !loggedIn || (contactRequired && !contact.trim()) ? "not-allowed" : "pointer",
                   fontFamily: "var(--font-display)", letterSpacing: "0.02em",
                   boxShadow: "0 4px 16px rgba(192,96,16,0.3)",
-                  opacity: contactRequired && !contact.trim() ? 0.5 : 1,
+                  opacity: !loggedIn || (contactRequired && !contact.trim()) ? 0.5 : 1,
                   transition: "opacity 0.15s",
                 }}
               >
