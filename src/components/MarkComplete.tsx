@@ -29,7 +29,6 @@ export default function MarkComplete({ month, setName, cardId, categories }: Pro
       setDone(false);
       void saveStudyCardProgress({ month, setName, cardId, categories, done: false });
     } else {
-      // Store categories so profile can show breakdown
       localStorage.setItem(key, categories.join(","));
       setDone(true);
       setFlash(true);
@@ -39,32 +38,43 @@ export default function MarkComplete({ month, setName, cardId, categories }: Pro
   }
 
   return (
-    <button
-      onClick={toggle}
-      style={{
-        display: "flex",
-        alignItems: "center",
-        gap: 6,
-        padding: "7px 14px",
-        borderRadius: 10,
-        border: done ? "1px solid var(--accent)" : "1px solid var(--line)",
-        background: done
-          ? flash
-            ? "var(--accent)"
-            : "var(--accent-soft)"
-          : "var(--chip)",
-        color: done ? "var(--accent)" : "var(--ink-soft)",
-        fontSize: 12,
-        fontWeight: 700,
-        cursor: "pointer",
-        fontFamily: "var(--font-display)",
-        letterSpacing: "0.03em",
-        transition: "all 0.15s",
-        flexShrink: 0,
-      }}
-    >
-      <span style={{ fontSize: 14 }}>{done ? "✓" : "○"}</span>
-      {done ? "Completed" : "Mark done"}
-    </button>
+    <div style={{
+      position: "fixed",
+      bottom: "calc(60px + env(safe-area-inset-bottom))",
+      left: 0, right: 0,
+      zIndex: 150,
+      display: "flex",
+      justifyContent: "center",
+      pointerEvents: "none",
+    }}>
+      <button
+        onClick={toggle}
+        style={{
+          pointerEvents: "auto",
+          display: "flex",
+          alignItems: "center",
+          gap: 8,
+          padding: "12px 28px",
+          borderRadius: 50,
+          border: done ? "1.5px solid var(--accent)" : "1.5px solid rgba(120,80,30,0.2)",
+          background: done
+            ? flash ? "var(--accent)" : "rgba(184,97,23,0.12)"
+            : "rgba(244,239,232,0.97)",
+          backdropFilter: "blur(12px)",
+          WebkitBackdropFilter: "blur(12px)",
+          color: done ? (flash ? "#fff" : "var(--accent)") : "var(--ink-soft)",
+          fontSize: 13,
+          fontWeight: 700,
+          cursor: "pointer",
+          fontFamily: "var(--font-display)",
+          letterSpacing: "0.03em",
+          boxShadow: "0 4px 20px rgba(120,80,30,0.15)",
+          transition: "all 0.15s",
+        }}
+      >
+        <span style={{ fontSize: 16 }}>{done ? "✓" : "○"}</span>
+        {done ? "Completed" : "Mark done"}
+      </button>
+    </div>
   );
 }
