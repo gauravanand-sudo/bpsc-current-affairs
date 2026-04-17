@@ -137,159 +137,55 @@ export default async function QuizPage({
   /* ── Quiz not ready ───────────────────────────────────────── */
   if (!quizData) {
     return (
-      <main
-        style={{
-          minHeight: "100vh",
-          background: "#111827",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          padding: 24,
-        }}
-      >
-        <div style={{ textAlign: "center", maxWidth: 420 }}>
-          {/* Icon */}
-          <div
-            style={{
-              width: 72,
-              height: 72,
-              borderRadius: "50%",
-              background: "rgba(192,96,16,0.12)",
-              border: "1px solid rgba(192,96,16,0.25)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              margin: "0 auto 24px",
-              fontSize: 32,
-            }}
-          >
-            ⏳
-          </div>
+      <main style={{
+        minHeight: "100vh",
+        background: "linear-gradient(160deg, #0c1220 0%, #1a2744 100%)",
+        display: "flex", alignItems: "center", justifyContent: "center",
+        padding: 24,
+      }}>
+        <div style={{ maxWidth: 380, width: "100%", textAlign: "center" }}>
 
-          <p
-            style={{
-              fontFamily: "monospace",
-              fontSize: 10,
-              letterSpacing: "0.32em",
-              textTransform: "uppercase",
-              color: "#c06010",
-              marginBottom: 12,
-            }}
-          >
-            BPSC Cosmos · Quiz
-          </p>
+          <div style={{ fontSize: 44, marginBottom: 20 }}>⏳</div>
 
-          <h1
-            style={{
-              fontFamily: "var(--font-display)",
-              fontSize: "clamp(1.4rem, 4vw, 1.9rem)",
-              fontWeight: 700,
-              color: "#f1f5f9",
-              letterSpacing: "-0.02em",
-              lineHeight: 1.2,
-              marginBottom: 12,
-            }}
-          >
-            {setLabel(month, set)} — Test
+          <h1 style={{
+            fontFamily: "var(--font-display)",
+            fontSize: "clamp(1.3rem, 4vw, 1.7rem)",
+            fontWeight: 700, color: "#f1f5f9",
+            letterSpacing: "-0.02em", lineHeight: 1.2, marginBottom: 8,
+          }}>
+            {setLabel(month, set)}
           </h1>
-
-          <p
-            style={{
-              fontSize: 14,
-              color: "#94a3b8",
-              lineHeight: 1.7,
-              marginBottom: 8,
-            }}
-          >
-            {monthLabel(month)}
+          <p style={{ fontSize: 13, color: "#64748b", marginBottom: 24 }}>
+            Quiz being prepared — check back in 24h
           </p>
 
-          <p
-            style={{
-              fontSize: 14,
-              color: "#64748b",
-              lineHeight: 1.7,
-              marginBottom: 36,
-            }}
-          >
-            This quiz is being prepared by our team.<br />
-            It will be live soon — check back after 24 hours.
-          </p>
-
-          {/* What to expect */}
-          <div
-            style={{
-              background: "rgba(255,255,255,0.04)",
-              border: "1px solid rgba(255,255,255,0.08)",
-              borderRadius: 20,
-              padding: "20px 18px",
-              marginBottom: 32,
-              textAlign: "left",
-            }}
-          >
-            <p
-              style={{
-                fontFamily: "monospace",
-                fontSize: 9,
-                letterSpacing: "0.26em",
-                textTransform: "uppercase",
-                color: "#64748b",
-                marginBottom: 14,
-              }}
-            >
-              What to expect
-            </p>
-            {[
-              "30 MCQs based on this set's current affairs",
-              "30-minute timer, exactly like BPSC pattern",
-              "−⅓ negative marking for wrong answers",
-              "Score extrapolated to /150 with BPSC cutoff",
-              "Detailed explanation for every question",
-            ].map((line) => (
-              <div
-                key={line}
-                style={{ display: "flex", alignItems: "flex-start", gap: 10, marginBottom: 10 }}
-              >
-                <span style={{ color: "#c06010", flexShrink: 0, marginTop: 2 }}>→</span>
-                <p style={{ fontSize: 13, color: "#94a3b8", lineHeight: 1.55 }}>{line}</p>
-              </div>
+          {/* Stat pills */}
+          <div style={{ display: "flex", justifyContent: "center", gap: 8, marginBottom: 32, flexWrap: "wrap" }}>
+            {["30 MCQs", "30 min", "−⅓ negative", "/150 score"].map(s => (
+              <span key={s} style={{
+                background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)",
+                borderRadius: 20, padding: "5px 12px",
+                fontSize: 12, fontWeight: 600, color: "#94a3b8",
+              }}>{s}</span>
             ))}
           </div>
 
-          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-            <Link
-              href={`/ca/${month}/${set}`}
-              style={{
-                background: "linear-gradient(135deg, #c06010, #d97706)",
-                color: "#fff",
-                borderRadius: 12,
-                padding: "13px 24px",
-                fontFamily: "var(--font-display)",
-                fontWeight: 700,
-                fontSize: 14,
-                textDecoration: "none",
-                letterSpacing: "0.02em",
-                display: "block",
-                textAlign: "center",
-              }}
-            >
-              Revise the Set First →
-            </Link>
-            <Link
-              href="/ca"
-              style={{
-                color: "#64748b",
-                fontSize: 13,
-                textDecoration: "none",
-                fontFamily: "monospace",
-                letterSpacing: "0.06em",
-                display: "block",
-                textAlign: "center",
-              }}
-            >
-              ← All Sets
-            </Link>
-          </div>
+          <Link href={`/ca/${month}/${set}`} style={{
+            display: "block", background: "linear-gradient(135deg, #c06010, #d97706)",
+            color: "#fff", borderRadius: 14, padding: "14px 28px",
+            fontFamily: "var(--font-display)", fontWeight: 700, fontSize: 15,
+            textDecoration: "none", letterSpacing: "0.01em",
+            boxShadow: "0 6px 24px rgba(192,96,16,0.35)", marginBottom: 12,
+          }}>
+            📖 Study the Set First →
+          </Link>
+          <Link href="/ca" style={{
+            fontSize: 12, color: "#475569", textDecoration: "none",
+            fontFamily: "monospace", letterSpacing: "0.06em", display: "block",
+          }}>
+            ← All Sets
+          </Link>
+
         </div>
       </main>
     );

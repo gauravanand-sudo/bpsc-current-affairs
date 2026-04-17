@@ -383,31 +383,37 @@ export default function QuizEngine({
   return (
     <div className="quiz-root" style={{
       minHeight: "calc(100vh - 52px)",
-      background: "var(--bg)",
+      background: "#0f1623",
       display: "flex",
       flexDirection: "column",
+      color: "#f1f5f9",
     }}>
 
       {/* ── Top bar ─────────────────────────────────────────── */}
       <div className="quiz-topbar" style={{
-        background: "var(--card)",
-        borderBottom: "1px solid var(--line)",
-        padding: "10px 20px",
+        background: "#161f30",
+        borderBottom: "1px solid rgba(255,255,255,0.07)",
+        padding: "8px 16px",
         display: "flex",
         alignItems: "center",
-        gap: 16,
+        gap: 12,
         flexShrink: 0,
       }}>
-        {/* Title + progress */}
+        {/* Progress bar + title */}
         <div style={{ flex: 1, minWidth: 0 }}>
-          <p style={{ fontSize: 11, color: "var(--muted)", fontFamily: "monospace", letterSpacing: "0.1em", marginBottom: 4, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-            {data.title}
-          </p>
-          <div style={{ height: 5, background: "var(--surface)", borderRadius: 3, overflow: "hidden" }}>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 5 }}>
+            <p style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", fontFamily: "monospace", letterSpacing: "0.08em", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", maxWidth: "70%" }}>
+              {data.title}
+            </p>
+            <p style={{ fontSize: 11, color: "rgba(255,255,255,0.4)", fontFamily: "monospace", flexShrink: 0 }}>
+              {answered}/{total} answered
+            </p>
+          </div>
+          <div style={{ height: 3, background: "rgba(255,255,255,0.08)", borderRadius: 3, overflow: "hidden" }}>
             <div style={{
               height: "100%",
-              width: `${((current + 1) / total) * 100}%`,
-              background: "linear-gradient(90deg, var(--accent), var(--accent-2))",
+              width: `${(answered / total) * 100}%`,
+              background: "linear-gradient(90deg, #f97316, #fbbf24)",
               borderRadius: 3,
               transition: "width 0.3s ease",
             }} />
@@ -415,44 +421,47 @@ export default function QuizEngine({
         </div>
 
         {/* Q counter */}
-        <div style={{ textAlign: "center", flexShrink: 0 }}>
-          <p style={{ fontSize: 18, fontWeight: 700, color: "var(--ink-strong)", fontFamily: "var(--font-display)", lineHeight: 1 }}>
-            {current + 1}<span style={{ fontSize: 13, color: "var(--muted)", fontWeight: 400 }}>/{total}</span>
+        <div style={{ textAlign: "center", flexShrink: 0, minWidth: 40 }}>
+          <p style={{ fontFamily: "var(--font-display)", fontSize: 17, fontWeight: 700, color: "#fbbf24", lineHeight: 1 }}>
+            {current + 1}<span style={{ fontSize: 12, color: "rgba(255,255,255,0.3)", fontWeight: 400 }}>/{total}</span>
           </p>
-          <p style={{ fontSize: 10, color: "var(--muted)", letterSpacing: "0.08em" }}>{answered} answered</p>
         </div>
 
         {/* Timer */}
         <div style={{
           flexShrink: 0,
-          background: veryUrgent ? "rgba(220,38,38,0.08)" : urgent ? "rgba(217,119,6,0.08)" : "rgba(22,163,74,0.08)",
-          border: `1px solid ${timerColor}33`,
-          borderRadius: 10,
-          padding: "6px 14px",
+          background: veryUrgent ? "rgba(220,38,38,0.15)" : urgent ? "rgba(217,119,6,0.12)" : "rgba(22,163,74,0.1)",
+          border: `1px solid ${timerColor}44`,
+          borderRadius: 8,
+          padding: "5px 12px",
           textAlign: "center",
         }}>
           <p style={{
-            fontFamily: "monospace", fontSize: 22, fontWeight: 700, lineHeight: 1,
+            fontFamily: "monospace", fontSize: 18, fontWeight: 700, lineHeight: 1,
             color: timerColor,
             animation: veryUrgent ? "timer-urgent 0.8s ease infinite" : "none",
           }}>
             {fmt(timeLeft)}
           </p>
-          <p style={{ fontSize: 9, color: "var(--muted)", marginTop: 2, letterSpacing: "0.08em" }}>remaining</p>
         </div>
 
-        {/* End button */}
+        {/* Submit button (top bar — mobile visible) */}
         <button
           onClick={() => submitQuiz(duration - timeLeft)}
           style={{
             flexShrink: 0,
-            padding: "8px 14px", borderRadius: 9,
-            border: "1px solid var(--line-hi)",
-            background: "transparent",
-            color: "var(--muted)", fontSize: 12, cursor: "pointer",
+            padding: "7px 14px", borderRadius: 8,
+            border: "none",
+            background: answered === total
+              ? "linear-gradient(135deg, #16a34a, #15803d)"
+              : "rgba(255,255,255,0.06)",
+            color: answered === total ? "#fff" : "rgba(255,255,255,0.35)",
+            fontSize: 12, fontWeight: 700, cursor: "pointer",
+            fontFamily: "var(--font-display)",
+            transition: "all 0.2s",
           }}
         >
-          End
+          Submit
         </button>
       </div>
 
@@ -465,32 +474,32 @@ export default function QuizEngine({
         <div className="quiz-main" style={{
           flex: 1,
           overflowY: "auto",
-          padding: "24px 28px 24px 24px",
+          padding: "20px 20px 24px",
           display: "flex",
           flexDirection: "column",
-          gap: 16,
+          gap: 14,
           minWidth: 0,
         }}>
 
           {/* Question card */}
           <div style={{
-            background: "var(--card)",
-            border: "1px solid var(--line)",
+            background: "#161f30",
+            border: "1px solid rgba(255,255,255,0.08)",
             borderRadius: 18,
             padding: "22px 20px",
           }}>
             <p style={{
-              fontSize: 15, lineHeight: 1.75, color: "var(--ink-strong)", fontWeight: 500,
+              fontSize: 16, lineHeight: 1.75, color: "#f1f5f9", fontWeight: 500,
               marginBottom: q.statements ? 16 : 0,
             }}>
-              <span style={{ color: "var(--accent)", fontWeight: 700, fontFamily: "monospace", marginRight: 6 }}>Q{current + 1}.</span>
+              <span style={{ color: "#fbbf24", fontWeight: 700, fontFamily: "monospace", marginRight: 8 }}>Q{current + 1}.</span>
               {q.question}
             </p>
 
             {q.statements && (
               <div style={{
-                background: "var(--panel)",
-                border: "1px solid var(--line)",
+                background: "rgba(255,255,255,0.03)",
+                border: "1px solid rgba(255,255,255,0.08)",
                 borderRadius: 12,
                 padding: "14px 16px",
                 display: "flex", flexDirection: "column", gap: 10,
@@ -499,14 +508,14 @@ export default function QuizEngine({
                   <div key={label} style={{ display: "flex", alignItems: "flex-start", gap: 10 }}>
                     <span style={{
                       flexShrink: 0, width: 22, height: 22, borderRadius: "50%",
-                      background: "var(--chip)", color: "var(--accent)",
+                      background: "rgba(251,191,36,0.15)", color: "#fbbf24",
                       fontSize: 11, fontWeight: 800,
                       display: "flex", alignItems: "center", justifyContent: "center",
                       marginTop: 1,
                     }}>
                       {label}
                     </span>
-                    <span style={{ fontSize: 13, color: "var(--ink-soft)", lineHeight: 1.65 }}>{text}</span>
+                    <span style={{ fontSize: 13, color: "rgba(255,255,255,0.65)", lineHeight: 1.65 }}>{text}</span>
                   </div>
                 ))}
               </div>
@@ -514,7 +523,7 @@ export default function QuizEngine({
           </div>
 
           {/* Options */}
-          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 9 }}>
             {q.options.map((opt, i) => {
               const isSelected = sel === i;
               const isFlashing = flash === i;
@@ -527,27 +536,29 @@ export default function QuizEngine({
                     display: "flex", alignItems: "flex-start", gap: 12,
                     textAlign: "left", width: "100%",
                     padding: "14px 16px", borderRadius: 13, cursor: "pointer",
-                    border: isSelected ? "2px solid var(--accent)" : "1px solid var(--line-hi)",
+                    border: isSelected
+                      ? "1.5px solid #f97316"
+                      : "1px solid rgba(255,255,255,0.08)",
                     background: isFlashing
-                      ? "rgba(192,96,16,0.1)"
+                      ? "rgba(249,115,22,0.12)"
                       : isSelected
-                      ? "var(--accent-soft)"
-                      : "var(--card)",
-                    color: isSelected ? "var(--ink-strong)" : "var(--ink-soft)",
+                      ? "rgba(249,115,22,0.1)"
+                      : "rgba(255,255,255,0.03)",
+                    color: isSelected ? "#fff" : "rgba(255,255,255,0.7)",
                     fontSize: 14, lineHeight: 1.55,
                     transform: isFlashing ? "scale(0.99)" : "scale(1)",
                     transition: "all 0.12s",
                   }}
                 >
                   <span style={{
-                    flexShrink: 0, width: 28, height: 28, borderRadius: "50%",
+                    flexShrink: 0, width: 26, height: 26, borderRadius: "50%",
                     display: "flex", alignItems: "center", justifyContent: "center",
-                    fontSize: 12, fontWeight: 800,
-                    background: isSelected ? "var(--accent)" : "var(--surface)",
-                    color: isSelected ? "#fff" : "var(--muted)",
-                    border: isSelected ? "none" : "1px solid var(--line-hi)",
+                    fontSize: 11, fontWeight: 800,
+                    background: isSelected ? "#f97316" : "rgba(255,255,255,0.06)",
+                    color: isSelected ? "#fff" : "rgba(255,255,255,0.4)",
+                    border: isSelected ? "none" : "1px solid rgba(255,255,255,0.1)",
                     transition: "all 0.12s",
-                    marginTop: 1,
+                    marginTop: 2,
                   }}>
                     {LABELS[i]}
                   </span>
@@ -563,10 +574,10 @@ export default function QuizEngine({
               onClick={() => setCurrent(c => Math.max(0, c - 1))}
               disabled={current === 0}
               style={{
-                padding: "10px 20px", borderRadius: 10,
-                border: "1px solid var(--line-hi)",
-                background: "var(--card)",
-                color: current === 0 ? "var(--line-hi)" : "var(--ink-soft)",
+                padding: "10px 18px", borderRadius: 10,
+                border: "1px solid rgba(255,255,255,0.1)",
+                background: "rgba(255,255,255,0.04)",
+                color: current === 0 ? "rgba(255,255,255,0.15)" : "rgba(255,255,255,0.55)",
                 fontSize: 13, cursor: current === 0 ? "not-allowed" : "pointer",
                 fontFamily: "var(--font-display)", fontWeight: 600,
               }}
@@ -576,9 +587,9 @@ export default function QuizEngine({
               onClick={toggleFlag}
               style={{
                 padding: "10px 14px", borderRadius: 10, fontSize: 13, cursor: "pointer",
-                border: flagged.has(current) ? "1px solid var(--accent)" : "1px solid var(--line-hi)",
-                background: flagged.has(current) ? "var(--accent-soft)" : "var(--card)",
-                color: flagged.has(current) ? "var(--accent)" : "var(--muted)",
+                border: flagged.has(current) ? "1px solid #f97316" : "1px solid rgba(255,255,255,0.1)",
+                background: flagged.has(current) ? "rgba(249,115,22,0.12)" : "rgba(255,255,255,0.04)",
+                color: flagged.has(current) ? "#f97316" : "rgba(255,255,255,0.35)",
               }}
             >
               {flagged.has(current) ? "🚩 Flagged" : "🏳 Flag"}
@@ -590,11 +601,14 @@ export default function QuizEngine({
                 style={{
                   padding: "10px 20px", borderRadius: 10,
                   border: "none",
-                  background: sel !== undefined ? "var(--accent)" : "var(--surface)",
-                  color: sel !== undefined ? "#fff" : "var(--muted)",
+                  background: sel !== undefined
+                    ? "linear-gradient(135deg, #f97316, #d97706)"
+                    : "rgba(255,255,255,0.06)",
+                  color: sel !== undefined ? "#fff" : "rgba(255,255,255,0.25)",
                   fontSize: 13, cursor: "pointer",
                   fontFamily: "var(--font-display)", fontWeight: 700,
                   transition: "background 0.15s",
+                  boxShadow: sel !== undefined ? "0 2px 12px rgba(249,115,22,0.3)" : "none",
                 }}
               >
                 Next →
@@ -620,22 +634,22 @@ export default function QuizEngine({
 
         {/* RIGHT — question navigator */}
         <div className="quiz-sidebar" style={{
-          width: 220,
+          width: 210,
           flexShrink: 0,
-          borderLeft: "1px solid var(--line)",
-          background: "var(--panel)",
+          borderLeft: "1px solid rgba(255,255,255,0.07)",
+          background: "#161f30",
           overflowY: "auto",
-          padding: "20px 16px",
+          padding: "18px 14px",
           display: "flex",
           flexDirection: "column",
           gap: 16,
         }}>
-          <p style={{ fontFamily: "monospace", fontSize: 9, letterSpacing: "0.24em", textTransform: "uppercase", color: "var(--muted)" }}>
+          <p style={{ fontFamily: "monospace", fontSize: 9, letterSpacing: "0.24em", textTransform: "uppercase", color: "rgba(255,255,255,0.25)" }}>
             Navigator
           </p>
 
           {/* Grid */}
-          <div className="quiz-nav-grid" style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+          <div className="quiz-nav-grid" style={{ display: "flex", flexWrap: "wrap", gap: 5 }}>
             {questions.map((_, i) => {
               const isCurrent  = i === current;
               const isAnswered = answers[i] !== undefined;
@@ -645,24 +659,24 @@ export default function QuizEngine({
                   key={i}
                   onClick={() => setCurrent(i)}
                   style={{
-                    width: 32, height: 32, borderRadius: 8,
+                    width: 30, height: 30, borderRadius: 7,
                     fontSize: 11, fontWeight: 700, cursor: "pointer",
                     transition: "all 0.1s",
-                    border: isCurrent ? "2px solid var(--accent)" : "1px solid var(--line-hi)",
+                    border: isCurrent ? "1.5px solid #f97316" : "1px solid rgba(255,255,255,0.1)",
                     background: isCurrent
-                      ? "var(--accent)"
+                      ? "#f97316"
                       : isFlagged
-                      ? "rgba(192,96,16,0.12)"
+                      ? "rgba(249,115,22,0.15)"
                       : isAnswered
-                      ? "var(--accent-soft)"
-                      : "var(--card)",
+                      ? "rgba(22,163,74,0.2)"
+                      : "rgba(255,255,255,0.04)",
                     color: isCurrent
                       ? "#fff"
                       : isFlagged
-                      ? "var(--accent)"
+                      ? "#f97316"
                       : isAnswered
-                      ? "var(--accent)"
-                      : "var(--muted)",
+                      ? "#4ade80"
+                      : "rgba(255,255,255,0.3)",
                   }}
                 >
                   {i + 1}
@@ -671,48 +685,38 @@ export default function QuizEngine({
             })}
           </div>
 
-          {/* Legend */}
-          <div style={{ display: "flex", flexDirection: "column", gap: 7 }}>
-            {[
-              { bg: "var(--accent-soft)", border: "var(--line-hi)", color: "var(--accent)", label: "Answered" },
-              { bg: "rgba(192,96,16,0.12)", border: "var(--line-hi)", color: "var(--accent)", label: "Flagged" },
-              { bg: "var(--card)", border: "var(--line-hi)", color: "var(--muted)", label: "Not visited" },
-            ].map(l => (
-              <div key={l.label} style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                <span style={{ width: 14, height: 14, borderRadius: 4, background: l.bg, border: `1px solid ${l.border}`, flexShrink: 0 }} />
-                <span style={{ fontSize: 11, color: "var(--ink-soft)" }}>{l.label}</span>
-              </div>
-            ))}
-          </div>
-
           {/* Stats */}
-          <div style={{ background: "var(--card)", border: "1px solid var(--line)", borderRadius: 12, padding: "12px" }}>
-            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
-              <span style={{ fontSize: 11, color: "var(--muted)" }}>Answered</span>
-              <span style={{ fontSize: 11, fontWeight: 700, color: "var(--accent)" }}>{answered}/{total}</span>
+          <div style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 10, padding: "10px 12px" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 5 }}>
+              <span style={{ fontSize: 11, color: "rgba(255,255,255,0.35)" }}>Answered</span>
+              <span style={{ fontSize: 11, fontWeight: 700, color: "#4ade80" }}>{answered}/{total}</span>
             </div>
-            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 6 }}>
-              <span style={{ fontSize: 11, color: "var(--muted)" }}>Flagged</span>
-              <span style={{ fontSize: 11, fontWeight: 700, color: "var(--ink-soft)" }}>{flagged.size}</span>
+            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 5 }}>
+              <span style={{ fontSize: 11, color: "rgba(255,255,255,0.35)" }}>Flagged</span>
+              <span style={{ fontSize: 11, fontWeight: 700, color: "#f97316" }}>{flagged.size}</span>
             </div>
             <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <span style={{ fontSize: 11, color: "var(--muted)" }}>Skipped</span>
-              <span style={{ fontSize: 11, fontWeight: 700, color: "var(--muted)" }}>{total - answered}</span>
+              <span style={{ fontSize: 11, color: "rgba(255,255,255,0.35)" }}>Remaining</span>
+              <span style={{ fontSize: 11, fontWeight: 700, color: "rgba(255,255,255,0.4)" }}>{total - answered}</span>
             </div>
           </div>
 
           <button
             onClick={() => submitQuiz(duration - timeLeft)}
             style={{
-              width: "100%", padding: "11px", borderRadius: 10,
+              width: "100%", padding: "12px", borderRadius: 10,
               border: "none",
-              background: "linear-gradient(135deg, #16a34a, #15803d)",
-              color: "#fff", fontSize: 13, cursor: "pointer",
+              background: answered === total
+                ? "linear-gradient(135deg, #16a34a, #15803d)"
+                : "rgba(22,163,74,0.15)",
+              color: answered === total ? "#fff" : "#4ade80",
+              fontSize: 13, cursor: "pointer",
               fontFamily: "var(--font-display)", fontWeight: 700,
-              boxShadow: "0 2px 10px rgba(22,163,74,0.25)",
+              boxShadow: answered === total ? "0 4px 16px rgba(22,163,74,0.3)" : "none",
+              transition: "all 0.2s",
             }}
           >
-            Submit Quiz ✓
+            {answered === total ? "Submit Quiz ✓" : `Submit (${total - answered} left)`}
           </button>
         </div>
       </div>
@@ -730,26 +734,26 @@ export default function QuizEngine({
         >
           <div
             style={{
-              background: "var(--card)",
-              border: "1px solid var(--line-hi)",
+              background: "#1a2540",
+              border: "1px solid rgba(255,255,255,0.1)",
               borderRadius: 24,
               padding: "32px 28px",
-              maxWidth: 380,
+              maxWidth: 360,
               width: "100%",
               textAlign: "center",
-              boxShadow: "0 20px 60px rgba(0,0,0,0.4)",
+              boxShadow: "0 24px 64px rgba(0,0,0,0.6)",
             }}
             onClick={e => e.stopPropagation()}
           >
             <div style={{ fontSize: 36, marginBottom: 14 }}>⏸️</div>
             <h2 style={{
               fontFamily: "var(--font-display)", fontWeight: 700, fontSize: 19,
-              color: "var(--ink-strong)", marginBottom: 10, letterSpacing: "-0.01em",
+              color: "#f1f5f9", marginBottom: 10, letterSpacing: "-0.01em",
             }}>
               Quiz in progress
             </h2>
-            <p style={{ fontSize: 14, color: "var(--ink-soft)", lineHeight: 1.65, marginBottom: 28 }}>
-              Submit your quiz before leaving — your answers won&apos;t be saved if you leave now.
+            <p style={{ fontSize: 14, color: "rgba(255,255,255,0.5)", lineHeight: 1.65, marginBottom: 28 }}>
+              Submit your quiz before leaving — your answers won&apos;t be saved if you go now.
             </p>
             <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
               <button
@@ -757,7 +761,6 @@ export default function QuizEngine({
                   submitQuiz(duration - timeLeftRef.current);
                   setShowExitModal(false);
                   if (pendingHref) {
-                    // small delay so result screen renders, then navigate
                     setTimeout(() => { window.location.href = pendingHref; }, 800);
                   }
                 }}
@@ -767,6 +770,7 @@ export default function QuizEngine({
                   background: "linear-gradient(135deg, #16a34a, #15803d)",
                   color: "#fff", fontSize: 14, fontWeight: 700,
                   cursor: "pointer", fontFamily: "var(--font-display)",
+                  boxShadow: "0 4px 16px rgba(22,163,74,0.3)",
                 }}
               >
                 Submit Quiz ✓
@@ -775,9 +779,9 @@ export default function QuizEngine({
                 onClick={() => setShowExitModal(false)}
                 style={{
                   width: "100%", padding: "12px", borderRadius: 12,
-                  border: "1px solid var(--line-hi)",
-                  background: "var(--panel)",
-                  color: "var(--ink-soft)", fontSize: 14, fontWeight: 600,
+                  border: "1px solid rgba(255,255,255,0.1)",
+                  background: "rgba(255,255,255,0.04)",
+                  color: "rgba(255,255,255,0.5)", fontSize: 14, fontWeight: 600,
                   cursor: "pointer", fontFamily: "var(--font-display)",
                 }}
               >

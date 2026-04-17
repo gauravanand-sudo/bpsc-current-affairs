@@ -106,193 +106,81 @@ export default async function CASetPage({
       <div className="feed-shell">
 
         {/* ════════════════════════════════════════
-            SLIDE 0 — Cover
+            SLIDE 0 — Cover (minimal)
         ════════════════════════════════════════ */}
         <section className="feed-slide">
-          <article className="card-frame" style={{ display: "flex", flexDirection: "column" }}>
-            <div className="card-glow" />
+          <article className="card-frame" style={{
+            display: "flex", flexDirection: "column",
+            background: "linear-gradient(160deg, #0c1220 0%, #1a2744 100%)",
+          }}>
 
-            <div style={{ position: "relative", zIndex: 10, display: "flex", flexDirection: "column", height: "100%", gap: 0 }}>
+            <div style={{ position: "relative", zIndex: 10, display: "flex", flexDirection: "column", height: "100%", justifyContent: "space-between" }}>
 
               {/* Top nav */}
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 32, flexShrink: 0 }}>
-                <Link
-                  href="/ca"
-                  style={{ fontFamily: "monospace", fontSize: 11, color: "var(--muted)", textDecoration: "none", letterSpacing: "0.1em" }}
-                >
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <Link href="/ca" style={{ fontFamily: "monospace", fontSize: 11, color: "rgba(255,255,255,0.35)", textDecoration: "none", letterSpacing: "0.1em" }}>
                   ← All Sets
                 </Link>
-                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                  {lang && (
-                    <span
-                      style={{
-                        background: "var(--chip)", color: "var(--ink-soft)",
-                        borderRadius: 8, padding: "3px 10px", fontSize: 11, fontWeight: 700,
-                        letterSpacing: "0.06em",
-                      }}
-                    >
-                      {lang.emoji}
-                    </span>
-                  )}
-                  <span
-                    style={{
-                      background: "var(--accent-soft)", color: "var(--accent)",
-                      borderRadius: 20, padding: "3px 12px", fontSize: 11, fontWeight: 700, letterSpacing: "0.1em",
-                    }}
-                  >
-                    BPSC 365
-                  </span>
-                </div>
+                <span style={{ background: "rgba(192,96,16,0.2)", color: "#fbbf24", borderRadius: 20, padding: "3px 12px", fontSize: 10, fontWeight: 700, letterSpacing: "0.12em" }}>
+                  BPSC 365
+                </span>
               </div>
 
-              {/* Month + Set label */}
-              <div style={{ flexShrink: 0 }}>
-                <p style={{ fontFamily: "monospace", fontSize: 11, color: "var(--muted)", letterSpacing: "0.28em", textTransform: "uppercase", marginBottom: 8 }}>
+              {/* Centre — title + meta */}
+              <div style={{ textAlign: "center" }}>
+                <p style={{ fontFamily: "monospace", fontSize: 10, letterSpacing: "0.3em", textTransform: "uppercase", color: "rgba(251,191,36,0.6)", marginBottom: 12 }}>
                   {monthLabel(month)}
                 </p>
-                <h1
-                  style={{
-                    fontFamily: "var(--font-display)",
-                    fontSize: "clamp(2.4rem, 7vw, 4rem)",
-                    fontWeight: 700,
-                    lineHeight: 1.05,
-                    color: "var(--ink-strong)",
-                    letterSpacing: "-0.03em",
-                    marginBottom: 4,
-                  }}
-                >
+                <h1 style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: "clamp(2rem, 6vw, 3.2rem)",
+                  fontWeight: 700, lineHeight: 1.08,
+                  color: "#f1f5f9",
+                  letterSpacing: "-0.03em",
+                  marginBottom: 16,
+                }}>
                   {setLabel(month, set)}
                 </h1>
-                <p style={{ fontSize: 14, color: "var(--ink-soft)", marginBottom: 28 }}>
-                  Current Affairs + Exhaustive Static Linked
-                </p>
-              </div>
 
-              {/* Stats row */}
-              <div
-                style={{
-                  display: "flex",
-                  gap: 12,
-                  marginBottom: 28,
-                  flexShrink: 0,
-                  flexWrap: "wrap",
-                }}
-              >
-                {[
-                  { n: items.length.toString(), label: "Cards" },
-                  { n: `${totalFacts}+`, label: "Facts" },
-                  { n: items.length.toString(), label: "MCQs" },
-                  { n: `~${Math.round(items.length * 1.5)} min`, label: "Est. time" },
-                ].map(({ n, label }) => (
-                  <div
-                    key={label}
-                    style={{
-                      flex: "1 1 60px",
-                      border: "1px solid var(--line)",
-                      borderRadius: 14,
-                      padding: "12px 10px",
-                      textAlign: "center",
-                      background: "var(--card)",
-                    }}
-                  >
-                    <p style={{ fontFamily: "var(--font-display)", fontSize: 20, fontWeight: 700, color: "var(--accent)", lineHeight: 1 }}>{n}</p>
-                    <p style={{ fontSize: 10, color: "var(--muted)", marginTop: 4, letterSpacing: "0.08em" }}>{label}</p>
-                  </div>
-                ))}
-              </div>
+                {/* Inline stats */}
+                <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 0, marginBottom: 20, flexWrap: "wrap" }}>
+                  {[
+                    `${items.length} Cards`,
+                    `${totalFacts}+ Facts`,
+                    `~${Math.round(items.length * 1.5)} min`,
+                  ].map((s, i) => (
+                    <span key={s} style={{ display: "flex", alignItems: "center", gap: 0 }}>
+                      {i > 0 && <span style={{ color: "rgba(255,255,255,0.18)", margin: "0 10px" }}>·</span>}
+                      <span style={{ fontSize: 13, color: "rgba(255,255,255,0.55)", fontWeight: 600 }}>{s}</span>
+                    </span>
+                  ))}
+                </div>
 
-              {/* Category breakdown */}
-              <div
-                style={{
-                  flex: 1,
-                  border: "1px solid var(--line)",
-                  borderRadius: 20,
-                  padding: "18px 16px",
-                  background: "var(--panel)",
-                  minHeight: 0,
-                }}
-              >
-                <p style={{ fontFamily: "monospace", fontSize: 10, letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 14 }}>
-                  Topics Covered
-                </p>
-                <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
-                  {sortedCats.map(([cat, count]) => {
+                {/* Topic pills — compact */}
+                <div style={{ display: "flex", flexWrap: "wrap", gap: 6, justifyContent: "center" }}>
+                  {sortedCats.slice(0, 5).map(([cat]) => {
                     const m = CAT[cat];
                     return (
-                      <span
-                        key={cat}
-                        style={{
-                          background: `${m?.color}14`,
-                          color: m?.color,
-                          border: `1px solid ${m?.color}40`,
-                          borderRadius: 20,
-                          padding: "5px 12px",
-                          fontSize: 12,
-                          fontWeight: 700,
-                          letterSpacing: "0.05em",
-                          display: "flex",
-                          alignItems: "center",
-                          gap: 6,
-                        }}
-                      >
+                      <span key={cat} style={{
+                        background: `${m?.color}22`,
+                        color: m?.color,
+                        border: `1px solid ${m?.color}40`,
+                        borderRadius: 20, padding: "4px 11px",
+                        fontSize: 11, fontWeight: 700, letterSpacing: "0.04em",
+                      }}>
                         {m?.label ?? cat}
-                        <span style={{ opacity: 0.65, fontWeight: 400, fontSize: 11 }}>{count}</span>
                       </span>
                     );
                   })}
                 </div>
-
-                {/* What's inside */}
-                <div style={{ marginTop: 16, display: "flex", flexDirection: "column", gap: 6 }}>
-                  {[
-                    { icon: "📰", text: "Current affairs from PIB · The Hindu · Indian Express · Yojana · Kurukshetra" },
-                    { icon: "📚", text: "Static facts from Laxmikant · Spectrum · NCERT · Majid Husain · G.C. Leong" },
-                    { icon: "🗺️", text: "Bihar angle — schemes, data, geography hooks — in every card" },
-                    { icon: "🎯", text: "One likely MCQ per card — exact BPSC format" },
-                  ].map(({ icon, text }) => (
-                    <div key={text} style={{ display: "flex", alignItems: "flex-start", gap: 8 }}>
-                      <span style={{ fontSize: 14, flexShrink: 0, marginTop: 1 }}>{icon}</span>
-                      <p style={{ fontSize: 12, color: "var(--ink-soft)", lineHeight: 1.55 }}>{text}</p>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Training badge */}
-                <div style={{
-                  marginTop: 14,
-                  background: "linear-gradient(135deg, rgba(192,96,16,0.07), rgba(26,39,68,0.07))",
-                  border: "1px solid var(--accent-border)",
-                  borderRadius: 12,
-                  padding: "10px 14px",
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 8,
-                }}>
-                  <span style={{ fontSize: 18, flexShrink: 0 }}>🏛️</span>
-                  <p style={{ fontSize: 11, color: "var(--ink-soft)", lineHeight: 1.55 }}>
-                    <strong style={{ color: "var(--ink-strong)" }}>Trained on 15 Years of BPSC Prelims</strong> using deep learning models — every MCQ direction, static link, and Bihar angle is shaped by what Bihar actually asks.
-                  </p>
-                </div>
               </div>
 
-              {/* CTA */}
-              <div style={{ marginTop: 20, flexShrink: 0, display: "flex", flexDirection: "column", alignItems: "center", gap: 10 }}>
-                <div style={{
-                  display: "flex", gap: 10, flexWrap: "wrap", justifyContent: "center",
-                  background: "var(--panel)", borderRadius: 14, padding: "12px 16px",
-                  border: "1px solid var(--line)", width: "100%",
-                }}>
-                  {[
-                    "📖 Read each card carefully",
-                    "📌 Note static facts",
-                    "🎯 Quiz waits at the end",
-                  ].map(tip => (
-                    <span key={tip} style={{ fontSize: 12, color: "var(--ink-soft)", whiteSpace: "nowrap" }}>{tip}</span>
-                  ))}
-                </div>
-                <p style={{ fontSize: 12, color: "var(--muted)", fontFamily: "monospace", letterSpacing: "0.1em" }}>
-                  ↓ scroll to begin
+              {/* Bottom — scroll nudge */}
+              <div style={{ textAlign: "center" }}>
+                <p style={{ fontSize: 11, color: "rgba(255,255,255,0.3)", fontFamily: "monospace", letterSpacing: "0.18em", marginBottom: 4 }}>
+                  SCROLL TO BEGIN
                 </p>
+                <p style={{ fontSize: 22, color: "rgba(255,255,255,0.2)" }}>↓</p>
               </div>
 
             </div>
