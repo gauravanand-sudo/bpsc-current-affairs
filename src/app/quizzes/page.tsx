@@ -1,7 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
-import Link from "next/link";
 import QuizSetCard from "@/components/QuizSetCard";
+import CollapsibleMonth from "@/components/CollapsibleMonth";
 
 const CAT: Record<string, { label: string; color: string }> = {
   polity:  { label: "Polity",      color: "#b86117" },
@@ -124,30 +124,24 @@ export default async function QuizzesPage() {
           Quiz Sets — Apr 2025 to Apr 2026 · 15 Sets Each
         </p>
 
-        {PLANNED_MONTHS.map(month => {
+        {PLANNED_MONTHS.map((month, idx) => {
           const sets = meta[month] ?? [];
           const liveByNum: Record<number, QuizMeta> = {};
           sets.forEach(s => { liveByNum[s.setNum] = s; });
           const liveCount = sets.filter(s => s.english || s.hindi).length;
 
           return (
-            <div key={month} style={{ marginBottom: 52 }}>
-              <div style={{ display: "flex", alignItems: "baseline", gap: 12, marginBottom: 20 }}>
-                <h2 style={{
-                  fontFamily: "var(--font-display)", fontSize: 22, fontWeight: 700,
-                  color: "var(--ink-strong)", letterSpacing: "-0.01em",
-                }}>
-                  {monthLabel(month)}
-                </h2>
-                <span style={{ fontSize: 12, color: "var(--muted)", fontFamily: "monospace" }}>
-                  {liveCount}/15 quizzes available
-                </span>
-              </div>
-
+            <CollapsibleMonth
+              key={month}
+              label={monthLabel(month)}
+              liveCount={liveCount}
+              totalPlanned={15}
+              defaultOpen={idx === 0}
+            >
               <div style={{
                 display: "grid",
-                gridTemplateColumns: "repeat(auto-fill, minmax(230px, 1fr))",
-                gap: 14,
+                gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
+                gap: 12,
               }}>
                 {Array.from({ length: 15 }, (_, i) => i + 1).map(num => {
                   const live = liveByNum[num];
@@ -181,7 +175,7 @@ export default async function QuizzesPage() {
                   );
                 })}
               </div>
-            </div>
+            </CollapsibleMonth>
           );
         })}
       </section>

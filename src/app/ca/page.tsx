@@ -3,6 +3,7 @@ import path from "node:path";
 import Link from "next/link";
 import AdBanner from "@/components/AdBanner";
 import StudySetCard from "@/components/StudySetCard";
+import CollapsibleMonth from "@/components/CollapsibleMonth";
 
 /* ─── Types ──────────────────────────────────────────────────── */
 type SetMeta = {
@@ -489,43 +490,24 @@ export default async function CALandingPage() {
 
         <AdBanner />
 
-        {PLANNED_MONTHS.map((month) => {
+        {PLANNED_MONTHS.map((month, idx) => {
           const liveSets = allSets[month] ?? [];
           const liveByNum: Record<number, SetMeta> = {};
           liveSets.forEach((s) => { liveByNum[s.setNum] = s; });
 
           return (
-            <div key={month} style={{ marginBottom: 56 }}>
-              {/* Month heading */}
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "baseline",
-                  gap: 12,
-                  marginBottom: 20,
-                }}
-              >
-                <h2
-                  style={{
-                    fontFamily: "var(--font-display)",
-                    fontSize: 22,
-                    fontWeight: 700,
-                    color: "var(--ink-strong)",
-                    letterSpacing: "-0.01em",
-                  }}
-                >
-                  {monthLabel(month)}
-                </h2>
-                <span style={{ fontSize: 12, color: "var(--muted)", fontFamily: "monospace" }}>
-                  {liveSets.length}/15 sets live
-                </span>
-              </div>
-
+            <CollapsibleMonth
+              key={month}
+              label={monthLabel(month)}
+              liveCount={liveSets.length}
+              totalPlanned={15}
+              defaultOpen={idx === 0}
+            >
               <div
                 style={{
                   display: "grid",
-                  gridTemplateColumns: "repeat(auto-fill, minmax(230px, 1fr))",
-                  gap: 14,
+                  gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
+                  gap: 12,
                 }}
               >
                 {Array.from({ length: 15 }, (_, i) => i + 1).map((num) => {
@@ -582,7 +564,7 @@ export default async function CALandingPage() {
                   );
                 })}
               </div>
-            </div>
+            </CollapsibleMonth>
           );
         })}
       </section>
