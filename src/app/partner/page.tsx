@@ -4,6 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import type { Session } from "@supabase/supabase-js";
 import { getSupabaseBrowserClient } from "@/lib/supabase";
 
+/* ── Types ───────────────────────────────────────────────────────── */
 type PartnerProfile = {
   user_id: string;
   display_name: string;
@@ -58,164 +59,211 @@ type PartnerCheckin = {
   updated_at: string;
 };
 
-const EXAMS = ["72nd BPSC", "BPSC TRE", "Bihar SI", "UPSC + BPSC", "Bihar SSC"];
-const STAGES = ["Starting", "Building basics", "Revision", "Test series", "Final sprint"];
+/* ── Constants ───────────────────────────────────────────────────── */
+const EXAMS    = ["72nd BPSC", "BPSC TRE", "Bihar SI", "UPSC + BPSC", "Bihar SSC"];
+const STAGES   = ["Starting", "Building basics", "Revision", "Test series", "Final sprint"];
 const DISTRICTS = [
   "Patna", "Gaya", "Muzaffarpur", "Bhagalpur", "Darbhanga", "Purnea",
   "Nalanda", "Siwan", "Bhojpur", "Bihar", "Outside Bihar",
 ];
 const LANGUAGES = ["Hindi", "English", "Hindi + English"];
-const HOURS = ["1-2 hrs/day", "2-3 hrs/day", "3-5 hrs/day", "5+ hrs/day"];
-const MODES = [
-  "Accountability + Silent Study",
-  "Doubt discussion",
-  "Daily target check",
-  "Mock-test partner",
-  "Full syllabus revision",
+const HOURS     = ["1-2 hrs/day", "2-3 hrs/day", "3-5 hrs/day", "5+ hrs/day"];
+const MODES     = [
+  "Accountability + Silent Study", "Doubt discussion",
+  "Daily target check", "Mock-test partner", "Full syllabus revision",
 ];
 const REQUEST_FOCUSES = [
-  "Current Affairs",
-  "Answer Writing",
-  "Mock Analysis",
-  "Daily Revision",
-  "Doubt Solving",
-  "Bihar Special",
+  "Current Affairs", "Answer Writing", "Mock Analysis",
+  "Daily Revision", "Doubt Solving", "Bihar Special",
 ];
-const SLOTS = ["Morning", "Afternoon", "Evening", "Late night"];
+const SLOTS    = ["Morning", "Afternoon", "Evening", "Late night"];
 const SUBJECTS = [
   "Current Affairs", "Polity", "Economy", "History", "Geography",
   "Bihar Special", "Science", "Environment", "Maths", "Reasoning",
 ];
 const GENDER_PREFS = ["No preference", "Female only", "Male only"];
+const MOODS        = ["locked in", "steady", "tired but showing up", "test mode"];
 
+/* ── Helpers ─────────────────────────────────────────────────────── */
 function firstName(session: Session | null) {
-  const user = session?.user;
-  return (
-    (user?.user_metadata?.full_name as string | undefined)?.split(" ")[0]
-    ?? user?.email?.split("@")[0]
-    ?? "Aspirant"
-  );
+  const u = session?.user;
+  return (u?.user_metadata?.full_name as string | undefined)?.split(" ")[0]
+    ?? u?.email?.split("@")[0]
+    ?? "Aspirant";
 }
 
 function initials(name: string) {
-  return name
-    .split(" ")
-    .map(part => part[0])
-    .join("")
-    .slice(0, 2)
-    .toUpperCase();
+  return name.split(" ").map(p => p[0]).join("").slice(0, 2).toUpperCase();
 }
 
 function timeAgo(iso: string) {
-  const diff = Date.now() - new Date(iso).getTime();
-  if (diff < 60000) return "just now";
-  if (diff < 3600000) return `${Math.floor(diff / 60000)}m ago`;
-  if (diff < 86400000) return `${Math.floor(diff / 3600000)}h ago`;
-  return `${Math.floor(diff / 86400000)}d ago`;
+  const d = Date.now() - new Date(iso).getTime();
+  if (d < 60000)    return "just now";
+  if (d < 3600000)  return `${Math.floor(d / 60000)}m ago`;
+  if (d < 86400000) return `${Math.floor(d / 3600000)}h ago`;
+  return `${Math.floor(d / 86400000)}d ago`;
 }
 
-function todayKey() {
-  return new Date().toISOString().slice(0, 10);
-}
+function todayKey() { return new Date().toISOString().slice(0, 10); }
 
-function requestFocusOf(connection: Pick<PartnerConnection, "request_focus">) {
-  return connection.request_focus || "Current Affairs";
+function connFocus(conn: Pick<PartnerConnection, "request_focus">) {
+  return conn.request_focus || "Current Affairs";
 }
 
 function overlap(a: string[] = [], b: string[] = []) {
-  return a.filter(item => b.includes(item));
+  return a.filter(x => b.includes(x));
 }
 
-function scoreMatch(me: PartnerProfile | null, partner: PartnerProfile) {
+function scoreMatch(me: PartnerProfile | null, p: PartnerProfile) {
   if (!me) return 60;
-  let score = 24;
-  if (partner.exam_target === me.exam_target) score += 16;
-  if (partner.stage === me.stage) score += 10;
-  if (partner.language === me.language) score += 8;
-  if (partner.district === me.district) score += 6;
-  if (partner.daily_hours === me.daily_hours) score += 8;
-  score += Math.min(16, overlap(partner.slots, me.slots).length * 8);
-  score += Math.min(18, overlap(partner.strong_subjects, me.weak_subjects).length * 9);
-  score += Math.min(10, overlap(partner.weak_subjects, me.strong_subjects).length * 5);
-  score += Math.round(Math.min(partner.seriousness_score, 100) / 10);
-  return Math.min(99, score);
+  let s = 24;
+  if (p.exam_target === me.exam_target)  s += 16;
+  if (p.stage       === me.stage)        s += 10;
+  if (p.language    === me.language)     s += 8;
+  if (p.district    === me.district)     s += 6;
+  if (p.daily_hours === me.daily_hours)  s += 8;
+  s += Math.min(16, overlap(p.slots, me.slots).length * 8);
+  s += Math.min(18, overlap(p.strong_subjects, me.weak_subjects).length * 9);
+  s += Math.min(10, overlap(p.weak_subjects, me.strong_subjects).length * 5);
+  s += Math.round(Math.min(p.seriousness_score, 100) / 10);
+  return Math.min(99, s);
 }
 
-function matchReason(me: PartnerProfile | null, partner: PartnerProfile) {
+function matchReason(me: PartnerProfile | null, p: PartnerProfile) {
   if (!me) return "Create your profile to unlock precise matching.";
-  const reasons = [];
-  if (partner.exam_target === me.exam_target) reasons.push("same exam");
-  if (partner.stage === me.stage) reasons.push("same prep stage");
-  const slots = overlap(partner.slots, me.slots);
-  if (slots.length) reasons.push(`${slots[0].toLowerCase()} slot`);
-  const helps = overlap(partner.strong_subjects, me.weak_subjects);
-  if (helps.length) reasons.push(`strong in your weak area: ${helps[0]}`);
-  return reasons.length ? reasons.slice(0, 3).join(" · ") : "Different profile, useful for accountability.";
+  const r: string[] = [];
+  if (p.exam_target === me.exam_target) r.push("same exam");
+  if (p.stage       === me.stage)       r.push("same stage");
+  const slots = overlap(p.slots, me.slots);
+  if (slots.length) r.push(`${slots[0].toLowerCase()} slot`);
+  const helps = overlap(p.strong_subjects, me.weak_subjects);
+  if (helps.length) r.push(`strong in your weak: ${helps[0]}`);
+  return r.length ? r.slice(0, 3).join(" · ") : "Good for accountability variety.";
 }
 
-const chip = (active: boolean): React.CSSProperties => ({
-  border: active ? "1.5px solid var(--accent)" : "1px solid var(--line)",
-  background: active ? "var(--accent-soft)" : "var(--chip)",
-  color: active ? "var(--accent)" : "var(--ink-soft)",
-  borderRadius: 999,
-  padding: "7px 11px",
-  fontSize: 12,
-  fontWeight: 800,
-  cursor: "pointer",
-});
+function scoreColor(score: number) {
+  if (score >= 80) return { text: "#16a34a", bg: "rgba(22,163,74,0.10)", border: "rgba(22,163,74,0.28)" };
+  if (score >= 60) return { text: "#d97706", bg: "rgba(217,119,6,0.10)", border: "rgba(217,119,6,0.28)" };
+  return { text: "#c06010", bg: "rgba(192,96,16,0.08)", border: "rgba(192,96,16,0.22)" };
+}
 
-const card: React.CSSProperties = {
-  border: "1px solid var(--line)",
-  background: "var(--card)",
-  borderRadius: 22,
-  boxShadow: "0 12px 32px rgba(39, 24, 8, 0.07)",
-};
+/* ── Avatar ──────────────────────────────────────────────────────── */
+function Avatar({ url, name, size = 44 }: { url: string | null; name: string; size?: number }) {
+  if (url) return (
+    // eslint-disable-next-line @next/next/no-img-element
+    <img src={url} alt={name} width={size} height={size}
+      style={{ borderRadius: "50%", objectFit: "cover", flexShrink: 0 }} />
+  );
+  return (
+    <div style={{
+      width: size, height: size, borderRadius: "50%", flexShrink: 0,
+      display: "grid", placeItems: "center",
+      background: "var(--accent-soft)", color: "var(--accent)",
+      fontWeight: 900, fontSize: Math.round(size * 0.36),
+    }}>{initials(name)}</div>
+  );
+}
 
-const glassCard: React.CSSProperties = {
-  border: "1px solid rgba(255,255,255,0.16)",
-  background: "linear-gradient(145deg, rgba(255,255,255,0.92), rgba(255,248,235,0.72))",
-  borderRadius: 26,
-  boxShadow: "0 24px 70px rgba(48, 26, 7, 0.13)",
-};
+/* ── SelectField ─────────────────────────────────────────────────── */
+function SelectField({ label, value, values, onChange }: {
+  label: string; value: string; values: string[];
+  onChange: (v: string) => void;
+}) {
+  return (
+    <label>
+      <span style={{ fontSize: 11, fontWeight: 800, color: "var(--muted)", letterSpacing: "0.1em", textTransform: "uppercase" }}>
+        {label}
+      </span>
+      <select value={value} onChange={e => onChange(e.target.value)} style={{
+        display: "block", width: "100%", marginTop: 7,
+        border: "1px solid var(--line)", borderRadius: 12, padding: "11px 12px",
+        background: "var(--panel)", color: "var(--ink-strong)", fontWeight: 700, fontSize: 13,
+        appearance: "auto",
+      }}>
+        {values.map(item => <option key={item} value={item}>{item}</option>)}
+      </select>
+    </label>
+  );
+}
 
+/* ── MultiField ──────────────────────────────────────────────────── */
+function MultiField({ label, values, selected, onToggle }: {
+  label: string; values: string[]; selected: string[];
+  onToggle: (v: string) => void;
+}) {
+  return (
+    <div>
+      <p style={{ fontSize: 11, fontWeight: 800, color: "var(--muted)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 8 }}>
+        {label}
+      </p>
+      <div style={{ display: "flex", gap: 7, flexWrap: "wrap" }}>
+        {values.map(item => {
+          const active = selected.includes(item);
+          return (
+            <button key={item} type="button" onClick={() => onToggle(item)} style={{
+              border: active ? "1.5px solid var(--accent)" : "1px solid var(--line)",
+              background: active ? "var(--accent-soft)" : "var(--panel)",
+              color: active ? "var(--accent)" : "var(--muted)",
+              borderRadius: 999, padding: "6px 11px", fontSize: 12, fontWeight: 700, cursor: "pointer",
+            }}>{item}</button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+/* ── Main component ──────────────────────────────────────────────── */
 export default function PartnerPage() {
-  const [session, setSession] = useState<Session | null>(null);
-  const [loading, setLoading] = useState(true);
+  const [session,   setSession]   = useState<Session | null>(null);
+  const [loading,   setLoading]   = useState(true);
   const [tab, setTab] = useState<"discover" | "requests" | "chat" | "profile">("discover");
-  const [profiles, setProfiles] = useState<PartnerProfile[]>([]);
-  const [myProfile, setMyProfile] = useState<PartnerProfile | null>(null);
+
+  // Data
+  const [profiles,    setProfiles]    = useState<PartnerProfile[]>([]);
+  const [myProfile,   setMyProfile]   = useState<PartnerProfile | null>(null);
   const [connections, setConnections] = useState<PartnerConnection[]>([]);
+
+  // Chat
   const [activeConnectionId, setActiveConnectionId] = useState<string | null>(null);
-  const [messages, setMessages] = useState<PartnerMessage[]>([]);
-  const [checkins, setCheckins] = useState<PartnerCheckin[]>([]);
-  const [messageText, setMessageText] = useState("");
-  const [targetText, setTargetText] = useState("");
-  const [focusMinutes, setFocusMinutes] = useState(90);
-  const [mood, setMood] = useState("locked in");
-  const [actionPending, setActionPending] = useState<string | null>(null);
+  const [messages,   setMessages]   = useState<PartnerMessage[]>([]);
+  const [checkins,   setCheckins]   = useState<PartnerCheckin[]>([]);
+  const [msgText,    setMsgText]    = useState("");
+  const [showPact,   setShowPact]   = useState(false);
+
+  // Daily pact
+  const [targetText,    setTargetText]    = useState("");
+  const [focusMinutes,  setFocusMinutes]  = useState(90);
+  const [mood,          setMood]          = useState("locked in");
+
+  // UI
+  const [actionPending,      setActionPending]      = useState<string | null>(null);
   const [requestFocusByUser, setRequestFocusByUser] = useState<Record<string, string>>({});
-  const [saving, setSaving] = useState(false);
-  const [notice, setNotice] = useState("");
-  const bottomRef = useRef<HTMLDivElement>(null);
-  const activeConnectionIdRef = useRef<string | null>(null);
+  const [saving,  setSaving]  = useState(false);
+  const [notice,  setNotice]  = useState("");
+
+  const bottomRef             = useRef<HTMLDivElement>(null);
+  const activeConnIdRef       = useRef<string | null>(null);
+  const noticeTimerRef        = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   const [form, setForm] = useState({
-    exam_target: "72nd BPSC",
-    stage: "Revision",
-    district: "Patna",
-    language: "Hindi + English",
-    gender_preference: "No preference",
+    exam_target:             "72nd BPSC",
+    stage:                   "Revision",
+    district:                "Patna",
+    language:                "Hindi + English",
+    gender_preference:       "No preference",
     partner_gender_preference: "No preference",
-    study_mode: "Accountability + Silent Study",
-    daily_hours: "2-3 hrs/day",
-    slots: ["Evening"],
-    weak_subjects: ["Current Affairs", "Polity"],
-    strong_subjects: ["Bihar Special"],
+    study_mode:              "Accountability + Silent Study",
+    daily_hours:             "2-3 hrs/day",
+    slots:         ["Evening"]                          as string[],
+    weak_subjects: ["Current Affairs", "Polity"]        as string[],
+    strong_subjects: ["Bihar Special"]                  as string[],
     bio: "I want a serious partner for daily targets, revision and mock analysis.",
     seriousness_score: 70,
   });
 
   const userId = session?.user.id ?? "";
+
   const profileMap = useMemo(
     () => new Map(profiles.concat(myProfile ? [myProfile] : []).map(p => [p.user_id, p])),
     [profiles, myProfile],
@@ -224,77 +272,70 @@ export default function PartnerPage() {
   const accepted = connections.filter(c => c.status === "accepted");
   const incoming = connections.filter(c => c.status === "pending" && c.receiver_id === userId);
   const outgoing = connections.filter(c => c.status === "pending" && c.requester_id === userId);
-  const activeConnection = accepted.find(c => c.id === activeConnectionId) ?? accepted[0] ?? null;
-  const activePartnerId = activeConnection
-    ? activeConnection.requester_id === userId
-      ? activeConnection.receiver_id
-      : activeConnection.requester_id
-    : "";
-  const todaysCheckins = checkins.filter(c => c.checkin_date === todayKey());
-  const myCheckin = todaysCheckins.find(c => c.user_id === userId) ?? null;
-  const partnerCheckin = todaysCheckins.find(c => c.user_id === activePartnerId) ?? null;
-  const pactComplete = Boolean(myCheckin?.completed && partnerCheckin?.completed);
-  const pairFocusMinutes = todaysCheckins.reduce((sum, item) => sum + item.focus_minutes, 0);
-  const activeChatCount = accepted.length;
-  const attentionCount = incoming.length + activeChatCount;
 
-  const candidates = useMemo(() => {
-    return profiles
+  const activeConnection = accepted.find(c => c.id === activeConnectionId) ?? accepted[0] ?? null;
+  const activePartnerId  = activeConnection
+    ? (activeConnection.requester_id === userId ? activeConnection.receiver_id : activeConnection.requester_id)
+    : "";
+
+  const todaysCheckins = checkins.filter(c => c.checkin_date === todayKey());
+  const myCheckin      = todaysCheckins.find(c => c.user_id === userId)          ?? null;
+  const partnerCheckin = todaysCheckins.find(c => c.user_id === activePartnerId) ?? null;
+  const pactComplete   = Boolean(myCheckin?.completed && partnerCheckin?.completed);
+  const pairFocusMins  = todaysCheckins.reduce((sum, r) => sum + r.focus_minutes, 0);
+
+  const otherUserId = (conn: PartnerConnection) =>
+    conn.requester_id === userId ? conn.receiver_id : conn.requester_id;
+
+  const candidates = useMemo(() =>
+    profiles
       .filter(p => p.user_id !== userId)
       .map(p => ({ profile: p, score: scoreMatch(myProfile, p), reason: matchReason(myProfile, p) }))
-      .sort((a, b) => b.score - a.score);
-  }, [myProfile, profiles, userId]);
+      .sort((a, b) => b.score - a.score),
+    [myProfile, profiles, userId],
+  );
 
+  function showNotice(msg: string) {
+    setNotice(msg);
+    if (noticeTimerRef.current) clearTimeout(noticeTimerRef.current);
+    noticeTimerRef.current = setTimeout(() => setNotice(""), 4500);
+  }
+
+  /* ── Effects ─────────────────────────────────────────────────── */
   useEffect(() => {
     const supabase = getSupabaseBrowserClient();
-
-    async function boot() {
-      const { data } = await supabase.auth.getSession();
-      setSession(data.session ?? null);
-      setLoading(false);
-    }
-
-    void boot();
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, nextSession) => {
-      setSession(nextSession ?? null);
-    });
-
+    supabase.auth.getSession().then(({ data }) => { setSession(data.session ?? null); setLoading(false); });
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((_e, s) => setSession(s ?? null));
     return () => subscription.unsubscribe();
   }, []);
 
-  useEffect(() => {
-    activeConnectionIdRef.current = activeConnection?.id ?? null;
-  }, [activeConnection?.id]);
+  useEffect(() => { activeConnIdRef.current = activeConnection?.id ?? null; }, [activeConnection?.id]);
 
   useEffect(() => {
-    if (!activeConnectionId && accepted.length > 0) {
-      setActiveConnectionId(accepted[0].id);
-    }
+    if (!activeConnectionId && accepted.length > 0) setActiveConnectionId(accepted[0].id);
   }, [accepted, activeConnectionId]);
 
   useEffect(() => {
     if (!session) return;
     void loadAll();
-
     const supabase = getSupabaseBrowserClient();
-    const channel = supabase
+    const ch = supabase
       .channel("study-partner-live")
       .on("postgres_changes", { event: "*", schema: "public", table: "study_partner_profiles" }, () => void loadAll())
       .on("postgres_changes", { event: "*", schema: "public", table: "study_partner_connections" }, () => void loadAll())
       .on("postgres_changes", { event: "INSERT", schema: "public", table: "study_partner_messages" }, payload => {
         const next = payload.new as PartnerMessage;
-        if (next.connection_id === activeConnectionIdRef.current) {
-          setMessages(prev => prev.some(item => item.id === next.id) ? prev : [...prev, next]);
+        if (next.connection_id === activeConnIdRef.current) {
+          setMessages(prev => prev.some(m => m.id === next.id) ? prev : [...prev, next]);
           setTimeout(() => bottomRef.current?.scrollIntoView({ behavior: "smooth" }), 40);
         }
       })
       .on("postgres_changes", { event: "*", schema: "public", table: "study_partner_checkins" }, payload => {
         const next = payload.new as PartnerCheckin;
-        if (next?.connection_id === activeConnectionIdRef.current) void loadCheckins(next.connection_id);
+        if (next?.connection_id === activeConnIdRef.current) void loadCheckins(next.connection_id);
       })
       .subscribe();
-
-    return () => { void supabase.removeChannel(channel); };
+    return () => { void supabase.removeChannel(ch); };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session?.user.id]);
 
@@ -308,47 +349,31 @@ export default function PartnerPage() {
 
   useEffect(() => {
     if (!activeConnection?.id) return;
-    const timer = window.setInterval(() => {
-      void loadMessages(activeConnection.id);
-    }, 4500);
-    return () => window.clearInterval(timer);
+    const t = window.setInterval(() => void loadMessages(activeConnection.id), 4500);
+    return () => window.clearInterval(t);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeConnection?.id]);
 
+  /* ── Loaders ─────────────────────────────────────────────────── */
   async function loadAll() {
     if (!session) return;
     const supabase = getSupabaseBrowserClient();
-    const [{ data: allProfiles }, { data: allConnections }] = await Promise.all([
-      (supabase as any)
-        .from("study_partner_profiles")
-        .select("*")
-        .order("updated_at", { ascending: false }),
-      (supabase as any)
-        .from("study_partner_connections")
-        .select("*")
-        .order("created_at", { ascending: false }),
+    const [{ data: ap }, { data: ac }] = await Promise.all([
+      (supabase as any).from("study_partner_profiles").select("*").order("updated_at", { ascending: false }),
+      (supabase as any).from("study_partner_connections").select("*").order("created_at", { ascending: false }),
     ]);
-
-    const typedProfiles = (allProfiles ?? []) as PartnerProfile[];
-    const mine = typedProfiles.find(p => p.user_id === session.user.id) ?? null;
+    const typed = (ap ?? []) as PartnerProfile[];
+    const mine  = typed.find(p => p.user_id === session.user.id) ?? null;
     setMyProfile(mine);
-    setProfiles(typedProfiles.filter(p => p.user_id !== session.user.id && p.is_active));
-    setConnections((allConnections ?? []) as PartnerConnection[]);
+    setProfiles(typed.filter(p => p.user_id !== session.user.id && p.is_active));
+    setConnections((ac ?? []) as PartnerConnection[]);
     if (mine) {
       setForm({
-        exam_target: mine.exam_target,
-        stage: mine.stage,
-        district: mine.district,
-        language: mine.language,
-        gender_preference: mine.gender_preference,
-        partner_gender_preference: mine.partner_gender_preference,
-        study_mode: mine.study_mode,
-        daily_hours: mine.daily_hours,
-        slots: mine.slots,
-        weak_subjects: mine.weak_subjects,
-        strong_subjects: mine.strong_subjects,
-        bio: mine.bio,
-        seriousness_score: mine.seriousness_score,
+        exam_target: mine.exam_target, stage: mine.stage, district: mine.district,
+        language: mine.language, gender_preference: mine.gender_preference,
+        partner_gender_preference: mine.partner_gender_preference, study_mode: mine.study_mode,
+        daily_hours: mine.daily_hours, slots: mine.slots, weak_subjects: mine.weak_subjects,
+        strong_subjects: mine.strong_subjects, bio: mine.bio, seriousness_score: mine.seriousness_score,
       });
     } else {
       setTab("profile");
@@ -358,11 +383,8 @@ export default function PartnerPage() {
   async function loadMessages(connectionId: string) {
     const supabase = getSupabaseBrowserClient();
     const { data } = await (supabase as any)
-      .from("study_partner_messages")
-      .select("*")
-      .eq("connection_id", connectionId)
-      .order("created_at", { ascending: true })
-      .limit(100);
+      .from("study_partner_messages").select("*")
+      .eq("connection_id", connectionId).order("created_at", { ascending: true }).limit(100);
     setMessages((data ?? []) as PartnerMessage[]);
     setTimeout(() => bottomRef.current?.scrollIntoView({ behavior: "smooth" }), 60);
   }
@@ -370,49 +392,36 @@ export default function PartnerPage() {
   async function loadCheckins(connectionId: string) {
     const supabase = getSupabaseBrowserClient();
     const { data } = await (supabase as any)
-      .from("study_partner_checkins")
-      .select("*")
+      .from("study_partner_checkins").select("*")
       .eq("connection_id", connectionId)
       .gte("checkin_date", new Date(Date.now() - 6 * 86400000).toISOString().slice(0, 10))
       .order("checkin_date", { ascending: false });
     const rows = (data ?? []) as PartnerCheckin[];
     setCheckins(rows);
-    const mine = rows.find(row => row.user_id === userId && row.checkin_date === todayKey());
-    if (mine) {
-      setTargetText(mine.target);
-      setFocusMinutes(mine.focus_minutes || 90);
-      setMood(mine.mood || "locked in");
-    } else {
-      setTargetText("");
-      setFocusMinutes(90);
-      setMood("locked in");
-    }
+    const mine = rows.find(r => r.user_id === userId && r.checkin_date === todayKey());
+    if (mine) { setTargetText(mine.target); setFocusMinutes(mine.focus_minutes || 90); setMood(mine.mood || "locked in"); }
+    else       { setTargetText(""); setFocusMinutes(90); setMood("locked in"); }
   }
 
+  /* ── Actions ──────────────────────────────────────────────────── */
   async function signIn() {
-    const supabase = getSupabaseBrowserClient();
-    await supabase.auth.signInWithOAuth({
+    await getSupabaseBrowserClient().auth.signInWithOAuth({
       provider: "google",
       options: { redirectTo: `${window.location.origin}/partner` },
     });
   }
 
-  function toggleArray(key: "slots" | "weak_subjects" | "strong_subjects", value: string) {
+  function toggleArr(key: "slots" | "weak_subjects" | "strong_subjects", val: string) {
     setForm(prev => {
-      const current = prev[key];
-      const next = current.includes(value)
-        ? current.filter(item => item !== value)
-        : [...current, value];
-      return { ...prev, [key]: next };
+      const cur = prev[key];
+      return { ...prev, [key]: cur.includes(val) ? cur.filter(i => i !== val) : [...cur, val] };
     });
   }
 
   async function saveProfile() {
     if (!session) return;
     setSaving(true);
-    setNotice("");
-    const supabase = getSupabaseBrowserClient();
-    const payload = {
+    const { error } = await (getSupabaseBrowserClient() as any).from("study_partner_profiles").upsert({
       user_id: session.user.id,
       display_name: firstName(session),
       avatar_url: (session.user.user_metadata?.avatar_url as string | undefined) ?? null,
@@ -420,90 +429,55 @@ export default function PartnerPage() {
       bio: form.bio.trim().slice(0, 220),
       is_active: true,
       updated_at: new Date().toISOString(),
-    };
-    const { error } = await (supabase as any)
-      .from("study_partner_profiles")
-      .upsert(payload, { onConflict: "user_id" });
+    }, { onConflict: "user_id" });
     setSaving(false);
-    if (error) {
-      setNotice(error.message);
-      return;
-    }
-    setNotice("Profile updated. Matching refreshed.");
+    if (error) { showNotice(error.message); return; }
+    showNotice("Profile saved. Matches refreshed.");
     await loadAll();
     setTab("discover");
   }
 
   async function sendRequest(receiverId: string, requestFocus: string) {
-    if (!session || !myProfile) {
-      setTab("profile");
-      setNotice("Create your study profile first.");
-      return;
-    }
+    if (!session || !myProfile) { setTab("profile"); showNotice("Create your profile first."); return; }
     const pendingKey = `request:${receiverId}:${requestFocus}`;
     setActionPending(pendingKey);
-    setNotice(`Sending ${requestFocus} request...`);
     const supabase = getSupabaseBrowserClient();
     const partner = profileMap.get(receiverId);
-    const opener = `Hi ${partner?.display_name ?? "there"}, let's do a focused ${requestFocus} sprint for BPSC.`;
-    const { data: existingRows, error: existingError } = await (supabase as any)
-      .from("study_partner_connections")
-      .select("*")
-      .or(`and(requester_id.eq.${session.user.id},receiver_id.eq.${receiverId}),and(requester_id.eq.${receiverId},receiver_id.eq.${session.user.id})`)
-      .eq("request_focus", requestFocus)
-      .order("created_at", { ascending: false })
-      .limit(1);
+    const opener  = `Hi ${partner?.display_name ?? "there"}, let's do a focused ${requestFocus} sprint for BPSC.`;
 
-    if (existingError) {
-      setActionPending(null);
-      setNotice(existingError.message);
-      return;
-    }
+    const { data: existingRows, error: existingError } = await (supabase as any)
+      .from("study_partner_connections").select("*")
+      .or(`and(requester_id.eq.${session.user.id},receiver_id.eq.${receiverId}),and(requester_id.eq.${receiverId},receiver_id.eq.${session.user.id})`)
+      .eq("request_focus", requestFocus).order("created_at", { ascending: false }).limit(1);
+
+    if (existingError) { setActionPending(null); showNotice(existingError.message); return; }
 
     const existing = ((existingRows ?? []) as PartnerConnection[])[0];
     if (existing?.status === "accepted") {
-      setActiveConnectionId(existing.id);
-      setTab("chat");
-      setNotice(`You already have a ${requestFocus} chat with ${partner?.display_name ?? "this student"}.`);
-      setActionPending(null);
-      return;
+      setActiveConnectionId(existing.id); setTab("chat");
+      showNotice(`Already chatting with ${partner?.display_name ?? "this student"} for ${requestFocus}.`);
+      setActionPending(null); return;
     }
     if (existing?.status === "pending") {
       setTab("requests");
-      setNotice(`A ${requestFocus} request with ${partner?.display_name ?? "this student"} is already pending.`);
-      setActionPending(null);
-      return;
+      showNotice(`A ${requestFocus} request is already pending.`);
+      setActionPending(null); return;
     }
 
-    const payload = {
-      requester_id: session.user.id,
-      receiver_id: receiverId,
-      request_focus: requestFocus,
-      opener,
-    };
-
+    const payload = { requester_id: session.user.id, receiver_id: receiverId, request_focus: requestFocus, opener };
     const { error } = existing
-      ? await (supabase as any)
-        .from("study_partner_connections")
-        .update({
-          ...payload,
-          status: "pending",
-          responded_at: null,
-          created_at: new Date().toISOString(),
-        })
-        .eq("id", existing.id)
+      ? await (supabase as any).from("study_partner_connections")
+          .update({ ...payload, status: "pending", responded_at: null, created_at: new Date().toISOString() }).eq("id", existing.id)
       : await (supabase as any).from("study_partner_connections").insert(payload);
 
     if (error) {
       setActionPending(null);
-      setNotice(
-        error.message.includes("duplicate")
-          ? `You already have an active ${requestFocus} request/chat with this student. Pick another purpose or open Requests/Messages.`
-          : error.message
-      );
+      showNotice(error.message.includes("duplicate")
+        ? `Already connected for ${requestFocus}. Check Requests or Messages.`
+        : error.message);
       return;
     }
-    setNotice(`${requestFocus} request sent. Chat opens after they accept.`);
+    showNotice("Request sent! Chat unlocks when they accept.");
     await loadAll();
     setActionPending(null);
     setTab("requests");
@@ -511,469 +485,746 @@ export default function PartnerPage() {
 
   async function updateConnection(id: string, status: "accepted" | "rejected" | "cancelled") {
     setActionPending(`${status}:${id}`);
-    const supabase = getSupabaseBrowserClient();
-    const { error } = await (supabase as any)
-      .from("study_partner_connections")
-      .update({ status, responded_at: new Date().toISOString() })
-      .eq("id", id);
-    if (error) {
-      setActionPending(null);
-      setNotice(error.message);
-      return;
-    }
+    const { error } = await (getSupabaseBrowserClient() as any).from("study_partner_connections")
+      .update({ status, responded_at: new Date().toISOString() }).eq("id", id);
+    if (error) { setActionPending(null); showNotice(error.message); return; }
     await loadAll();
     setActionPending(null);
-    if (status === "accepted") {
-      setActiveConnectionId(id);
-      setTab("chat");
-    }
+    if (status === "accepted") { setActiveConnectionId(id); setTab("chat"); }
   }
 
   async function sendMessage() {
-    if (!session || !activeConnection || !messageText.trim()) return;
-    const body = messageText.trim().slice(0, 600);
-    setMessageText("");
-    const optimistic: PartnerMessage = {
-      id: -Date.now(),
-      connection_id: activeConnection.id,
-      sender_id: session.user.id,
-      body,
-      created_at: new Date().toISOString(),
-      read_at: null,
+    if (!session || !activeConnection || !msgText.trim()) return;
+    const body = msgText.trim().slice(0, 600);
+    setMsgText("");
+    const opt: PartnerMessage = {
+      id: -Date.now(), connection_id: activeConnection.id, sender_id: userId,
+      body, created_at: new Date().toISOString(), read_at: null,
     };
-    setMessages(prev => [...prev, optimistic]);
+    setMessages(prev => [...prev, opt]);
     setTimeout(() => bottomRef.current?.scrollIntoView({ behavior: "smooth" }), 40);
-    const supabase = getSupabaseBrowserClient();
-    const { error } = await (supabase as any).from("study_partner_messages").insert({
-      connection_id: activeConnection.id,
-      sender_id: session.user.id,
-      body,
-    });
-    if (error) {
-      setNotice(error.message);
-      setMessages(prev => prev.filter(item => item.id !== optimistic.id));
-      return;
-    }
+    const { error } = await (getSupabaseBrowserClient() as any).from("study_partner_messages")
+      .insert({ connection_id: activeConnection.id, sender_id: userId, body });
+    if (error) { showNotice(error.message); setMessages(prev => prev.filter(m => m.id !== opt.id)); return; }
     await loadMessages(activeConnection.id);
   }
 
   async function saveCheckin(completed = false) {
     if (!session || !activeConnection) return;
     const target = targetText.trim().slice(0, 220);
-    if (!target) {
-      setNotice("Add today's target first.");
-      return;
-    }
+    if (!target) { showNotice("Add today's target first."); return; }
     setActionPending(completed ? "done" : "lock");
-    setNotice(completed ? "Marking today as done..." : "Locking today's target...");
-    const supabase = getSupabaseBrowserClient();
-    const { error } = await (supabase as any)
-      .from("study_partner_checkins")
-      .upsert({
-        connection_id: activeConnection.id,
-        user_id: session.user.id,
-        checkin_date: todayKey(),
-        target,
-        completed: completed || myCheckin?.completed || false,
-        focus_minutes: focusMinutes,
-        mood,
-        updated_at: new Date().toISOString(),
-      }, { onConflict: "connection_id,user_id,checkin_date" });
-
-    if (error) {
-      setActionPending(null);
-      setNotice(error.message);
-      return;
-    }
-
+    const { error } = await (getSupabaseBrowserClient() as any).from("study_partner_checkins").upsert({
+      connection_id: activeConnection.id, user_id: userId, checkin_date: todayKey(),
+      target, completed: completed || myCheckin?.completed || false,
+      focus_minutes: focusMinutes, mood, updated_at: new Date().toISOString(),
+    }, { onConflict: "connection_id,user_id,checkin_date" });
+    if (error) { setActionPending(null); showNotice(error.message); return; }
     await loadCheckins(activeConnection.id);
-    const partner = profileMap.get(otherUser(activeConnection));
-    setMessageText(
-      completed
-        ? `Done for today: ${target} (${focusMinutes} min). Your turn, ${partner?.display_name ?? "partner"}.`
-        : `Today's target: ${target} (${focusMinutes} min). Let's finish this.`
+    const partner = profileMap.get(activePartnerId);
+    setMsgText(completed
+      ? `Done for today: ${target} (${focusMinutes} min). Your turn, ${partner?.display_name ?? "partner"}.`
+      : `Today's target: ${target} (${focusMinutes} min). Let's finish this.`
     );
     setActionPending(null);
-    setNotice(completed ? "Done marked. Send the update to your partner." : "Target locked. Send it to your partner.");
+    showNotice(completed ? "Done marked! Hit Send to notify your partner." : "Target locked! Send it to your partner.");
   }
 
   async function reportUser(reportedUserId: string) {
     if (!session) return;
     const reason = window.prompt("Why are you reporting this user?");
     if (!reason?.trim()) return;
-    const supabase = getSupabaseBrowserClient();
-    await (supabase as any).from("study_partner_reports").insert({
-      reporter_id: session.user.id,
-      reported_user_id: reportedUserId,
-      reason: reason.trim().slice(0, 300),
+    await (getSupabaseBrowserClient() as any).from("study_partner_reports").insert({
+      reporter_id: userId, reported_user_id: reportedUserId, reason: reason.trim().slice(0, 300),
     });
-    setNotice("Report submitted. We will review this user.");
+    showNotice("Report submitted. We will review this user.");
   }
 
-  const otherUser = (connection: PartnerConnection) =>
-    connection.requester_id === userId ? connection.receiver_id : connection.requester_id;
+  /* ── Loading ─────────────────────────────────────────────────── */
+  if (loading) return (
+    <main style={{ minHeight: "100vh", display: "grid", placeItems: "center", background: "var(--bg)" }}>
+      <div style={{ textAlign: "center" }}>
+        <p style={{ fontSize: 40, marginBottom: 12 }}>🤝</p>
+        <p style={{ color: "var(--muted)", fontWeight: 700, fontSize: 15 }}>Finding your tribe…</p>
+      </div>
+    </main>
+  );
 
-  if (loading) {
-    return (
-      <main style={{ minHeight: "100vh", display: "grid", placeItems: "center", background: "var(--bg)" }}>
-        <p style={{ color: "var(--muted)", fontWeight: 800 }}>Loading partner room...</p>
-      </main>
-    );
-  }
-
-  if (!session) {
-    return (
-      <main style={{ minHeight: "100vh", background: "var(--bg)", padding: "56px 18px" }}>
-        <section style={{ ...card, maxWidth: 560, margin: "0 auto", padding: 28, textAlign: "center" }}>
-          <p style={{ fontSize: 42, marginBottom: 14 }}>Study Partner</p>
-          <h1 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2rem, 7vw, 3.4rem)", lineHeight: 1, color: "var(--ink-strong)", marginBottom: 12 }}>
-            Find one serious aspirant. Finish the syllabus together.
-          </h1>
-          <p style={{ color: "var(--ink-soft)", lineHeight: 1.7, marginBottom: 22 }}>
-            Match by exam, weak subjects, daily slot, language, district and seriousness. Private chat opens only after both students connect.
-          </p>
-          <button onClick={signIn} style={{
-            border: "none", borderRadius: 14, padding: "14px 20px",
-            background: "var(--accent)", color: "#fff", fontWeight: 900,
-            fontFamily: "var(--font-display)", cursor: "pointer",
-          }}>
-            Sign in to find a partner
-          </button>
-        </section>
-      </main>
-    );
-  }
-
-  return (
-    <main style={{ minHeight: "100vh", background: "var(--bg)", padding: "18px 14px 90px" }}>
-      <section style={{ maxWidth: 1080, margin: "0 auto" }}>
-        <div style={{
-          ...card,
-          padding: "16px",
-          background: "linear-gradient(135deg, rgba(255,255,255,0.92), rgba(255,248,235,0.76))",
-          color: "var(--ink-strong)",
-          overflow: "hidden",
+  /* ── Sign-in gate ─────────────────────────────────────────────── */
+  if (!session) return (
+    <main style={{ minHeight: "100vh", background: "var(--bg)", display: "grid", placeItems: "center", padding: "24px 16px" }}>
+      <div style={{
+        maxWidth: 500, width: "100%", textAlign: "center",
+        border: "1px solid var(--line)", borderRadius: 28,
+        background: "var(--card)", padding: "44px 32px",
+        boxShadow: "0 24px 64px rgba(39,24,8,0.09)",
+      }}>
+        <p style={{ fontSize: 48, marginBottom: 16 }}>🤝</p>
+        <h1 style={{
+          fontFamily: "var(--font-display)", fontSize: "clamp(1.6rem, 5vw, 2.3rem)",
+          lineHeight: 1.1, color: "var(--ink-strong)", marginBottom: 14, letterSpacing: "-0.02em",
         }}>
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16, flexWrap: "wrap" }}>
-            <div>
-              <p style={{ fontFamily: "monospace", letterSpacing: "0.18em", fontSize: 10, color: "var(--accent)", textTransform: "uppercase", marginBottom: 6 }}>
-                Study Partner
-              </p>
-              <h1 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.45rem, 4vw, 2.25rem)", lineHeight: 1.02, letterSpacing: "-0.04em" }}>
-                Find focused partners for each prep goal.
-              </h1>
-              <p style={{ marginTop: 8, color: "var(--ink-soft)", maxWidth: 620, lineHeight: 1.55, fontSize: 13 }}>
-                Choose a student, select a purpose like CA or Answer Writing, then send a private request.
-              </p>
-            </div>
-            <div style={{
-              border: "1px solid rgba(184,97,23,0.20)",
-              background: "rgba(184,97,23,0.08)",
-              color: "var(--accent)",
-              borderRadius: 18,
-              padding: "10px 12px",
-              fontWeight: 900,
-              fontSize: 13,
-              minWidth: 132,
-              textAlign: "center",
-            }}>
-              {candidates.length} matches
-            </div>
-          </div>
-        </div>
-
-        {notice && (
-          <div style={{
-            ...card,
-            position: "sticky",
-            top: 62,
-            zIndex: 20,
-            marginTop: 14,
-            padding: "12px 14px",
-            color: "var(--accent)",
-            fontWeight: 800,
-            fontSize: 13,
-            borderColor: "rgba(184,97,23,0.28)",
-          }}>
-            {notice}
-          </div>
-        )}
-
-        <div style={{ display: "flex", gap: 8, overflowX: "auto", padding: "16px 0 12px" }}>
+          Find one serious aspirant.<br />Finish BPSC together.
+        </h1>
+        <p style={{ color: "var(--ink-soft)", lineHeight: 1.7, marginBottom: 28, fontSize: 14, maxWidth: 380, margin: "0 auto 28px" }}>
+          Matched by exam, weak subjects, study slot and prep stage. Private 1:1 chat opens only after both students connect.
+        </p>
+        <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 28, textAlign: "left" }}>
           {[
-            ["discover", `Discover ${candidates.length}`],
-            ["requests", `Requests ${incoming.length + outgoing.length}`],
-            ["chat", `Messages ${attentionCount}`],
-            ["profile", myProfile ? "My Match Profile" : "Create Profile"],
-          ].map(([id, label]) => (
-            <button key={id} onClick={() => setTab(id as typeof tab)} style={{
-              ...chip(tab === id),
-              whiteSpace: "nowrap",
-              padding: "10px 14px",
-            }}>
-              {label}
-            </button>
+            ["🎯", "Smart match by exam + stage + weak subjects"],
+            ["🔒", "Private 1:1 chat — no public feed, no strangers"],
+            ["📋", "Daily pact — shared target + completion check-in"],
+            ["🛡️", "Report system to keep quality high"],
+          ].map(([icon, text]) => (
+            <div key={text as string} style={{ display: "flex", alignItems: "center", gap: 10, fontSize: 13, color: "var(--ink-soft)" }}>
+              <span style={{ fontSize: 18 }}>{icon}</span>
+              <span>{text}</span>
+            </div>
           ))}
         </div>
+        <button onClick={signIn} style={{
+          width: "100%", border: "none", borderRadius: 16, padding: "15px 24px",
+          background: "var(--accent)", color: "#fff", fontWeight: 900,
+          fontFamily: "var(--font-display)", cursor: "pointer", fontSize: 16,
+        }}>
+          Sign in with Google →
+        </button>
+      </div>
+    </main>
+  );
 
-        {tab === "discover" && (
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 14 }}>
-            {!myProfile && (
-              <div style={{ ...card, padding: 20 }}>
-                <h2 style={{ fontFamily: "var(--font-display)", color: "var(--ink-strong)", marginBottom: 8 }}>Create your profile first</h2>
-                <p style={{ color: "var(--ink-soft)", lineHeight: 1.65, fontSize: 14, marginBottom: 14 }}>
-                  Matching becomes useful only after we know your stage, weak subjects and study slot.
-                </p>
-                <button onClick={() => setTab("profile")} style={{ ...chip(true), borderRadius: 12 }}>Create profile</button>
+  /* ── Tabs config ─────────────────────────────────────────────── */
+  const TABS = [
+    { id: "discover"  as const, icon: "🔍", label: "Discover",  badge: candidates.length || null },
+    { id: "requests"  as const, icon: "📨", label: "Requests",  badge: incoming.length   || null },
+    { id: "chat"      as const, icon: "💬", label: "Chat",      badge: accepted.length   || null },
+    { id: "profile"   as const, icon: "👤", label: myProfile ? "Profile" : "Setup ✦", badge: null },
+  ];
+
+  /* ── Main render ─────────────────────────────────────────────── */
+  return (
+    <main style={{ minHeight: "100vh", background: "var(--bg)", paddingBottom: 80 }}>
+
+      {/* ── Page header + Tab bar ────────────────────────────── */}
+      <div style={{ borderBottom: "1px solid var(--line)", background: "var(--card)", position: "sticky", top: 0, zIndex: 30 }}>
+        <div style={{ maxWidth: 900, margin: "0 auto", padding: "0 16px" }}>
+
+          {/* Mini header */}
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", paddingTop: 14, paddingBottom: 10, gap: 12 }}>
+            <div>
+              <p style={{ fontFamily: "monospace", fontSize: 10, letterSpacing: "0.26em", color: "var(--accent)", textTransform: "uppercase" }}>
+                Study Partner
+              </p>
+              <h1 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.15rem, 3.5vw, 1.55rem)", letterSpacing: "-0.02em", color: "var(--ink-strong)", lineHeight: 1.15 }}>
+                Hey {firstName(session)} 👋
+              </h1>
+            </div>
+            {candidates.length > 0 && (
+              <div style={{
+                background: "var(--accent-soft)", border: "1px solid var(--accent-border)",
+                borderRadius: 14, padding: "7px 12px", textAlign: "center",
+              }}>
+                <p style={{ fontFamily: "var(--font-display)", fontSize: 19, fontWeight: 700, color: "var(--accent)", lineHeight: 1 }}>{candidates.length}</p>
+                <p style={{ fontSize: 9, color: "var(--muted)", marginTop: 2, letterSpacing: "0.06em" }}>MATCHES</p>
               </div>
             )}
+          </div>
 
-            {candidates.map(({ profile, score, reason }) => (
-              <article key={profile.user_id} style={{ ...card, padding: 18, display: "flex", flexDirection: "column", gap: 13 }}>
-                {(() => {
-                  const selectedFocus = requestFocusByUser[profile.user_id] ?? REQUEST_FOCUSES[0];
-                  const pendingKey = `request:${profile.user_id}:${selectedFocus}`;
-                  const activeForFocus = connections.find(conn =>
-                    (conn.status === "pending" || conn.status === "accepted")
-                    && requestFocusOf(conn) === selectedFocus
-                    && (conn.requester_id === profile.user_id || conn.receiver_id === profile.user_id)
-                  );
-                  return (
-                    <>
-                <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-                  {profile.avatar_url ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img src={profile.avatar_url} alt={profile.display_name} width={48} height={48} style={{ borderRadius: "50%", objectFit: "cover" }} />
-                  ) : (
-                    <div style={{
-                      width: 48, height: 48, borderRadius: "50%", display: "grid", placeItems: "center",
-                      background: "var(--accent-soft)", color: "var(--accent)", fontWeight: 900,
-                    }}>
-                      {initials(profile.display_name)}
-                    </div>
-                  )}
-                  <div style={{ flex: 1 }}>
-                    <h3 style={{ color: "var(--ink-strong)", fontSize: 17, fontFamily: "var(--font-display)" }}>{profile.display_name}</h3>
-                    <p style={{ color: "var(--muted)", fontSize: 12 }}>{profile.district} · {profile.stage}</p>
-                  </div>
-                  <div style={{ textAlign: "right" }}>
-                    <p style={{ color: "var(--accent)", fontWeight: 900, fontSize: 22 }}>{score}%</p>
-                    <p style={{ color: "var(--muted)", fontSize: 10, letterSpacing: "0.08em", textTransform: "uppercase" }}>match</p>
-                  </div>
-                </div>
-
-                <div style={{ height: 8, background: "rgba(120,80,30,0.12)", borderRadius: 999, overflow: "hidden" }}>
-                  <div style={{ width: `${score}%`, height: "100%", background: "linear-gradient(90deg, #b86117, #16a34a)", borderRadius: 999 }} />
-                </div>
-
-                <div style={{
-                  border: "1px solid rgba(184,97,23,0.18)",
-                  background: "linear-gradient(135deg, rgba(184,97,23,0.08), rgba(255,255,255,0.82))",
-                  borderRadius: 18,
-                  padding: 12,
-                }}>
-                  <p style={{ fontSize: 11, fontWeight: 900, color: "var(--accent)", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 8 }}>
-                    Create request
-                  </p>
-                  <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 1fr) auto", gap: 8, alignItems: "stretch" }}>
-                    <select
-                      aria-label={`Request purpose for ${profile.display_name}`}
-                      value={selectedFocus}
-                      onChange={event => setRequestFocusByUser(prev => ({ ...prev, [profile.user_id]: event.target.value }))}
-                      style={{
-                        minWidth: 0, border: "1px solid var(--line)", borderRadius: 13,
-                        padding: "11px 12px", background: "var(--panel)", color: "var(--ink-strong)", fontWeight: 900,
-                      }}
-                    >
-                      {REQUEST_FOCUSES.map(item => <option key={item} value={item}>{item}</option>)}
-                    </select>
-                    <button type="button" disabled={actionPending === pendingKey} onClick={() => sendRequest(profile.user_id, selectedFocus)} style={{
-                      border: "none", borderRadius: 13, padding: "0 14px",
-                      background: "var(--accent)", color: "#fff", fontWeight: 900, cursor: "pointer",
-                      fontFamily: "var(--font-display)",
-                      opacity: actionPending === pendingKey ? 0.72 : 1,
-                      whiteSpace: "nowrap",
-                    }}>
-                      {actionPending === pendingKey
-                        ? "Sending..."
-                        : activeForFocus
-                          ? activeForFocus.status === "accepted" ? "Open chat" : "Pending"
-                          : "Send"}
-                    </button>
-                  </div>
-                  <p style={{ color: "var(--muted)", fontSize: 11, lineHeight: 1.45, marginTop: 8 }}>
-                    You can create separate rooms with the same student for different goals.
-                  </p>
-                </div>
-
-                <p style={{ color: "var(--ink-soft)", fontSize: 13, lineHeight: 1.55 }}>{reason}</p>
-                <p style={{ color: "var(--ink-strong)", fontSize: 13, lineHeight: 1.55 }}>{profile.bio}</p>
-
-                <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
-                  {[profile.exam_target, profile.daily_hours, profile.study_mode, ...profile.slots.slice(0, 2)].map(item => (
-                    <span key={item} style={{ ...chip(false), cursor: "default", padding: "5px 9px" }}>{item}</span>
-                  ))}
-                </div>
-
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, fontSize: 12 }}>
-                  <div style={{ background: "rgba(22,163,74,0.08)", borderRadius: 12, padding: 10 }}>
-                    <b style={{ color: "#15803d" }}>Strong</b>
-                    <p style={{ color: "var(--ink-soft)", marginTop: 4 }}>{profile.strong_subjects.join(", ") || "Not set"}</p>
-                  </div>
-                  <div style={{ background: "rgba(220,38,38,0.06)", borderRadius: 12, padding: 10 }}>
-                    <b style={{ color: "#b91c1c" }}>Improving</b>
-                    <p style={{ color: "var(--ink-soft)", marginTop: 4 }}>{profile.weak_subjects.join(", ") || "Not set"}</p>
-                  </div>
-                </div>
-
-                <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                  <button type="button" onClick={() => reportUser(profile.user_id)} style={{ ...chip(false), borderRadius: 13 }}>
-                    Report
-                  </button>
-                </div>
-                    </>
-                  );
-                })()}
-              </article>
+          {/* Tab row */}
+          <div style={{ display: "flex" }}>
+            {TABS.map(t => (
+              <button key={t.id} onClick={() => setTab(t.id)} style={{
+                flex: 1, border: "none", background: "none", cursor: "pointer",
+                padding: "9px 6px 13px",
+                borderBottom: tab === t.id ? "2.5px solid var(--accent)" : "2.5px solid transparent",
+                color: tab === t.id ? "var(--accent)" : "var(--muted)",
+                fontSize: 11, fontWeight: tab === t.id ? 800 : 600,
+                position: "relative", transition: "color 0.15s",
+              }}>
+                <span style={{ fontSize: 15, display: "block", marginBottom: 2 }}>{t.icon}</span>
+                {t.label}
+                {t.badge != null && (
+                  <span style={{
+                    position: "absolute", top: 5, right: "50%", transform: "translateX(10px)",
+                    background: "var(--accent)", color: "#fff",
+                    borderRadius: 999, fontSize: 9, fontWeight: 900, padding: "1px 5px", minWidth: 16, textAlign: "center",
+                  }}>{t.badge}</span>
+                )}
+              </button>
             ))}
+          </div>
+        </div>
+      </div>
 
-            {myProfile && candidates.length === 0 && (
-              <div style={{ ...card, padding: 22, textAlign: "center", gridColumn: "1 / -1" }}>
-                <h2 style={{ fontFamily: "var(--font-display)", color: "var(--ink-strong)", marginBottom: 8 }}>No new matches yet</h2>
-                <p style={{ color: "var(--ink-soft)" }}>When more students create profiles, they will appear here.</p>
+      {/* ── Content ──────────────────────────────────────────── */}
+      <div style={{ maxWidth: 900, margin: "0 auto", padding: "20px 16px 0" }}>
+
+        {/* Toast notice */}
+        {notice && (
+          <div style={{
+            marginBottom: 16, padding: "11px 15px",
+            background: "rgba(184,97,23,0.07)", border: "1px solid rgba(184,97,23,0.22)",
+            borderRadius: 14, fontSize: 13, fontWeight: 700, color: "var(--accent)",
+            display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10,
+          }}>
+            <span>{notice}</span>
+            <button onClick={() => setNotice("")} style={{ background: "none", border: "none", cursor: "pointer", color: "var(--muted)", fontSize: 16, padding: 0, lineHeight: 1 }}>✕</button>
+          </div>
+        )}
+
+        {/* ════════════════════════ DISCOVER ════════════════════════ */}
+        {tab === "discover" && (
+          <div>
+            {/* Create profile nudge */}
+            {!myProfile && (
+              <div style={{
+                border: "1.5px dashed var(--accent-border)", borderRadius: 20,
+                padding: "28px 20px", textAlign: "center", marginBottom: 24,
+                background: "linear-gradient(135deg, rgba(192,96,16,0.04), transparent)",
+              }}>
+                <p style={{ fontSize: 36, marginBottom: 10 }}>👤</p>
+                <h2 style={{ fontFamily: "var(--font-display)", fontSize: 20, color: "var(--ink-strong)", marginBottom: 8 }}>Set up your profile first</h2>
+                <p style={{ color: "var(--ink-soft)", fontSize: 13, lineHeight: 1.65, maxWidth: 360, margin: "0 auto 18px" }}>
+                  Tell us your exam, weak subjects and study slot. Matching is useful only after we know your prep situation.
+                </p>
+                <button onClick={() => setTab("profile")} style={{
+                  border: "none", borderRadius: 14, padding: "12px 22px",
+                  background: "var(--accent)", color: "#fff", fontWeight: 900,
+                  fontFamily: "var(--font-display)", cursor: "pointer", fontSize: 15,
+                }}>
+                  Create profile →
+                </button>
               </div>
+            )}
+
+            {/* Empty state */}
+            {myProfile && candidates.length === 0 && (
+              <div style={{ textAlign: "center", padding: "60px 20px", color: "var(--muted)" }}>
+                <p style={{ fontSize: 44, marginBottom: 12 }}>🔍</p>
+                <h2 style={{ fontFamily: "var(--font-display)", fontSize: 20, color: "var(--ink-strong)", marginBottom: 8 }}>No matches yet</h2>
+                <p style={{ fontSize: 13, lineHeight: 1.65 }}>More aspirants join daily. Check back soon.</p>
+              </div>
+            )}
+
+            {/* Candidate cards */}
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: 14 }}>
+              {candidates.map(({ profile, score, reason }) => {
+                const focus   = requestFocusByUser[profile.user_id] ?? REQUEST_FOCUSES[0];
+                const pKey    = `request:${profile.user_id}:${focus}`;
+                const col     = scoreColor(score);
+                const connFor = connections.find(c =>
+                  (c.status === "pending" || c.status === "accepted")
+                  && connFocus(c) === focus
+                  && (c.requester_id === profile.user_id || c.receiver_id === profile.user_id)
+                );
+
+                return (
+                  <article key={profile.user_id} style={{
+                    border: "1px solid var(--line)", borderRadius: 22, padding: "18px 16px",
+                    background: "var(--card)", display: "flex", flexDirection: "column", gap: 12,
+                    boxShadow: "0 4px 20px rgba(39,24,8,0.05)",
+                  }}>
+                    {/* Name row */}
+                    <div style={{ display: "flex", alignItems: "center", gap: 11 }}>
+                      <Avatar url={profile.avatar_url} name={profile.display_name} size={46} />
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <p style={{
+                          fontFamily: "var(--font-display)", fontSize: 16, fontWeight: 700,
+                          color: "var(--ink-strong)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis",
+                        }}>{profile.display_name}</p>
+                        <p style={{ fontSize: 12, color: "var(--muted)", marginTop: 2 }}>
+                          {profile.district} · {profile.stage}
+                        </p>
+                      </div>
+                      <div style={{
+                        background: col.bg, border: `1px solid ${col.border}`,
+                        borderRadius: 14, padding: "6px 10px", textAlign: "center", flexShrink: 0,
+                      }}>
+                        <p style={{ fontSize: 18, fontWeight: 900, color: col.text, lineHeight: 1 }}>{score}</p>
+                        <p style={{ fontSize: 9, color: col.text, opacity: 0.75, letterSpacing: "0.05em", marginTop: 1 }}>MATCH</p>
+                      </div>
+                    </div>
+
+                    {/* Score bar */}
+                    <div style={{ height: 4, background: "rgba(120,80,30,0.08)", borderRadius: 999, overflow: "hidden" }}>
+                      <div style={{
+                        width: `${score}%`, height: "100%", borderRadius: 999,
+                        background: score >= 80 ? "linear-gradient(90deg,#c06010,#16a34a)" : `linear-gradient(90deg,${col.text},${col.text})`,
+                      }} />
+                    </div>
+
+                    {/* Match reason */}
+                    <p style={{ fontSize: 12, color: "var(--ink-soft)", lineHeight: 1.5, fontStyle: "italic" }}>
+                      ✨ {reason}
+                    </p>
+
+                    {/* Bio excerpt */}
+                    {profile.bio && (
+                      <p style={{
+                        fontSize: 13, color: "var(--ink-strong)", lineHeight: 1.55,
+                        borderLeft: "3px solid var(--line)", paddingLeft: 10,
+                      }}>
+                        {profile.bio.slice(0, 120)}{profile.bio.length > 120 ? "…" : ""}
+                      </p>
+                    )}
+
+                    {/* Pill row */}
+                    <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
+                      {[profile.exam_target, profile.daily_hours, profile.language].map(pill => (
+                        <span key={pill} style={{
+                          border: "1px solid var(--line)", borderRadius: 999, padding: "4px 9px",
+                          fontSize: 11, fontWeight: 700, color: "var(--ink-soft)", background: "var(--panel)",
+                        }}>{pill}</span>
+                      ))}
+                    </div>
+
+                    {/* Subjects grid */}
+                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+                      <div style={{ background: "rgba(22,163,74,0.07)", borderRadius: 12, padding: "9px 10px" }}>
+                        <p style={{ fontSize: 10, fontWeight: 800, color: "#15803d", letterSpacing: "0.05em", marginBottom: 4 }}>STRONG</p>
+                        <p style={{ fontSize: 11, color: "var(--ink-soft)", lineHeight: 1.4 }}>{profile.strong_subjects.slice(0, 3).join(", ") || "—"}</p>
+                      </div>
+                      <div style={{ background: "rgba(220,38,38,0.05)", borderRadius: 12, padding: "9px 10px" }}>
+                        <p style={{ fontSize: 10, fontWeight: 800, color: "#b91c1c", letterSpacing: "0.05em", marginBottom: 4 }}>WORKING ON</p>
+                        <p style={{ fontSize: 11, color: "var(--ink-soft)", lineHeight: 1.4 }}>{profile.weak_subjects.slice(0, 3).join(", ") || "—"}</p>
+                      </div>
+                    </div>
+
+                    {/* Request box */}
+                    <div style={{ background: "var(--panel)", border: "1px solid var(--line)", borderRadius: 16, padding: "12px" }}>
+                      <p style={{ fontSize: 10, fontWeight: 800, color: "var(--muted)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 8 }}>
+                        Request a focused room
+                      </p>
+                      <div style={{ display: "flex", gap: 8 }}>
+                        <select
+                          value={focus}
+                          onChange={e => setRequestFocusByUser(prev => ({ ...prev, [profile.user_id]: e.target.value }))}
+                          style={{
+                            flex: 1, minWidth: 0, border: "1px solid var(--line)", borderRadius: 11,
+                            padding: "9px 10px", background: "var(--card)", color: "var(--ink-strong)", fontWeight: 700, fontSize: 13,
+                          }}
+                        >
+                          {REQUEST_FOCUSES.map(f => <option key={f} value={f}>{f}</option>)}
+                        </select>
+                        <button
+                          disabled={actionPending === pKey}
+                          onClick={() => {
+                            if (connFor?.status === "accepted") { setActiveConnectionId(connFor.id); setTab("chat"); }
+                            else void sendRequest(profile.user_id, focus);
+                          }}
+                          style={{
+                            border: "none", borderRadius: 11, padding: "0 16px",
+                            background: connFor?.status === "accepted" ? "#16a34a" : "var(--accent)",
+                            color: "#fff", fontWeight: 900, cursor: "pointer",
+                            opacity: actionPending === pKey ? 0.7 : 1,
+                            fontSize: 13, whiteSpace: "nowrap", flexShrink: 0,
+                          }}
+                        >
+                          {actionPending === pKey ? "…"
+                            : connFor?.status === "accepted" ? "Open →"
+                            : connFor?.status === "pending"  ? "Pending"
+                            : "Send →"}
+                        </button>
+                      </div>
+                      {connFor?.status === "pending" && (
+                        <p style={{ fontSize: 11, color: "var(--muted)", marginTop: 6 }}>Pending. Try a different focus topic.</p>
+                      )}
+                    </div>
+
+                    {/* Footer row */}
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                      <p style={{ fontSize: 11, color: "var(--muted)" }}>Active {timeAgo(profile.updated_at)}</p>
+                      <button onClick={() => reportUser(profile.user_id)} style={{
+                        background: "none", border: "1px solid var(--line)", borderRadius: 10,
+                        padding: "4px 10px", fontSize: 11, color: "var(--muted)", cursor: "pointer",
+                      }}>Report</button>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* ════════════════════════ REQUESTS ════════════════════════ */}
+        {tab === "requests" && (
+          <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
+
+            {/* Incoming */}
+            <section>
+              <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 14 }}>
+                <h2 style={{ fontFamily: "var(--font-display)", fontSize: 20, color: "var(--ink-strong)" }}>Requests to you</h2>
+                {incoming.length > 0 && (
+                  <span style={{
+                    background: "rgba(22,163,74,0.10)", color: "#16a34a",
+                    border: "1px solid rgba(22,163,74,0.28)", borderRadius: 999, padding: "2px 9px", fontSize: 11, fontWeight: 800,
+                  }}>{incoming.length} new</span>
+                )}
+              </div>
+              {incoming.length === 0 ? (
+                <div style={{ border: "1px dashed var(--line)", borderRadius: 16, padding: "24px 20px", textAlign: "center", color: "var(--muted)", fontSize: 13 }}>
+                  No incoming requests. Share your profile link to get one!
+                </div>
+              ) : incoming.map(row => {
+                const partner = profileMap.get(otherUserId(row));
+                return (
+                  <div key={row.id} style={{
+                    border: "1px solid rgba(22,163,74,0.25)", borderRadius: 18,
+                    padding: "16px 14px", marginBottom: 10, background: "rgba(22,163,74,0.025)",
+                  }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 11, marginBottom: 10 }}>
+                      <Avatar url={partner?.avatar_url ?? null} name={partner?.display_name ?? "?"} size={42} />
+                      <div style={{ flex: 1 }}>
+                        <p style={{ fontWeight: 700, color: "var(--ink-strong)", fontSize: 15 }}>{partner?.display_name ?? "Aspirant"}</p>
+                        <p style={{ fontSize: 12, color: "var(--muted)" }}>{partner?.exam_target} · {partner?.stage}</p>
+                      </div>
+                      <span style={{
+                        background: "rgba(22,163,74,0.10)", color: "#16a34a",
+                        border: "1px solid rgba(22,163,74,0.28)", borderRadius: 999, padding: "3px 9px", fontSize: 11, fontWeight: 800,
+                      }}>{connFocus(row)}</span>
+                    </div>
+                    <p style={{
+                      fontSize: 13, color: "var(--ink-soft)", lineHeight: 1.55, marginBottom: 12,
+                      borderLeft: "3px solid rgba(22,163,74,0.3)", paddingLeft: 10,
+                    }}>{row.opener}</p>
+                    <div style={{ display: "flex", gap: 8 }}>
+                      <button onClick={() => updateConnection(row.id, "accepted")} style={{
+                        flex: 1, border: "none", borderRadius: 12, padding: "12px 0",
+                        background: "linear-gradient(135deg,#15803d,#16a34a)", color: "#fff", fontWeight: 900, cursor: "pointer",
+                      }}>Accept</button>
+                      <button onClick={() => updateConnection(row.id, "rejected")} style={{
+                        flex: 1, border: "1px solid var(--line)", borderRadius: 12, padding: "12px 0",
+                        background: "var(--panel)", color: "var(--muted)", fontWeight: 700, cursor: "pointer",
+                      }}>Decline</button>
+                    </div>
+                  </div>
+                );
+              })}
+            </section>
+
+            {/* Sent */}
+            <section>
+              <h2 style={{ fontFamily: "var(--font-display)", fontSize: 20, color: "var(--ink-strong)", marginBottom: 14 }}>Sent by you</h2>
+              {outgoing.length === 0 ? (
+                <div style={{ border: "1px dashed var(--line)", borderRadius: 16, padding: "24px 20px", textAlign: "center", color: "var(--muted)", fontSize: 13 }}>
+                  No sent requests. Go to Discover and send one.
+                </div>
+              ) : outgoing.map(row => {
+                const partner = profileMap.get(otherUserId(row));
+                return (
+                  <div key={row.id} style={{ border: "1px solid var(--line)", borderRadius: 18, padding: "16px 14px", marginBottom: 10, background: "var(--card)" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 11, marginBottom: 10 }}>
+                      <Avatar url={partner?.avatar_url ?? null} name={partner?.display_name ?? "?"} size={42} />
+                      <div style={{ flex: 1 }}>
+                        <p style={{ fontWeight: 700, color: "var(--ink-strong)", fontSize: 15 }}>{partner?.display_name ?? "Aspirant"}</p>
+                        <p style={{ fontSize: 12, color: "var(--muted)" }}>{partner?.exam_target} · {partner?.district}</p>
+                      </div>
+                      <div style={{ textAlign: "right" }}>
+                        <span style={{
+                          background: "rgba(217,119,6,0.10)", color: "#d97706",
+                          border: "1px solid rgba(217,119,6,0.28)", borderRadius: 999,
+                          padding: "3px 9px", fontSize: 11, fontWeight: 800, display: "block", marginBottom: 4,
+                        }}>{connFocus(row)}</span>
+                        <p style={{ fontSize: 11, color: "var(--muted)" }}>{timeAgo(row.created_at)}</p>
+                      </div>
+                    </div>
+                    <button onClick={() => updateConnection(row.id, "cancelled")} style={{
+                      width: "100%", border: "1px solid var(--line)", borderRadius: 12, padding: "10px 0",
+                      background: "var(--panel)", color: "var(--muted)", fontWeight: 700, cursor: "pointer", fontSize: 13,
+                    }}>Cancel request</button>
+                  </div>
+                );
+              })}
+            </section>
+
+            {/* Active connections shortcut */}
+            {accepted.length > 0 && (
+              <section>
+                <h2 style={{ fontFamily: "var(--font-display)", fontSize: 20, color: "var(--ink-strong)", marginBottom: 14 }}>Active connections</h2>
+                {accepted.map(row => {
+                  const partner = profileMap.get(otherUserId(row));
+                  return (
+                    <div key={row.id} style={{
+                      border: "1px solid rgba(22,163,74,0.28)", borderRadius: 18,
+                      padding: "14px 14px", marginBottom: 10, background: "rgba(22,163,74,0.025)",
+                    }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: 11 }}>
+                        <Avatar url={partner?.avatar_url ?? null} name={partner?.display_name ?? "?"} size={40} />
+                        <div style={{ flex: 1 }}>
+                          <p style={{ fontWeight: 700, color: "var(--ink-strong)", fontSize: 15 }}>{partner?.display_name ?? "Partner"}</p>
+                          <p style={{ fontSize: 12, color: "var(--muted)" }}>{connFocus(row)} room · connected</p>
+                        </div>
+                        <button onClick={() => { setActiveConnectionId(row.id); setTab("chat"); }} style={{
+                          border: "none", borderRadius: 12, padding: "9px 14px",
+                          background: "var(--accent)", color: "#fff", fontWeight: 900, cursor: "pointer", fontSize: 13,
+                        }}>Open chat →</button>
+                      </div>
+                    </div>
+                  );
+                })}
+              </section>
             )}
           </div>
         )}
 
-        {tab === "requests" && (
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: 14 }}>
-            <RequestList
-              title="Requests to you"
-              empty="No incoming requests yet."
-              rows={incoming}
-              userId={userId}
-              profileMap={profileMap}
-              onAccept={id => updateConnection(id, "accepted")}
-              onReject={id => updateConnection(id, "rejected")}
-            />
-            <RequestList
-              title="Sent by you"
-              empty="No sent requests."
-              rows={outgoing}
-              userId={userId}
-              profileMap={profileMap}
-              onCancel={id => updateConnection(id, "cancelled")}
-            />
-          </div>
-        )}
-
+        {/* ════════════════════════ CHAT ════════════════════════════ */}
         {tab === "chat" && (
-          <div className="partner-chat-shell" style={{ display: "grid", gridTemplateColumns: "340px minmax(0, 1fr)", gap: 14, alignItems: "stretch" }}>
-            <div className="partner-chat-list" style={{ ...glassCard, padding: 12, height: "min(78vh, 760px)", overflowY: "auto" }}>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10, margin: "6px 6px 12px" }}>
-                <div>
-                  <p style={{ fontFamily: "monospace", fontSize: 10, color: "var(--accent)", letterSpacing: "0.16em", textTransform: "uppercase" }}>
-                    Inbox
-                  </p>
-                  <h2 style={{ fontFamily: "var(--font-display)", color: "var(--ink-strong)", fontSize: 22 }}>Private chats</h2>
-                </div>
-                <span style={{ ...chip(true), cursor: "default" }}>{activeChatCount}</span>
+          <div className="partner-chat-shell" style={{ display: "grid", gridTemplateColumns: "260px minmax(0,1fr)", gap: 14, alignItems: "start" }}>
+
+            {/* Sidebar */}
+            <div className="partner-chat-list" style={{
+              border: "1px solid var(--line)", borderRadius: 20,
+              background: "var(--card)", overflow: "hidden",
+            }}>
+              <div style={{ padding: "14px 14px 10px", borderBottom: "1px solid var(--line)" }}>
+                <p style={{ fontFamily: "var(--font-display)", fontSize: 16, fontWeight: 700, color: "var(--ink-strong)" }}>Private Chats</p>
+                <p style={{ fontSize: 11, color: "var(--muted)", marginTop: 2 }}>{accepted.length} connection{accepted.length !== 1 ? "s" : ""}</p>
               </div>
-              {accepted.length === 0 && <p style={{ color: "var(--muted)", fontSize: 13, padding: 8 }}>No private chats yet. Accept or send a request first.</p>}
-              {accepted.map(conn => {
-                const other = profileMap.get(otherUser(conn));
+              {accepted.length === 0 ? (
+                <div style={{ padding: "20px 14px", textAlign: "center", color: "var(--muted)", fontSize: 13 }}>
+                  Accept a request to start chatting.
+                </div>
+              ) : accepted.map(conn => {
+                const other  = profileMap.get(otherUserId(conn));
                 const active = activeConnection?.id === conn.id;
                 return (
                   <button key={conn.id} onClick={() => setActiveConnectionId(conn.id)} style={{
-                    width: "100%", textAlign: "left", border: active ? "1.5px solid var(--accent)" : "1px solid rgba(120,80,30,0.10)",
-                    background: active ? "linear-gradient(135deg, rgba(184,97,23,0.13), rgba(255,255,255,0.92))" : "rgba(255,255,255,0.58)", borderRadius: 18,
-                    padding: 13, cursor: "pointer", marginBottom: 8,
-                    boxShadow: active ? "0 12px 28px rgba(184,97,23,0.12)" : "none",
+                    width: "100%", textAlign: "left", border: "none",
+                    background: active ? "var(--accent-soft)" : "none",
+                    borderBottom: "1px solid var(--line)", padding: "12px 14px", cursor: "pointer",
+                    borderLeft: active ? "3px solid var(--accent)" : "3px solid transparent",
                   }}>
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8 }}>
-                      <b style={{ color: "var(--ink-strong)" }}>{other?.display_name ?? "Partner"}</b>
-                      <span style={{
-                        fontSize: 10,
-                        fontWeight: 900,
-                        color: active ? "var(--accent)" : "var(--muted)",
-                        background: active ? "rgba(184,97,23,0.10)" : "rgba(120,80,30,0.08)",
-                        borderRadius: 999,
-                        padding: "3px 7px",
-                      }}>
-                        chat
-                      </span>
+                    <div style={{ display: "flex", alignItems: "center", gap: 9 }}>
+                      <Avatar url={other?.avatar_url ?? null} name={other?.display_name ?? "?"} size={34} />
+                      <div style={{ flex: 1, minWidth: 0 }}>
+                        <p style={{
+                          fontWeight: 700, fontSize: 13,
+                          color: active ? "var(--accent)" : "var(--ink-strong)",
+                          whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis",
+                        }}>{other?.display_name ?? "Partner"}</p>
+                        <p style={{ fontSize: 11, color: "var(--muted)", marginTop: 1 }}>{connFocus(conn)}</p>
+                      </div>
                     </div>
-                    <p style={{ color: "var(--muted)", fontSize: 12, marginTop: 4, lineHeight: 1.45 }}>
-                      {requestFocusOf(conn)} room · {other?.study_mode ?? "1:1 accountability"}
-                    </p>
                   </button>
                 );
               })}
             </div>
 
-            <div className="partner-chat-panel" style={{ ...glassCard, height: "min(78vh, 760px)", minHeight: 0, minWidth: 0, display: "flex", flexDirection: "column", overflow: "hidden" }}>
-              {activeConnection ? (
-                <>
-                  <div style={{ padding: "16px 18px", borderBottom: "1px solid rgba(120,80,30,0.12)", background: "rgba(255,255,255,0.58)" }}>
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
-                      <div>
-                        <h2 style={{ fontFamily: "var(--font-display)", color: "var(--ink-strong)", fontSize: 22 }}>
-                          {profileMap.get(otherUser(activeConnection))?.display_name ?? "Study Partner"}
-                        </h2>
-                        <p style={{ color: "var(--muted)", fontSize: 12 }}>
-                          {requestFocusOf(activeConnection)} room · private 1:1 chat · realtime sync
-                        </p>
+            {/* Chat panel */}
+            <div className="partner-chat-panel" style={{
+              border: "1px solid var(--line)", borderRadius: 20, background: "var(--card)",
+              height: "min(82vh, 820px)", display: "flex", flexDirection: "column", overflow: "hidden",
+            }}>
+              {activeConnection ? (() => {
+                const partner = profileMap.get(activePartnerId);
+                const lastSeven = Array.from({ length: 7 }, (_, i) =>
+                  new Date(Date.now() - i * 86400000).toISOString().slice(0, 10)
+                ).reverse();
+                const perfectDays = lastSeven.filter(date => {
+                  const rows = checkins.filter(r => r.checkin_date === date);
+                  return rows.length >= 2 && rows.every(r => r.completed);
+                }).length;
+
+                return (
+                  <>
+                    {/* Chat header */}
+                    <div style={{
+                      padding: "13px 16px", borderBottom: "1px solid var(--line)",
+                      display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12,
+                    }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                        <Avatar url={partner?.avatar_url ?? null} name={partner?.display_name ?? "?"} size={36} />
+                        <div>
+                          <p style={{ fontWeight: 700, fontSize: 15, color: "var(--ink-strong)" }}>{partner?.display_name ?? "Study Partner"}</p>
+                          <p style={{ fontSize: 11, color: "var(--muted)" }}>{connFocus(activeConnection)} · private 1:1</p>
+                        </div>
                       </div>
-                      <span style={{ ...chip(true), cursor: "default" }}>{requestFocusOf(activeConnection)}</span>
+                      <button onClick={() => setShowPact(v => !v)} style={{
+                        border: "1px solid var(--line)", borderRadius: 12, padding: "7px 12px",
+                        background: showPact ? "var(--accent-soft)" : "var(--panel)",
+                        color: showPact ? "var(--accent)" : "var(--muted)",
+                        fontWeight: 700, fontSize: 12, cursor: "pointer", whiteSpace: "nowrap",
+                      }}>
+                        {showPact ? "Hide pact" : "📋 Daily Pact"}
+                      </button>
                     </div>
-                  </div>
-                  <div style={{ flex: 1, minHeight: 0, overflowY: "auto", padding: 14, display: "flex", flexDirection: "column", gap: 10 }}>
-                    {messages.length === 0 && (
-                      <div style={{ textAlign: "center", padding: "28px 12px", color: "var(--muted)" }}>
-                        <p style={{ fontFamily: "var(--font-display)", color: "var(--ink-strong)", fontSize: 18, marginBottom: 6 }}>Start this private thread</p>
-                        <p style={{ fontSize: 13, lineHeight: 1.6 }}>Send today&apos;s target, a mock score, or one topic you both must finish before sleeping.</p>
-                      </div>
-                    )}
-                    {messages.map(msg => {
-                      const mine = msg.sender_id === userId;
-                      return (
-                        <div key={msg.id} style={{ display: "flex", justifyContent: mine ? "flex-end" : "flex-start" }}>
+
+                    {/* Daily pact panel */}
+                    {showPact && (
+                      <div style={{
+                        padding: "14px 16px", borderBottom: "1px solid var(--line)",
+                        background: "linear-gradient(135deg, rgba(184,97,23,0.04), rgba(22,163,74,0.02))",
+                        overflowY: "auto", maxHeight: "45%",
+                      }}>
+                        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 12, gap: 10 }}>
+                          <div>
+                            <p style={{ fontFamily: "monospace", fontSize: 10, letterSpacing: "0.16em", color: "var(--accent)", textTransform: "uppercase", marginBottom: 3 }}>
+                              Today&apos;s pact
+                            </p>
+                            <p style={{ fontFamily: "var(--font-display)", fontSize: 17, fontWeight: 700, color: "var(--ink-strong)" }}>
+                              One honest block together
+                            </p>
+                          </div>
                           <div style={{
-                            maxWidth: "78%", borderRadius: mine ? "18px 18px 4px 18px" : "18px 18px 18px 4px",
-                            background: mine ? "var(--accent)" : "var(--chip)",
-                            color: mine ? "#fff" : "var(--ink-strong)",
-                            padding: "10px 13px", lineHeight: 1.5, fontSize: 14,
+                            background: pactComplete ? "rgba(22,163,74,0.10)" : "rgba(184,97,23,0.08)",
+                            border: `1px solid ${pactComplete ? "rgba(22,163,74,0.28)" : "rgba(184,97,23,0.2)"}`,
+                            borderRadius: 14, padding: "7px 10px", textAlign: "center", flexShrink: 0,
                           }}>
-                            {msg.body}
-                            <p style={{ opacity: 0.65, fontSize: 10, marginTop: 4 }}>{timeAgo(msg.created_at)}</p>
+                            <p style={{ fontSize: 11, fontWeight: 900, color: pactComplete ? "#15803d" : "var(--accent)" }}>
+                              {pactComplete ? "✓ Pact done" : "Pact open"}
+                            </p>
+                            <p style={{ fontSize: 10, color: "var(--muted)", marginTop: 2 }}>{perfectDays}/7 perfect days</p>
                           </div>
                         </div>
-                      );
-                    })}
-                    <div ref={bottomRef} />
-                  </div>
-                  <div style={{ padding: 12, borderTop: "1px solid var(--line)", display: "flex", gap: 8, background: "rgba(255,255,255,0.78)" }}>
-                    <input
-                      value={messageText}
-                      onChange={event => setMessageText(event.target.value)}
-                      onKeyDown={event => { if (event.key === "Enter") void sendMessage(); }}
-                      placeholder="Send today's target, doubt, or mock score..."
-                      style={{
-                        flex: 1, border: "1px solid var(--line)", borderRadius: 14,
-                        padding: "12px 13px", background: "var(--panel)", color: "var(--ink-strong)",
-                      }}
-                    />
-                    <button onClick={sendMessage} style={{ border: "none", borderRadius: 14, background: "var(--accent)", color: "#fff", padding: "0 16px", fontWeight: 900 }}>
-                      Send
-                    </button>
-                  </div>
-                </>
-              ) : (
-                <div style={{ flex: 1, display: "grid", placeItems: "center", textAlign: "center", padding: 30 }}>
+
+                        {/* Target + minutes */}
+                        <div style={{ display: "grid", gridTemplateColumns: "1fr 76px", gap: 8, marginBottom: 8 }}>
+                          <input
+                            value={targetText}
+                            onChange={e => setTargetText(e.target.value)}
+                            placeholder="Today's target: e.g. Revise Polity + 25 CA facts"
+                            maxLength={220}
+                            style={{
+                              border: "1px solid var(--line)", borderRadius: 12, padding: "10px 12px",
+                              background: "var(--panel)", color: "var(--ink-strong)", fontWeight: 600, fontSize: 13,
+                            }}
+                          />
+                          <input
+                            type="number" value={focusMinutes} min={15} max={600}
+                            onChange={e => setFocusMinutes(Number(e.target.value))}
+                            style={{
+                              border: "1px solid var(--line)", borderRadius: 12, padding: "10px 10px",
+                              background: "var(--panel)", color: "var(--ink-strong)", fontWeight: 700, fontSize: 13,
+                              textAlign: "center",
+                            }}
+                          />
+                        </div>
+
+                        {/* Mood chips */}
+                        <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 12 }}>
+                          {MOODS.map(m => (
+                            <button key={m} type="button" onClick={() => setMood(m)} style={{
+                              border: mood === m ? "1.5px solid var(--accent)" : "1px solid var(--line)",
+                              background: mood === m ? "var(--accent-soft)" : "var(--panel)",
+                              color: mood === m ? "var(--accent)" : "var(--muted)",
+                              borderRadius: 999, padding: "5px 10px", fontSize: 11, fontWeight: 700, cursor: "pointer",
+                            }}>{m}</button>
+                          ))}
+                        </div>
+
+                        {/* Status tiles */}
+                        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8, marginBottom: 12 }}>
+                          {[
+                            { name: "You", checkin: myCheckin },
+                            { name: partner?.display_name ?? "Partner", checkin: partnerCheckin },
+                          ].map(({ name, checkin }) => (
+                            <div key={name} style={{
+                              borderRadius: 14, padding: "10px 11px",
+                              background: checkin?.completed ? "rgba(22,163,74,0.08)" : "var(--panel)",
+                              border: `1px solid ${checkin?.completed ? "rgba(22,163,74,0.2)" : "var(--line)"}`,
+                            }}>
+                              <p style={{ fontSize: 10, fontWeight: 800, color: "var(--muted)", letterSpacing: "0.06em", textTransform: "uppercase" }}>{name}</p>
+                              <p style={{ fontSize: 13, fontWeight: 700, color: checkin?.completed ? "#15803d" : "var(--ink-strong)", marginTop: 4 }}>
+                                {checkin?.completed ? "✓ Done" : checkin ? `${checkin.focus_minutes}m locked` : "Waiting"}
+                              </p>
+                              {checkin?.target && (
+                                <p style={{ fontSize: 11, color: "var(--muted)", marginTop: 3, lineHeight: 1.4 }}>
+                                  {checkin.target.slice(0, 48)}{checkin.target.length > 48 ? "…" : ""}
+                                </p>
+                              )}
+                            </div>
+                          ))}
+                          <div style={{
+                            borderRadius: 14, padding: "10px 11px",
+                            background: pairFocusMins >= 120 ? "rgba(22,163,74,0.06)" : "var(--panel)",
+                            border: "1px solid var(--line)",
+                          }}>
+                            <p style={{ fontSize: 10, fontWeight: 800, color: "var(--muted)", letterSpacing: "0.06em", textTransform: "uppercase" }}>Pair focus</p>
+                            <p style={{ fontSize: 13, fontWeight: 700, color: "var(--ink-strong)", marginTop: 4 }}>
+                              {Math.floor(pairFocusMins / 60)}h {pairFocusMins % 60}m
+                            </p>
+                            <p style={{ fontSize: 11, color: "var(--muted)", marginTop: 3 }}>today</p>
+                          </div>
+                        </div>
+
+                        {/* Pact actions */}
+                        <div style={{ display: "flex", gap: 8 }}>
+                          <button disabled={actionPending === "lock"} onClick={() => saveCheckin(false)} style={{
+                            flex: 1, border: "1px solid rgba(184,97,23,0.3)", borderRadius: 12, padding: "10px 0",
+                            background: "rgba(184,97,23,0.08)", color: "var(--accent)", fontWeight: 900, cursor: "pointer",
+                            opacity: actionPending === "lock" ? 0.7 : 1,
+                          }}>
+                            {actionPending === "lock" ? "Locking…" : "Lock target"}
+                          </button>
+                          <button disabled={actionPending === "done"} onClick={() => saveCheckin(true)} style={{
+                            flex: 1, border: "none", borderRadius: 12, padding: "10px 0",
+                            background: "linear-gradient(135deg,#15803d,#16a34a)", color: "#fff", fontWeight: 900, cursor: "pointer",
+                            opacity: actionPending === "done" ? 0.7 : 1,
+                          }}>
+                            {actionPending === "done" ? "Marking…" : "Mark done ✓"}
+                          </button>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Messages list */}
+                    <div style={{ flex: 1, minHeight: 0, overflowY: "auto", padding: "14px 16px", display: "flex", flexDirection: "column", gap: 8 }}>
+                      {messages.length === 0 ? (
+                        <div style={{ flex: 1, display: "grid", placeItems: "center", textAlign: "center", padding: "32px 16px" }}>
+                          <div>
+                            <p style={{ fontSize: 36, marginBottom: 12 }}>💬</p>
+                            <p style={{ fontFamily: "var(--font-display)", fontSize: 18, color: "var(--ink-strong)", marginBottom: 8 }}>Start this private thread</p>
+                            <p style={{ fontSize: 13, color: "var(--muted)", lineHeight: 1.65 }}>
+                              Share today&apos;s target, a mock score, or open the Daily Pact above to lock a commitment.
+                            </p>
+                          </div>
+                        </div>
+                      ) : messages.map(msg => {
+                        const mine = msg.sender_id === userId;
+                        return (
+                          <div key={msg.id} style={{ display: "flex", justifyContent: mine ? "flex-end" : "flex-start" }}>
+                            <div style={{
+                              maxWidth: "76%",
+                              borderRadius: mine ? "18px 18px 4px 18px" : "18px 18px 18px 4px",
+                              background: mine ? "var(--accent)" : "var(--panel)",
+                              color: mine ? "#fff" : "var(--ink-strong)",
+                              padding: "10px 14px", lineHeight: 1.5, fontSize: 14,
+                              border: mine ? "none" : "1px solid var(--line)",
+                            }}>
+                              <p>{msg.body}</p>
+                              <p style={{ opacity: 0.6, fontSize: 10, marginTop: 4, textAlign: "right" }}>{timeAgo(msg.created_at)}</p>
+                            </div>
+                          </div>
+                        );
+                      })}
+                      <div ref={bottomRef} />
+                    </div>
+
+                    {/* Message input */}
+                    <div style={{ padding: "10px 12px", borderTop: "1px solid var(--line)", display: "flex", gap: 8 }}>
+                      <input
+                        value={msgText}
+                        onChange={e => setMsgText(e.target.value)}
+                        onKeyDown={e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); void sendMessage(); } }}
+                        placeholder="Share a target, mock score, or doubt…"
+                        style={{
+                          flex: 1, border: "1px solid var(--line)", borderRadius: 14,
+                          padding: "11px 14px", background: "var(--panel)", color: "var(--ink-strong)", fontSize: 14,
+                        }}
+                      />
+                      <button onClick={sendMessage} style={{
+                        border: "none", borderRadius: 14, padding: "0 18px",
+                        background: "var(--accent)", color: "#fff", fontWeight: 900, cursor: "pointer", fontSize: 18,
+                      }}>↑</button>
+                    </div>
+                  </>
+                );
+              })() : (
+                <div style={{ flex: 1, display: "grid", placeItems: "center", textAlign: "center", padding: 32 }}>
                   <div>
+                    <p style={{ fontSize: 48, marginBottom: 12 }}>💬</p>
                     <h2 style={{ fontFamily: "var(--font-display)", color: "var(--ink-strong)", marginBottom: 8 }}>No chat selected</h2>
-                    <p style={{ color: "var(--muted)" }}>Private chat opens only after a request is accepted.</p>
+                    <p style={{ color: "var(--muted)", fontSize: 13 }}>Accept a request to open a private chat.</p>
                   </div>
                 </div>
               )}
@@ -981,367 +1232,100 @@ export default function PartnerPage() {
           </div>
         )}
 
+        {/* ════════════════════════ PROFILE ═════════════════════════ */}
         {tab === "profile" && (
-          <section style={{ ...card, padding: 18 }}>
-            <div style={{ display: "flex", justifyContent: "space-between", gap: 12, alignItems: "flex-start", marginBottom: 16 }}>
-              <div>
-                <h2 style={{ fontFamily: "var(--font-display)", color: "var(--ink-strong)", fontSize: 24 }}>Your matching profile</h2>
-                <p style={{ color: "var(--muted)", fontSize: 13, lineHeight: 1.6 }}>The better this is, the better the partner recommendations become.</p>
+          <div style={{ maxWidth: 640, margin: "0 auto" }}>
+            {!myProfile && (
+              <div style={{
+                background: "linear-gradient(135deg, rgba(192,96,16,0.06), rgba(255,255,255,0))",
+                border: "1px solid var(--accent-border)", borderRadius: 18, padding: "16px 18px", marginBottom: 24,
+              }}>
+                <p style={{ fontFamily: "var(--font-display)", fontSize: 18, fontWeight: 700, color: "var(--ink-strong)", marginBottom: 6 }}>
+                  Welcome to Study Partner 👋
+                </p>
+                <p style={{ fontSize: 13, color: "var(--ink-soft)", lineHeight: 1.65 }}>
+                  Fill in your profile below. This is what other aspirants see before sending a request. Be honest — better profiles attract better partners.
+                </p>
               </div>
-              <div style={{ ...chip(true), cursor: "default" }}>{form.seriousness_score}/100 serious</div>
+            )}
+
+            <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
+
+              {/* Basics */}
+              <section style={{ border: "1px solid var(--line)", borderRadius: 20, padding: "18px 16px", background: "var(--card)" }}>
+                <h3 style={{ fontFamily: "var(--font-display)", fontSize: 17, color: "var(--ink-strong)", marginBottom: 14 }}>📚 Basics</h3>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 12 }}>
+                  <SelectField label="Exam target"  value={form.exam_target}  values={EXAMS}     onChange={v => setForm({ ...form, exam_target: v })} />
+                  <SelectField label="Prep stage"   value={form.stage}        values={STAGES}    onChange={v => setForm({ ...form, stage: v })} />
+                  <SelectField label="District"     value={form.district}     values={DISTRICTS} onChange={v => setForm({ ...form, district: v })} />
+                  <SelectField label="Language"     value={form.language}     values={LANGUAGES} onChange={v => setForm({ ...form, language: v })} />
+                </div>
+              </section>
+
+              {/* Study habits */}
+              <section style={{ border: "1px solid var(--line)", borderRadius: 20, padding: "18px 16px", background: "var(--card)" }}>
+                <h3 style={{ fontFamily: "var(--font-display)", fontSize: 17, color: "var(--ink-strong)", marginBottom: 14 }}>⏰ Study Habits</h3>
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 12, marginBottom: 14 }}>
+                  <SelectField label="Daily hours" value={form.daily_hours} values={HOURS} onChange={v => setForm({ ...form, daily_hours: v })} />
+                  <SelectField label="Study mode"  value={form.study_mode}  values={MODES} onChange={v => setForm({ ...form, study_mode: v })} />
+                </div>
+                <MultiField label="Available slots" values={SLOTS} selected={form.slots} onToggle={v => toggleArr("slots", v)} />
+              </section>
+
+              {/* Subjects */}
+              <section style={{ border: "1px solid var(--line)", borderRadius: 20, padding: "18px 16px", background: "var(--card)" }}>
+                <h3 style={{ fontFamily: "var(--font-display)", fontSize: 17, color: "var(--ink-strong)", marginBottom: 14 }}>🎯 Subjects</h3>
+                <MultiField label="Working on (weak)" values={SUBJECTS} selected={form.weak_subjects}   onToggle={v => toggleArr("weak_subjects", v)} />
+                <div style={{ marginTop: 14 }}>
+                  <MultiField label="Can help others (strong)" values={SUBJECTS} selected={form.strong_subjects} onToggle={v => toggleArr("strong_subjects", v)} />
+                </div>
+              </section>
+
+              {/* About */}
+              <section style={{ border: "1px solid var(--line)", borderRadius: 20, padding: "18px 16px", background: "var(--card)" }}>
+                <h3 style={{ fontFamily: "var(--font-display)", fontSize: 17, color: "var(--ink-strong)", marginBottom: 14 }}>🙋 About you</h3>
+                <div style={{ marginBottom: 14 }}>
+                  <SelectField label="Partner preference" value={form.partner_gender_preference} values={GENDER_PREFS} onChange={v => setForm({ ...form, partner_gender_preference: v })} />
+                </div>
+                <label style={{ display: "block" }}>
+                  <span style={{ fontSize: 11, fontWeight: 800, color: "var(--muted)", letterSpacing: "0.1em", textTransform: "uppercase" }}>Short bio</span>
+                  <textarea
+                    value={form.bio}
+                    onChange={e => setForm({ ...form, bio: e.target.value })}
+                    maxLength={220}
+                    rows={3}
+                    placeholder="What kind of partner are you looking for? What's your current focus?"
+                    style={{
+                      display: "block", width: "100%", marginTop: 8,
+                      border: "1px solid var(--line)", borderRadius: 14, padding: "12px 13px",
+                      background: "var(--panel)", color: "var(--ink-strong)", resize: "vertical",
+                      fontSize: 14, lineHeight: 1.55,
+                    }}
+                  />
+                  <p style={{ fontSize: 11, color: "var(--muted)", marginTop: 5, textAlign: "right" }}>{form.bio.length}/220</p>
+                </label>
+              </section>
+
+              <button onClick={saveProfile} disabled={saving} style={{
+                width: "100%", border: "none", borderRadius: 18, padding: "16px 20px",
+                background: "var(--accent)", color: "#fff", fontWeight: 900,
+                fontFamily: "var(--font-display)", cursor: saving ? "wait" : "pointer", fontSize: 17,
+                letterSpacing: "-0.01em",
+              }}>
+                {saving ? "Saving…" : myProfile ? "Update profile →" : "Create profile & start matching →"}
+              </button>
             </div>
-
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 12 }}>
-              <SelectField label="Exam" value={form.exam_target} values={EXAMS} onChange={value => setForm({ ...form, exam_target: value })} />
-              <SelectField label="Stage" value={form.stage} values={STAGES} onChange={value => setForm({ ...form, stage: value })} />
-              <SelectField label="District" value={form.district} values={DISTRICTS} onChange={value => setForm({ ...form, district: value })} />
-              <SelectField label="Language" value={form.language} values={LANGUAGES} onChange={value => setForm({ ...form, language: value })} />
-              <SelectField label="Daily hours" value={form.daily_hours} values={HOURS} onChange={value => setForm({ ...form, daily_hours: value })} />
-              <SelectField label="Study mode" value={form.study_mode} values={MODES} onChange={value => setForm({ ...form, study_mode: value })} />
-              <SelectField label="Your preference" value={form.partner_gender_preference} values={GENDER_PREFS} onChange={value => setForm({ ...form, partner_gender_preference: value })} />
-            </div>
-
-            <MultiField label="Available slots" values={SLOTS} selected={form.slots} onToggle={value => toggleArray("slots", value)} />
-            <MultiField label="Weak subjects" values={SUBJECTS} selected={form.weak_subjects} onToggle={value => toggleArray("weak_subjects", value)} />
-            <MultiField label="Strong subjects" values={SUBJECTS} selected={form.strong_subjects} onToggle={value => toggleArray("strong_subjects", value)} />
-
-            <label style={{ display: "block", marginTop: 16 }}>
-              <span style={{ fontSize: 11, fontWeight: 900, color: "var(--muted)", letterSpacing: "0.12em", textTransform: "uppercase" }}>Short bio</span>
-              <textarea
-                value={form.bio}
-                onChange={event => setForm({ ...form, bio: event.target.value })}
-                maxLength={220}
-                rows={3}
-                style={{
-                  width: "100%", boxSizing: "border-box", marginTop: 7, border: "1px solid var(--line)",
-                  borderRadius: 14, padding: 13, background: "var(--panel)", color: "var(--ink-strong)", resize: "vertical",
-                }}
-              />
-            </label>
-
-            <label style={{ display: "block", marginTop: 16 }}>
-              <span style={{ fontSize: 11, fontWeight: 900, color: "var(--muted)", letterSpacing: "0.12em", textTransform: "uppercase" }}>Seriousness score</span>
-              <input
-                type="range"
-                min={30}
-                max={100}
-                value={form.seriousness_score}
-                onChange={event => setForm({ ...form, seriousness_score: Number(event.target.value) })}
-                style={{ width: "100%", marginTop: 8 }}
-              />
-            </label>
-
-            <button onClick={saveProfile} disabled={saving} style={{
-              marginTop: 18, border: "none", borderRadius: 15, padding: "14px 18px",
-              background: "var(--accent)", color: "#fff", fontWeight: 900,
-              fontFamily: "var(--font-display)", cursor: saving ? "wait" : "pointer",
-            }}>
-              {saving ? "Saving..." : myProfile ? "Update match profile" : "Create match profile"}
-            </button>
-          </section>
+          </div>
         )}
-      </section>
+      </div>
 
       <style>{`
-        @media (max-width: 760px) {
-          .partner-chat-shell,
-          main [style*="grid-template-columns: 340px minmax(0, 1fr)"] {
-            grid-template-columns: 1fr !important;
-          }
-          .partner-chat-list {
-            height: auto !important;
-            max-height: 280px !important;
-          }
-          .partner-chat-panel {
-            height: calc(100dvh - 220px) !important;
-            min-height: 520px !important;
-          }
-          main [style*="grid-template-columns: 1.4fr 0.8fr"] {
-            grid-template-columns: 1fr !important;
-          }
-        }
-        @media (max-width: 520px) {
-          .partner-chat-panel {
-            height: calc(100dvh - 190px) !important;
-            min-height: 460px !important;
-          }
+        @media (max-width: 700px) {
+          .partner-chat-shell { grid-template-columns: 1fr !important; }
+          .partner-chat-list  { height: auto !important; max-height: 200px !important; overflow-y: auto !important; }
+          .partner-chat-panel { height: calc(100dvh - 270px) !important; min-height: 480px !important; }
         }
       `}</style>
     </main>
-  );
-}
-
-function DailyPact({
-  partnerName,
-  targetText,
-  setTargetText,
-  focusMinutes,
-  setFocusMinutes,
-  mood,
-  setMood,
-  myCheckin,
-  partnerCheckin,
-  checkins,
-  pairFocusMinutes,
-  pactComplete,
-  onSave,
-  onDone,
-  actionPending,
-}: {
-  partnerName: string;
-  targetText: string;
-  setTargetText: (value: string) => void;
-  focusMinutes: number;
-  setFocusMinutes: (value: number) => void;
-  mood: string;
-  setMood: (value: string) => void;
-  myCheckin: PartnerCheckin | null;
-  partnerCheckin: PartnerCheckin | null;
-  checkins: PartnerCheckin[];
-  pairFocusMinutes: number;
-  pactComplete: boolean;
-  onSave: () => void;
-  onDone: () => void;
-  actionPending: string | null;
-}) {
-  const lastSevenDates = Array.from({ length: 7 }, (_, index) =>
-    new Date(Date.now() - index * 86400000).toISOString().slice(0, 10)
-  ).reverse();
-  const perfectDays = lastSevenDates.filter(date => {
-    const rows = checkins.filter(row => row.checkin_date === date);
-    return rows.length >= 2 && rows.every(row => row.completed);
-  }).length;
-
-  return (
-    <section style={{
-      margin: 12,
-      padding: 14,
-      borderRadius: 22,
-      background: "linear-gradient(135deg, #fff7ea, #ffffff 54%, #eefaf1)",
-      border: "1px solid rgba(184,97,23,0.16)",
-      boxShadow: "inset 0 1px 0 rgba(255,255,255,0.85)",
-    }}>
-      <div style={{ display: "flex", justifyContent: "space-between", gap: 12, alignItems: "flex-start", marginBottom: 12 }}>
-        <div>
-          <p style={{ fontFamily: "monospace", fontSize: 10, letterSpacing: "0.18em", color: "var(--accent)", textTransform: "uppercase", marginBottom: 4 }}>
-            Today&apos;s pact
-          </p>
-          <h3 style={{ fontFamily: "var(--font-display)", color: "var(--ink-strong)", fontSize: 20, letterSpacing: "-0.03em" }}>
-            Finish one honest block together
-          </h3>
-        </div>
-        <div style={{
-          borderRadius: 16,
-          padding: "8px 10px",
-          background: pactComplete ? "rgba(22,163,74,0.12)" : "rgba(184,97,23,0.10)",
-          color: pactComplete ? "#15803d" : "var(--accent)",
-          fontWeight: 900,
-          fontSize: 12,
-          textAlign: "right",
-          minWidth: 92,
-        }}>
-          {pactComplete ? "Pact closed" : "Pact open"}
-          <p style={{ fontSize: 10, opacity: 0.75, marginTop: 2 }}>{perfectDays}/7 perfect days</p>
-        </div>
-      </div>
-
-      <div style={{ display: "grid", gridTemplateColumns: "1.4fr 0.8fr", gap: 10 }}>
-        <input
-          value={targetText}
-          onChange={event => setTargetText(event.target.value)}
-          placeholder="Example: Revise Polity articles + 25 CA facts"
-          maxLength={220}
-          style={{
-            minWidth: 0,
-            border: "1px solid rgba(120,80,30,0.14)",
-            borderRadius: 14,
-            padding: "12px 13px",
-            background: "rgba(255,255,255,0.82)",
-            color: "var(--ink-strong)",
-            fontWeight: 700,
-          }}
-        />
-        <input
-          type="number"
-          value={focusMinutes}
-          min={15}
-          max={600}
-          onChange={event => setFocusMinutes(Number(event.target.value))}
-          style={{
-            minWidth: 0,
-            border: "1px solid rgba(120,80,30,0.14)",
-            borderRadius: 14,
-            padding: "12px 13px",
-            background: "rgba(255,255,255,0.82)",
-            color: "var(--ink-strong)",
-            fontWeight: 800,
-          }}
-        />
-      </div>
-
-      <div style={{ display: "flex", gap: 7, flexWrap: "wrap", marginTop: 10 }}>
-        {["locked in", "steady", "tired but showing up", "test mode"].map(item => (
-          <button key={item} type="button" onClick={() => setMood(item)} style={chip(mood === item)}>
-            {item}
-          </button>
-        ))}
-      </div>
-
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: 9, marginTop: 12 }}>
-        <StatusTile
-          title="You"
-          subtitle={myCheckin?.target || "Target not locked"}
-          strong={myCheckin?.completed ? "Done" : myCheckin ? `${myCheckin.focus_minutes} min locked` : "Waiting"}
-          good={Boolean(myCheckin?.completed)}
-        />
-        <StatusTile
-          title={partnerName}
-          subtitle={partnerCheckin?.target || "No target yet"}
-          strong={partnerCheckin?.completed ? "Done" : partnerCheckin ? `${partnerCheckin.focus_minutes} min locked` : "Waiting"}
-          good={Boolean(partnerCheckin?.completed)}
-        />
-        <StatusTile
-          title="Pair focus"
-          subtitle="Total planned focus today"
-          strong={`${Math.floor(pairFocusMinutes / 60)}h ${pairFocusMinutes % 60}m`}
-          good={pairFocusMinutes >= 120}
-        />
-      </div>
-
-      <div style={{ display: "flex", gap: 8, marginTop: 12 }}>
-        <button type="button" disabled={actionPending === "lock"} onClick={onSave} style={{
-          flex: 1,
-          border: "1px solid rgba(184,97,23,0.26)",
-          background: "rgba(184,97,23,0.08)",
-          color: "var(--accent)",
-          borderRadius: 14,
-          padding: "11px 12px",
-          fontWeight: 900,
-          cursor: "pointer",
-          opacity: actionPending === "lock" ? 0.7 : 1,
-        }}>
-          {actionPending === "lock" ? "Locking..." : "Lock target"}
-        </button>
-        <button type="button" disabled={actionPending === "done"} onClick={onDone} style={{
-          flex: 1,
-          border: "none",
-          background: "linear-gradient(135deg, #15803d, #16a34a)",
-          color: "#fff",
-          borderRadius: 14,
-          padding: "11px 12px",
-          fontWeight: 900,
-          cursor: "pointer",
-          boxShadow: "0 10px 24px rgba(22,163,74,0.22)",
-          opacity: actionPending === "done" ? 0.7 : 1,
-        }}>
-          {actionPending === "done" ? "Marking..." : "Mark done"}
-        </button>
-      </div>
-    </section>
-  );
-}
-
-function StatusTile({ title, subtitle, strong, good }: {
-  title: string;
-  subtitle: string;
-  strong: string;
-  good: boolean;
-}) {
-  return (
-    <div style={{
-      borderRadius: 16,
-      padding: 11,
-      background: good ? "rgba(22,163,74,0.08)" : "rgba(255,255,255,0.72)",
-      border: good ? "1px solid rgba(22,163,74,0.18)" : "1px solid rgba(120,80,30,0.10)",
-    }}>
-      <p style={{ color: "var(--muted)", fontSize: 11, fontWeight: 900, letterSpacing: "0.08em", textTransform: "uppercase" }}>{title}</p>
-      <p style={{ color: good ? "#15803d" : "var(--ink-strong)", fontWeight: 900, marginTop: 4 }}>{strong}</p>
-      <p style={{ color: "var(--ink-soft)", fontSize: 12, lineHeight: 1.45, marginTop: 4 }}>{subtitle}</p>
-    </div>
-  );
-}
-
-function SelectField({ label, value, values, onChange }: {
-  label: string;
-  value: string;
-  values: string[];
-  onChange: (value: string) => void;
-}) {
-  return (
-    <label>
-      <span style={{ fontSize: 11, fontWeight: 900, color: "var(--muted)", letterSpacing: "0.12em", textTransform: "uppercase" }}>{label}</span>
-      <select
-        value={value}
-        onChange={event => onChange(event.target.value)}
-        style={{
-          width: "100%", marginTop: 7, border: "1px solid var(--line)", borderRadius: 13,
-          padding: "11px 12px", background: "var(--panel)", color: "var(--ink-strong)", fontWeight: 700,
-        }}
-      >
-        {values.map(item => <option key={item} value={item}>{item}</option>)}
-      </select>
-    </label>
-  );
-}
-
-function MultiField({ label, values, selected, onToggle }: {
-  label: string;
-  values: string[];
-  selected: string[];
-  onToggle: (value: string) => void;
-}) {
-  return (
-    <div style={{ marginTop: 16 }}>
-      <p style={{ fontSize: 11, fontWeight: 900, color: "var(--muted)", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 7 }}>{label}</p>
-      <div style={{ display: "flex", gap: 7, flexWrap: "wrap" }}>
-        {values.map(item => (
-          <button key={item} onClick={() => onToggle(item)} type="button" style={chip(selected.includes(item))}>
-            {item}
-          </button>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function RequestList({ title, empty, rows, userId, profileMap, onAccept, onReject, onCancel }: {
-  title: string;
-  empty: string;
-  rows: PartnerConnection[];
-  userId: string;
-  profileMap: Map<string, PartnerProfile>;
-  onAccept?: (id: string) => void;
-  onReject?: (id: string) => void;
-  onCancel?: (id: string) => void;
-}) {
-  return (
-    <section style={{ ...card, padding: 16 }}>
-      <h2 style={{ fontFamily: "var(--font-display)", color: "var(--ink-strong)", marginBottom: 12 }}>{title}</h2>
-      {rows.length === 0 && <p style={{ color: "var(--muted)", fontSize: 13 }}>{empty}</p>}
-      {rows.map(row => {
-        const otherId = row.requester_id === userId ? row.receiver_id : row.requester_id;
-        const profile = profileMap.get(otherId);
-        return (
-          <article key={row.id} style={{ border: "1px solid var(--line)", borderRadius: 16, padding: 13, marginBottom: 10 }}>
-            <div style={{ display: "flex", justifyContent: "space-between", gap: 10 }}>
-              <div>
-                <b style={{ color: "var(--ink-strong)" }}>{profile?.display_name ?? "Aspirant"}</b>
-                <p style={{ color: "var(--muted)", fontSize: 12, marginTop: 3 }}>{profile?.exam_target} · {profile?.stage}</p>
-              </div>
-              <div style={{ textAlign: "right" }}>
-                <span style={{ ...chip(true), cursor: "default", padding: "4px 8px", fontSize: 10 }}>{requestFocusOf(row)}</span>
-                <p style={{ color: "var(--muted)", fontSize: 11, marginTop: 5 }}>{timeAgo(row.created_at)}</p>
-              </div>
-            </div>
-            <p style={{ color: "var(--ink-soft)", fontSize: 13, lineHeight: 1.55, marginTop: 9 }}>{row.opener}</p>
-            <div style={{ display: "flex", gap: 8, marginTop: 11 }}>
-              {onAccept && <button onClick={() => onAccept(row.id)} style={{ ...chip(true), borderRadius: 12 }}>Accept</button>}
-              {onReject && <button onClick={() => onReject(row.id)} style={{ ...chip(false), borderRadius: 12 }}>Reject</button>}
-              {onCancel && <button onClick={() => onCancel(row.id)} style={{ ...chip(false), borderRadius: 12 }}>Cancel</button>}
-            </div>
-          </article>
-        );
-      })}
-    </section>
   );
 }
