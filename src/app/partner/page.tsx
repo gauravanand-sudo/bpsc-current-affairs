@@ -243,8 +243,23 @@ export default function PartnerPage() {
   const [notice,  setNotice]  = useState("");
 
   const bottomRef             = useRef<HTMLDivElement>(null);
+  const msgScrollRef          = useRef<HTMLDivElement>(null);
   const activeConnIdRef       = useRef<string | null>(null);
   const noticeTimerRef        = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Only auto-scroll when user is already within 120px of the bottom
+  function scrollToBottomIfNear() {
+    const el = msgScrollRef.current;
+    if (!el) return;
+    const nearBottom = el.scrollHeight - el.scrollTop - el.clientHeight < 120;
+    if (nearBottom) el.scrollTop = el.scrollHeight;
+  }
+
+  // Always scroll — used when the user themselves sends a message
+  function scrollToBottom() {
+    const el = msgScrollRef.current;
+    if (el) el.scrollTop = el.scrollHeight;
+  }
 
   const [form, setForm] = useState({
     exam_target:             "72nd BPSC",
@@ -327,7 +342,7 @@ export default function PartnerPage() {
         const next = payload.new as PartnerMessage;
         if (next.connection_id === activeConnIdRef.current) {
           setMessages(prev => prev.some(m => m.id === next.id) ? prev : [...prev, next]);
-          setTimeout(() => bottomRef.current?.scrollIntoView({ behavior: "smooth" }), 40);
+          setTimeout(() => scrollToBottomIfNear(), 40);
         }
       })
       .on("postgres_changes", { event: "*", schema: "public", table: "study_partner_checkins" }, payload => {
@@ -341,7 +356,7 @@ export default function PartnerPage() {
 
   useEffect(() => {
     if (activeConnection?.id) {
-      void loadMessages(activeConnection.id);
+      void loadMessages(activeConnection.id, true);  // initial load → force-scroll
       void loadCheckins(activeConnection.id);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -380,13 +395,14 @@ export default function PartnerPage() {
     }
   }
 
-  async function loadMessages(connectionId: string) {
+  async function loadMessages(connectionId: string, forceScroll = false) {
     const supabase = getSupabaseBrowserClient();
     const { data } = await (supabase as any)
       .from("study_partner_messages").select("*")
       .eq("connection_id", connectionId).order("created_at", { ascending: true }).limit(100);
     setMessages((data ?? []) as PartnerMessage[]);
-    setTimeout(() => bottomRef.current?.scrollIntoView({ behavior: "smooth" }), 60);
+    // On initial load force-scroll; on polling only scroll if already at bottom
+    setTimeout(() => forceScroll ? scrollToBottom() : scrollToBottomIfNear(), 60);
   }
 
   async function loadCheckins(connectionId: string) {
@@ -502,11 +518,11 @@ export default function PartnerPage() {
       body, created_at: new Date().toISOString(), read_at: null,
     };
     setMessages(prev => [...prev, opt]);
-    setTimeout(() => bottomRef.current?.scrollIntoView({ behavior: "smooth" }), 40);
+    setTimeout(() => scrollToBottom(), 40);
     const { error } = await (getSupabaseBrowserClient() as any).from("study_partner_messages")
       .insert({ connection_id: activeConnection.id, sender_id: userId, body });
     if (error) { showNotice(error.message); setMessages(prev => prev.filter(m => m.id !== opt.id)); return; }
-    await loadMessages(activeConnection.id);
+    await loadMessages(activeConnection.id, true);
   }
 
   async function saveCheckin(completed = false) {
@@ -1168,7 +1184,7 @@ export default function PartnerPage() {
                     )}
 
                     {/* Messages list */}
-                    <div style={{ flex: 1, minHeight: 0, overflowY: "auto", padding: "14px 16px", display: "flex", flexDirection: "column", gap: 8 }}>
+                    <div ref={msgScrollRef} style={{ flex: 1, minHeight: 0, overflowY: "auto", padding: "14px 16px", display: "flex", flexDirection: "column", gap: 8 }}>
                       {messages.length === 0 ? (
                         <div style={{ flex: 1, display: "grid", placeItems: "center", textAlign: "center", padding: "32px 16px" }}>
                           <div>
@@ -1197,7 +1213,6 @@ export default function PartnerPage() {
                           </div>
                         );
                       })}
-                      <div ref={bottomRef} />
                     </div>
 
                     {/* Message input */}
