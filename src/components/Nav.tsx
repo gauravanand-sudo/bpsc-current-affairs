@@ -46,6 +46,7 @@ export default function Nav() {
     { href: "/ca", label: "Study", icon: "📖" },
     { href: "/quizzes", label: "Quiz", icon: "🎯" },
     { href: "/ask", label: "Ask AI", icon: "🧠" },
+    { href: "/partner", label: "Partner", icon: "🤝" },
     { href: "/leaderboard", label: "Rank", icon: "🏆" },
   ];
 
@@ -75,7 +76,7 @@ export default function Nav() {
 
         {/* Desktop nav links — hidden on mobile */}
         <div className="desktop-nav" style={{ display: "flex", alignItems: "center", gap: 4 }}>
-          {tabs.slice(0, 5).map(({ href, label }) => (
+          {tabs.map(({ href, label }) => (
             <Link key={href} href={href} style={{
               fontSize: 13, fontWeight: isActive(href) ? 700 : 600,
               color: isActive(href) ? "var(--accent)" : "var(--ink-soft)",

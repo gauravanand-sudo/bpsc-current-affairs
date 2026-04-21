@@ -11,14 +11,16 @@ export default function SupportButton() {
 
   useEffect(() => {
     const supabase = getSupabaseBrowserClient();
-    const cutoff = new Date(Date.now() - 86400000).toISOString();
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    (supabase as any)
-      .from("study_partner_requests")
-      .select("id", { count: "exact", head: true })
-      .gte("created_at", cutoff)
-      .then(({ count }: { count: number | null }) => {
-        if (count) setSeekers(count);
+    supabase.auth.getSession().then(({ data }) => {
+      if (!data.session) return;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (supabase as any)
+        .from("study_partner_profiles")
+        .select("user_id", { count: "exact", head: true })
+        .eq("is_active", true)
+        .then(({ count }: { count: number | null }) => {
+          if (count) setSeekers(count);
+        });
       });
   }, []);
 
