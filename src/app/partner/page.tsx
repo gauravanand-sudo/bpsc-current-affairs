@@ -182,6 +182,7 @@ export default function PartnerPage() {
   const [saving, setSaving] = useState(false);
   const [notice, setNotice] = useState("");
   const bottomRef = useRef<HTMLDivElement>(null);
+  const activeConnectionIdRef = useRef<string | null>(null);
 
   const [form, setForm] = useState({
     exam_target: "72nd BPSC",
@@ -219,9 +220,15 @@ export default function PartnerPage() {
   const partnerCheckin = todaysCheckins.find(c => c.user_id === activePartnerId) ?? null;
   const pactComplete = Boolean(myCheckin?.completed && partnerCheckin?.completed);
   const pairFocusMinutes = todaysCheckins.reduce((sum, item) => sum + item.focus_minutes, 0);
+  const activeChatCount = accepted.length;
+  const attentionCount = incoming.length + activeChatCount;
 
   const candidates = useMemo(() => {
-    const blocked = new Set(connections.flatMap(c => [c.requester_id, c.receiver_id]));
+    const blocked = new Set(
+      connections
+        .filter(c => c.status === "pending" || c.status === "accepted")
+        .flatMap(c => [c.requester_id, c.receiver_id])
+    );
     return profiles
       .filter(p => p.user_id !== userId)
       .filter(p => !blocked.has(p.user_id))
@@ -247,6 +254,16 @@ export default function PartnerPage() {
   }, []);
 
   useEffect(() => {
+    activeConnectionIdRef.current = activeConnection?.id ?? null;
+  }, [activeConnection?.id]);
+
+  useEffect(() => {
+    if (!activeConnectionId && accepted.length > 0) {
+      setActiveConnectionId(accepted[0].id);
+    }
+  }, [accepted, activeConnectionId]);
+
+  useEffect(() => {
     if (!session) return;
     void loadAll();
 
@@ -257,20 +274,20 @@ export default function PartnerPage() {
       .on("postgres_changes", { event: "*", schema: "public", table: "study_partner_connections" }, () => void loadAll())
       .on("postgres_changes", { event: "INSERT", schema: "public", table: "study_partner_messages" }, payload => {
         const next = payload.new as PartnerMessage;
-        if (next.connection_id === activeConnectionId) {
-          setMessages(prev => [...prev, next]);
+        if (next.connection_id === activeConnectionIdRef.current) {
+          setMessages(prev => prev.some(item => item.id === next.id) ? prev : [...prev, next]);
           setTimeout(() => bottomRef.current?.scrollIntoView({ behavior: "smooth" }), 40);
         }
       })
       .on("postgres_changes", { event: "*", schema: "public", table: "study_partner_checkins" }, payload => {
         const next = payload.new as PartnerCheckin;
-        if (next?.connection_id === activeConnectionId) void loadCheckins(next.connection_id);
+        if (next?.connection_id === activeConnectionIdRef.current) void loadCheckins(next.connection_id);
       })
       .subscribe();
 
     return () => { void supabase.removeChannel(channel); };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [session?.user.id, activeConnectionId]);
+  }, [session?.user.id]);
 
   useEffect(() => {
     if (activeConnection?.id) {
@@ -413,7 +430,11 @@ export default function PartnerPage() {
       opener: `Hi ${partner?.display_name ?? "there"}, let's do a 7-day BPSC accountability sprint.`,
     });
     if (error) {
-      setNotice(error.message.includes("duplicate") ? "You already have a request with this student." : error.message);
+      setNotice(
+        error.message.includes("duplicate")
+          ? "You already have an active request or chat with this student."
+          : error.message
+      );
       return;
     }
     setNotice("Request sent. Chat opens after they accept.");
@@ -438,12 +459,28 @@ export default function PartnerPage() {
     if (!session || !activeConnection || !messageText.trim()) return;
     const body = messageText.trim().slice(0, 600);
     setMessageText("");
+    const optimistic: PartnerMessage = {
+      id: -Date.now(),
+      connection_id: activeConnection.id,
+      sender_id: session.user.id,
+      body,
+      created_at: new Date().toISOString(),
+      read_at: null,
+    };
+    setMessages(prev => [...prev, optimistic]);
+    setTimeout(() => bottomRef.current?.scrollIntoView({ behavior: "smooth" }), 40);
     const supabase = getSupabaseBrowserClient();
-    await (supabase as any).from("study_partner_messages").insert({
+    const { error } = await (supabase as any).from("study_partner_messages").insert({
       connection_id: activeConnection.id,
       sender_id: session.user.id,
       body,
     });
+    if (error) {
+      setNotice(error.message);
+      setMessages(prev => prev.filter(item => item.id !== optimistic.id));
+      return;
+    }
+    await loadMessages(activeConnection.id);
   }
 
   async function saveCheckin(completed = false) {
@@ -559,7 +596,7 @@ export default function PartnerPage() {
           {[
             ["discover", `Discover ${candidates.length}`],
             ["requests", `Requests ${incoming.length + outgoing.length}`],
-            ["chat", `1:1 Chat ${accepted.length}`],
+            ["chat", `Messages ${attentionCount}`],
             ["profile", myProfile ? "My Match Profile" : "Create Profile"],
           ].map(([id, label]) => (
             <button key={id} onClick={() => setTab(id as typeof tab)} style={{
@@ -679,34 +716,62 @@ export default function PartnerPage() {
         )}
 
         {tab === "chat" && (
-          <div style={{ display: "grid", gridTemplateColumns: "minmax(220px, 320px) 1fr", gap: 14 }}>
-            <div style={{ ...card, padding: 12, minHeight: 420 }}>
-              <h2 style={{ fontFamily: "var(--font-display)", color: "var(--ink-strong)", margin: "6px 6px 12px" }}>Accepted partners</h2>
+          <div style={{ display: "grid", gridTemplateColumns: "340px minmax(0, 1fr)", gap: 14, alignItems: "stretch" }}>
+            <div style={{ ...glassCard, padding: 12, height: "min(78vh, 760px)", overflowY: "auto" }}>
+              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10, margin: "6px 6px 12px" }}>
+                <div>
+                  <p style={{ fontFamily: "monospace", fontSize: 10, color: "var(--accent)", letterSpacing: "0.16em", textTransform: "uppercase" }}>
+                    Inbox
+                  </p>
+                  <h2 style={{ fontFamily: "var(--font-display)", color: "var(--ink-strong)", fontSize: 22 }}>Private chats</h2>
+                </div>
+                <span style={{ ...chip(true), cursor: "default" }}>{activeChatCount}</span>
+              </div>
               {accepted.length === 0 && <p style={{ color: "var(--muted)", fontSize: 13, padding: 8 }}>No private chats yet. Accept or send a request first.</p>}
               {accepted.map(conn => {
                 const other = profileMap.get(otherUser(conn));
                 const active = activeConnection?.id === conn.id;
+                const threadCheckins = checkins.filter(item => item.connection_id === conn.id && item.checkin_date === todayKey());
+                const threadDone = threadCheckins.length >= 2 && threadCheckins.every(item => item.completed);
                 return (
                   <button key={conn.id} onClick={() => setActiveConnectionId(conn.id)} style={{
-                    width: "100%", textAlign: "left", border: active ? "1.5px solid var(--accent)" : "1px solid transparent",
-                    background: active ? "var(--accent-soft)" : "transparent", borderRadius: 14,
-                    padding: 11, cursor: "pointer", marginBottom: 6,
+                    width: "100%", textAlign: "left", border: active ? "1.5px solid var(--accent)" : "1px solid rgba(120,80,30,0.10)",
+                    background: active ? "linear-gradient(135deg, rgba(184,97,23,0.13), rgba(255,255,255,0.92))" : "rgba(255,255,255,0.58)", borderRadius: 18,
+                    padding: 13, cursor: "pointer", marginBottom: 8,
+                    boxShadow: active ? "0 12px 28px rgba(184,97,23,0.12)" : "none",
                   }}>
-                    <b style={{ color: "var(--ink-strong)" }}>{other?.display_name ?? "Partner"}</b>
-                    <p style={{ color: "var(--muted)", fontSize: 12, marginTop: 3 }}>{other?.study_mode ?? "1:1 chat"}</p>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8 }}>
+                      <b style={{ color: "var(--ink-strong)" }}>{other?.display_name ?? "Partner"}</b>
+                      <span style={{
+                        fontSize: 10,
+                        fontWeight: 900,
+                        color: threadDone ? "#15803d" : "var(--accent)",
+                        background: threadDone ? "rgba(22,163,74,0.10)" : "rgba(184,97,23,0.10)",
+                        borderRadius: 999,
+                        padding: "3px 7px",
+                      }}>
+                        {threadDone ? "done" : "active"}
+                      </span>
+                    </div>
+                    <p style={{ color: "var(--muted)", fontSize: 12, marginTop: 4, lineHeight: 1.45 }}>{other?.study_mode ?? "1:1 accountability"}</p>
                   </button>
                 );
               })}
             </div>
 
-            <div style={{ ...card, minHeight: 520, display: "flex", flexDirection: "column", overflow: "hidden" }}>
+            <div style={{ ...glassCard, height: "min(78vh, 760px)", minWidth: 0, display: "flex", flexDirection: "column", overflow: "hidden" }}>
               {activeConnection ? (
                 <>
-                  <div style={{ padding: "14px 16px", borderBottom: "1px solid var(--line)" }}>
-                    <h2 style={{ fontFamily: "var(--font-display)", color: "var(--ink-strong)", fontSize: 18 }}>
-                      {profileMap.get(otherUser(activeConnection))?.display_name ?? "Study Partner"}
-                    </h2>
-                    <p style={{ color: "var(--muted)", fontSize: 12 }}>Private 1:1 accountability chat</p>
+                  <div style={{ padding: "16px 18px", borderBottom: "1px solid rgba(120,80,30,0.12)", background: "rgba(255,255,255,0.58)" }}>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
+                      <div>
+                        <h2 style={{ fontFamily: "var(--font-display)", color: "var(--ink-strong)", fontSize: 22 }}>
+                          {profileMap.get(otherUser(activeConnection))?.display_name ?? "Study Partner"}
+                        </h2>
+                        <p style={{ color: "var(--muted)", fontSize: 12 }}>Separate private chat · daily pact · real accountability</p>
+                      </div>
+                      <span style={{ ...chip(pactComplete), cursor: "default" }}>{pactComplete ? "closed today" : "open today"}</span>
+                    </div>
                   </div>
                   <DailyPact
                     partnerName={profileMap.get(otherUser(activeConnection))?.display_name ?? "Partner"}
@@ -725,6 +790,12 @@ export default function PartnerPage() {
                     onDone={() => saveCheckin(true)}
                   />
                   <div style={{ flex: 1, overflowY: "auto", padding: 14, display: "flex", flexDirection: "column", gap: 10 }}>
+                    {messages.length === 0 && (
+                      <div style={{ textAlign: "center", padding: "28px 12px", color: "var(--muted)" }}>
+                        <p style={{ fontFamily: "var(--font-display)", color: "var(--ink-strong)", fontSize: 18, marginBottom: 6 }}>Start this private thread</p>
+                        <p style={{ fontSize: 13, lineHeight: 1.6 }}>Send today&apos;s target, a mock score, or one topic you both must finish before sleeping.</p>
+                      </div>
+                    )}
                     {messages.map(msg => {
                       const mine = msg.sender_id === userId;
                       return (
@@ -834,7 +905,14 @@ export default function PartnerPage() {
 
       <style>{`
         @media (max-width: 760px) {
-          main [style*="grid-template-columns: minmax(220px, 320px) 1fr"] {
+          main [style*="grid-template-columns: 340px minmax(0, 1fr)"] {
+            grid-template-columns: 1fr !important;
+          }
+          main [style*="height: min(78vh, 760px)"] {
+            height: auto !important;
+            max-height: none !important;
+          }
+          main [style*="grid-template-columns: 1.4fr 0.8fr"] {
             grid-template-columns: 1fr !important;
           }
         }

@@ -37,6 +37,13 @@ create table if not exists public.study_partner_connections (
   check (requester_id <> receiver_id)
 );
 
+create unique index if not exists study_partner_connections_unique_pair_idx
+  on public.study_partner_connections (
+    least(requester_id, receiver_id),
+    greatest(requester_id, receiver_id)
+  )
+  where status in ('pending', 'accepted');
+
 create table if not exists public.study_partner_messages (
   id bigint generated always as identity primary key,
   connection_id uuid not null references public.study_partner_connections(id) on delete cascade,
