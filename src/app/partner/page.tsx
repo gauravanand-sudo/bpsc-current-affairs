@@ -631,19 +631,31 @@ export default function PartnerPage() {
               <p style={{ fontFamily: "monospace", fontSize: 10, letterSpacing: "0.26em", color: "var(--accent)", textTransform: "uppercase" }}>
                 Study Partner
               </p>
-              <h1 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.15rem, 3.5vw, 1.55rem)", letterSpacing: "-0.02em", color: "var(--ink-strong)", lineHeight: 1.15 }}>
+              <h1 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.1rem, 3.5vw, 1.45rem)", letterSpacing: "-0.02em", color: "var(--ink-strong)", lineHeight: 1.15 }}>
                 Hey {firstName(session)} 👋
+                {accepted.length > 0 && <span style={{ fontSize: "0.7em", color: "#16a34a", marginLeft: 8 }}>● {accepted.length} active</span>}
               </h1>
             </div>
-            {candidates.length > 0 && (
-              <div style={{
-                background: "var(--accent-soft)", border: "1px solid var(--accent-border)",
-                borderRadius: 14, padding: "7px 12px", textAlign: "center",
-              }}>
-                <p style={{ fontFamily: "var(--font-display)", fontSize: 19, fontWeight: 700, color: "var(--accent)", lineHeight: 1 }}>{candidates.length}</p>
-                <p style={{ fontSize: 9, color: "var(--muted)", marginTop: 2, letterSpacing: "0.06em" }}>MATCHES</p>
-              </div>
-            )}
+            <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+              {incoming.length > 0 && (
+                <button onClick={() => setTab("requests")} style={{
+                  border: "none", borderRadius: 12, padding: "7px 12px",
+                  background: "rgba(22,163,74,0.12)", color: "#15803d", fontWeight: 800,
+                  fontSize: 12, cursor: "pointer",
+                }}>
+                  {incoming.length} request{incoming.length > 1 ? "s" : ""} waiting →
+                </button>
+              )}
+              {candidates.length > 0 && (
+                <div style={{
+                  background: "var(--accent-soft)", border: "1px solid var(--accent-border)",
+                  borderRadius: 14, padding: "7px 12px", textAlign: "center",
+                }}>
+                  <p style={{ fontFamily: "var(--font-display)", fontSize: 19, fontWeight: 700, color: "var(--accent)", lineHeight: 1 }}>{candidates.length}</p>
+                  <p style={{ fontSize: 9, color: "var(--muted)", marginTop: 2, letterSpacing: "0.06em" }}>MATCHES</p>
+                </div>
+              )}
+            </div>
           </div>
 
           {/* Tab row */}
@@ -691,39 +703,83 @@ export default function PartnerPage() {
         {/* ════════════════════════ DISCOVER ════════════════════════ */}
         {tab === "discover" && (
           <div>
-            {/* Create profile nudge */}
+
+            {/* How it works — show when no connections yet */}
+            {accepted.length === 0 && (
+              <div style={{
+                display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))",
+                gap: 10, marginBottom: 24,
+                background: "var(--card)", border: "1px solid var(--line)",
+                borderRadius: 20, padding: "18px 16px",
+              }}>
+                <div style={{ gridColumn: "1 / -1", marginBottom: 6 }}>
+                  <p style={{ fontFamily: "monospace", fontSize: 10, letterSpacing: "0.2em", color: "var(--accent)", textTransform: "uppercase" }}>How it works</p>
+                </div>
+                {[
+                  { step: "1", icon: "👤", title: "Build your profile", desc: "Set your exam, weak subjects and daily study slot so we match you well." },
+                  { step: "2", icon: "🤝", title: "Connect with a match", desc: "Pick a study topic and send a connection request to any aspirant below." },
+                  { step: "3", icon: "💬", title: "Chat opens instantly", desc: "Once they accept, your private chat and Daily Pact unlock immediately." },
+                ].map(s => (
+                  <div key={s.step} style={{ display: "flex", gap: 10, alignItems: "flex-start" }}>
+                    <div style={{
+                      width: 28, height: 28, borderRadius: "50%", flexShrink: 0, marginTop: 1,
+                      background: "var(--accent-soft)", color: "var(--accent)",
+                      display: "grid", placeItems: "center", fontWeight: 900, fontSize: 12,
+                    }}>{s.step}</div>
+                    <div>
+                      <p style={{ fontWeight: 700, fontSize: 13, color: "var(--ink-strong)", marginBottom: 3 }}>{s.title}</p>
+                      <p style={{ fontSize: 12, color: "var(--muted)", lineHeight: 1.5 }}>{s.desc}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* Create profile CTA */}
             {!myProfile && (
               <div style={{
-                border: "1.5px dashed var(--accent-border)", borderRadius: 20,
-                padding: "28px 20px", textAlign: "center", marginBottom: 24,
-                background: "linear-gradient(135deg, rgba(192,96,16,0.04), transparent)",
+                borderRadius: 20, padding: "28px 24px", marginBottom: 20,
+                background: "linear-gradient(135deg, #0c1220, #1a2744)",
+                textAlign: "center",
               }}>
-                <p style={{ fontSize: 36, marginBottom: 10 }}>👤</p>
-                <h2 style={{ fontFamily: "var(--font-display)", fontSize: 20, color: "var(--ink-strong)", marginBottom: 8 }}>Set up your profile first</h2>
-                <p style={{ color: "var(--ink-soft)", fontSize: 13, lineHeight: 1.65, maxWidth: 360, margin: "0 auto 18px" }}>
-                  Tell us your exam, weak subjects and study slot. Matching is useful only after we know your prep situation.
+                <p style={{ fontSize: 32, marginBottom: 10 }}>👤</p>
+                <h2 style={{ fontFamily: "var(--font-display)", fontSize: 22, color: "#fef3c7", marginBottom: 8 }}>
+                  Your profile is missing
+                </h2>
+                <p style={{ color: "rgba(254,243,199,0.65)", fontSize: 13, lineHeight: 1.65, maxWidth: 340, margin: "0 auto 20px" }}>
+                  Takes 2 minutes. Your exam, prep stage, weak subjects — that&apos;s what makes matching accurate.
                 </p>
                 <button onClick={() => setTab("profile")} style={{
-                  border: "none", borderRadius: 14, padding: "12px 22px",
+                  border: "none", borderRadius: 14, padding: "13px 28px",
                   background: "var(--accent)", color: "#fff", fontWeight: 900,
                   fontFamily: "var(--font-display)", cursor: "pointer", fontSize: 15,
                 }}>
-                  Create profile →
+                  Set up in 2 min →
                 </button>
               </div>
             )}
 
-            {/* Empty state */}
+            {/* Empty state with profile */}
             {myProfile && candidates.length === 0 && (
               <div style={{ textAlign: "center", padding: "60px 20px", color: "var(--muted)" }}>
                 <p style={{ fontSize: 44, marginBottom: 12 }}>🔍</p>
-                <h2 style={{ fontFamily: "var(--font-display)", fontSize: 20, color: "var(--ink-strong)", marginBottom: 8 }}>No matches yet</h2>
-                <p style={{ fontSize: 13, lineHeight: 1.65 }}>More aspirants join daily. Check back soon.</p>
+                <h2 style={{ fontFamily: "var(--font-display)", fontSize: 20, color: "var(--ink-strong)", marginBottom: 8 }}>
+                  Be among the first here
+                </h2>
+                <p style={{ fontSize: 13, lineHeight: 1.7, maxWidth: 320, margin: "0 auto 20px" }}>
+                  More aspirants join every day. Your profile is live — someone will match soon.
+                </p>
+                <button onClick={() => setTab("profile")} style={{
+                  border: "1px solid var(--accent-border)", borderRadius: 14, padding: "10px 20px",
+                  background: "var(--accent-soft)", color: "var(--accent)", fontWeight: 800, cursor: "pointer", fontSize: 13,
+                }}>
+                  Update profile to improve match quality →
+                </button>
               </div>
             )}
 
             {/* Candidate cards */}
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: 14 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(290px, 1fr))", gap: 16 }}>
               {candidates.map(({ profile, score, reason }) => {
                 const focus   = requestFocusByUser[profile.user_id] ?? REQUEST_FOCUSES[0];
                 const pKey    = `request:${profile.user_id}:${focus}`;
@@ -733,31 +789,35 @@ export default function PartnerPage() {
                   && connFocus(c) === focus
                   && (c.requester_id === profile.user_id || c.receiver_id === profile.user_id)
                 );
+                const anyAccepted = connections.find(c =>
+                  c.status === "accepted"
+                  && (c.requester_id === profile.user_id || c.receiver_id === profile.user_id)
+                );
 
                 return (
                   <article key={profile.user_id} style={{
-                    border: "1px solid var(--line)", borderRadius: 22, padding: "18px 16px",
-                    background: "var(--card)", display: "flex", flexDirection: "column", gap: 12,
+                    border: "1px solid var(--line)", borderRadius: 22, padding: "20px 18px",
+                    background: "var(--card)", display: "flex", flexDirection: "column", gap: 14,
                     boxShadow: "0 4px 20px rgba(39,24,8,0.05)",
                   }}>
                     {/* Name row */}
-                    <div style={{ display: "flex", alignItems: "center", gap: 11 }}>
-                      <Avatar url={profile.avatar_url} name={profile.display_name} size={46} />
+                    <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+                      <Avatar url={profile.avatar_url} name={profile.display_name} size={50} />
                       <div style={{ flex: 1, minWidth: 0 }}>
                         <p style={{
-                          fontFamily: "var(--font-display)", fontSize: 16, fontWeight: 700,
+                          fontFamily: "var(--font-display)", fontSize: 17, fontWeight: 700,
                           color: "var(--ink-strong)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis",
                         }}>{profile.display_name}</p>
-                        <p style={{ fontSize: 12, color: "var(--muted)", marginTop: 2 }}>
-                          {profile.district} · {profile.stage}
+                        <p style={{ fontSize: 12, color: "var(--muted)", marginTop: 3 }}>
+                          {profile.exam_target} · {profile.district}
                         </p>
                       </div>
                       <div style={{
                         background: col.bg, border: `1px solid ${col.border}`,
-                        borderRadius: 14, padding: "6px 10px", textAlign: "center", flexShrink: 0,
+                        borderRadius: 14, padding: "7px 11px", textAlign: "center", flexShrink: 0,
                       }}>
-                        <p style={{ fontSize: 18, fontWeight: 900, color: col.text, lineHeight: 1 }}>{score}</p>
-                        <p style={{ fontSize: 9, color: col.text, opacity: 0.75, letterSpacing: "0.05em", marginTop: 1 }}>MATCH</p>
+                        <p style={{ fontSize: 19, fontWeight: 900, color: col.text, lineHeight: 1 }}>{score}</p>
+                        <p style={{ fontSize: 9, color: col.text, opacity: 0.7, letterSpacing: "0.05em", marginTop: 1 }}>MATCH</p>
                       </div>
                     </div>
 
@@ -765,94 +825,121 @@ export default function PartnerPage() {
                     <div style={{ height: 4, background: "rgba(120,80,30,0.08)", borderRadius: 999, overflow: "hidden" }}>
                       <div style={{
                         width: `${score}%`, height: "100%", borderRadius: 999,
-                        background: score >= 80 ? "linear-gradient(90deg,#c06010,#16a34a)" : `linear-gradient(90deg,${col.text},${col.text})`,
+                        background: score >= 80
+                          ? "linear-gradient(90deg,#c06010,#16a34a)"
+                          : `linear-gradient(90deg,${col.text},${col.text})`,
                       }} />
                     </div>
 
-                    {/* Match reason */}
-                    <p style={{ fontSize: 12, color: "var(--ink-soft)", lineHeight: 1.5, fontStyle: "italic" }}>
-                      ✨ {reason}
-                    </p>
+                    {/* Why they match */}
+                    <div style={{ display: "flex", alignItems: "flex-start", gap: 8, background: "var(--panel)", borderRadius: 12, padding: "10px 12px" }}>
+                      <span style={{ fontSize: 14, flexShrink: 0, marginTop: 1 }}>✨</span>
+                      <p style={{ fontSize: 12, color: "var(--ink-soft)", lineHeight: 1.55 }}>{reason}</p>
+                    </div>
 
-                    {/* Bio excerpt */}
+                    {/* Bio */}
                     {profile.bio && (
                       <p style={{
-                        fontSize: 13, color: "var(--ink-strong)", lineHeight: 1.55,
-                        borderLeft: "3px solid var(--line)", paddingLeft: 10,
+                        fontSize: 13, color: "var(--ink-strong)", lineHeight: 1.6,
+                        borderLeft: "3px solid var(--line)", paddingLeft: 10, margin: 0,
                       }}>
-                        {profile.bio.slice(0, 120)}{profile.bio.length > 120 ? "…" : ""}
+                        "{profile.bio.slice(0, 110)}{profile.bio.length > 110 ? "…" : ""}"
                       </p>
                     )}
 
-                    {/* Pill row */}
+                    {/* Quick stats row */}
                     <div style={{ display: "flex", flexWrap: "wrap", gap: 6 }}>
-                      {[profile.exam_target, profile.daily_hours, profile.language].map(pill => (
+                      {[
+                        profile.stage,
+                        profile.daily_hours,
+                        ...(profile.slots.slice(0, 1).map(s => `${s} slot`)),
+                        profile.language,
+                      ].map(pill => (
                         <span key={pill} style={{
                           border: "1px solid var(--line)", borderRadius: 999, padding: "4px 9px",
-                          fontSize: 11, fontWeight: 700, color: "var(--ink-soft)", background: "var(--panel)",
+                          fontSize: 11, fontWeight: 600, color: "var(--ink-soft)", background: "var(--panel)",
                         }}>{pill}</span>
                       ))}
                     </div>
 
-                    {/* Subjects grid */}
-                    <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
-                      <div style={{ background: "rgba(22,163,74,0.07)", borderRadius: 12, padding: "9px 10px" }}>
-                        <p style={{ fontSize: 10, fontWeight: 800, color: "#15803d", letterSpacing: "0.05em", marginBottom: 4 }}>STRONG</p>
-                        <p style={{ fontSize: 11, color: "var(--ink-soft)", lineHeight: 1.4 }}>{profile.strong_subjects.slice(0, 3).join(", ") || "—"}</p>
+                    {/* Subjects: strong in your weak */}
+                    {overlap(profile.strong_subjects, myProfile?.weak_subjects ?? []).length > 0 && (
+                      <div style={{ background: "rgba(22,163,74,0.07)", borderRadius: 12, padding: "9px 12px", display: "flex", alignItems: "center", gap: 8 }}>
+                        <span style={{ fontSize: 14 }}>💡</span>
+                        <p style={{ fontSize: 12, color: "#15803d", fontWeight: 700 }}>
+                          Strong in {overlap(profile.strong_subjects, myProfile?.weak_subjects ?? []).slice(0, 2).join(" & ")} — your weak area
+                        </p>
                       </div>
-                      <div style={{ background: "rgba(220,38,38,0.05)", borderRadius: 12, padding: "9px 10px" }}>
-                        <p style={{ fontSize: 10, fontWeight: 800, color: "#b91c1c", letterSpacing: "0.05em", marginBottom: 4 }}>WORKING ON</p>
-                        <p style={{ fontSize: 11, color: "var(--ink-soft)", lineHeight: 1.4 }}>{profile.weak_subjects.slice(0, 3).join(", ") || "—"}</p>
-                      </div>
-                    </div>
+                    )}
 
-                    {/* Request box */}
-                    <div style={{ background: "var(--panel)", border: "1px solid var(--line)", borderRadius: 16, padding: "12px" }}>
-                      <p style={{ fontSize: 10, fontWeight: 800, color: "var(--muted)", letterSpacing: "0.1em", textTransform: "uppercase", marginBottom: 8 }}>
-                        Request a focused room
-                      </p>
-                      <div style={{ display: "flex", gap: 8 }}>
-                        <select
-                          value={focus}
-                          onChange={e => setRequestFocusByUser(prev => ({ ...prev, [profile.user_id]: e.target.value }))}
-                          style={{
-                            flex: 1, minWidth: 0, border: "1px solid var(--line)", borderRadius: 11,
-                            padding: "9px 10px", background: "var(--card)", color: "var(--ink-strong)", fontWeight: 700, fontSize: 13,
-                          }}
-                        >
-                          {REQUEST_FOCUSES.map(f => <option key={f} value={f}>{f}</option>)}
-                        </select>
-                        <button
-                          disabled={actionPending === pKey}
-                          onClick={() => {
-                            if (connFor?.status === "accepted") { setActiveConnectionId(connFor.id); setTab("chat"); }
-                            else void sendRequest(profile.user_id, focus);
-                          }}
-                          style={{
-                            border: "none", borderRadius: 11, padding: "0 16px",
-                            background: connFor?.status === "accepted" ? "#16a34a" : "var(--accent)",
-                            color: "#fff", fontWeight: 900, cursor: "pointer",
-                            opacity: actionPending === pKey ? 0.7 : 1,
-                            fontSize: 13, whiteSpace: "nowrap", flexShrink: 0,
-                          }}
-                        >
-                          {actionPending === pKey ? "…"
-                            : connFor?.status === "accepted" ? "Open →"
-                            : connFor?.status === "pending"  ? "Pending"
-                            : "Send →"}
+                    {/* ── CTA section ── */}
+                    <div style={{ marginTop: "auto", display: "flex", flexDirection: "column", gap: 8 }}>
+                      {anyAccepted ? (
+                        /* Already connected — go to chat */
+                        <button onClick={() => { setActiveConnectionId(anyAccepted.id); setTab("chat"); }} style={{
+                          border: "none", borderRadius: 14, padding: "13px 16px",
+                          background: "linear-gradient(135deg,#15803d,#16a34a)",
+                          color: "#fff", fontWeight: 900, cursor: "pointer", fontSize: 14,
+                          display: "flex", alignItems: "center", justifyContent: "center", gap: 8,
+                        }}>
+                          💬 Open chat with {profile.display_name.split(" ")[0]} →
                         </button>
-                      </div>
-                      {connFor?.status === "pending" && (
-                        <p style={{ fontSize: 11, color: "var(--muted)", marginTop: 6 }}>Pending. Try a different focus topic.</p>
+                      ) : connFor?.status === "pending" ? (
+                        /* Request pending */
+                        <div style={{
+                          border: "1px solid rgba(217,119,6,0.3)", borderRadius: 14, padding: "12px 16px",
+                          background: "rgba(217,119,6,0.06)", textAlign: "center",
+                        }}>
+                          <p style={{ fontSize: 13, fontWeight: 800, color: "#d97706", marginBottom: 4 }}>
+                            ⏳ Request pending — waiting for response
+                          </p>
+                          <p style={{ fontSize: 11, color: "var(--muted)" }}>
+                            You can send a different topic request while this is pending.
+                          </p>
+                        </div>
+                      ) : (
+                        /* Fresh — show connect CTA */
+                        <>
+                          <button
+                            disabled={actionPending === pKey}
+                            onClick={() => void sendRequest(profile.user_id, focus)}
+                            style={{
+                              border: "none", borderRadius: 14, padding: "13px 16px",
+                              background: "var(--accent)", color: "#fff", fontWeight: 900,
+                              cursor: actionPending === pKey ? "wait" : "pointer", fontSize: 14,
+                              opacity: actionPending === pKey ? 0.75 : 1,
+                              display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
+                            }}
+                          >
+                            {actionPending === pKey
+                              ? "Sending request…"
+                              : `🤝 Study ${focus} together →`}
+                          </button>
+                          {/* Topic picker below */}
+                          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                            <p style={{ fontSize: 11, color: "var(--muted)", flexShrink: 0 }}>Study what:</p>
+                            <select
+                              value={focus}
+                              onChange={e => setRequestFocusByUser(prev => ({ ...prev, [profile.user_id]: e.target.value }))}
+                              style={{
+                                flex: 1, border: "1px solid var(--line)", borderRadius: 10,
+                                padding: "7px 9px", background: "var(--panel)", color: "var(--ink-strong)",
+                                fontWeight: 600, fontSize: 12,
+                              }}
+                            >
+                              {REQUEST_FOCUSES.map(f => <option key={f} value={f}>{f}</option>)}
+                            </select>
+                          </div>
+                        </>
                       )}
                     </div>
 
-                    {/* Footer row */}
-                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                    {/* Footer */}
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", paddingTop: 4, borderTop: "1px solid var(--line)" }}>
                       <p style={{ fontSize: 11, color: "var(--muted)" }}>Active {timeAgo(profile.updated_at)}</p>
                       <button onClick={() => reportUser(profile.user_id)} style={{
-                        background: "none", border: "1px solid var(--line)", borderRadius: 10,
-                        padding: "4px 10px", fontSize: 11, color: "var(--muted)", cursor: "pointer",
+                        background: "none", border: "none", padding: "3px 0",
+                        fontSize: 11, color: "var(--line-hi)", cursor: "pointer",
                       }}>Report</button>
                     </div>
                   </article>
@@ -879,7 +966,7 @@ export default function PartnerPage() {
               </div>
               {incoming.length === 0 ? (
                 <div style={{ border: "1px dashed var(--line)", borderRadius: 16, padding: "24px 20px", textAlign: "center", color: "var(--muted)", fontSize: 13 }}>
-                  No incoming requests. Share your profile link to get one!
+                  No incoming requests yet. Go to Discover and send one yourself — don&apos;t wait.
                 </div>
               ) : incoming.map(row => {
                 const partner = profileMap.get(otherUserId(row));
@@ -922,8 +1009,12 @@ export default function PartnerPage() {
             <section>
               <h2 style={{ fontFamily: "var(--font-display)", fontSize: 20, color: "var(--ink-strong)", marginBottom: 14 }}>Sent by you</h2>
               {outgoing.length === 0 ? (
-                <div style={{ border: "1px dashed var(--line)", borderRadius: 16, padding: "24px 20px", textAlign: "center", color: "var(--muted)", fontSize: 13 }}>
-                  No sent requests. Go to Discover and send one.
+                <div style={{ border: "1px dashed var(--line)", borderRadius: 16, padding: "24px 20px", textAlign: "center" }}>
+                  <p style={{ fontSize: 13, color: "var(--muted)", marginBottom: 10 }}>You haven&apos;t sent any requests yet.</p>
+                  <button onClick={() => setTab("discover")} style={{
+                    border: "none", borderRadius: 12, padding: "9px 16px",
+                    background: "var(--accent)", color: "#fff", fontWeight: 800, cursor: "pointer", fontSize: 13,
+                  }}>Browse matches →</button>
                 </div>
               ) : outgoing.map(row => {
                 const partner = profileMap.get(otherUserId(row));
@@ -1238,8 +1329,16 @@ export default function PartnerPage() {
                 <div style={{ flex: 1, display: "grid", placeItems: "center", textAlign: "center", padding: 32 }}>
                   <div>
                     <p style={{ fontSize: 48, marginBottom: 12 }}>💬</p>
-                    <h2 style={{ fontFamily: "var(--font-display)", color: "var(--ink-strong)", marginBottom: 8 }}>No chat selected</h2>
-                    <p style={{ color: "var(--muted)", fontSize: 13 }}>Accept a request to open a private chat.</p>
+                    <h2 style={{ fontFamily: "var(--font-display)", color: "var(--ink-strong)", marginBottom: 8 }}>No chats yet</h2>
+                    <p style={{ color: "var(--muted)", fontSize: 13, lineHeight: 1.65, marginBottom: 20 }}>
+                      Private chat opens once a partner accepts your request.
+                    </p>
+                    <button onClick={() => setTab("discover")} style={{
+                      border: "none", borderRadius: 14, padding: "11px 20px",
+                      background: "var(--accent)", color: "#fff", fontWeight: 900, cursor: "pointer", fontSize: 14,
+                    }}>
+                      Find a study partner →
+                    </button>
                   </div>
                 </div>
               )}
@@ -1250,17 +1349,49 @@ export default function PartnerPage() {
         {/* ════════════════════════ PROFILE ═════════════════════════ */}
         {tab === "profile" && (
           <div style={{ maxWidth: 640, margin: "0 auto" }}>
-            {!myProfile && (
+            {!myProfile ? (
+              <div style={{ marginBottom: 24 }}>
+                <div style={{
+                  background: "linear-gradient(135deg, #0c1220, #1a2744)",
+                  borderRadius: 20, padding: "24px 20px", textAlign: "center", marginBottom: 16,
+                }}>
+                  <p style={{ fontSize: 32, marginBottom: 10 }}>👤</p>
+                  <h2 style={{ fontFamily: "var(--font-display)", fontSize: 22, color: "#fef3c7", marginBottom: 8 }}>
+                    Build your match profile
+                  </h2>
+                  <p style={{ fontSize: 13, color: "rgba(254,243,199,0.65)", lineHeight: 1.65, maxWidth: 360, margin: "0 auto" }}>
+                    Takes 2 minutes. The more accurate this is, the better your partner matches will be.
+                  </p>
+                </div>
+                {/* Step progress */}
+                <div style={{ display: "flex", gap: 8 }}>
+                  {["Basics", "Study Habits", "Subjects", "About"].map((s, i) => (
+                    <div key={s} style={{ flex: 1, textAlign: "center" }}>
+                      <div style={{ height: 4, borderRadius: 999, background: i === 0 ? "var(--accent)" : "var(--line)", marginBottom: 4 }} />
+                      <p style={{ fontSize: 10, color: i === 0 ? "var(--accent)" : "var(--muted)", fontWeight: 700 }}>{s}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ) : (
               <div style={{
-                background: "linear-gradient(135deg, rgba(192,96,16,0.06), rgba(255,255,255,0))",
-                border: "1px solid var(--accent-border)", borderRadius: 18, padding: "16px 18px", marginBottom: 24,
+                background: "rgba(22,163,74,0.06)", border: "1px solid rgba(22,163,74,0.2)",
+                borderRadius: 16, padding: "12px 16px", marginBottom: 20,
+                display: "flex", alignItems: "center", gap: 10,
               }}>
-                <p style={{ fontFamily: "var(--font-display)", fontSize: 18, fontWeight: 700, color: "var(--ink-strong)", marginBottom: 6 }}>
-                  Welcome to Study Partner 👋
-                </p>
-                <p style={{ fontSize: 13, color: "var(--ink-soft)", lineHeight: 1.65 }}>
-                  Fill in your profile below. This is what other aspirants see before sending a request. Be honest — better profiles attract better partners.
-                </p>
+                <span style={{ fontSize: 20 }}>✅</span>
+                <div style={{ flex: 1 }}>
+                  <p style={{ fontSize: 13, fontWeight: 700, color: "#15803d" }}>Your profile is live</p>
+                  <p style={{ fontSize: 12, color: "var(--ink-soft)", marginTop: 2 }}>
+                    Visible to other aspirants. Update anytime to improve your match quality.
+                  </p>
+                </div>
+                <button onClick={() => setTab("discover")} style={{
+                  border: "none", borderRadius: 10, padding: "7px 12px",
+                  background: "rgba(22,163,74,0.15)", color: "#15803d", fontWeight: 800, cursor: "pointer", fontSize: 12,
+                }}>
+                  See matches →
+                </button>
               </div>
             )}
 
