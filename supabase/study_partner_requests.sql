@@ -33,9 +33,11 @@ create table if not exists public.study_partner_connections (
   opener text not null default '',
   created_at timestamptz not null default timezone('utc', now()),
   responded_at timestamptz,
-  unique (requester_id, receiver_id),
   check (requester_id <> receiver_id)
 );
+
+alter table public.study_partner_connections
+  drop constraint if exists study_partner_connections_requester_id_receiver_id_key;
 
 create unique index if not exists study_partner_connections_unique_pair_idx
   on public.study_partner_connections (

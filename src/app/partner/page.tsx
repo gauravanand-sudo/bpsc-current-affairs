@@ -179,6 +179,7 @@ export default function PartnerPage() {
   const [targetText, setTargetText] = useState("");
   const [focusMinutes, setFocusMinutes] = useState(90);
   const [mood, setMood] = useState("locked in");
+  const [actionPending, setActionPending] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
   const [notice, setNotice] = useState("");
   const bottomRef = useRef<HTMLDivElement>(null);
@@ -422,6 +423,8 @@ export default function PartnerPage() {
       setNotice("Create your study profile first.");
       return;
     }
+    setActionPending(`request:${receiverId}`);
+    setNotice("Sending match request...");
     const supabase = getSupabaseBrowserClient();
     const partner = profileMap.get(receiverId);
     const { error } = await (supabase as any).from("study_partner_connections").insert({
@@ -430,6 +433,7 @@ export default function PartnerPage() {
       opener: `Hi ${partner?.display_name ?? "there"}, let's do a 7-day BPSC accountability sprint.`,
     });
     if (error) {
+      setActionPending(null);
       setNotice(
         error.message.includes("duplicate")
           ? "You already have an active request or chat with this student."
@@ -439,16 +443,24 @@ export default function PartnerPage() {
     }
     setNotice("Request sent. Chat opens after they accept.");
     await loadAll();
+    setActionPending(null);
     setTab("requests");
   }
 
   async function updateConnection(id: string, status: "accepted" | "rejected" | "cancelled") {
+    setActionPending(`${status}:${id}`);
     const supabase = getSupabaseBrowserClient();
-    await (supabase as any)
+    const { error } = await (supabase as any)
       .from("study_partner_connections")
       .update({ status, responded_at: new Date().toISOString() })
       .eq("id", id);
+    if (error) {
+      setActionPending(null);
+      setNotice(error.message);
+      return;
+    }
     await loadAll();
+    setActionPending(null);
     if (status === "accepted") {
       setActiveConnectionId(id);
       setTab("chat");
@@ -490,6 +502,8 @@ export default function PartnerPage() {
       setNotice("Add today's target first.");
       return;
     }
+    setActionPending(completed ? "done" : "lock");
+    setNotice(completed ? "Marking today as done..." : "Locking today's target...");
     const supabase = getSupabaseBrowserClient();
     const { error } = await (supabase as any)
       .from("study_partner_checkins")
@@ -505,6 +519,7 @@ export default function PartnerPage() {
       }, { onConflict: "connection_id,user_id,checkin_date" });
 
     if (error) {
+      setActionPending(null);
       setNotice(error.message);
       return;
     }
@@ -516,6 +531,8 @@ export default function PartnerPage() {
         ? `Done for today: ${target} (${focusMinutes} min). Your turn, ${partner?.display_name ?? "partner"}.`
         : `Today's target: ${target} (${focusMinutes} min). Let's finish this.`
     );
+    setActionPending(null);
+    setNotice(completed ? "Done marked. Send the update to your partner." : "Target locked. Send it to your partner.");
   }
 
   async function reportUser(reportedUserId: string) {
@@ -587,7 +604,18 @@ export default function PartnerPage() {
         </div>
 
         {notice && (
-          <div style={{ ...card, marginTop: 14, padding: "12px 14px", color: "var(--accent)", fontWeight: 800, fontSize: 13 }}>
+          <div style={{
+            ...card,
+            position: "sticky",
+            top: 62,
+            zIndex: 20,
+            marginTop: 14,
+            padding: "12px 14px",
+            color: "var(--accent)",
+            fontWeight: 800,
+            fontSize: 13,
+            borderColor: "rgba(184,97,23,0.28)",
+          }}>
             {notice}
           </div>
         )}
@@ -670,14 +698,15 @@ export default function PartnerPage() {
                 </div>
 
                 <div style={{ display: "flex", gap: 8 }}>
-                  <button onClick={() => sendRequest(profile.user_id)} style={{
+                  <button type="button" disabled={actionPending === `request:${profile.user_id}`} onClick={() => sendRequest(profile.user_id)} style={{
                     flex: 1, border: "none", borderRadius: 13, padding: "12px 14px",
                     background: "var(--accent)", color: "#fff", fontWeight: 900, cursor: "pointer",
                     fontFamily: "var(--font-display)",
+                    opacity: actionPending === `request:${profile.user_id}` ? 0.72 : 1,
                   }}>
-                    Send private request
+                    {actionPending === `request:${profile.user_id}` ? "Sending..." : "Send private request"}
                   </button>
-                  <button onClick={() => reportUser(profile.user_id)} style={{ ...chip(false), borderRadius: 13 }}>
+                  <button type="button" onClick={() => reportUser(profile.user_id)} style={{ ...chip(false), borderRadius: 13 }}>
                     Report
                   </button>
                 </div>
@@ -788,6 +817,7 @@ export default function PartnerPage() {
                     pactComplete={pactComplete}
                     onSave={() => saveCheckin(false)}
                     onDone={() => saveCheckin(true)}
+                    actionPending={actionPending}
                   />
                   <div style={{ flex: 1, overflowY: "auto", padding: 14, display: "flex", flexDirection: "column", gap: 10 }}>
                     {messages.length === 0 && (
@@ -936,6 +966,7 @@ function DailyPact({
   pactComplete,
   onSave,
   onDone,
+  actionPending,
 }: {
   partnerName: string;
   targetText: string;
@@ -951,6 +982,7 @@ function DailyPact({
   pactComplete: boolean;
   onSave: () => void;
   onDone: () => void;
+  actionPending: string | null;
 }) {
   const lastSevenDates = Array.from({ length: 7 }, (_, index) =>
     new Date(Date.now() - index * 86400000).toISOString().slice(0, 10)
@@ -1057,7 +1089,7 @@ function DailyPact({
       </div>
 
       <div style={{ display: "flex", gap: 8, marginTop: 12 }}>
-        <button onClick={onSave} style={{
+        <button type="button" disabled={actionPending === "lock"} onClick={onSave} style={{
           flex: 1,
           border: "1px solid rgba(184,97,23,0.26)",
           background: "rgba(184,97,23,0.08)",
@@ -1066,10 +1098,11 @@ function DailyPact({
           padding: "11px 12px",
           fontWeight: 900,
           cursor: "pointer",
+          opacity: actionPending === "lock" ? 0.7 : 1,
         }}>
-          Lock target
+          {actionPending === "lock" ? "Locking..." : "Lock target"}
         </button>
-        <button onClick={onDone} style={{
+        <button type="button" disabled={actionPending === "done"} onClick={onDone} style={{
           flex: 1,
           border: "none",
           background: "linear-gradient(135deg, #15803d, #16a34a)",
@@ -1079,8 +1112,9 @@ function DailyPact({
           fontWeight: 900,
           cursor: "pointer",
           boxShadow: "0 10px 24px rgba(22,163,74,0.22)",
+          opacity: actionPending === "done" ? 0.7 : 1,
         }}>
-          Mark done
+          {actionPending === "done" ? "Marking..." : "Mark done"}
         </button>
       </div>
     </section>
