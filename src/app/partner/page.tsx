@@ -44,6 +44,19 @@ type PartnerMessage = {
   read_at: string | null;
 };
 
+type PartnerCheckin = {
+  id: number;
+  connection_id: string;
+  user_id: string;
+  checkin_date: string;
+  target: string;
+  completed: boolean;
+  focus_minutes: number;
+  mood: string;
+  created_at: string;
+  updated_at: string;
+};
+
 const EXAMS = ["72nd BPSC", "BPSC TRE", "Bihar SI", "UPSC + BPSC", "Bihar SSC"];
 const STAGES = ["Starting", "Building basics", "Revision", "Test series", "Final sprint"];
 const DISTRICTS = [
@@ -90,6 +103,10 @@ function timeAgo(iso: string) {
   if (diff < 3600000) return `${Math.floor(diff / 60000)}m ago`;
   if (diff < 86400000) return `${Math.floor(diff / 3600000)}h ago`;
   return `${Math.floor(diff / 86400000)}d ago`;
+}
+
+function todayKey() {
+  return new Date().toISOString().slice(0, 10);
 }
 
 function overlap(a: string[] = [], b: string[] = []) {
@@ -141,6 +158,13 @@ const card: React.CSSProperties = {
   boxShadow: "0 12px 32px rgba(39, 24, 8, 0.07)",
 };
 
+const glassCard: React.CSSProperties = {
+  border: "1px solid rgba(255,255,255,0.16)",
+  background: "linear-gradient(145deg, rgba(255,255,255,0.92), rgba(255,248,235,0.72))",
+  borderRadius: 26,
+  boxShadow: "0 24px 70px rgba(48, 26, 7, 0.13)",
+};
+
 export default function PartnerPage() {
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
@@ -150,7 +174,11 @@ export default function PartnerPage() {
   const [connections, setConnections] = useState<PartnerConnection[]>([]);
   const [activeConnectionId, setActiveConnectionId] = useState<string | null>(null);
   const [messages, setMessages] = useState<PartnerMessage[]>([]);
+  const [checkins, setCheckins] = useState<PartnerCheckin[]>([]);
   const [messageText, setMessageText] = useState("");
+  const [targetText, setTargetText] = useState("");
+  const [focusMinutes, setFocusMinutes] = useState(90);
+  const [mood, setMood] = useState("locked in");
   const [saving, setSaving] = useState(false);
   const [notice, setNotice] = useState("");
   const bottomRef = useRef<HTMLDivElement>(null);
@@ -181,6 +209,16 @@ export default function PartnerPage() {
   const incoming = connections.filter(c => c.status === "pending" && c.receiver_id === userId);
   const outgoing = connections.filter(c => c.status === "pending" && c.requester_id === userId);
   const activeConnection = accepted.find(c => c.id === activeConnectionId) ?? accepted[0] ?? null;
+  const activePartnerId = activeConnection
+    ? activeConnection.requester_id === userId
+      ? activeConnection.receiver_id
+      : activeConnection.requester_id
+    : "";
+  const todaysCheckins = checkins.filter(c => c.checkin_date === todayKey());
+  const myCheckin = todaysCheckins.find(c => c.user_id === userId) ?? null;
+  const partnerCheckin = todaysCheckins.find(c => c.user_id === activePartnerId) ?? null;
+  const pactComplete = Boolean(myCheckin?.completed && partnerCheckin?.completed);
+  const pairFocusMinutes = todaysCheckins.reduce((sum, item) => sum + item.focus_minutes, 0);
 
   const candidates = useMemo(() => {
     const blocked = new Set(connections.flatMap(c => [c.requester_id, c.receiver_id]));
@@ -224,6 +262,10 @@ export default function PartnerPage() {
           setTimeout(() => bottomRef.current?.scrollIntoView({ behavior: "smooth" }), 40);
         }
       })
+      .on("postgres_changes", { event: "*", schema: "public", table: "study_partner_checkins" }, payload => {
+        const next = payload.new as PartnerCheckin;
+        if (next?.connection_id === activeConnectionId) void loadCheckins(next.connection_id);
+      })
       .subscribe();
 
     return () => { void supabase.removeChannel(channel); };
@@ -231,7 +273,10 @@ export default function PartnerPage() {
   }, [session?.user.id, activeConnectionId]);
 
   useEffect(() => {
-    if (activeConnection?.id) void loadMessages(activeConnection.id);
+    if (activeConnection?.id) {
+      void loadMessages(activeConnection.id);
+      void loadCheckins(activeConnection.id);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeConnection?.id]);
 
@@ -285,6 +330,28 @@ export default function PartnerPage() {
       .limit(100);
     setMessages((data ?? []) as PartnerMessage[]);
     setTimeout(() => bottomRef.current?.scrollIntoView({ behavior: "smooth" }), 60);
+  }
+
+  async function loadCheckins(connectionId: string) {
+    const supabase = getSupabaseBrowserClient();
+    const { data } = await (supabase as any)
+      .from("study_partner_checkins")
+      .select("*")
+      .eq("connection_id", connectionId)
+      .gte("checkin_date", new Date(Date.now() - 6 * 86400000).toISOString().slice(0, 10))
+      .order("checkin_date", { ascending: false });
+    const rows = (data ?? []) as PartnerCheckin[];
+    setCheckins(rows);
+    const mine = rows.find(row => row.user_id === userId && row.checkin_date === todayKey());
+    if (mine) {
+      setTargetText(mine.target);
+      setFocusMinutes(mine.focus_minutes || 90);
+      setMood(mine.mood || "locked in");
+    } else {
+      setTargetText("");
+      setFocusMinutes(90);
+      setMood("locked in");
+    }
   }
 
   async function signIn() {
@@ -377,6 +444,41 @@ export default function PartnerPage() {
       sender_id: session.user.id,
       body,
     });
+  }
+
+  async function saveCheckin(completed = false) {
+    if (!session || !activeConnection) return;
+    const target = targetText.trim().slice(0, 220);
+    if (!target) {
+      setNotice("Add today's target first.");
+      return;
+    }
+    const supabase = getSupabaseBrowserClient();
+    const { error } = await (supabase as any)
+      .from("study_partner_checkins")
+      .upsert({
+        connection_id: activeConnection.id,
+        user_id: session.user.id,
+        checkin_date: todayKey(),
+        target,
+        completed: completed || myCheckin?.completed || false,
+        focus_minutes: focusMinutes,
+        mood,
+        updated_at: new Date().toISOString(),
+      }, { onConflict: "connection_id,user_id,checkin_date" });
+
+    if (error) {
+      setNotice(error.message);
+      return;
+    }
+
+    await loadCheckins(activeConnection.id);
+    const partner = profileMap.get(otherUser(activeConnection));
+    setMessageText(
+      completed
+        ? `Done for today: ${target} (${focusMinutes} min). Your turn, ${partner?.display_name ?? "partner"}.`
+        : `Today's target: ${target} (${focusMinutes} min). Let's finish this.`
+    );
   }
 
   async function reportUser(reportedUserId: string) {
@@ -606,6 +708,22 @@ export default function PartnerPage() {
                     </h2>
                     <p style={{ color: "var(--muted)", fontSize: 12 }}>Private 1:1 accountability chat</p>
                   </div>
+                  <DailyPact
+                    partnerName={profileMap.get(otherUser(activeConnection))?.display_name ?? "Partner"}
+                    targetText={targetText}
+                    setTargetText={setTargetText}
+                    focusMinutes={focusMinutes}
+                    setFocusMinutes={setFocusMinutes}
+                    mood={mood}
+                    setMood={setMood}
+                    myCheckin={myCheckin}
+                    partnerCheckin={partnerCheckin}
+                    checkins={checkins}
+                    pairFocusMinutes={pairFocusMinutes}
+                    pactComplete={pactComplete}
+                    onSave={() => saveCheckin(false)}
+                    onDone={() => saveCheckin(true)}
+                  />
                   <div style={{ flex: 1, overflowY: "auto", padding: 14, display: "flex", flexDirection: "column", gap: 10 }}>
                     {messages.map(msg => {
                       const mine = msg.sender_id === userId;
@@ -722,6 +840,192 @@ export default function PartnerPage() {
         }
       `}</style>
     </main>
+  );
+}
+
+function DailyPact({
+  partnerName,
+  targetText,
+  setTargetText,
+  focusMinutes,
+  setFocusMinutes,
+  mood,
+  setMood,
+  myCheckin,
+  partnerCheckin,
+  checkins,
+  pairFocusMinutes,
+  pactComplete,
+  onSave,
+  onDone,
+}: {
+  partnerName: string;
+  targetText: string;
+  setTargetText: (value: string) => void;
+  focusMinutes: number;
+  setFocusMinutes: (value: number) => void;
+  mood: string;
+  setMood: (value: string) => void;
+  myCheckin: PartnerCheckin | null;
+  partnerCheckin: PartnerCheckin | null;
+  checkins: PartnerCheckin[];
+  pairFocusMinutes: number;
+  pactComplete: boolean;
+  onSave: () => void;
+  onDone: () => void;
+}) {
+  const lastSevenDates = Array.from({ length: 7 }, (_, index) =>
+    new Date(Date.now() - index * 86400000).toISOString().slice(0, 10)
+  ).reverse();
+  const perfectDays = lastSevenDates.filter(date => {
+    const rows = checkins.filter(row => row.checkin_date === date);
+    return rows.length >= 2 && rows.every(row => row.completed);
+  }).length;
+
+  return (
+    <section style={{
+      margin: 12,
+      padding: 14,
+      borderRadius: 22,
+      background: "linear-gradient(135deg, #fff7ea, #ffffff 54%, #eefaf1)",
+      border: "1px solid rgba(184,97,23,0.16)",
+      boxShadow: "inset 0 1px 0 rgba(255,255,255,0.85)",
+    }}>
+      <div style={{ display: "flex", justifyContent: "space-between", gap: 12, alignItems: "flex-start", marginBottom: 12 }}>
+        <div>
+          <p style={{ fontFamily: "monospace", fontSize: 10, letterSpacing: "0.18em", color: "var(--accent)", textTransform: "uppercase", marginBottom: 4 }}>
+            Today&apos;s pact
+          </p>
+          <h3 style={{ fontFamily: "var(--font-display)", color: "var(--ink-strong)", fontSize: 20, letterSpacing: "-0.03em" }}>
+            Finish one honest block together
+          </h3>
+        </div>
+        <div style={{
+          borderRadius: 16,
+          padding: "8px 10px",
+          background: pactComplete ? "rgba(22,163,74,0.12)" : "rgba(184,97,23,0.10)",
+          color: pactComplete ? "#15803d" : "var(--accent)",
+          fontWeight: 900,
+          fontSize: 12,
+          textAlign: "right",
+          minWidth: 92,
+        }}>
+          {pactComplete ? "Pact closed" : "Pact open"}
+          <p style={{ fontSize: 10, opacity: 0.75, marginTop: 2 }}>{perfectDays}/7 perfect days</p>
+        </div>
+      </div>
+
+      <div style={{ display: "grid", gridTemplateColumns: "1.4fr 0.8fr", gap: 10 }}>
+        <input
+          value={targetText}
+          onChange={event => setTargetText(event.target.value)}
+          placeholder="Example: Revise Polity articles + 25 CA facts"
+          maxLength={220}
+          style={{
+            minWidth: 0,
+            border: "1px solid rgba(120,80,30,0.14)",
+            borderRadius: 14,
+            padding: "12px 13px",
+            background: "rgba(255,255,255,0.82)",
+            color: "var(--ink-strong)",
+            fontWeight: 700,
+          }}
+        />
+        <input
+          type="number"
+          value={focusMinutes}
+          min={15}
+          max={600}
+          onChange={event => setFocusMinutes(Number(event.target.value))}
+          style={{
+            minWidth: 0,
+            border: "1px solid rgba(120,80,30,0.14)",
+            borderRadius: 14,
+            padding: "12px 13px",
+            background: "rgba(255,255,255,0.82)",
+            color: "var(--ink-strong)",
+            fontWeight: 800,
+          }}
+        />
+      </div>
+
+      <div style={{ display: "flex", gap: 7, flexWrap: "wrap", marginTop: 10 }}>
+        {["locked in", "steady", "tired but showing up", "test mode"].map(item => (
+          <button key={item} type="button" onClick={() => setMood(item)} style={chip(mood === item)}>
+            {item}
+          </button>
+        ))}
+      </div>
+
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))", gap: 9, marginTop: 12 }}>
+        <StatusTile
+          title="You"
+          subtitle={myCheckin?.target || "Target not locked"}
+          strong={myCheckin?.completed ? "Done" : myCheckin ? `${myCheckin.focus_minutes} min locked` : "Waiting"}
+          good={Boolean(myCheckin?.completed)}
+        />
+        <StatusTile
+          title={partnerName}
+          subtitle={partnerCheckin?.target || "No target yet"}
+          strong={partnerCheckin?.completed ? "Done" : partnerCheckin ? `${partnerCheckin.focus_minutes} min locked` : "Waiting"}
+          good={Boolean(partnerCheckin?.completed)}
+        />
+        <StatusTile
+          title="Pair focus"
+          subtitle="Total planned focus today"
+          strong={`${Math.floor(pairFocusMinutes / 60)}h ${pairFocusMinutes % 60}m`}
+          good={pairFocusMinutes >= 120}
+        />
+      </div>
+
+      <div style={{ display: "flex", gap: 8, marginTop: 12 }}>
+        <button onClick={onSave} style={{
+          flex: 1,
+          border: "1px solid rgba(184,97,23,0.26)",
+          background: "rgba(184,97,23,0.08)",
+          color: "var(--accent)",
+          borderRadius: 14,
+          padding: "11px 12px",
+          fontWeight: 900,
+          cursor: "pointer",
+        }}>
+          Lock target
+        </button>
+        <button onClick={onDone} style={{
+          flex: 1,
+          border: "none",
+          background: "linear-gradient(135deg, #15803d, #16a34a)",
+          color: "#fff",
+          borderRadius: 14,
+          padding: "11px 12px",
+          fontWeight: 900,
+          cursor: "pointer",
+          boxShadow: "0 10px 24px rgba(22,163,74,0.22)",
+        }}>
+          Mark done
+        </button>
+      </div>
+    </section>
+  );
+}
+
+function StatusTile({ title, subtitle, strong, good }: {
+  title: string;
+  subtitle: string;
+  strong: string;
+  good: boolean;
+}) {
+  return (
+    <div style={{
+      borderRadius: 16,
+      padding: 11,
+      background: good ? "rgba(22,163,74,0.08)" : "rgba(255,255,255,0.72)",
+      border: good ? "1px solid rgba(22,163,74,0.18)" : "1px solid rgba(120,80,30,0.10)",
+    }}>
+      <p style={{ color: "var(--muted)", fontSize: 11, fontWeight: 900, letterSpacing: "0.08em", textTransform: "uppercase" }}>{title}</p>
+      <p style={{ color: good ? "#15803d" : "var(--ink-strong)", fontWeight: 900, marginTop: 4 }}>{strong}</p>
+      <p style={{ color: "var(--ink-soft)", fontSize: 12, lineHeight: 1.45, marginTop: 4 }}>{subtitle}</p>
+    </div>
   );
 }
 
