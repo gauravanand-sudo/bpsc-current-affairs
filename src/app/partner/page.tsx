@@ -244,6 +244,7 @@ export default function PartnerPage() {
 
   const bottomRef             = useRef<HTMLDivElement>(null);
   const msgScrollRef          = useRef<HTMLDivElement>(null);
+  const contentAreaRef        = useRef<HTMLDivElement>(null);
   const activeConnIdRef       = useRef<string | null>(null);
   const noticeTimerRef        = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -315,6 +316,13 @@ export default function PartnerPage() {
     if (noticeTimerRef.current) clearTimeout(noticeTimerRef.current);
     noticeTimerRef.current = setTimeout(() => setNotice(""), 4500);
   }
+
+  // Scroll content area back to top when switching tabs (not needed for chat)
+  useEffect(() => {
+    if (tab !== "chat" && contentAreaRef.current) {
+      contentAreaRef.current.scrollTop = 0;
+    }
+  }, [tab]);
 
   /* ── Effects ─────────────────────────────────────────────────── */
   useEffect(() => {
@@ -619,43 +627,33 @@ export default function PartnerPage() {
 
   /* ── Main render ─────────────────────────────────────────────── */
   return (
-    <main style={{ minHeight: "100vh", background: "var(--bg)", paddingBottom: 80 }}>
+    <main style={{ height: "100dvh", display: "flex", flexDirection: "column", overflow: "hidden", background: "var(--bg)" }}>
 
-      {/* ── Page header + Tab bar ────────────────────────────── */}
-      <div style={{ borderBottom: "1px solid var(--line)", background: "var(--card)", position: "sticky", top: 0, zIndex: 30 }}>
+      {/* ── Slim header + Tab bar ─────────────────────────────── */}
+      <div style={{ flexShrink: 0, borderBottom: "1px solid var(--line)", background: "var(--card)", zIndex: 30 }}>
         <div style={{ maxWidth: 900, margin: "0 auto", padding: "0 16px" }}>
 
-          {/* Mini header */}
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", paddingTop: 14, paddingBottom: 10, gap: 12 }}>
-            <div>
-              <p style={{ fontFamily: "monospace", fontSize: 10, letterSpacing: "0.26em", color: "var(--accent)", textTransform: "uppercase" }}>
+          {/* Single-line header */}
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", height: 48, gap: 12 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+              <p style={{ fontFamily: "var(--font-display)", fontSize: 15, fontWeight: 700, color: "var(--ink-strong)" }}>
                 Study Partner
               </p>
-              <h1 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.1rem, 3.5vw, 1.45rem)", letterSpacing: "-0.02em", color: "var(--ink-strong)", lineHeight: 1.15 }}>
-                Hey {firstName(session)} 👋
-                {accepted.length > 0 && <span style={{ fontSize: "0.7em", color: "#16a34a", marginLeft: 8 }}>● {accepted.length} active</span>}
-              </h1>
-            </div>
-            <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-              {incoming.length > 0 && (
-                <button onClick={() => setTab("requests")} style={{
-                  border: "none", borderRadius: 12, padding: "7px 12px",
-                  background: "rgba(22,163,74,0.12)", color: "#15803d", fontWeight: 800,
-                  fontSize: 12, cursor: "pointer",
-                }}>
-                  {incoming.length} request{incoming.length > 1 ? "s" : ""} waiting →
-                </button>
-              )}
-              {candidates.length > 0 && (
-                <div style={{
-                  background: "var(--accent-soft)", border: "1px solid var(--accent-border)",
-                  borderRadius: 14, padding: "7px 12px", textAlign: "center",
-                }}>
-                  <p style={{ fontFamily: "var(--font-display)", fontSize: 19, fontWeight: 700, color: "var(--accent)", lineHeight: 1 }}>{candidates.length}</p>
-                  <p style={{ fontSize: 9, color: "var(--muted)", marginTop: 2, letterSpacing: "0.06em" }}>MATCHES</p>
-                </div>
+              {accepted.length > 0 && (
+                <span style={{ fontSize: 11, color: "#16a34a", fontWeight: 700, background: "rgba(22,163,74,0.10)", border: "1px solid rgba(22,163,74,0.22)", borderRadius: 999, padding: "2px 8px" }}>
+                  {accepted.length} active
+                </span>
               )}
             </div>
+            {incoming.length > 0 && (
+              <button onClick={() => setTab("requests")} style={{
+                border: "none", borderRadius: 10, padding: "5px 10px",
+                background: "rgba(22,163,74,0.12)", color: "#15803d", fontWeight: 800,
+                fontSize: 12, cursor: "pointer",
+              }}>
+                {incoming.length} new →
+              </button>
+            )}
           </div>
 
           {/* Tab row */}
@@ -663,7 +661,7 @@ export default function PartnerPage() {
             {TABS.map(t => (
               <button key={t.id} onClick={() => setTab(t.id)} style={{
                 flex: 1, border: "none", background: "none", cursor: "pointer",
-                padding: "9px 6px 13px",
+                padding: "8px 6px 11px",
                 borderBottom: tab === t.id ? "2.5px solid var(--accent)" : "2.5px solid transparent",
                 color: tab === t.id ? "var(--accent)" : "var(--muted)",
                 fontSize: 11, fontWeight: tab === t.id ? 800 : 600,
@@ -673,7 +671,7 @@ export default function PartnerPage() {
                 {t.label}
                 {t.badge != null && (
                   <span style={{
-                    position: "absolute", top: 5, right: "50%", transform: "translateX(10px)",
+                    position: "absolute", top: 4, right: "50%", transform: "translateX(10px)",
                     background: "var(--accent)", color: "#fff",
                     borderRadius: 999, fontSize: 9, fontWeight: 900, padding: "1px 5px", minWidth: 16, textAlign: "center",
                   }}>{t.badge}</span>
@@ -684,8 +682,24 @@ export default function PartnerPage() {
         </div>
       </div>
 
-      {/* ── Content ──────────────────────────────────────────── */}
-      <div style={{ maxWidth: 900, margin: "0 auto", padding: "20px 16px 0" }}>
+      {/* ── Scrollable content area ───────────────────────────── */}
+      <div
+        ref={contentAreaRef}
+        style={{
+          flex: 1,
+          overflowY: tab === "chat" ? "hidden" : "auto",
+          overflowX: "hidden",
+        }}
+      >
+      <div style={{
+        maxWidth: tab === "chat" ? "none" : 900,
+        margin: "0 auto",
+        padding: tab === "chat" ? "16px 16px 0" : "20px 16px 80px",
+        height: tab === "chat" ? "100%" : "auto",
+        display: tab === "chat" ? "flex" : "block",
+        flexDirection: "column",
+        boxSizing: "border-box",
+      }}>
 
         {/* Toast notice */}
         {notice && (
@@ -1076,17 +1090,18 @@ export default function PartnerPage() {
 
         {/* ════════════════════════ CHAT ════════════════════════════ */}
         {tab === "chat" && (
-          <div className="partner-chat-shell" style={{ display: "grid", gridTemplateColumns: "260px minmax(0,1fr)", gap: 14, alignItems: "start" }}>
+          <div className="partner-chat-shell" style={{ display: "grid", gridTemplateColumns: "240px minmax(0,1fr)", gap: 12, alignItems: "stretch", flex: 1, minHeight: 0 }}>
 
             {/* Sidebar */}
             <div className="partner-chat-list" style={{
-              border: "1px solid var(--line)", borderRadius: 20,
-              background: "var(--card)", overflow: "hidden",
+              border: "1px solid var(--line)", borderRadius: 16,
+              background: "var(--card)", overflow: "hidden", display: "flex", flexDirection: "column",
             }}>
-              <div style={{ padding: "14px 14px 10px", borderBottom: "1px solid var(--line)" }}>
-                <p style={{ fontFamily: "var(--font-display)", fontSize: 16, fontWeight: 700, color: "var(--ink-strong)" }}>Private Chats</p>
-                <p style={{ fontSize: 11, color: "var(--muted)", marginTop: 2 }}>{accepted.length} connection{accepted.length !== 1 ? "s" : ""}</p>
+              <div style={{ padding: "12px 14px 10px", borderBottom: "1px solid var(--line)", flexShrink: 0 }}>
+                <p style={{ fontFamily: "var(--font-display)", fontSize: 15, fontWeight: 700, color: "var(--ink-strong)" }}>Chats</p>
+                <p style={{ fontSize: 11, color: "var(--muted)", marginTop: 1 }}>{accepted.length} active</p>
               </div>
+              <div style={{ flex: 1, overflowY: "auto" }}>
               {accepted.length === 0 ? (
                 <div style={{ padding: "20px 14px", textAlign: "center", color: "var(--muted)", fontSize: 13 }}>
                   Accept a request to start chatting.
@@ -1115,12 +1130,13 @@ export default function PartnerPage() {
                   </button>
                 );
               })}
+              </div>
             </div>
 
             {/* Chat panel */}
             <div className="partner-chat-panel" style={{
-              border: "1px solid var(--line)", borderRadius: 20, background: "var(--card)",
-              height: "min(82vh, 820px)", display: "flex", flexDirection: "column", overflow: "hidden",
+              border: "1px solid var(--line)", borderRadius: 16, background: "var(--card)",
+              display: "flex", flexDirection: "column", overflow: "hidden", minHeight: 0,
             }}>
               {activeConnection ? (() => {
                 const partner = profileMap.get(activePartnerId);
@@ -1346,7 +1362,7 @@ export default function PartnerPage() {
           </div>
         )}
 
-        {/* ════════════════════════ PROFILE ═════════════════════════ */}
+        {/* ══════════════════════ PROFILE ═══════════════════════════ */}
         {tab === "profile" && (
           <div style={{ maxWidth: 640, margin: "0 auto" }}>
             {!myProfile ? (
@@ -1464,12 +1480,13 @@ export default function PartnerPage() {
           </div>
         )}
       </div>
+      </div>
 
       <style>{`
         @media (max-width: 700px) {
           .partner-chat-shell { grid-template-columns: 1fr !important; }
-          .partner-chat-list  { height: auto !important; max-height: 200px !important; overflow-y: auto !important; }
-          .partner-chat-panel { height: calc(100dvh - 270px) !important; min-height: 480px !important; }
+          .partner-chat-list  { height: auto !important; max-height: 180px !important; overflow-y: auto !important; }
+          .partner-chat-panel { flex: 1 !important; min-height: 0 !important; height: auto !important; }
         }
       `}</style>
     </main>
