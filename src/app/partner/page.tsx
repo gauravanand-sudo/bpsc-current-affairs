@@ -649,20 +649,37 @@ export default function PartnerPage() {
       <section style={{ maxWidth: 1080, margin: "0 auto" }}>
         <div style={{
           ...card,
-          padding: "24px 18px",
-          background: "linear-gradient(135deg, #16110b, #2a1608 58%, #8a3f0f)",
-          color: "#fff",
+          padding: "16px",
+          background: "linear-gradient(135deg, rgba(255,255,255,0.92), rgba(255,248,235,0.76))",
+          color: "var(--ink-strong)",
           overflow: "hidden",
         }}>
-          <p style={{ fontFamily: "monospace", letterSpacing: "0.22em", fontSize: 11, opacity: 0.72, textTransform: "uppercase", marginBottom: 10 }}>
-            BPSC Cosmos Matching Lab
-          </p>
-          <h1 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(2rem, 7vw, 4.3rem)", lineHeight: 0.95, letterSpacing: "-0.05em", maxWidth: 760 }}>
-            Don&apos;t study alone. Build your serious circle.
-          </h1>
-          <p style={{ marginTop: 14, color: "rgba(255,255,255,0.72)", maxWidth: 620, lineHeight: 1.7, fontSize: 15 }}>
-            Match with aspirants who share your target, timing and weak areas. Send a request, accept privately, then use 1:1 chat for daily targets.
-          </p>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16, flexWrap: "wrap" }}>
+            <div>
+              <p style={{ fontFamily: "monospace", letterSpacing: "0.18em", fontSize: 10, color: "var(--accent)", textTransform: "uppercase", marginBottom: 6 }}>
+                Study Partner
+              </p>
+              <h1 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.45rem, 4vw, 2.25rem)", lineHeight: 1.02, letterSpacing: "-0.04em" }}>
+                Find focused partners for each prep goal.
+              </h1>
+              <p style={{ marginTop: 8, color: "var(--ink-soft)", maxWidth: 620, lineHeight: 1.55, fontSize: 13 }}>
+                Choose a student, select a purpose like CA or Answer Writing, then send a private request.
+              </p>
+            </div>
+            <div style={{
+              border: "1px solid rgba(184,97,23,0.20)",
+              background: "rgba(184,97,23,0.08)",
+              color: "var(--accent)",
+              borderRadius: 18,
+              padding: "10px 12px",
+              fontWeight: 900,
+              fontSize: 13,
+              minWidth: 132,
+              textAlign: "center",
+            }}>
+              {candidates.length} matches
+            </div>
+          </div>
         </div>
 
         {notice && (
@@ -749,6 +766,46 @@ export default function PartnerPage() {
                   <div style={{ width: `${score}%`, height: "100%", background: "linear-gradient(90deg, #b86117, #16a34a)", borderRadius: 999 }} />
                 </div>
 
+                <div style={{
+                  border: "1px solid rgba(184,97,23,0.18)",
+                  background: "linear-gradient(135deg, rgba(184,97,23,0.08), rgba(255,255,255,0.82))",
+                  borderRadius: 18,
+                  padding: 12,
+                }}>
+                  <p style={{ fontSize: 11, fontWeight: 900, color: "var(--accent)", letterSpacing: "0.12em", textTransform: "uppercase", marginBottom: 8 }}>
+                    Create request
+                  </p>
+                  <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 1fr) auto", gap: 8, alignItems: "stretch" }}>
+                    <select
+                      aria-label={`Request purpose for ${profile.display_name}`}
+                      value={selectedFocus}
+                      onChange={event => setRequestFocusByUser(prev => ({ ...prev, [profile.user_id]: event.target.value }))}
+                      style={{
+                        minWidth: 0, border: "1px solid var(--line)", borderRadius: 13,
+                        padding: "11px 12px", background: "var(--panel)", color: "var(--ink-strong)", fontWeight: 900,
+                      }}
+                    >
+                      {REQUEST_FOCUSES.map(item => <option key={item} value={item}>{item}</option>)}
+                    </select>
+                    <button type="button" disabled={actionPending === pendingKey} onClick={() => sendRequest(profile.user_id, selectedFocus)} style={{
+                      border: "none", borderRadius: 13, padding: "0 14px",
+                      background: "var(--accent)", color: "#fff", fontWeight: 900, cursor: "pointer",
+                      fontFamily: "var(--font-display)",
+                      opacity: actionPending === pendingKey ? 0.72 : 1,
+                      whiteSpace: "nowrap",
+                    }}>
+                      {actionPending === pendingKey
+                        ? "Sending..."
+                        : activeForFocus
+                          ? activeForFocus.status === "accepted" ? "Open chat" : "Pending"
+                          : "Send"}
+                    </button>
+                  </div>
+                  <p style={{ color: "var(--muted)", fontSize: 11, lineHeight: 1.45, marginTop: 8 }}>
+                    You can create separate rooms with the same student for different goals.
+                  </p>
+                </div>
+
                 <p style={{ color: "var(--ink-soft)", fontSize: 13, lineHeight: 1.55 }}>{reason}</p>
                 <p style={{ color: "var(--ink-strong)", fontSize: 13, lineHeight: 1.55 }}>{profile.bio}</p>
 
@@ -757,22 +814,6 @@ export default function PartnerPage() {
                     <span key={item} style={{ ...chip(false), cursor: "default", padding: "5px 9px" }}>{item}</span>
                   ))}
                 </div>
-
-                <label>
-                  <span style={{ fontSize: 11, fontWeight: 900, color: "var(--muted)", letterSpacing: "0.12em", textTransform: "uppercase" }}>
-                    Request purpose
-                  </span>
-                  <select
-                    value={selectedFocus}
-                    onChange={event => setRequestFocusByUser(prev => ({ ...prev, [profile.user_id]: event.target.value }))}
-                    style={{
-                      width: "100%", marginTop: 7, border: "1px solid var(--line)", borderRadius: 13,
-                      padding: "11px 12px", background: "var(--panel)", color: "var(--ink-strong)", fontWeight: 800,
-                    }}
-                  >
-                    {REQUEST_FOCUSES.map(item => <option key={item} value={item}>{item}</option>)}
-                  </select>
-                </label>
 
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, fontSize: 12 }}>
                   <div style={{ background: "rgba(22,163,74,0.08)", borderRadius: 12, padding: 10 }}>
@@ -785,19 +826,7 @@ export default function PartnerPage() {
                   </div>
                 </div>
 
-                <div style={{ display: "flex", gap: 8 }}>
-                  <button type="button" disabled={actionPending === pendingKey} onClick={() => sendRequest(profile.user_id, selectedFocus)} style={{
-                    flex: 1, border: "none", borderRadius: 13, padding: "12px 14px",
-                    background: "var(--accent)", color: "#fff", fontWeight: 900, cursor: "pointer",
-                    fontFamily: "var(--font-display)",
-                    opacity: actionPending === pendingKey ? 0.72 : 1,
-                  }}>
-                    {actionPending === pendingKey
-                      ? "Sending..."
-                      : activeForFocus
-                        ? activeForFocus.status === "accepted" ? "Open existing chat" : "View pending request"
-                        : `Send ${selectedFocus} request`}
-                  </button>
+                <div style={{ display: "flex", justifyContent: "flex-end" }}>
                   <button type="button" onClick={() => reportUser(profile.user_id)} style={{ ...chip(false), borderRadius: 13 }}>
                     Report
                   </button>
