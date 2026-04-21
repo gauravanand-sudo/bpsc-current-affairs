@@ -55,6 +55,20 @@ create table if not exists public.study_partner_reports (
   unique (reporter_id, reported_user_id)
 );
 
+create table if not exists public.study_partner_checkins (
+  id bigint generated always as identity primary key,
+  connection_id uuid not null references public.study_partner_connections(id) on delete cascade,
+  user_id uuid not null references auth.users(id) on delete cascade,
+  checkin_date date not null default current_date,
+  target text not null default '',
+  completed boolean not null default false,
+  focus_minutes integer not null default 0 check (focus_minutes between 0 and 1440),
+  mood text not null default 'steady',
+  created_at timestamptz not null default timezone('utc', now()),
+  updated_at timestamptz not null default timezone('utc', now()),
+  unique (connection_id, user_id, checkin_date)
+);
+
 create index if not exists study_partner_profiles_active_idx
   on public.study_partner_profiles (is_active, updated_at desc);
 
@@ -64,10 +78,14 @@ create index if not exists study_partner_connections_people_idx
 create index if not exists study_partner_messages_connection_idx
   on public.study_partner_messages (connection_id, created_at);
 
+create index if not exists study_partner_checkins_connection_idx
+  on public.study_partner_checkins (connection_id, checkin_date desc);
+
 alter table public.study_partner_profiles enable row level security;
 alter table public.study_partner_connections enable row level security;
 alter table public.study_partner_messages enable row level security;
 alter table public.study_partner_reports enable row level security;
+alter table public.study_partner_checkins enable row level security;
 
 drop policy if exists "partner_profiles_read_active" on public.study_partner_profiles;
 create policy "partner_profiles_read_active"
@@ -146,6 +164,40 @@ create policy "partner_reports_read_own"
   to authenticated
   using (auth.uid() = reporter_id);
 
+drop policy if exists "partner_checkins_read_accepted_members" on public.study_partner_checkins;
+create policy "partner_checkins_read_accepted_members"
+  on public.study_partner_checkins for select
+  to authenticated
+  using (
+    exists (
+      select 1 from public.study_partner_connections c
+      where c.id = connection_id
+        and c.status = 'accepted'
+        and (auth.uid() = c.requester_id or auth.uid() = c.receiver_id)
+    )
+  );
+
+drop policy if exists "partner_checkins_insert_own" on public.study_partner_checkins;
+create policy "partner_checkins_insert_own"
+  on public.study_partner_checkins for insert
+  to authenticated
+  with check (
+    auth.uid() = user_id
+    and exists (
+      select 1 from public.study_partner_connections c
+      where c.id = connection_id
+        and c.status = 'accepted'
+        and (auth.uid() = c.requester_id or auth.uid() = c.receiver_id)
+    )
+  );
+
+drop policy if exists "partner_checkins_update_own" on public.study_partner_checkins;
+create policy "partner_checkins_update_own"
+  on public.study_partner_checkins for update
+  to authenticated
+  using (auth.uid() = user_id)
+  with check (auth.uid() = user_id);
+
 do $$
 begin
   alter publication supabase_realtime add table public.study_partner_profiles;
@@ -161,6 +213,12 @@ end $$;
 do $$
 begin
   alter publication supabase_realtime add table public.study_partner_messages;
+exception when duplicate_object then null;
+end $$;
+
+do $$
+begin
+  alter publication supabase_realtime add table public.study_partner_checkins;
 exception when duplicate_object then null;
 end $$;
 
