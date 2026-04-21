@@ -29,6 +29,7 @@ create table if not exists public.study_partner_connections (
   id uuid primary key default gen_random_uuid(),
   requester_id uuid not null references auth.users(id) on delete cascade,
   receiver_id uuid not null references auth.users(id) on delete cascade,
+  request_focus text not null default 'Current Affairs',
   status text not null default 'pending' check (status in ('pending', 'accepted', 'rejected', 'cancelled')),
   opener text not null default '',
   created_at timestamptz not null default timezone('utc', now()),
@@ -39,10 +40,20 @@ create table if not exists public.study_partner_connections (
 alter table public.study_partner_connections
   drop constraint if exists study_partner_connections_requester_id_receiver_id_key;
 
-create unique index if not exists study_partner_connections_unique_pair_idx
+alter table public.study_partner_connections
+  add column if not exists request_focus text not null default 'Current Affairs';
+
+update public.study_partner_connections
+set request_focus = 'Current Affairs'
+where request_focus is null or trim(request_focus) = '';
+
+drop index if exists public.study_partner_connections_unique_pair_idx;
+
+create unique index if not exists study_partner_connections_unique_pair_focus_idx
   on public.study_partner_connections (
     least(requester_id, receiver_id),
-    greatest(requester_id, receiver_id)
+    greatest(requester_id, receiver_id),
+    lower(request_focus)
   )
   where status in ('pending', 'accepted');
 

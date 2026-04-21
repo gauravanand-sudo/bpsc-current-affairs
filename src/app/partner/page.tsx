@@ -29,6 +29,7 @@ type PartnerConnection = {
   id: string;
   requester_id: string;
   receiver_id: string;
+  request_focus: string;
   status: "pending" | "accepted" | "rejected" | "cancelled";
   opener: string;
   created_at: string;
@@ -72,6 +73,14 @@ const MODES = [
   "Mock-test partner",
   "Full syllabus revision",
 ];
+const REQUEST_FOCUSES = [
+  "Current Affairs",
+  "Answer Writing",
+  "Mock Analysis",
+  "Daily Revision",
+  "Doubt Solving",
+  "Bihar Special",
+];
 const SLOTS = ["Morning", "Afternoon", "Evening", "Late night"];
 const SUBJECTS = [
   "Current Affairs", "Polity", "Economy", "History", "Geography",
@@ -107,6 +116,10 @@ function timeAgo(iso: string) {
 
 function todayKey() {
   return new Date().toISOString().slice(0, 10);
+}
+
+function requestFocusOf(connection: Pick<PartnerConnection, "request_focus">) {
+  return connection.request_focus || "Current Affairs";
 }
 
 function overlap(a: string[] = [], b: string[] = []) {
@@ -180,6 +193,7 @@ export default function PartnerPage() {
   const [focusMinutes, setFocusMinutes] = useState(90);
   const [mood, setMood] = useState("locked in");
   const [actionPending, setActionPending] = useState<string | null>(null);
+  const [requestFocusByUser, setRequestFocusByUser] = useState<Record<string, string>>({});
   const [saving, setSaving] = useState(false);
   const [notice, setNotice] = useState("");
   const bottomRef = useRef<HTMLDivElement>(null);
@@ -225,17 +239,11 @@ export default function PartnerPage() {
   const attentionCount = incoming.length + activeChatCount;
 
   const candidates = useMemo(() => {
-    const blocked = new Set(
-      connections
-        .filter(c => c.status === "pending" || c.status === "accepted")
-        .flatMap(c => [c.requester_id, c.receiver_id])
-    );
     return profiles
       .filter(p => p.user_id !== userId)
-      .filter(p => !blocked.has(p.user_id))
       .map(p => ({ profile: p, score: scoreMatch(myProfile, p), reason: matchReason(myProfile, p) }))
       .sort((a, b) => b.score - a.score);
-  }, [connections, myProfile, profiles, userId]);
+  }, [myProfile, profiles, userId]);
 
   useEffect(() => {
     const supabase = getSupabaseBrowserClient();
@@ -295,6 +303,15 @@ export default function PartnerPage() {
       void loadMessages(activeConnection.id);
       void loadCheckins(activeConnection.id);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeConnection?.id]);
+
+  useEffect(() => {
+    if (!activeConnection?.id) return;
+    const timer = window.setInterval(() => {
+      void loadMessages(activeConnection.id);
+    }, 4500);
+    return () => window.clearInterval(timer);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [activeConnection?.id]);
 
@@ -417,31 +434,76 @@ export default function PartnerPage() {
     setTab("discover");
   }
 
-  async function sendRequest(receiverId: string) {
+  async function sendRequest(receiverId: string, requestFocus: string) {
     if (!session || !myProfile) {
       setTab("profile");
       setNotice("Create your study profile first.");
       return;
     }
-    setActionPending(`request:${receiverId}`);
-    setNotice("Sending match request...");
+    const pendingKey = `request:${receiverId}:${requestFocus}`;
+    setActionPending(pendingKey);
+    setNotice(`Sending ${requestFocus} request...`);
     const supabase = getSupabaseBrowserClient();
     const partner = profileMap.get(receiverId);
-    const { error } = await (supabase as any).from("study_partner_connections").insert({
+    const opener = `Hi ${partner?.display_name ?? "there"}, let's do a focused ${requestFocus} sprint for BPSC.`;
+    const { data: existingRows, error: existingError } = await (supabase as any)
+      .from("study_partner_connections")
+      .select("*")
+      .or(`and(requester_id.eq.${session.user.id},receiver_id.eq.${receiverId}),and(requester_id.eq.${receiverId},receiver_id.eq.${session.user.id})`)
+      .eq("request_focus", requestFocus)
+      .order("created_at", { ascending: false })
+      .limit(1);
+
+    if (existingError) {
+      setActionPending(null);
+      setNotice(existingError.message);
+      return;
+    }
+
+    const existing = ((existingRows ?? []) as PartnerConnection[])[0];
+    if (existing?.status === "accepted") {
+      setActiveConnectionId(existing.id);
+      setTab("chat");
+      setNotice(`You already have a ${requestFocus} chat with ${partner?.display_name ?? "this student"}.`);
+      setActionPending(null);
+      return;
+    }
+    if (existing?.status === "pending") {
+      setTab("requests");
+      setNotice(`A ${requestFocus} request with ${partner?.display_name ?? "this student"} is already pending.`);
+      setActionPending(null);
+      return;
+    }
+
+    const payload = {
       requester_id: session.user.id,
       receiver_id: receiverId,
-      opener: `Hi ${partner?.display_name ?? "there"}, let's do a 7-day BPSC accountability sprint.`,
-    });
+      request_focus: requestFocus,
+      opener,
+    };
+
+    const { error } = existing
+      ? await (supabase as any)
+        .from("study_partner_connections")
+        .update({
+          ...payload,
+          status: "pending",
+          responded_at: null,
+          created_at: new Date().toISOString(),
+        })
+        .eq("id", existing.id)
+      : await (supabase as any).from("study_partner_connections").insert(payload);
+
     if (error) {
       setActionPending(null);
       setNotice(
         error.message.includes("duplicate")
-          ? "You already have an active request or chat with this student."
+          ? `You already have an active ${requestFocus} request/chat with this student. Pick another purpose or open Requests/Messages.`
           : error.message
       );
       return;
     }
-    setNotice("Request sent. Chat opens after they accept.");
+    setNotice(`${requestFocus} request sent. Chat opens after they accept.`);
     await loadAll();
     setActionPending(null);
     setTab("requests");
@@ -651,6 +713,16 @@ export default function PartnerPage() {
 
             {candidates.map(({ profile, score, reason }) => (
               <article key={profile.user_id} style={{ ...card, padding: 18, display: "flex", flexDirection: "column", gap: 13 }}>
+                {(() => {
+                  const selectedFocus = requestFocusByUser[profile.user_id] ?? REQUEST_FOCUSES[0];
+                  const pendingKey = `request:${profile.user_id}:${selectedFocus}`;
+                  const activeForFocus = connections.find(conn =>
+                    (conn.status === "pending" || conn.status === "accepted")
+                    && requestFocusOf(conn) === selectedFocus
+                    && (conn.requester_id === profile.user_id || conn.receiver_id === profile.user_id)
+                  );
+                  return (
+                    <>
                 <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
                   {profile.avatar_url ? (
                     // eslint-disable-next-line @next/next/no-img-element
@@ -686,6 +758,22 @@ export default function PartnerPage() {
                   ))}
                 </div>
 
+                <label>
+                  <span style={{ fontSize: 11, fontWeight: 900, color: "var(--muted)", letterSpacing: "0.12em", textTransform: "uppercase" }}>
+                    Request purpose
+                  </span>
+                  <select
+                    value={selectedFocus}
+                    onChange={event => setRequestFocusByUser(prev => ({ ...prev, [profile.user_id]: event.target.value }))}
+                    style={{
+                      width: "100%", marginTop: 7, border: "1px solid var(--line)", borderRadius: 13,
+                      padding: "11px 12px", background: "var(--panel)", color: "var(--ink-strong)", fontWeight: 800,
+                    }}
+                  >
+                    {REQUEST_FOCUSES.map(item => <option key={item} value={item}>{item}</option>)}
+                  </select>
+                </label>
+
                 <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8, fontSize: 12 }}>
                   <div style={{ background: "rgba(22,163,74,0.08)", borderRadius: 12, padding: 10 }}>
                     <b style={{ color: "#15803d" }}>Strong</b>
@@ -698,25 +786,32 @@ export default function PartnerPage() {
                 </div>
 
                 <div style={{ display: "flex", gap: 8 }}>
-                  <button type="button" disabled={actionPending === `request:${profile.user_id}`} onClick={() => sendRequest(profile.user_id)} style={{
+                  <button type="button" disabled={actionPending === pendingKey} onClick={() => sendRequest(profile.user_id, selectedFocus)} style={{
                     flex: 1, border: "none", borderRadius: 13, padding: "12px 14px",
                     background: "var(--accent)", color: "#fff", fontWeight: 900, cursor: "pointer",
                     fontFamily: "var(--font-display)",
-                    opacity: actionPending === `request:${profile.user_id}` ? 0.72 : 1,
+                    opacity: actionPending === pendingKey ? 0.72 : 1,
                   }}>
-                    {actionPending === `request:${profile.user_id}` ? "Sending..." : "Send private request"}
+                    {actionPending === pendingKey
+                      ? "Sending..."
+                      : activeForFocus
+                        ? activeForFocus.status === "accepted" ? "Open existing chat" : "View pending request"
+                        : `Send ${selectedFocus} request`}
                   </button>
                   <button type="button" onClick={() => reportUser(profile.user_id)} style={{ ...chip(false), borderRadius: 13 }}>
                     Report
                   </button>
                 </div>
+                    </>
+                  );
+                })()}
               </article>
             ))}
 
             {myProfile && candidates.length === 0 && (
               <div style={{ ...card, padding: 22, textAlign: "center", gridColumn: "1 / -1" }}>
                 <h2 style={{ fontFamily: "var(--font-display)", color: "var(--ink-strong)", marginBottom: 8 }}>No new matches yet</h2>
-                <p style={{ color: "var(--ink-soft)" }}>Your requests and accepted partners are hidden from Discover. Check Requests or Chat.</p>
+                <p style={{ color: "var(--ink-soft)" }}>When more students create profiles, they will appear here.</p>
               </div>
             )}
           </div>
@@ -745,8 +840,8 @@ export default function PartnerPage() {
         )}
 
         {tab === "chat" && (
-          <div style={{ display: "grid", gridTemplateColumns: "340px minmax(0, 1fr)", gap: 14, alignItems: "stretch" }}>
-            <div style={{ ...glassCard, padding: 12, height: "min(78vh, 760px)", overflowY: "auto" }}>
+          <div className="partner-chat-shell" style={{ display: "grid", gridTemplateColumns: "340px minmax(0, 1fr)", gap: 14, alignItems: "stretch" }}>
+            <div className="partner-chat-list" style={{ ...glassCard, padding: 12, height: "min(78vh, 760px)", overflowY: "auto" }}>
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10, margin: "6px 6px 12px" }}>
                 <div>
                   <p style={{ fontFamily: "monospace", fontSize: 10, color: "var(--accent)", letterSpacing: "0.16em", textTransform: "uppercase" }}>
@@ -760,8 +855,6 @@ export default function PartnerPage() {
               {accepted.map(conn => {
                 const other = profileMap.get(otherUser(conn));
                 const active = activeConnection?.id === conn.id;
-                const threadCheckins = checkins.filter(item => item.connection_id === conn.id && item.checkin_date === todayKey());
-                const threadDone = threadCheckins.length >= 2 && threadCheckins.every(item => item.completed);
                 return (
                   <button key={conn.id} onClick={() => setActiveConnectionId(conn.id)} style={{
                     width: "100%", textAlign: "left", border: active ? "1.5px solid var(--accent)" : "1px solid rgba(120,80,30,0.10)",
@@ -774,21 +867,23 @@ export default function PartnerPage() {
                       <span style={{
                         fontSize: 10,
                         fontWeight: 900,
-                        color: threadDone ? "#15803d" : "var(--accent)",
-                        background: threadDone ? "rgba(22,163,74,0.10)" : "rgba(184,97,23,0.10)",
+                        color: active ? "var(--accent)" : "var(--muted)",
+                        background: active ? "rgba(184,97,23,0.10)" : "rgba(120,80,30,0.08)",
                         borderRadius: 999,
                         padding: "3px 7px",
                       }}>
-                        {threadDone ? "done" : "active"}
+                        chat
                       </span>
                     </div>
-                    <p style={{ color: "var(--muted)", fontSize: 12, marginTop: 4, lineHeight: 1.45 }}>{other?.study_mode ?? "1:1 accountability"}</p>
+                    <p style={{ color: "var(--muted)", fontSize: 12, marginTop: 4, lineHeight: 1.45 }}>
+                      {requestFocusOf(conn)} room · {other?.study_mode ?? "1:1 accountability"}
+                    </p>
                   </button>
                 );
               })}
             </div>
 
-            <div style={{ ...glassCard, height: "min(78vh, 760px)", minWidth: 0, display: "flex", flexDirection: "column", overflow: "hidden" }}>
+            <div className="partner-chat-panel" style={{ ...glassCard, height: "min(78vh, 760px)", minHeight: 0, minWidth: 0, display: "flex", flexDirection: "column", overflow: "hidden" }}>
               {activeConnection ? (
                 <>
                   <div style={{ padding: "16px 18px", borderBottom: "1px solid rgba(120,80,30,0.12)", background: "rgba(255,255,255,0.58)" }}>
@@ -797,29 +892,14 @@ export default function PartnerPage() {
                         <h2 style={{ fontFamily: "var(--font-display)", color: "var(--ink-strong)", fontSize: 22 }}>
                           {profileMap.get(otherUser(activeConnection))?.display_name ?? "Study Partner"}
                         </h2>
-                        <p style={{ color: "var(--muted)", fontSize: 12 }}>Separate private chat · daily pact · real accountability</p>
+                        <p style={{ color: "var(--muted)", fontSize: 12 }}>
+                          {requestFocusOf(activeConnection)} room · private 1:1 chat · realtime sync
+                        </p>
                       </div>
-                      <span style={{ ...chip(pactComplete), cursor: "default" }}>{pactComplete ? "closed today" : "open today"}</span>
+                      <span style={{ ...chip(true), cursor: "default" }}>{requestFocusOf(activeConnection)}</span>
                     </div>
                   </div>
-                  <DailyPact
-                    partnerName={profileMap.get(otherUser(activeConnection))?.display_name ?? "Partner"}
-                    targetText={targetText}
-                    setTargetText={setTargetText}
-                    focusMinutes={focusMinutes}
-                    setFocusMinutes={setFocusMinutes}
-                    mood={mood}
-                    setMood={setMood}
-                    myCheckin={myCheckin}
-                    partnerCheckin={partnerCheckin}
-                    checkins={checkins}
-                    pairFocusMinutes={pairFocusMinutes}
-                    pactComplete={pactComplete}
-                    onSave={() => saveCheckin(false)}
-                    onDone={() => saveCheckin(true)}
-                    actionPending={actionPending}
-                  />
-                  <div style={{ flex: 1, overflowY: "auto", padding: 14, display: "flex", flexDirection: "column", gap: 10 }}>
+                  <div style={{ flex: 1, minHeight: 0, overflowY: "auto", padding: 14, display: "flex", flexDirection: "column", gap: 10 }}>
                     {messages.length === 0 && (
                       <div style={{ textAlign: "center", padding: "28px 12px", color: "var(--muted)" }}>
                         <p style={{ fontFamily: "var(--font-display)", color: "var(--ink-strong)", fontSize: 18, marginBottom: 6 }}>Start this private thread</p>
@@ -844,7 +924,7 @@ export default function PartnerPage() {
                     })}
                     <div ref={bottomRef} />
                   </div>
-                  <div style={{ padding: 12, borderTop: "1px solid var(--line)", display: "flex", gap: 8 }}>
+                  <div style={{ padding: 12, borderTop: "1px solid var(--line)", display: "flex", gap: 8, background: "rgba(255,255,255,0.78)" }}>
                     <input
                       value={messageText}
                       onChange={event => setMessageText(event.target.value)}
@@ -935,15 +1015,26 @@ export default function PartnerPage() {
 
       <style>{`
         @media (max-width: 760px) {
+          .partner-chat-shell,
           main [style*="grid-template-columns: 340px minmax(0, 1fr)"] {
             grid-template-columns: 1fr !important;
           }
-          main [style*="height: min(78vh, 760px)"] {
+          .partner-chat-list {
             height: auto !important;
-            max-height: none !important;
+            max-height: 280px !important;
+          }
+          .partner-chat-panel {
+            height: calc(100dvh - 220px) !important;
+            min-height: 520px !important;
           }
           main [style*="grid-template-columns: 1.4fr 0.8fr"] {
             grid-template-columns: 1fr !important;
+          }
+        }
+        @media (max-width: 520px) {
+          .partner-chat-panel {
+            height: calc(100dvh - 190px) !important;
+            min-height: 460px !important;
           }
         }
       `}</style>
@@ -1208,7 +1299,10 @@ function RequestList({ title, empty, rows, userId, profileMap, onAccept, onRejec
                 <b style={{ color: "var(--ink-strong)" }}>{profile?.display_name ?? "Aspirant"}</b>
                 <p style={{ color: "var(--muted)", fontSize: 12, marginTop: 3 }}>{profile?.exam_target} · {profile?.stage}</p>
               </div>
-              <p style={{ color: "var(--muted)", fontSize: 11 }}>{timeAgo(row.created_at)}</p>
+              <div style={{ textAlign: "right" }}>
+                <span style={{ ...chip(true), cursor: "default", padding: "4px 8px", fontSize: 10 }}>{requestFocusOf(row)}</span>
+                <p style={{ color: "var(--muted)", fontSize: 11, marginTop: 5 }}>{timeAgo(row.created_at)}</p>
+              </div>
             </div>
             <p style={{ color: "var(--ink-soft)", fontSize: 13, lineHeight: 1.55, marginTop: 9 }}>{row.opener}</p>
             <div style={{ display: "flex", gap: 8, marginTop: 11 }}>
