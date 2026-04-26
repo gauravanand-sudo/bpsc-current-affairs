@@ -1,0 +1,445 @@
+{
+  "format": "atlas-v1",
+  "month": "2026-04",
+  "setName": "set-1-english",
+  "title": "April 2026 Study Atlas",
+  "language": "english",
+  "studySetsPerMonth": 5,
+  "estimatedMinutes": 85,
+  "intro": "This is the first full atlas-style BPSC study set: each theme covers the current affair, the static spine behind it, Bihar relevance, PYQ direction, revision cues, and a quick self-check so students feel the syllabus is closing around them while they study.",
+  "coveragePromise": [
+    "Theme-wise coverage instead of isolated event cards",
+    "Current + static + Bihar + PYQ in one reading flow",
+    "Interactive revision notes and weak-area marking",
+    "Built to retain learners on-platform rather than push them to PDF"
+  ],
+  "sections": [
+    {
+      "id": "governance-public-finance",
+      "title": "Governance, Representation and Public Finance",
+      "emoji": "🏛️",
+      "categoryKeys": ["polity", "economy", "bihar"],
+      "themeGoal": "This theme should make the learner feel that constitutional change, budgeting, representation, and Bihar's place in federal governance are being revised together rather than as disconnected facts.",
+      "coverageChecklist": [
+        "Constitutional article or amendment identified",
+        "Budget / representation logic understood",
+        "Bihar example extracted",
+        "One prelims trap revised"
+      ],
+      "dossiers": [
+        {
+          "id": 101,
+          "emoji": "🏛️",
+          "title": "Women's Reservation and the New Delimitation Debate",
+          "categories": ["polity", "bihar"],
+          "examPriority": "High",
+          "inBrief": "The debate is not only about reservation in legislatures; it is also about delimitation, redistribution of seats, federal balance, and what implementation after the next census would actually mean.",
+          "whyItMatters": "BPSC can ask this as a constitutional amendment question, a reservation-within-reservation question, a Bihar local governance example, or a mains discussion on representation and federal sensitivity.",
+          "whatHappened": [
+            "The current discussion revives how women's reservation in legislatures will operate only after fresh delimitation.",
+            "Seat expansion and reserve-seat design create a second layer of debate: representation is being linked with census-driven reallocation.",
+            "This makes the topic both constitutional and politically sensitive."
+          ],
+          "background": [
+            "The 106th Constitutional Amendment Act, 2023 is popularly known as the Nari Shakti Vandan Adhiniyam.",
+            "Reservation for women in Lok Sabha and State Assemblies is to become operational after the first delimitation following the relevant census.",
+            "Bihar already provides 50% reservation to women in Panchayati Raj institutions, making the state a strong comparative example."
+          ],
+          "staticSpine": [
+            {
+              "title": "Constitutional Spine",
+              "facts": [
+                "Article 82 provides for readjustment of Lok Sabha seats after each census through a Delimitation Commission process.",
+                "Articles 330 to 332 deal with reservation of seats for SCs and STs in Parliament and State Assemblies.",
+                "Women's reservation in the amendment operates within the constitutional structure of representation, not outside it."
+              ]
+            },
+            {
+              "title": "Historical Spine",
+              "facts": [
+                "The push for women's legislative reservation has a long history, with repeated earlier bills lapsing before the 2023 amendment.",
+                "The 73rd Amendment created a major local-government precedent by reserving seats for women in Panchayats."
+              ]
+            },
+            {
+              "title": "Bihar Spine",
+              "facts": [
+                "Bihar is a standard example in answers because it moved early to 50% reservation for women in Panchayati Raj institutions.",
+                "This lets students connect national representation debates with grassroots democratic participation."
+              ]
+            }
+          ],
+          "biharAngle": [
+            "Use Bihar's 50% Panchayati Raj reservation as the strongest state-level precedent.",
+            "In a mains answer, Bihar helps show that women's political participation has already been normalised at the grassroots."
+          ],
+          "pyqLinks": [
+            {
+              "year": "2023",
+              "stage": "Prelims",
+              "paper": "General Studies",
+              "question": "Questions on reservation and constitutional amendment sequencing often ask whether implementation is immediate or contingent on later procedures.",
+              "takeaway": "Train the learner to identify the hidden procedural step: delimitation is the real trap."
+            },
+            {
+              "year": "2022",
+              "stage": "Mains",
+              "paper": "GS 2",
+              "question": "Discuss how political representation reforms can deepen democracy without disturbing federal balance.",
+              "takeaway": "This topic fits perfectly because it combines inclusion, federalism, and procedural implementation."
+            }
+          ],
+          "prelimsTraps": [
+            "Confusing the amendment number and the popular name.",
+            "Forgetting that implementation is linked to delimitation, not just parliamentary passage.",
+            "Mixing SC/ST reservation provisions with the women-reservation mechanism."
+          ],
+          "mainsFrame": [
+            "Start with inclusive representation as a democratic goal.",
+            "Explain the constitutional mechanism: amendment plus later delimitation.",
+            "Add Bihar as a working example of women-centric political inclusion at local level.",
+            "End with the need for representation to be substantive, not symbolic."
+          ],
+          "mindmap": [
+            "🏛️ Amendment",
+            "🧮 Delimitation",
+            "👩 Representation",
+            "🌾 Bihar Panchayat precedent",
+            "🎯 Procedural trap"
+          ],
+          "revisionBullets": [
+            "106th Amendment = Nari Shakti Vandan Adhiniyam.",
+            "Operational after delimitation.",
+            "Articles 330 to 332 remain important for reserve-seat logic.",
+            "Bihar = 50% women reservation in Panchayati Raj."
+          ],
+          "interactivePrompts": [
+            "Can you explain in one line why passage of the amendment does not mean immediate implementation?",
+            "Can you connect Bihar's Panchayat example to national representation in 15 seconds?"
+          ],
+          "quickCheck": {
+            "question": "Which hidden procedural step is most likely to be tested with women's reservation in legislatures?",
+            "options": [
+              "Immediate enforcement through Cabinet resolution",
+              "Delimitation after the relevant census",
+              "Rajya Sabha special veto over reserved seats",
+              "Finance Commission recommendation"
+            ],
+            "answer": "Delimitation after the relevant census",
+            "explanation": "The exam trap is not the idea of reservation itself but the implementation trigger. Delimitation is the decisive constitutional bridge."
+          }
+        },
+        {
+          "id": 102,
+          "emoji": "💰",
+          "title": "Union Budget 2026-27 and Bihar's Federal Dependence Story",
+          "categories": ["economy", "polity", "bihar"],
+          "examPriority": "High",
+          "inBrief": "The budget should not be studied as mere figures. For BPSC, it is a doorway into constitutional finance, fiscal deficit, devolution, and why Bihar remains deeply shaped by central transfers.",
+          "whyItMatters": "This can appear as a constitutional article question, a fiscal-deficit concept question, or a mains discussion on federal equity and state capacity.",
+          "whatHappened": [
+            "The Union Budget for 2026-27 highlighted expenditure expansion, capital outlay, and a controlled fiscal path.",
+            "Budget announcements linked taxation, infrastructure, and sectoral support with broader growth messaging.",
+            "For Bihar-focused preparation, the real value is understanding how central taxation and transfers affect a lower-income state."
+          ],
+          "background": [
+            "Article 112 uses the term Annual Financial Statement for the budget.",
+            "All revenues and loans go into the Consolidated Fund of India under Article 266.",
+            "The Finance Commission under Article 280 shapes vertical and horizontal devolution."
+          ],
+          "staticSpine": [
+            {
+              "title": "Constitution and Public Finance",
+              "facts": [
+                "Article 110 explains the Money Bill framework that limits Rajya Sabha's role.",
+                "Article 112 covers the Annual Financial Statement.",
+                "Article 266 covers the Consolidated Fund of India."
+              ]
+            },
+            {
+              "title": "Budget Economics",
+              "facts": [
+                "Fiscal deficit measures the gap between total expenditure and total receipts excluding borrowings.",
+                "Capital expenditure is exam-relevant because it creates assets and future productivity gains.",
+                "Debt-to-GDP remains a standard indicator of fiscal sustainability."
+              ]
+            },
+            {
+              "title": "Bihar Lens",
+              "facts": [
+                "Bihar depends heavily on tax devolution and central support because of a limited own-tax base.",
+                "This makes Union Budget interpretation more important for Bihar than for many richer states."
+              ]
+            }
+          ],
+          "biharAngle": [
+            "Use Bihar to explain the practical importance of Finance Commission transfers.",
+            "In a mains answer, Bihar becomes an example of why cooperative federalism is not abstract."
+          ],
+          "pyqLinks": [
+            {
+              "year": "2024",
+              "stage": "Prelims",
+              "paper": "General Studies",
+              "question": "Which Article deals with the Annual Financial Statement?",
+              "takeaway": "This remains a classic memory-based prelims ask."
+            },
+            {
+              "year": "2021",
+              "stage": "Mains",
+              "paper": "GS 3",
+              "question": "Discuss how fiscal policy shapes inclusive development in poorer states.",
+              "takeaway": "Budget questions become stronger when linked to federal outcomes instead of only macro terms."
+            }
+          ],
+          "prelimsTraps": [
+            "Confusing Article 112 with Article 110 or Article 266.",
+            "Treating fiscal deficit and revenue deficit as the same.",
+            "Ignoring Bihar's fiscal dependence angle in a state-services exam."
+          ],
+          "mainsFrame": [
+            "Define the constitutional base of the budget.",
+            "Explain why fiscal choices influence development capacity.",
+            "Bring in Bihar as a transfer-dependent state that benefits from stronger federal support.",
+            "Conclude with growth plus equity as the federal finance test."
+          ],
+          "mindmap": [
+            "💰 Budget",
+            "📜 Article 112",
+            "🏦 Consolidated Fund",
+            "🌾 Bihar devolution",
+            "📈 Fiscal sustainability"
+          ],
+          "revisionBullets": [
+            "Article 112 = Annual Financial Statement.",
+            "Article 266 = Consolidated Fund.",
+            "Article 280 = Finance Commission.",
+            "Bihar's dependence on devolution is a likely answer enhancer."
+          ],
+          "interactivePrompts": [
+            "Can you explain fiscal deficit without using the word borrowing?",
+            "Can you tell why Bihar cares about Union Budget decisions more than a richer state might?"
+          ],
+          "quickCheck": {
+            "question": "Which constitutional article formally deals with the Annual Financial Statement?",
+            "options": [
+              "Article 110",
+              "Article 112",
+              "Article 266",
+              "Article 280"
+            ],
+            "answer": "Article 112",
+            "explanation": "This is a very direct prelims-style recall point and should become automatic."
+          }
+        }
+      ]
+    },
+    {
+      "id": "agriculture-markets-bihar",
+      "title": "Agriculture, Markets and Bihar's Rural Economy",
+      "emoji": "🌾",
+      "categoryKeys": ["economy", "bihar", "polity"],
+      "themeGoal": "The learner should come out of this section feeling that market reform, APMC, e-NAM, FPOs, and Bihar agriculture are one integrated theme.",
+      "coverageChecklist": [
+        "Market institution understood",
+        "Bihar-specific crop angle revised",
+        "State List connection remembered",
+        "One agriculture reform trap cleared"
+      ],
+      "dossiers": [
+        {
+          "id": 201,
+          "emoji": "🌾",
+          "title": "e-NAM, APMC Reform and Why Bihar Is a Special Case",
+          "categories": ["economy", "bihar", "polity"],
+          "examPriority": "High",
+          "inBrief": "e-NAM is not just a portal question. It opens up the larger issue of agricultural markets, State List powers, and Bihar's unusual abolition of the APMC Act.",
+          "whyItMatters": "This is exactly the kind of topic where BPSC can combine current affairs with Bihar-specific policy uniqueness.",
+          "whatHappened": [
+            "e-NAM expanded its mandi network and cumulative trade volume.",
+            "The platform's growth revived interest in digital agricultural marketing and better price discovery.",
+            "The strongest exam angle is the contrast between the e-NAM model and Bihar's post-APMC market structure."
+          ],
+          "background": [
+            "Agriculture and agricultural markets are largely state subjects in constitutional practice.",
+            "APMC mandis are regulated under state-level laws.",
+            "Bihar abolished its APMC Act in 2006 and is frequently cited for that reason."
+          ],
+          "staticSpine": [
+            {
+              "title": "Institutional Spine",
+              "facts": [
+                "e-NAM stands for Electronic National Agriculture Market.",
+                "SFAC supports the initiative institutionally.",
+                "FPOs are increasingly tied into the modern agri-marketing conversation."
+              ]
+            },
+            {
+              "title": "Constitutional Spine",
+              "facts": [
+                "Agriculture is in the State List.",
+                "Markets and fairs are also tied to state-level legislative space."
+              ]
+            },
+            {
+              "title": "Bihar Spine",
+              "facts": [
+                "Bihar abolished the APMC regime in 2006.",
+                "Bihar's maize, makhana, and litchi examples can be used to localise the answer."
+              ]
+            }
+          ],
+          "biharAngle": [
+            "Bihar is a standout state because APMC abolition makes its market story different from the national mandi model.",
+            "Use Muzaffarpur litchi, Mithila makhana, and Kosi maize as concrete memory anchors."
+          ],
+          "pyqLinks": [
+            {
+              "year": "2020",
+              "stage": "Prelims",
+              "paper": "General Studies",
+              "question": "Questions on agriculture reforms often test whether agriculture is a Union, State, or Concurrent List subject.",
+              "takeaway": "The governance location of the subject is often more important than the portal fact."
+            }
+          ],
+          "prelimsTraps": [
+            "Assuming the Centre directly controls APMC laws.",
+            "Remembering e-NAM but forgetting SFAC and the State List angle.",
+            "Missing Bihar's 2006 abolition fact."
+          ],
+          "mainsFrame": [
+            "Introduce the need for better agri-marketing and price discovery.",
+            "Explain e-NAM as a digital reform, but contrast its impact with Bihar's market model.",
+            "End with the need for institutional support, FPOs, logistics, and state-sensitive reform."
+          ],
+          "mindmap": [
+            "🌾 e-NAM",
+            "🏬 APMC",
+            "📜 State List",
+            "🌾 Bihar 2006",
+            "🎯 Maize-Makhana-Litchi"
+          ],
+          "revisionBullets": [
+            "e-NAM = electronic national agri market.",
+            "APMC laws are state-linked.",
+            "Bihar abolished APMC Act in 2006.",
+            "Use crop examples from Bihar in answers."
+          ],
+          "interactivePrompts": [
+            "Can you explain why Bihar is always mentioned in agri-market reform questions?",
+            "Can you name three Bihar crop anchors linked to market questions?"
+          ],
+          "quickCheck": {
+            "question": "Which Bihar-specific fact makes e-NAM and mandi reform questions especially important in BPSC?",
+            "options": [
+              "Bihar has the highest MSP in India",
+              "Bihar abolished its APMC Act in 2006",
+              "Bihar runs all mandis under a Union law",
+              "Bihar has India's largest seaport network"
+            ],
+            "answer": "Bihar abolished its APMC Act in 2006",
+            "explanation": "This is the one-liner that instantly localises the topic for a Bihar services exam."
+          }
+        }
+      ]
+    },
+    {
+      "id": "technology-state-capacity",
+      "title": "Digital Infrastructure, Innovation and State Capacity",
+      "emoji": "🔬",
+      "categoryKeys": ["st", "economy", "polity"],
+      "themeGoal": "Students should feel that digital payments, public tech, research policy, and administrative capacity are parts of one modern-governance theme.",
+      "coverageChecklist": [
+        "Digital institution identified",
+        "Security / innovation angle revised",
+        "One administrative use-case stated",
+        "One likely MCQ fixed in memory"
+      ],
+      "dossiers": [
+        {
+          "id": 301,
+          "emoji": "📱",
+          "title": "UPI Expansion and the Governance of Trust in Digital Payments",
+          "categories": ["economy", "st"],
+          "examPriority": "Medium",
+          "inBrief": "UPI growth should be read as a payments-system story, a state-capacity story, and a digital-governance trust story rather than only a transaction-volume headline.",
+          "whyItMatters": "BPSC can test the institutional spine behind UPI, especially NPCI, RBI regulation, and the meaning of secure digital public infrastructure.",
+          "whatHappened": [
+            "UPI reached massive transaction scale and expanded internationally.",
+            "The news also highlighted security and authentication strengthening.",
+            "That makes the topic ideal for connecting public tech with regulatory trust."
+          ],
+          "background": [
+            "NPCI created UPI under the wider digital payments ecosystem.",
+            "RBI regulates payment systems under the Payment and Settlement Systems Act, 2007.",
+            "Two-factor authentication matters because digital inclusion without trust cannot sustain adoption."
+          ],
+          "staticSpine": [
+            {
+              "title": "Institutional Spine",
+              "facts": [
+                "NPCI was set up under the aegis of RBI and the Indian Banks' Association.",
+                "UPI uses interoperable digital rails and virtual payment addresses."
+              ]
+            },
+            {
+              "title": "Technology Spine",
+              "facts": [
+                "Two-factor authentication is a basic digital-security principle.",
+                "Tokenisation and consent-based data flows are part of the wider digital-finance architecture."
+              ]
+            }
+          ],
+          "biharAngle": [
+            "In Bihar answers, use UPI as an example of digital inclusion reaching low-income and rural users when backed by mobile penetration and Jan Dhan accounts."
+          ],
+          "pyqLinks": [
+            {
+              "year": "2024",
+              "stage": "Prelims",
+              "paper": "General Studies",
+              "question": "Questions on digital payment systems often ask about the institution behind the platform rather than the app name.",
+              "takeaway": "NPCI is the likely anchor."
+            }
+          ],
+          "prelimsTraps": [
+            "Confusing NPCI with RBI itself.",
+            "Remembering UPI volume but not the institutional structure behind it."
+          ],
+          "mainsFrame": [
+            "Use UPI as digital public infrastructure.",
+            "Link inclusion with trust, regulation, and security.",
+            "Show that digital governance succeeds when scale and safeguards grow together."
+          ],
+          "mindmap": [
+            "📱 UPI",
+            "🏦 NPCI",
+            "🛡️ 2FA",
+            "📜 PSS Act 2007",
+            "🌾 Digital inclusion"
+          ],
+          "revisionBullets": [
+            "NPCI anchors UPI.",
+            "RBI regulates payment systems.",
+            "2FA is a trust mechanism, not just a technical term."
+          ],
+          "interactivePrompts": [
+            "Can you tell the difference between NPCI's operational role and RBI's regulatory role?",
+            "Can you convert UPI from a tech topic into a governance answer?"
+          ],
+          "quickCheck": {
+            "question": "Which institution is the key operational anchor behind UPI?",
+            "options": [
+              "Election Commission of India",
+              "National Payments Corporation of India",
+              "NITI Aayog",
+              "Finance Commission"
+            ],
+            "answer": "National Payments Corporation of India",
+            "explanation": "NPCI is the operational institution. RBI remains the regulator of the payment system."
+          }
+        }
+      ]
+    }
+  ]
+}
