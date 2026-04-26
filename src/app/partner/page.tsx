@@ -592,8 +592,12 @@ export default function PartnerPage() {
 
   /* ── Main render ─────────────────────────────────────────────────────── */
   return (
-    <main style={{ height: "100dvh", display: "flex", flexDirection: "column", overflow: "hidden", background: "var(--bg)" }}>
-      <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
+    <main id="partner-shell" style={{ position: "fixed", top: 52, left: 0, right: 0, bottom: 0, display: "flex", flexDirection: "column", overflow: "hidden", background: "var(--bg)" }}>
+      <style>{`
+        @keyframes spin { to { transform: rotate(360deg); } }
+        #partner-shell { bottom: 60px; }
+        @media (min-width: 640px) { #partner-shell { bottom: 0; } }
+      `}</style>
 
       {/* ── Fixed toast ───────────────────────────────────────────────── */}
       {notice && (
