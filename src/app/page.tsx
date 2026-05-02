@@ -1,245 +1,259 @@
+import Image from "next/image";
 import Link from "next/link";
 
-const FEATURES = [
+const CONTENT = [
   {
     href: "/ca",
-    emoji: "📖",
+    emoji: "📰",
     title: "Current Affairs",
-    desc: "Daily CA briefs, month-wise sets, and quick revision notes",
+    desc: "Daily CA sets, month-wise revision",
     color: "#c06010",
   },
   {
-    href: "/quizzes",
-    emoji: "🎯",
-    title: "Practice Quiz",
-    desc: "Topic-wise MCQs with instant feedback and explanations",
-    color: "#0891b2",
-  },
-  {
-    href: "/ask",
-    emoji: "🧠",
-    title: "Ask AI",
-    desc: "Get instant answers to your BPSC doubts anytime",
+    href: "/ca/theme/polity",
+    emoji: "📕",
+    title: "GS Ghatnachakra",
+    desc: "Polity, economy & governance GS",
     color: "#6366f1",
-  },
-  {
-    href: "/partner",
-    emoji: "🤝",
-    title: "Study Partner",
-    desc: "Find an accountability partner who matches your schedule",
-    color: "#15803d",
-  },
-  {
-    href: "/leaderboard",
-    emoji: "🏆",
-    title: "Leaderboard",
-    desc: "Track your daily rank and compete with aspirants",
-    color: "#d97706",
   },
   {
     href: "/ca/theme/bihar-special",
     emoji: "🗺️",
-    title: "Bihar Special",
-    desc: "Bihar GS — history, geography, polity & economy",
+    title: "Bihar GS",
+    desc: "Bihar history, geography & polity",
     color: "#b91c1c",
+  },
+  {
+    href: "/ca/theme/history-culture",
+    emoji: "📗",
+    title: "NCERT",
+    desc: "History, culture & geography basics",
+    color: "#0891b2",
+  },
+  {
+    href: "/ca",
+    emoji: "📘",
+    title: "Lucent GK",
+    desc: "Static GK, science & environment",
+    color: "#7c3aed",
+  },
+  {
+    href: "/quizzes",
+    emoji: "🎯",
+    title: "Quiz",
+    desc: "Timed MCQs with instant feedback",
+    color: "#15803d",
+  },
+  {
+    href: "/pyq",
+    emoji: "📋",
+    title: "Bihar PYQ",
+    desc: "BPSC previous year questions",
+    color: "#d97706",
   },
 ];
 
-const PILLS = ["72nd BPSC", "Daily CA", "AI-Powered", "100% Free"];
+const TOOLS = [
+  {
+    href: "/partner",
+    emoji: "🤝",
+    title: "Study Partner",
+    desc: "Find your accountability partner",
+    color: "#15803d",
+  },
+  {
+    href: "/support",
+    emoji: "💙",
+    title: "Feeling Sad?",
+    desc: "Take a breath. We've got you.",
+    color: "#6366f1",
+  },
+  {
+    href: "/ask",
+    emoji: "🧠",
+    title: "Ask Tutor",
+    desc: "AI tutor — ask anything, anytime",
+    color: "#c06010",
+  },
+];
 
 export default function HomePage() {
   return (
-    <main style={{ background: "var(--bg)", minHeight: "100vh" }}>
+    <main style={{ background: "var(--bg)", minHeight: "100vh", padding: "0 0 64px" }}>
 
-      {/* ── Hero ──────────────────────────────────────────────── */}
-      <section style={{
-        maxWidth: 680,
-        margin: "0 auto",
-        padding: "52px 20px 40px",
-        textAlign: "center",
+      {/* ── Brand header ─────────────────────────────────────── */}
+      <div style={{
+        display: "flex", flexDirection: "column", alignItems: "center",
+        padding: "40px 20px 28px", textAlign: "center",
       }}>
-        {/* Pill badges */}
-        <div style={{
-          display: "flex", gap: 6, justifyContent: "center",
-          flexWrap: "wrap", marginBottom: 24,
-        }}>
-          {PILLS.map(p => (
-            <span key={p} style={{
-              display: "inline-block",
-              background: "var(--accent-soft)",
-              color: "var(--accent)",
-              fontSize: 11, fontWeight: 800,
-              letterSpacing: "0.1em", textTransform: "uppercase",
-              padding: "4px 12px", borderRadius: 999,
-              border: "1px solid var(--accent-border)",
-            }}>{p}</span>
-          ))}
-        </div>
-
+        <Image
+          src="/icons/icon.svg"
+          alt="OneShot GS"
+          width={72} height={72}
+          style={{ borderRadius: "50%", marginBottom: 14, boxShadow: "0 4px 20px rgba(184,97,23,0.22)" }}
+          priority
+        />
         <h1 style={{
           fontFamily: "var(--font-display)",
-          fontSize: "clamp(2.2rem, 8vw, 3.8rem)",
-          lineHeight: 1.05,
+          fontSize: "clamp(1.8rem, 6vw, 2.8rem)",
           letterSpacing: "-0.04em",
+          lineHeight: 1.05,
           color: "var(--ink-strong)",
-          marginBottom: 16,
+          marginBottom: 6,
         }}>
-          Everything you need<br />
-          for <span style={{ color: "var(--accent)" }}>BPSC Prelims</span>
+          OneShot GS
         </h1>
-
         <p style={{
-          fontSize: 15,
-          color: "var(--ink-soft)",
-          lineHeight: 1.7,
-          maxWidth: 460,
-          margin: "0 auto 32px",
+          fontSize: 13.5,
+          color: "var(--muted)",
+          fontWeight: 600,
+          letterSpacing: "0.03em",
         }}>
-          Daily Current Affairs, AI doubt solving, timed quizzes, and a study partner — built for Bihar aspirants. Completely free.
+          72nd BPSC · Free · Always
         </p>
+      </div>
 
-        <div style={{ display: "flex", gap: 10, justifyContent: "center", flexWrap: "wrap" }}>
-          <Link href="/ca" className="btn-primary">
-            📖 Start Studying
-          </Link>
-          <Link href="/ask" className="btn-secondary">
-            🧠 Ask AI
-          </Link>
+      {/* ── Content section ───────────────────────────────────── */}
+      <section style={{ maxWidth: 860, margin: "0 auto", padding: "0 14px 8px" }}>
+        <p style={{
+          fontSize: 10, fontWeight: 800, letterSpacing: "0.18em",
+          textTransform: "uppercase", color: "var(--muted)",
+          marginBottom: 10, paddingLeft: 4,
+        }}>Study Material</p>
+
+        <div className="content-grid">
+          {CONTENT.map(item => (
+            <Link key={item.href + item.title} href={item.href} className="content-card" style={{
+              "--c": item.color,
+            } as React.CSSProperties}>
+              <span className="card-emoji">{item.emoji}</span>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <p style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: 15, fontWeight: 700,
+                  color: "var(--ink-strong)",
+                  letterSpacing: "-0.02em",
+                  marginBottom: 2,
+                  whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis",
+                }}>{item.title}</p>
+                <p style={{
+                  fontSize: 12, color: "var(--muted)",
+                  lineHeight: 1.5,
+                  whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis",
+                }}>{item.desc}</p>
+              </div>
+              <span className="card-arrow">›</span>
+            </Link>
+          ))}
         </div>
       </section>
 
-      {/* ── Stats strip ───────────────────────────────────────── */}
-      <div style={{ maxWidth: 860, margin: "0 auto 36px", padding: "0 16px" }}>
-        <div style={{
-          background: "var(--card)",
-          border: "1px solid var(--line)",
-          borderRadius: 20,
-          padding: "18px 8px",
-          display: "grid",
-          gridTemplateColumns: "repeat(4, 1fr)",
-          textAlign: "center",
-        }}>
-          {[
-            { num: "72nd",  label: "BPSC Prelims" },
-            { num: "Daily", label: "CA Updates" },
-            { num: "AI",    label: "Doubt Solving" },
-            { num: "Free",  label: "Always" },
-          ].map((s, i, arr) => (
-            <div key={i} style={{
-              borderRight: i < arr.length - 1 ? "1px solid var(--line)" : "none",
-              padding: "0 8px",
-            }}>
-              <div style={{
-                fontFamily: "var(--font-display)",
-                fontSize: "clamp(1.3rem, 4vw, 1.9rem)",
-                fontWeight: 700,
-                color: "var(--accent)",
-                letterSpacing: "-0.04em",
-                lineHeight: 1.1,
-              }}>{s.num}</div>
-              <div style={{
-                fontSize: 10.5, color: "var(--muted)",
-                fontWeight: 600, marginTop: 3,
-                letterSpacing: "0.04em",
-              }}>{s.label}</div>
-            </div>
-          ))}
-        </div>
-      </div>
+      {/* ── Tools section ─────────────────────────────────────── */}
+      <section style={{ maxWidth: 860, margin: "24px auto 0", padding: "0 14px" }}>
+        <p style={{
+          fontSize: 10, fontWeight: 800, letterSpacing: "0.18em",
+          textTransform: "uppercase", color: "var(--muted)",
+          marginBottom: 10, paddingLeft: 4,
+        }}>More on this site</p>
 
-      {/* ── Feature cards ─────────────────────────────────────── */}
-      <section style={{ maxWidth: 860, margin: "0 auto", padding: "0 16px 72px" }}>
-        <div className="home-grid">
-          {FEATURES.map(f => (
-            <Link key={f.href} href={f.href} className="home-card" style={{
-              "--card-color": f.color,
+        <div className="tools-grid">
+          {TOOLS.map(item => (
+            <Link key={item.href} href={item.href} className="tool-card" style={{
+              "--c": item.color,
             } as React.CSSProperties}>
-              <div style={{
-                width: 52, height: 52, borderRadius: 16,
-                background: `color-mix(in srgb, ${f.color} 12%, transparent)`,
-                border: `1.5px solid color-mix(in srgb, ${f.color} 22%, transparent)`,
-                display: "grid", placeItems: "center",
-                fontSize: 26, marginBottom: 12, flexShrink: 0,
-              }}>{f.emoji}</div>
-              <h2 style={{
-                fontFamily: "var(--font-display)",
-                fontSize: 16.5, fontWeight: 700,
-                color: "var(--ink-strong)",
-                letterSpacing: "-0.025em",
-                marginBottom: 5,
-              }}>{f.title}</h2>
+              <div className="tool-icon">{item.emoji}</div>
               <p style={{
-                fontSize: 12.5, color: "var(--muted)",
-                lineHeight: 1.6, flex: 1,
-              }}>{f.desc}</p>
-              <span className="card-cta" style={{ color: f.color }}>
-                Open →
-              </span>
+                fontFamily: "var(--font-display)",
+                fontSize: 14, fontWeight: 700,
+                color: "var(--ink-strong)",
+                letterSpacing: "-0.02em",
+                marginBottom: 3,
+              }}>{item.title}</p>
+              <p style={{
+                fontSize: 11.5, color: "var(--muted)", lineHeight: 1.5,
+              }}>{item.desc}</p>
             </Link>
           ))}
         </div>
       </section>
 
       <style>{`
-        .btn-primary {
-          display: inline-flex; align-items: center; gap: 8px;
-          background: var(--accent); color: #fff;
-          font-size: 14px; font-weight: 700;
-          padding: 13px 26px; border-radius: 14px;
-          text-decoration: none;
-          box-shadow: 0 4px 20px rgba(192,96,16,0.3);
-          transition: transform 0.14s ease, box-shadow 0.14s ease;
-        }
-        .btn-secondary {
-          display: inline-flex; align-items: center; gap: 8px;
-          background: var(--card); color: var(--ink-strong);
-          font-size: 14px; font-weight: 700;
-          padding: 13px 26px; border-radius: 14px;
-          text-decoration: none;
-          border: 1px solid var(--line-hi);
-          transition: transform 0.14s ease, border-color 0.14s ease;
-        }
-        @media (hover: hover) {
-          .btn-primary:hover  { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(192,96,16,0.36); }
-          .btn-secondary:hover { transform: translateY(-2px); border-color: var(--accent-border); }
-        }
-
-        .home-grid {
+        /* Content grid — 1 col mobile, 2 col tablet+ */
+        .content-grid {
           display: grid;
-          grid-template-columns: 1fr 1fr;
-          gap: 12px;
+          grid-template-columns: 1fr;
+          gap: 8px;
         }
-        @media (min-width: 600px) {
-          .home-grid { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+        @media (min-width: 540px) {
+          .content-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
         }
 
-        .home-card {
+        .content-card {
           text-decoration: none;
+          display: flex; align-items: center; gap: 12px;
           background: var(--card);
           border: 1px solid var(--line);
-          border-radius: 22px;
-          padding: 22px 20px 18px;
-          display: flex; flex-direction: column;
-          box-shadow: 0 2px 10px rgba(120,80,30,0.045);
-          transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+          border-radius: 16px;
+          padding: 14px 16px;
+          box-shadow: 0 1px 6px rgba(120,80,30,0.04);
+          transition: transform 0.13s ease, box-shadow 0.13s ease, border-color 0.13s ease;
         }
         @media (hover: hover) {
-          .home-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 10px 32px rgba(120,80,30,0.1);
-            border-color: var(--line-hi);
+          .content-card:hover {
+            transform: translateY(-2px);
+            border-color: color-mix(in srgb, var(--c) 35%, transparent);
+            box-shadow: 0 6px 22px rgba(120,80,30,0.09);
           }
         }
 
-        .card-cta {
-          display: inline-flex; align-items: center; gap: 3px;
-          margin-top: 14px;
-          font-size: 11.5px; font-weight: 800;
-          letter-spacing: 0.02em;
-          transition: gap 0.14s ease;
+        .card-emoji {
+          font-size: 26px; line-height: 1; flex-shrink: 0;
+          width: 46px; height: 46px; border-radius: 14px;
+          display: grid; place-items: center;
+          background: color-mix(in srgb, var(--c) 11%, transparent);
+          border: 1px solid color-mix(in srgb, var(--c) 20%, transparent);
+        }
+
+        .card-arrow {
+          font-size: 20px; font-weight: 300;
+          color: var(--muted); flex-shrink: 0;
+          transition: transform 0.13s ease;
         }
         @media (hover: hover) {
-          .home-card:hover .card-cta { gap: 6px; }
+          .content-card:hover .card-arrow { transform: translateX(2px); color: var(--c); }
+        }
+
+        /* Tools grid — always 3 columns */
+        .tools-grid {
+          display: grid;
+          grid-template-columns: repeat(3, 1fr);
+          gap: 10px;
+        }
+
+        .tool-card {
+          text-decoration: none;
+          background: var(--card);
+          border: 1px solid var(--line);
+          border-radius: 18px;
+          padding: 16px 14px;
+          display: flex; flex-direction: column; align-items: flex-start;
+          box-shadow: 0 1px 6px rgba(120,80,30,0.04);
+          transition: transform 0.13s ease, box-shadow 0.13s ease, border-color 0.13s ease;
+        }
+        @media (hover: hover) {
+          .tool-card:hover {
+            transform: translateY(-2px);
+            border-color: color-mix(in srgb, var(--c) 35%, transparent);
+            box-shadow: 0 6px 22px rgba(120,80,30,0.09);
+          }
+        }
+
+        .tool-icon {
+          font-size: 24px; line-height: 1; margin-bottom: 10px;
+          width: 44px; height: 44px; border-radius: 14px;
+          display: grid; place-items: center;
+          background: color-mix(in srgb, var(--c) 11%, transparent);
+          border: 1px solid color-mix(in srgb, var(--c) 20%, transparent);
         }
       `}</style>
     </main>
