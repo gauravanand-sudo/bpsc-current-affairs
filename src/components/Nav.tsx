@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import type { Session } from "@supabase/supabase-js";
@@ -65,12 +66,7 @@ export default function Nav() {
         display: "flex", alignItems: "center", justifyContent: "space-between",
       }}>
         <Link href="/" style={{ textDecoration: "none", flexShrink: 0 }}>
-          <span style={{
-            fontFamily: "var(--font-display)", fontWeight: 700,
-            fontSize: 17, color: "var(--ink-strong)", letterSpacing: "-0.02em",
-          }}>
-            OneShot <span style={{ color: "var(--accent)" }}>GS</span>
-          </span>
+          <Image src="/logo.png" alt="OneShot GS" width={110} height={42} style={{ objectFit: "contain", display: "block" }} priority />
         </Link>
 
         {/* Desktop nav links — hidden on mobile */}

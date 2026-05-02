@@ -113,22 +113,12 @@ export default function HomePage() {
         padding: "40px 20px 28px", textAlign: "center",
       }}>
         <Image
-          src="/icons/icon.svg"
+          src="/logo.png"
           alt="OneShot GS"
-          width={72} height={72}
-          style={{ borderRadius: "50%", marginBottom: 14, boxShadow: "0 4px 20px rgba(184,97,23,0.22)" }}
+          width={320} height={120}
+          style={{ objectFit: "contain", marginBottom: 6 }}
           priority
         />
-        <h1 style={{
-          fontFamily: "var(--font-display)",
-          fontSize: "clamp(1.8rem, 6vw, 2.8rem)",
-          letterSpacing: "-0.04em",
-          lineHeight: 1.05,
-          color: "var(--ink-strong)",
-          marginBottom: 6,
-        }}>
-          OneShot GS
-        </h1>
         <p style={{
           fontSize: 13,
           color: "var(--muted)",
