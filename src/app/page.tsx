@@ -81,30 +81,41 @@ const TOOLS = [
 export default function HomePage() {
   return (
     <main style={{
-      minHeight: "100vh", padding: "0 0 64px",
-      backgroundImage: "linear-gradient(to bottom, rgba(247,242,235,0.45) 0%, rgba(247,242,235,0.62) 35%, rgba(247,242,235,0.82) 70%, rgba(247,242,235,0.96) 100%), url('/bg1.png')",
+      minHeight: "100vh", padding: "34px 0 64px",
+      backgroundImage: "linear-gradient(to bottom, rgba(247,242,235,0.28) 0%, rgba(247,242,235,0.55) 30%, rgba(247,242,235,0.80) 65%, rgba(247,242,235,0.97) 100%), url('/bg1.png')",
       backgroundSize: "cover", backgroundPosition: "center",
       backgroundAttachment: "fixed", backgroundRepeat: "no-repeat",
+      position: "relative",
     }}>
+
+      {/* ── Grain overlay ─────────────────────────────────────── */}
+      <div style={{
+        position: "fixed", inset: 0, pointerEvents: "none", zIndex: 0,
+        backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.78' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E")`,
+        backgroundRepeat: "repeat", backgroundSize: "220px 220px",
+        opacity: 0.055, mixBlendMode: "overlay",
+      }} />
+
       <FloatingExamTimers />
 
-      {/* ── Exam ticker ───────────────────────────────────────── */}
+      {/* ── Exam ticker — fixed below nav ─────────────────────── */}
       <div style={{
-        overflow: "hidden",
-        background: "var(--accent-soft)",
-        borderBottom: "1px solid var(--accent-border)",
-        height: 34, display: "flex", alignItems: "center",
+        position: "fixed", top: 52, left: 0, right: 0, zIndex: 99,
+        overflow: "hidden", height: 32,
+        background: "rgba(18,8,2,0.90)",
+        backdropFilter: "blur(8px)", WebkitBackdropFilter: "blur(8px)",
+        borderBottom: "1px solid rgba(192,96,16,0.25)",
+        display: "flex", alignItems: "center",
       }}>
-        {/* Two copies each 100vw wide → always filled, animates -50% = -100vw */}
         <div className="ticker-track" style={{ display: "flex", width: "200%", alignItems: "center" }}>
           {[0, 1].map(i => (
             <div key={i} style={{ width: "50%", display: "flex", alignItems: "center", justifyContent: "space-evenly" }}>
               {["72nd BPSC Prelims", "BPSC AEDO", "BSSC CGL"].map((exam, j) => (
-                <span key={j} style={{ display: "flex", alignItems: "center", gap: 10, whiteSpace: "nowrap" }}>
-                  <span style={{ fontSize: 12, fontWeight: 700, color: "var(--accent)", letterSpacing: "0.06em", textTransform: "uppercase" }}>
+                <span key={j} style={{ display: "flex", alignItems: "center", gap: 14, whiteSpace: "nowrap" }}>
+                  <span style={{ width: 5, height: 5, borderRadius: "50%", background: "#d97706", display: "inline-block", flexShrink: 0 }} />
+                  <span style={{ fontSize: 10.5, fontWeight: 700, color: "#f5c87a", letterSpacing: "0.18em", textTransform: "uppercase" }}>
                     {exam}
                   </span>
-                  <span style={{ fontSize: 8, color: "var(--accent-border)" }}>◆</span>
                 </span>
               ))}
             </div>
@@ -116,14 +127,24 @@ export default function HomePage() {
       <div style={{
         display: "flex", flexDirection: "column", alignItems: "center",
         padding: "40px 20px 28px", textAlign: "center",
+        position: "relative", zIndex: 1,
       }}>
-        <Image
-          src="/logo3.png"
-          alt="OneShot GS"
-          width={320} height={120}
-          style={{ objectFit: "contain", marginBottom: 6, mixBlendMode: "multiply", filter: "drop-shadow(0 4px 18px rgba(120,80,30,0.18))" }}
-          priority
-        />
+        {/* Frosted pill behind logo so it's always visible */}
+        <div style={{
+          background: "rgba(255,255,255,0.72)",
+          backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)",
+          borderRadius: 24, padding: "12px 28px", marginBottom: 10,
+          boxShadow: "0 4px 24px rgba(120,80,30,0.1), inset 0 1px 0 rgba(255,255,255,0.9)",
+          border: "1px solid rgba(255,255,255,0.6)",
+        }}>
+          <Image
+            src="/logo3.png"
+            alt="OneShot GS"
+            width={280} height={105}
+            style={{ objectFit: "contain", display: "block" }}
+            priority
+          />
+        </div>
         <p style={{
           fontSize: 13.5,
           color: "var(--ink-strong)",
@@ -138,7 +159,7 @@ export default function HomePage() {
       </div>
 
       {/* ── Content section ───────────────────────────────────── */}
-      <section style={{ maxWidth: 860, margin: "0 auto", padding: "0 14px 8px" }}>
+      <section style={{ maxWidth: 860, margin: "0 auto", padding: "0 14px 8px", position: "relative", zIndex: 1 }}>
         <p style={{
           fontSize: 10, fontWeight: 800, letterSpacing: "0.18em",
           textTransform: "uppercase", color: "var(--muted)",
@@ -173,7 +194,7 @@ export default function HomePage() {
       </section>
 
       {/* ── Tools section ─────────────────────────────────────── */}
-      <section style={{ maxWidth: 860, margin: "24px auto 0", padding: "0 14px" }}>
+      <section style={{ maxWidth: 860, margin: "24px auto 0", padding: "0 14px", position: "relative", zIndex: 1 }}>
         <p style={{
           fontSize: 10, fontWeight: 800, letterSpacing: "0.18em",
           textTransform: "uppercase", color: "var(--muted)",

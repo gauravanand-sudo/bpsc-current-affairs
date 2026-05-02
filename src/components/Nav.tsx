@@ -66,7 +66,7 @@ export default function Nav() {
         display: "flex", alignItems: "center", justifyContent: "space-between",
       }}>
         <Link href="/" style={{ textDecoration: "none", flexShrink: 0 }}>
-          <Image src="/logo3.png" alt="OneShot GS" width={110} height={42} style={{ objectFit: "contain", display: "block", mixBlendMode: "multiply" }} priority />
+          <Image src="/logo3.png" alt="OneShot GS" width={110} height={42} style={{ objectFit: "contain", display: "block", mixBlendMode: "darken" }} priority />
         </Link>
 
         {/* Desktop nav links — hidden on mobile */}
