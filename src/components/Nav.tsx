@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { usePathname } from "next/navigation";
 import type { Session } from "@supabase/supabase-js";
-import { getSupabaseBrowserClient } from "@/lib/supabase";
+import { getAuthRedirectUrl, getSupabaseBrowserClient } from "@/lib/supabase";
 import ExamCountdown from "@/components/ExamCountdown";
 
 export default function Nav() {
@@ -31,7 +31,7 @@ export default function Nav() {
     const supabase = getSupabaseBrowserClient();
     await supabase.auth.signInWithOAuth({
       provider: "google",
-      options: { redirectTo: `${window.location.origin}/profile` },
+      options: { redirectTo: getAuthRedirectUrl("/profile") },
     });
   }
 

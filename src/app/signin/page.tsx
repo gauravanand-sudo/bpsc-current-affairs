@@ -1,6 +1,6 @@
 "use client";
 
-import { getSupabaseBrowserClient } from "@/lib/supabase";
+import { getAuthRedirectUrl, getSupabaseBrowserClient } from "@/lib/supabase";
 
 export default function SignInPage() {
   async function handleGoogleSignIn() {
@@ -8,7 +8,7 @@ export default function SignInPage() {
     await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: `${window.location.origin}/profile`,
+        redirectTo: getAuthRedirectUrl("/profile"),
       },
     });
   }

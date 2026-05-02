@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import type { Session } from "@supabase/supabase-js";
-import { getSupabaseBrowserClient } from "@/lib/supabase";
+import { getAuthRedirectUrl, getSupabaseBrowserClient } from "@/lib/supabase";
 
 /* ── Types ───────────────────────────────────────────────────────────────── */
 type PartnerProfile = {
@@ -403,7 +403,7 @@ export default function PartnerPage() {
   async function signIn() {
     await getSupabaseBrowserClient().auth.signInWithOAuth({
       provider: "google",
-      options: { redirectTo: `${window.location.origin}/partner` },
+      options: { redirectTo: getAuthRedirectUrl("/partner") },
     });
   }
 

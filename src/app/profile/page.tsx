@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import type { Session } from "@supabase/supabase-js";
-import { getSupabaseBrowserClient } from "@/lib/supabase";
+import { getAuthRedirectUrl, getSupabaseBrowserClient } from "@/lib/supabase";
 import { ensureProfileRow, syncLocalProgressToSupabase } from "@/lib/progress";
 import { getStreak } from "@/lib/streak";
 import { getBookmarks, type Bookmark } from "@/lib/bookmarks";
@@ -81,7 +81,7 @@ export default function ProfilePage() {
     const supabase = getSupabaseBrowserClient();
     await supabase.auth.signInWithOAuth({
       provider: "google",
-      options: { redirectTo: `${window.location.origin}/profile` },
+      options: { redirectTo: getAuthRedirectUrl("/profile") },
     });
   }
 

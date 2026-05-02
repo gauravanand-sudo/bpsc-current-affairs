@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
-import { getSupabaseBrowserClient } from "@/lib/supabase";
+import { getAuthRedirectUrl, getSupabaseBrowserClient } from "@/lib/supabase";
 
 type Message = {
   id: number;
@@ -253,7 +253,7 @@ function SupportPageInner() {
                 const supabase = getSupabaseBrowserClient();
                 await supabase.auth.signInWithOAuth({
                   provider: "google",
-                  options: { redirectTo: `${window.location.origin}/support` },
+                  options: { redirectTo: getAuthRedirectUrl("/support") },
                 });
               }}
               style={{

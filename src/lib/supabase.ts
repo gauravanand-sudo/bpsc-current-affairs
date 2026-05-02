@@ -3,6 +3,7 @@
 import { createClient } from "@supabase/supabase-js";
 
 let browserClient: ReturnType<typeof createClient> | null = null;
+const DEFAULT_APP_URL = "https://bpsc365.vercel.app";
 
 export function getSupabaseBrowserClient() {
   if (browserClient) return browserClient;
@@ -23,4 +24,32 @@ export function getSupabaseBrowserClient() {
   });
 
   return browserClient;
+}
+
+function normalizeBaseUrl(url: string) {
+  return url.endsWith("/") ? url.slice(0, -1) : url;
+}
+
+export function getAppBaseUrl() {
+  const configuredUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+  if (configuredUrl) return normalizeBaseUrl(configuredUrl);
+
+  if (typeof window !== "undefined") {
+    const origin = window.location.origin.trim();
+
+    // Avoid using transient OAuth or embedded origins as callback bases.
+    if (origin.startsWith("http://") || origin.startsWith("https://")) {
+      const { hostname } = new URL(origin);
+      if (!hostname.endsWith(".supabase.co")) {
+        return normalizeBaseUrl(origin);
+      }
+    }
+  }
+
+  return DEFAULT_APP_URL;
+}
+
+export function getAuthRedirectUrl(path: string) {
+  const normalizedPath = path.startsWith("/") ? path : `/${path}`;
+  return new URL(normalizedPath, `${getAppBaseUrl()}/`).toString();
 }
