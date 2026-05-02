@@ -136,7 +136,7 @@ export default function FloatingExamTimers() {
               display: "flex", alignItems: "center", gap: 5,
             }}>
               <span style={{ fontSize: 7, fontWeight: 800, letterSpacing: "0.1em", textTransform: "uppercase", color: exam.color, lineHeight: 1 }}>
-                {exam.short.split(" ")[0]}
+                {exam.short}
               </span>
               {r ? (
                 <span style={{ fontSize: 11, fontWeight: 800, color: "var(--ink-strong)", letterSpacing: "-0.02em", fontVariantNumeric: "tabular-nums" }}>
