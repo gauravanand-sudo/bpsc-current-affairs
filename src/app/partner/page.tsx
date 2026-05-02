@@ -611,6 +611,14 @@ export default function PartnerPage() {
         }
         @media (max-width: 639px) {
           .desktop-chat { display: none !important; }
+          .mobile-chat-overlay {
+            position: fixed !important;
+            top: 52px !important;
+            bottom: 60px !important;
+            left: 0 !important;
+            right: 0 !important;
+            z-index: 150 !important;
+          }
         }
       `}</style>
 
@@ -1530,28 +1538,38 @@ export default function PartnerPage() {
         }).length;
         return (
           <div className="mobile-chat-overlay" style={{
-            position: "fixed", inset: 0, zIndex: 300,
             display: "flex", flexDirection: "column",
-            background: "var(--bg)",
+            background: "var(--card)",
           }}>
             {/* Header */}
             <div style={{
-              padding: "12px 16px",
-              paddingTop: "calc(12px + env(safe-area-inset-top))",
+              padding: "10px 14px",
               borderBottom: "1px solid var(--line)", flexShrink: 0,
               display: "flex", alignItems: "center", gap: 10,
               background: "var(--card)",
             }}>
               <button onClick={() => setMobileOpenChat(false)} style={{
-                background: "none", border: "none", fontSize: 24, cursor: "pointer",
-                color: "var(--accent)", padding: "0 4px", flexShrink: 0, lineHeight: 1,
+                background: "none", border: "none", fontSize: 26, cursor: "pointer",
+                color: "var(--accent)", padding: "0 2px", flexShrink: 0, lineHeight: 1,
               }}>‹</button>
               <Avatar url={partner?.avatar_url ?? null} name={partner?.display_name ?? "?"} size={36} />
               <div style={{ flex: 1, minWidth: 0 }}>
                 <p style={{ fontWeight: 700, fontSize: 15, color: "var(--ink-strong)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
                   {partner?.display_name ?? "Study Partner"}
                 </p>
-                <p style={{ fontSize: 11, color: "var(--muted)" }}>{connFocus(activeConnection)} · private 1:1</p>
+                <div style={{ display: "flex", alignItems: "center", gap: 5, marginTop: 2 }}>
+                  <span style={{
+                    width: 7, height: 7, borderRadius: "50%", display: "inline-block", flexShrink: 0,
+                    background: partner && (Date.now() - new Date(partner.updated_at).getTime() < 86400000) ? "#16a34a" : "#9ca3af",
+                  }} />
+                  <p style={{ fontSize: 11, color: "var(--muted)" }}>
+                    {partner && (Date.now() - new Date(partner.updated_at).getTime() < 86400000)
+                      ? "active today"
+                      : partner ? `last seen ${timeAgo(partner.updated_at)}` : "offline"
+                    }
+                    {" · "}{connFocus(activeConnection)}
+                  </p>
+                </div>
               </div>
               <button onClick={() => setShowPact(v => !v)} style={{
                 border: "1px solid var(--line-hi)", borderRadius: 10, padding: "5px 10px",
@@ -1693,8 +1711,7 @@ export default function PartnerPage() {
 
             {/* Input */}
             <div style={{
-              padding: "9px 12px",
-              paddingBottom: "calc(9px + env(safe-area-inset-bottom))",
+              padding: "9px 12px 11px",
               borderTop: "1px solid var(--line)",
               flexShrink: 0, display: "flex", gap: 8, background: "var(--card)",
             }}>
