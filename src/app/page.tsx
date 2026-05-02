@@ -80,7 +80,12 @@ const TOOLS = [
 
 export default function HomePage() {
   return (
-    <main style={{ background: "var(--bg)", minHeight: "100vh", padding: "0 0 64px" }}>
+    <main style={{
+      minHeight: "100vh", padding: "0 0 64px",
+      backgroundImage: "url('/bg.png')",
+      backgroundSize: "cover", backgroundPosition: "center",
+      backgroundAttachment: "fixed", backgroundRepeat: "no-repeat",
+    }}>
       <FloatingExamTimers />
 
       {/* ── Exam ticker ───────────────────────────────────────── */}
