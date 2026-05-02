@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import FloatingExamTimers from "@/components/FloatingExamTimers";
 
 const CONTENT = [
   {
@@ -80,6 +81,7 @@ const TOOLS = [
 export default function HomePage() {
   return (
     <main style={{ background: "var(--bg)", minHeight: "100vh", padding: "0 0 64px" }}>
+      <FloatingExamTimers />
 
       {/* ── Exam ticker ───────────────────────────────────────── */}
       <div style={{
