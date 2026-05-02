@@ -118,7 +118,7 @@ export default function HomePage() {
         padding: "40px 20px 28px", textAlign: "center",
       }}>
         <Image
-          src="/logo3.png"
+          src="/logo4.png"
           alt="OneShot GS"
           width={320} height={120}
           style={{ objectFit: "contain", marginBottom: 6, filter: "drop-shadow(0 4px 18px rgba(120,80,30,0.22))" }}
