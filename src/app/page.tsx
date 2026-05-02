@@ -81,6 +81,30 @@ export default function HomePage() {
   return (
     <main style={{ background: "var(--bg)", minHeight: "100vh", padding: "0 0 64px" }}>
 
+      {/* ── Exam ticker ───────────────────────────────────────── */}
+      <div style={{
+        overflow: "hidden",
+        background: "var(--accent-soft)",
+        borderBottom: "1px solid var(--accent-border)",
+        height: 34, display: "flex", alignItems: "center",
+      }}>
+        <div className="ticker-track">
+          {/* duplicated for seamless loop */}
+          {[0, 1].map(i => (
+            <span key={i} style={{ display: "flex", alignItems: "center", gap: 20, paddingRight: 20, whiteSpace: "nowrap" }}>
+              {["72nd BPSC Prelims", "BPSC AEDO", "BSSC CGL"].map((exam, j) => (
+                <span key={j} style={{ display: "flex", alignItems: "center", gap: 20 }}>
+                  <span style={{ fontSize: 12, fontWeight: 700, color: "var(--accent)", letterSpacing: "0.04em" }}>
+                    {exam}
+                  </span>
+                  <span style={{ fontSize: 10, color: "var(--accent-border)" }}>◆</span>
+                </span>
+              ))}
+            </span>
+          ))}
+        </div>
+      </div>
+
       {/* ── Brand header ─────────────────────────────────────── */}
       <div style={{
         display: "flex", flexDirection: "column", alignItems: "center",
@@ -180,6 +204,16 @@ export default function HomePage() {
       </section>
 
       <style>{`
+        .ticker-track {
+          display: flex;
+          animation: ticker 14s linear infinite;
+          width: max-content;
+        }
+        @keyframes ticker {
+          from { transform: translateX(0); }
+          to   { transform: translateX(-50%); }
+        }
+
         /* Content grid — 1 col mobile, 2 col tablet+ */
         .content-grid {
           display: grid;
