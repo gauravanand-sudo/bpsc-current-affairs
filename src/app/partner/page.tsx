@@ -596,7 +596,13 @@ export default function PartnerPage() {
       <style>{`
         @keyframes spin { to { transform: rotate(360deg); } }
         #partner-shell { bottom: 60px; }
-        @media (min-width: 640px) { #partner-shell { bottom: 0; } }
+        @media (min-width: 640px) {
+          #partner-shell { bottom: 0; }
+        }
+        @media (max-width: 639px) {
+          .chat-sidebar { display: none !important; }
+          .chat-root { padding: 6px !important; }
+        }
       `}</style>
 
       {/* ── Fixed toast ───────────────────────────────────────────────── */}
@@ -1196,10 +1202,10 @@ export default function PartnerPage() {
 
         {/* ═══════════════ CHAT — absolute fill ═══════════════════════════ */}
         {tab === "chat" && (
-          <div style={{ position: "absolute", inset: 0, display: "flex", padding: 12, gap: 12, boxSizing: "border-box" }}>
+          <div className="chat-root" style={{ position: "absolute", inset: 0, display: "flex", padding: 12, gap: 12, boxSizing: "border-box" }}>
 
-            {/* Sidebar */}
-            <div style={{
+            {/* Sidebar — hidden on mobile */}
+            <div className="chat-sidebar" style={{
               width: 210, flexShrink: 0, display: "flex", flexDirection: "column",
               border: "1px solid var(--line)", borderRadius: 16, background: "var(--card)", overflow: "hidden",
             }}>
