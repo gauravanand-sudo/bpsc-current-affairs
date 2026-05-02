@@ -4,9 +4,9 @@ import { useEffect, useState } from "react";
 
 // ── Update dates when exam schedules are announced ────────────────────────────
 const EXAMS = [
-  { short: "BPSC 72nd",  full: "72nd BPSC Prelims", date: new Date("2026-07-26T00:00:00+05:30"), color: "#c06010", start: new Date("2025-07-26T00:00:00+05:30") },
-  { short: "BPSC AEDO",  full: "BPSC AEDO",         date: new Date("2026-09-15T00:00:00+05:30"), color: "#6366f1", start: new Date("2025-09-15T00:00:00+05:30") },
-  { short: "BSSC CGL",   full: "BSSC CGL",           date: new Date("2026-11-01T00:00:00+05:30"), color: "#15803d", start: new Date("2025-11-01T00:00:00+05:30") },
+  { short: "BPSC 72nd", full: "72nd BPSC Prelims", date: new Date("2026-07-26T00:00:00+05:30"), color: "#c06010", start: new Date("2025-07-26T00:00:00+05:30") },
+  { short: "BPSC AEDO", full: "BPSC AEDO",         date: new Date("2026-09-15T00:00:00+05:30"), color: "#6366f1", start: new Date("2025-09-15T00:00:00+05:30") },
+  { short: "BSSC CGL",  full: "BSSC CGL",           date: new Date("2026-11-01T00:00:00+05:30"), color: "#15803d", start: new Date("2025-11-01T00:00:00+05:30") },
 ];
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -44,7 +44,7 @@ export default function FloatingExamTimers() {
       <style>{`
         @keyframes timerSlideIn {
           from { opacity: 0; transform: translateX(28px) scale(0.96); }
-          to   { opacity: 1; transform: translateX(0)    scale(1); }
+          to   { opacity: 1; transform: translateX(0) scale(1); }
         }
         @keyframes secondPulse {
           0%, 100% { opacity: 1; transform: scale(1); }
@@ -54,8 +54,6 @@ export default function FloatingExamTimers() {
           0%   { background-position: -200% center; }
           100% { background-position:  200% center; }
         }
-        .exam-timers-root { display: none; }
-        @media (min-width: 768px) { .exam-timers-root { display: flex; } }
         .timer-card {
           animation: timerSlideIn 0.55s cubic-bezier(0.22,1,0.36,1) both;
         }
@@ -70,64 +68,84 @@ export default function FloatingExamTimers() {
           background-size: 200% auto;
           animation: barShimmer 3s linear infinite;
         }
+        /* Full cards on desktop */
+        .timers-full { display: flex; }
+        .timers-mini { display: none; }
+        @media (max-width: 767px) {
+          .timers-full { display: none; }
+          .timers-mini { display: flex; }
+        }
       `}</style>
 
-      <div className="exam-timers-root" style={{
-        position: "fixed",
-        top: 94, right: 10,
+      {/* ── Desktop: full cards ──────────────────────────────── */}
+      <div className="timers-full" style={{
+        position: "fixed", top: 94, right: 10,
         flexDirection: "column", gap: 7,
         zIndex: 90, pointerEvents: "none",
       }}>
         {EXAMS.map(exam => {
           const r = remaining(exam.date);
           const pct = progressPct(exam.start, exam.date);
-
           return (
             <div key={exam.short} className="timer-card" style={{
-              background: "rgba(255, 253, 248, 0.75)",
-              backdropFilter: "blur(18px)",
-              WebkitBackdropFilter: "blur(18px)",
+              background: "rgba(255,253,248,0.75)",
+              backdropFilter: "blur(18px)", WebkitBackdropFilter: "blur(18px)",
               borderRadius: 14,
               border: "1px solid rgba(255,255,255,0.6)",
               borderTop: `2.5px solid ${exam.color}`,
-              boxShadow: `0 8px 28px rgba(120,80,30,0.1), 0 2px 6px rgba(120,80,30,0.06), inset 0 1px 0 rgba(255,255,255,0.8)`,
-              padding: "9px 13px 10px",
-              minWidth: 152,
+              boxShadow: "0 8px 28px rgba(120,80,30,0.1), 0 2px 6px rgba(120,80,30,0.06), inset 0 1px 0 rgba(255,255,255,0.8)",
+              padding: "9px 13px 10px", minWidth: 152,
             }}>
-
-              {/* Exam label */}
-              <p style={{
-                fontSize: 8.5, fontWeight: 800,
-                letterSpacing: "0.14em", textTransform: "uppercase",
-                color: exam.color, marginBottom: 6,
-              }}>{exam.short}</p>
-
-              {/* Countdown numbers */}
+              <p style={{ fontSize: 8.5, fontWeight: 800, letterSpacing: "0.14em", textTransform: "uppercase", color: exam.color, marginBottom: 6 }}>{exam.short}</p>
               {r ? (
                 <div style={{ display: "flex", gap: 8, alignItems: "flex-end" }}>
-                  <Unit val={r.d}  label="d" color={exam.color} />
-                  <Unit val={r.h}  label="h" color={exam.color} />
-                  <Unit val={r.m}  label="m" color={exam.color} />
-                  <Unit val={r.s}  label="s" color={exam.color} pulse />
+                  <Unit val={r.d} label="d" color={exam.color} />
+                  <Unit val={r.h} label="h" color={exam.color} />
+                  <Unit val={r.m} label="m" color={exam.color} />
+                  <Unit val={r.s} label="s" color={exam.color} pulse />
                 </div>
               ) : (
                 <p style={{ fontSize: 13, fontWeight: 800, color: exam.color }}>Exam Day 🎯</p>
               )}
-
-              {/* Progress bar */}
-              <div style={{
-                marginTop: 9, height: 3, borderRadius: 99,
-                background: `color-mix(in srgb, ${exam.color} 12%, transparent)`,
-                overflow: "hidden",
-              }}>
-                <div className="timer-bar-fill" style={{
-                  height: "100%", borderRadius: 99,
-                  width: `${pct}%`,
-                  background: `linear-gradient(90deg, ${exam.color}99, ${exam.color}, ${exam.color}99)`,
-                  transition: "width 60s linear",
-                }} />
+              <div style={{ marginTop: 9, height: 3, borderRadius: 99, background: `color-mix(in srgb, ${exam.color} 12%, transparent)`, overflow: "hidden" }}>
+                <div className="timer-bar-fill" style={{ height: "100%", borderRadius: 99, width: `${pct}%`, background: `linear-gradient(90deg, ${exam.color}99, ${exam.color}, ${exam.color}99)`, transition: "width 60s linear" }} />
               </div>
+            </div>
+          );
+        })}
+      </div>
 
+      {/* ── Mobile: mini pills ───────────────────────────────── */}
+      <div className="timers-mini" style={{
+        position: "fixed", top: 94, right: 8,
+        flexDirection: "column", gap: 4,
+        zIndex: 90, pointerEvents: "none",
+      }}>
+        {EXAMS.map(exam => {
+          const r = remaining(exam.date);
+          return (
+            <div key={exam.short} className="timer-card" style={{
+              background: "rgba(255,253,248,0.82)",
+              backdropFilter: "blur(14px)", WebkitBackdropFilter: "blur(14px)",
+              borderRadius: 8,
+              borderLeft: `3px solid ${exam.color}`,
+              border: "1px solid rgba(255,255,255,0.55)",
+              borderLeftColor: exam.color,
+              boxShadow: "0 2px 10px rgba(120,80,30,0.1)",
+              padding: "4px 8px",
+              display: "flex", alignItems: "center", gap: 5,
+            }}>
+              <span style={{ fontSize: 7, fontWeight: 800, letterSpacing: "0.1em", textTransform: "uppercase", color: exam.color, lineHeight: 1 }}>
+                {exam.short.split(" ")[0]}
+              </span>
+              {r ? (
+                <span style={{ fontSize: 11, fontWeight: 800, color: "var(--ink-strong)", letterSpacing: "-0.02em", fontVariantNumeric: "tabular-nums" }}>
+                  {r.d}<span style={{ fontSize: 8, color: exam.color, fontWeight: 700 }}>d </span>
+                  <span className="sec-val">{String(r.h).padStart(2,"0")}</span><span style={{ fontSize: 8, color: exam.color, fontWeight: 700 }}>h</span>
+                </span>
+              ) : (
+                <span style={{ fontSize: 10, fontWeight: 800, color: exam.color }}>🎯</span>
+              )}
             </div>
           );
         })}
@@ -141,18 +159,11 @@ function Unit({ val, label, color, pulse }: { val: number; label: string; color:
   return (
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 1 }}>
       <span className={pulse ? "sec-val" : undefined} style={{
-        fontSize: label === "d" ? 18 : 15,
-        fontWeight: 800,
-        color: "var(--ink-strong)",
-        lineHeight: 1,
-        letterSpacing: "-0.03em",
-        fontVariantNumeric: "tabular-nums",
+        fontSize: label === "d" ? 18 : 15, fontWeight: 800,
+        color: "var(--ink-strong)", lineHeight: 1,
+        letterSpacing: "-0.03em", fontVariantNumeric: "tabular-nums",
       }}>{str}</span>
-      <span style={{
-        fontSize: 7.5, fontWeight: 800,
-        letterSpacing: "0.1em", textTransform: "uppercase",
-        color,
-      }}>{label}</span>
+      <span style={{ fontSize: 7.5, fontWeight: 800, letterSpacing: "0.1em", textTransform: "uppercase", color }}>{label}</span>
     </div>
   );
 }
