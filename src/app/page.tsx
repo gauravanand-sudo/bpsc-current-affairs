@@ -90,19 +90,19 @@ export default function HomePage() {
         borderBottom: "1px solid var(--accent-border)",
         height: 34, display: "flex", alignItems: "center",
       }}>
-        <div className="ticker-track">
-          {/* duplicated for seamless loop */}
+        {/* Two copies each 100vw wide → always filled, animates -50% = -100vw */}
+        <div className="ticker-track" style={{ display: "flex", width: "200%", alignItems: "center" }}>
           {[0, 1].map(i => (
-            <span key={i} style={{ display: "flex", alignItems: "center", gap: 20, paddingRight: 20, whiteSpace: "nowrap" }}>
+            <div key={i} style={{ width: "50%", display: "flex", alignItems: "center", justifyContent: "space-evenly" }}>
               {["72nd BPSC Prelims", "BPSC AEDO", "BSSC CGL"].map((exam, j) => (
-                <span key={j} style={{ display: "flex", alignItems: "center", gap: 20 }}>
-                  <span style={{ fontSize: 12, fontWeight: 700, color: "var(--accent)", letterSpacing: "0.04em" }}>
+                <span key={j} style={{ display: "flex", alignItems: "center", gap: 10, whiteSpace: "nowrap" }}>
+                  <span style={{ fontSize: 12, fontWeight: 700, color: "var(--accent)", letterSpacing: "0.06em", textTransform: "uppercase" }}>
                     {exam}
                   </span>
-                  <span style={{ fontSize: 10, color: "var(--accent-border)" }}>◆</span>
+                  <span style={{ fontSize: 8, color: "var(--accent-border)" }}>◆</span>
                 </span>
               ))}
-            </span>
+            </div>
           ))}
         </div>
       </div>
@@ -207,9 +207,7 @@ export default function HomePage() {
 
       <style>{`
         .ticker-track {
-          display: flex;
-          animation: ticker 14s linear infinite;
-          width: max-content;
+          animation: ticker 18s linear infinite;
         }
         @keyframes ticker {
           from { transform: translateX(0); }
