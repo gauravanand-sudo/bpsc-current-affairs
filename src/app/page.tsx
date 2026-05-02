@@ -90,7 +90,7 @@ export default function HomePage() {
 
       {/* ── Grain overlay ─────────────────────────────────────── */}
       <div style={{
-        position: "fixed", inset: 0, pointerEvents: "none", zIndex: 0,
+        position: "fixed", inset: 0, pointerEvents: "none", zIndex: -1,
         backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.78' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E")`,
         backgroundRepeat: "repeat", backgroundSize: "220px 220px",
         opacity: 0.13, mixBlendMode: "multiply",
@@ -127,13 +127,12 @@ export default function HomePage() {
       <div style={{
         display: "flex", flexDirection: "column", alignItems: "center",
         padding: "40px 20px 28px", textAlign: "center",
-        position: "relative", zIndex: 1,
       }}>
         <Image
           src="/logo3.png"
           alt="OneShot GS"
           width={300} height={112}
-          style={{ objectFit: "contain", display: "block", marginBottom: 8, mixBlendMode: "multiply" }}
+          style={{ objectFit: "contain", display: "block", marginBottom: 8, mixBlendMode: "darken" }}
           priority
         />
         <p style={{
@@ -150,7 +149,7 @@ export default function HomePage() {
       </div>
 
       {/* ── Content section ───────────────────────────────────── */}
-      <section style={{ maxWidth: 860, margin: "0 auto", padding: "0 14px 8px", position: "relative", zIndex: 1 }}>
+      <section style={{ maxWidth: 860, margin: "0 auto", padding: "0 14px 8px" }}>
         <p style={{
           fontSize: 10, fontWeight: 800, letterSpacing: "0.18em",
           textTransform: "uppercase", color: "var(--muted)",
@@ -185,7 +184,7 @@ export default function HomePage() {
       </section>
 
       {/* ── Tools section ─────────────────────────────────────── */}
-      <section style={{ maxWidth: 860, margin: "24px auto 0", padding: "0 14px", position: "relative", zIndex: 1 }}>
+      <section style={{ maxWidth: 860, margin: "24px auto 0", padding: "0 14px" }}>
         <p style={{
           fontSize: 10, fontWeight: 800, letterSpacing: "0.18em",
           textTransform: "uppercase", color: "var(--muted)",
