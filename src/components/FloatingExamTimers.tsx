@@ -88,7 +88,7 @@ export default function FloatingExamTimers() {
           const pct = progressPct(exam.start, exam.date);
           return (
             <div key={exam.short} className="timer-card" style={{
-              background: "rgba(255,253,248,0.75)",
+              background: "rgba(255,253,248,0.18)",
               backdropFilter: "blur(18px)", WebkitBackdropFilter: "blur(18px)",
               borderRadius: 14,
               border: "1px solid rgba(255,255,255,0.6)",
@@ -125,7 +125,7 @@ export default function FloatingExamTimers() {
           const r = remaining(exam.date);
           return (
             <div key={exam.short} className="timer-card" style={{
-              background: "rgba(255,253,248,0.82)",
+              background: "rgba(255,253,248,0.18)",
               backdropFilter: "blur(14px)", WebkitBackdropFilter: "blur(14px)",
               borderRadius: 8,
               borderLeft: `3px solid ${exam.color}`,
