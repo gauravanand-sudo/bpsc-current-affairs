@@ -118,20 +118,20 @@ export default function HomePage() {
         padding: "40px 20px 28px", textAlign: "center",
       }}>
         <Image
-          src="/logo4.png"
+          src="/logo3.png"
           alt="OneShot GS"
           width={320} height={120}
-          style={{ objectFit: "contain", marginBottom: 6, filter: "drop-shadow(0 4px 18px rgba(120,80,30,0.22))" }}
+          style={{ objectFit: "contain", marginBottom: 6, mixBlendMode: "multiply", filter: "drop-shadow(0 4px 18px rgba(120,80,30,0.18))" }}
           priority
         />
         <p style={{
-          fontSize: 13,
-          color: "var(--ink-soft)",
-          fontWeight: 600,
+          fontSize: 13.5,
+          color: "var(--ink-strong)",
+          fontWeight: 700,
           lineHeight: 1.7,
           fontStyle: "italic",
-          letterSpacing: "0.01em",
-          textShadow: "0 1px 8px rgba(255,253,248,0.9)",
+          letterSpacing: "0.02em",
+          textShadow: "0 2px 12px rgba(255,253,248,1), 0 0px 30px rgba(255,253,248,0.8)",
         }}>
           असतो मा सद्गमय। तमसो मा ज्योतिर्गमय। मृत्योर्मा अमृतं गमय॥
         </p>
@@ -154,15 +154,15 @@ export default function HomePage() {
               <div style={{ flex: 1, minWidth: 0 }}>
                 <p style={{
                   fontFamily: "var(--font-display)",
-                  fontSize: 15, fontWeight: 700,
+                  fontSize: 15.5, fontWeight: 800,
                   color: "var(--ink-strong)",
-                  letterSpacing: "-0.02em",
+                  letterSpacing: "-0.03em",
                   marginBottom: 2,
                   whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis",
                 }}>{item.title}</p>
                 <p style={{
-                  fontSize: 12, color: "var(--muted)",
-                  lineHeight: 1.5,
+                  fontSize: 12, color: "var(--ink-soft)",
+                  lineHeight: 1.5, fontWeight: 500,
                   whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis",
                 }}>{item.desc}</p>
               </div>
@@ -188,13 +188,13 @@ export default function HomePage() {
               <div className="tool-icon">{item.emoji}</div>
               <p style={{
                 fontFamily: "var(--font-display)",
-                fontSize: 14, fontWeight: 700,
+                fontSize: 14, fontWeight: 800,
                 color: "var(--ink-strong)",
-                letterSpacing: "-0.02em",
+                letterSpacing: "-0.03em",
                 marginBottom: 3,
               }}>{item.title}</p>
               <p style={{
-                fontSize: 11.5, color: "var(--muted)", lineHeight: 1.5,
+                fontSize: 11.5, color: "var(--ink-soft)", lineHeight: 1.5, fontWeight: 500,
               }}>{item.desc}</p>
             </Link>
           ))}
