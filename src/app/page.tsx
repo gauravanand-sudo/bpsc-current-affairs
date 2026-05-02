@@ -104,12 +104,16 @@ export default function HomePage() {
           OneShot GS
         </h1>
         <p style={{
-          fontSize: 13.5,
+          fontSize: 13,
           color: "var(--muted)",
-          fontWeight: 600,
-          letterSpacing: "0.03em",
+          fontWeight: 500,
+          lineHeight: 1.7,
+          fontStyle: "italic",
+          letterSpacing: "0.01em",
         }}>
-          72nd BPSC · Free · Always
+          असतो मा सद्गमय।<br />
+          तमसो मा ज्योतिर्गमय।<br />
+          मृत्योर्मा अमृतं गमय॥
         </p>
       </div>
 
