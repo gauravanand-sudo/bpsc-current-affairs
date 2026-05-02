@@ -88,15 +88,12 @@ export default function FloatingExamTimers() {
           const pct = progressPct(exam.start, exam.date);
           return (
             <div key={exam.short} className="timer-card" style={{
-              background: "rgba(255,253,248,0.18)",
-              backdropFilter: "blur(18px)", WebkitBackdropFilter: "blur(18px)",
+              background: "transparent",
               borderRadius: 14,
-              border: "1px solid rgba(255,255,255,0.6)",
-              borderTop: `2.5px solid ${exam.color}`,
-              boxShadow: "0 8px 28px rgba(120,80,30,0.1), 0 2px 6px rgba(120,80,30,0.06), inset 0 1px 0 rgba(255,255,255,0.8)",
+              borderTop: `2px solid ${exam.color}44`,
               padding: "9px 13px 10px", minWidth: 152,
             }}>
-              <p style={{ fontSize: 8.5, fontWeight: 800, letterSpacing: "0.14em", textTransform: "uppercase", color: exam.color, marginBottom: 6 }}>{exam.short}</p>
+              <p style={{ fontSize: 8.5, fontWeight: 800, letterSpacing: "0.14em", textTransform: "uppercase", color: exam.color, opacity: 0.6, marginBottom: 6 }}>{exam.short}</p>
               {r ? (
                 <div style={{ display: "flex", gap: 8, alignItems: "flex-end" }}>
                   <Unit val={r.d} label="d" color={exam.color} />
@@ -125,21 +122,17 @@ export default function FloatingExamTimers() {
           const r = remaining(exam.date);
           return (
             <div key={exam.short} className="timer-card" style={{
-              background: "rgba(255,253,248,0.18)",
-              backdropFilter: "blur(14px)", WebkitBackdropFilter: "blur(14px)",
+              background: "transparent",
               borderRadius: 8,
-              borderLeft: `3px solid ${exam.color}`,
-              border: "1px solid rgba(255,255,255,0.55)",
-              borderLeftColor: exam.color,
-              boxShadow: "0 2px 10px rgba(120,80,30,0.1)",
+              borderLeft: `2px solid ${exam.color}55`,
               padding: "4px 8px",
               display: "flex", alignItems: "center", gap: 5,
             }}>
-              <span style={{ fontSize: 7, fontWeight: 800, letterSpacing: "0.1em", textTransform: "uppercase", color: exam.color, lineHeight: 1 }}>
+              <span style={{ fontSize: 7, fontWeight: 800, letterSpacing: "0.1em", textTransform: "uppercase", color: exam.color, opacity: 0.6, lineHeight: 1 }}>
                 {exam.short}
               </span>
               {r ? (
-                <span style={{ fontSize: 11, fontWeight: 800, color: "var(--ink-strong)", letterSpacing: "-0.02em", fontVariantNumeric: "tabular-nums" }}>
+                <span style={{ fontSize: 11, fontWeight: 800, color: "var(--ink-strong)", opacity: 0.55, letterSpacing: "-0.02em", fontVariantNumeric: "tabular-nums" }}>
                   {r.d}<span style={{ fontSize: 8, color: exam.color, fontWeight: 700 }}>d </span>
                   <span className="sec-val">{String(r.h).padStart(2,"0")}</span><span style={{ fontSize: 8, color: exam.color, fontWeight: 700 }}>h</span>
                 </span>
@@ -160,7 +153,7 @@ function Unit({ val, label, color, pulse }: { val: number; label: string; color:
     <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 1 }}>
       <span className={pulse ? "sec-val" : undefined} style={{
         fontSize: label === "d" ? 18 : 15, fontWeight: 800,
-        color: "var(--ink-strong)", lineHeight: 1,
+        color: "var(--ink-strong)", opacity: 0.55, lineHeight: 1,
         letterSpacing: "-0.03em", fontVariantNumeric: "tabular-nums",
       }}>{str}</span>
       <span style={{ fontSize: 7.5, fontWeight: 800, letterSpacing: "0.1em", textTransform: "uppercase", color }}>{label}</span>
