@@ -118,31 +118,32 @@ function SupportPageInner() {
       {/* ── Fixed header ── */}
       <div style={{
         flexShrink: 0,
-        padding: "12px 16px",
+        padding: "10px 14px",
         borderBottom: "1px solid var(--line)",
-        background: "rgba(244,239,232,0.97)",
+        background: "rgba(244,239,232,0.94)",
         backdropFilter: "blur(12px)",
         WebkitBackdropFilter: "blur(12px)",
         display: "flex", alignItems: "center", justifyContent: "space-between",
+        gap: 10,
       }}>
-        <div>
-          <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-            <span style={{ fontSize: 22 }}>💙</span>
-            <h1 style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: 17, color: "var(--ink-strong)" }}>
+        <div style={{ minWidth: 0 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 2 }}>
+            <span style={{ fontSize: 16, lineHeight: 1 }}>💙</span>
+            <h1 style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: 15, color: "var(--ink-strong)", letterSpacing: "-0.02em" }}>
               You&apos;re not alone
             </h1>
           </div>
-          <p style={{ fontSize: 12, color: "var(--ink-soft)", marginTop: 2 }}>
+          <p style={{ fontSize: 11, color: "var(--muted)", lineHeight: 1.4 }}>
             Safe space · BPSC aspirants only
           </p>
         </div>
         <div style={{
           display: "inline-flex", alignItems: "center", gap: 6,
-          background: "rgba(22,163,74,0.08)", border: "1px solid rgba(22,163,74,0.2)",
-          borderRadius: 20, padding: "5px 12px", flexShrink: 0,
+          background: "rgba(22,163,74,0.08)", border: "1px solid rgba(22,163,74,0.18)",
+          borderRadius: 999, padding: "4px 10px", flexShrink: 0,
         }}>
-          <span style={{ width: 7, height: 7, borderRadius: "50%", background: "#16a34a", display: "inline-block" }} />
-          <span style={{ fontSize: 12, fontWeight: 700, color: "#16a34a" }}>
+          <span style={{ width: 6, height: 6, borderRadius: "50%", background: "#16a34a", display: "inline-block" }} />
+          <span style={{ fontSize: 11, fontWeight: 700, color: "#16a34a", letterSpacing: "0.01em" }}>
             {online} online
           </span>
         </div>

@@ -3,6 +3,7 @@ import { Plus_Jakarta_Sans, Space_Grotesk } from "next/font/google";
 import Script from "next/script";
 import Nav from "@/components/Nav";
 import ServiceWorkerRegistrar from "@/components/ServiceWorkerRegistrar";
+import SiteFooter from "@/components/SiteFooter";
 import SupportButton from "@/components/SupportButton";
 import "./globals.css";
 
@@ -78,25 +79,10 @@ export default function RootLayout({
         <ServiceWorkerRegistrar />
         <Nav />
         <SupportButton />
-        <div style={{ flex: 1, minWidth: 0 }}>{children}</div>
-        <footer
-          style={{
-            borderTop: "1px solid rgba(120, 80, 30, 0.12)",
-            padding: "16px 20px 22px",
-            textAlign: "center",
-            background: "rgba(255, 253, 248, 0.72)",
-          }}
-        >
-          <p
-            style={{
-              fontSize: 13,
-              color: "#8a7260",
-              lineHeight: 1.6,
-            }}
-          >
-            Made with <span style={{ color: "#dc2626" }}>♥</span> for Bihar Students
-          </p>
-        </footer>
+        <div style={{ flex: 1, minWidth: 0, minHeight: 0, display: "flex", flexDirection: "column" }}>
+          {children}
+        </div>
+        <SiteFooter />
       </body>
     </html>
   );
