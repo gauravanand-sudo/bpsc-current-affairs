@@ -54,6 +54,8 @@ export default function FloatingExamTimers() {
           0%   { background-position: -200% center; }
           100% { background-position:  200% center; }
         }
+        .exam-timers-root { display: none; }
+        @media (min-width: 768px) { .exam-timers-root { display: flex; } }
         .timer-card {
           animation: timerSlideIn 0.55s cubic-bezier(0.22,1,0.36,1) both;
         }
@@ -70,10 +72,10 @@ export default function FloatingExamTimers() {
         }
       `}</style>
 
-      <div style={{
+      <div className="exam-timers-root" style={{
         position: "fixed",
         top: 94, right: 10,
-        display: "flex", flexDirection: "column", gap: 7,
+        flexDirection: "column", gap: 7,
         zIndex: 90, pointerEvents: "none",
       }}>
         {EXAMS.map(exam => {
