@@ -111,9 +111,7 @@ export default function HomePage() {
           fontStyle: "italic",
           letterSpacing: "0.01em",
         }}>
-          असतो मा सद्गमय।<br />
-          तमसो मा ज्योतिर्गमय।<br />
-          मृत्योर्मा अमृतं गमय॥
+          असतो मा सद्गमय। तमसो मा ज्योतिर्गमय। मृत्योर्मा अमृतं गमय॥
         </p>
       </div>
 

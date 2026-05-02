@@ -69,8 +69,7 @@ export default function Nav() {
             fontFamily: "var(--font-display)", fontWeight: 700,
             fontSize: 17, color: "var(--ink-strong)", letterSpacing: "-0.02em",
           }}>
-            72nd BPSC <span style={{ color: "var(--accent)" }}>PT365</span>
-            <span style={{ display: "block", fontSize: 9, fontWeight: 500, color: "var(--muted)", letterSpacing: "0.06em", marginTop: -2 }}>by BPSC Cosmos</span>
+            OneShot <span style={{ color: "var(--accent)" }}>GS</span>
           </span>
         </Link>
 
