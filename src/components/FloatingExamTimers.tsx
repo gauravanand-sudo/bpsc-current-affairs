@@ -81,19 +81,14 @@ export default function FloatingExamTimers() {
       <div className="timers-full" style={{
         position: "fixed", top: 94, right: 10,
         flexDirection: "column", gap: 7,
-        zIndex: 90, pointerEvents: "none",
+        zIndex: 90, pointerEvents: "none", opacity: 0.35,
       }}>
         {EXAMS.map(exam => {
           const r = remaining(exam.date);
           const pct = progressPct(exam.start, exam.date);
           return (
-            <div key={exam.short} className="timer-card" style={{
-              background: "transparent",
-              borderRadius: 14,
-              borderTop: `2px solid ${exam.color}44`,
-              padding: "9px 13px 10px", minWidth: 152,
-            }}>
-              <p style={{ fontSize: 8.5, fontWeight: 800, letterSpacing: "0.14em", textTransform: "uppercase", color: exam.color, opacity: 0.6, marginBottom: 6 }}>{exam.short}</p>
+            <div key={exam.short} className="timer-card" style={{ padding: "6px 10px", minWidth: 140 }}>
+              <p style={{ fontSize: 8, fontWeight: 800, letterSpacing: "0.14em", textTransform: "uppercase", color: exam.color, marginBottom: 4 }}>{exam.short}</p>
               {r ? (
                 <div style={{ display: "flex", gap: 8, alignItems: "flex-end" }}>
                   <Unit val={r.d} label="d" color={exam.color} />
@@ -104,9 +99,6 @@ export default function FloatingExamTimers() {
               ) : (
                 <p style={{ fontSize: 13, fontWeight: 800, color: exam.color }}>Exam Day 🎯</p>
               )}
-              <div style={{ marginTop: 9, height: 3, borderRadius: 99, background: `color-mix(in srgb, ${exam.color} 12%, transparent)`, overflow: "hidden" }}>
-                <div className="timer-bar-fill" style={{ height: "100%", borderRadius: 99, width: `${pct}%`, background: `linear-gradient(90deg, ${exam.color}99, ${exam.color}, ${exam.color}99)`, transition: "width 60s linear" }} />
-              </div>
             </div>
           );
         })}
@@ -116,16 +108,13 @@ export default function FloatingExamTimers() {
       <div className="timers-mini" style={{
         position: "fixed", top: 94, right: 8,
         flexDirection: "column", gap: 4,
-        zIndex: 90, pointerEvents: "none",
+        zIndex: 90, pointerEvents: "none", opacity: 0.35,
       }}>
         {EXAMS.map(exam => {
           const r = remaining(exam.date);
           return (
             <div key={exam.short} className="timer-card" style={{
-              background: "transparent",
-              borderRadius: 8,
-              borderLeft: `2px solid ${exam.color}55`,
-              padding: "4px 8px",
+              padding: "3px 6px",
               display: "flex", alignItems: "center", gap: 5,
             }}>
               <span style={{ fontSize: 7, fontWeight: 800, letterSpacing: "0.1em", textTransform: "uppercase", color: exam.color, opacity: 0.6, lineHeight: 1 }}>
