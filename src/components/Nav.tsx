@@ -12,6 +12,7 @@ export default function Nav() {
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
   const pathname = usePathname();
+  const hideMobileTabSpacer = ["/support", "/partner", "/ask"].includes(pathname);
 
   useEffect(() => {
     const supabase = getSupabaseBrowserClient();
@@ -160,7 +161,7 @@ export default function Nav() {
       </nav>
 
       {/* ── Bottom spacer so content isn't hidden behind tab bar ── */}
-      <div className="mobile-tab-spacer" style={{ height: 60 }} />
+      <div className="mobile-tab-spacer" style={{ height: hideMobileTabSpacer ? 0 : 60 }} />
 
       <style>{`
         @media (min-width: 640px) {

@@ -68,7 +68,7 @@ button { font-family: inherit; }
 
 /* ── Chat pages (ask / support / partner) ─────────────────── */
 .chat-shell {
-  height: calc(100dvh - 52px - 60px);
+  height: calc(100dvh - 52px);
 }
 @media (min-width: 640px) {
   .chat-shell { height: calc(100dvh - 52px); }
