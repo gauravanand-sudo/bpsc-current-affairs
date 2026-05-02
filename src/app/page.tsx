@@ -82,7 +82,7 @@ export default function HomePage() {
   return (
     <main style={{
       minHeight: "100vh", padding: "0 0 64px",
-      backgroundImage: "linear-gradient(rgba(247,242,235,0.72), rgba(247,242,235,0.72)), url('/bg1.png')",
+      backgroundImage: "linear-gradient(to bottom, rgba(247,242,235,0.45) 0%, rgba(247,242,235,0.62) 35%, rgba(247,242,235,0.82) 70%, rgba(247,242,235,0.96) 100%), url('/bg1.png')",
       backgroundSize: "cover", backgroundPosition: "center",
       backgroundAttachment: "fixed", backgroundRepeat: "no-repeat",
     }}>
@@ -121,16 +121,17 @@ export default function HomePage() {
           src="/logo3.png"
           alt="OneShot GS"
           width={320} height={120}
-          style={{ objectFit: "contain", marginBottom: 6 }}
+          style={{ objectFit: "contain", marginBottom: 6, filter: "drop-shadow(0 4px 18px rgba(120,80,30,0.22))" }}
           priority
         />
         <p style={{
           fontSize: 13,
-          color: "var(--muted)",
-          fontWeight: 500,
+          color: "var(--ink-soft)",
+          fontWeight: 600,
           lineHeight: 1.7,
           fontStyle: "italic",
           letterSpacing: "0.01em",
+          textShadow: "0 1px 8px rgba(255,253,248,0.9)",
         }}>
           असतो मा सद्गमय। तमसो मा ज्योतिर्गमय। मृत्योर्मा अमृतं गमय॥
         </p>
@@ -222,18 +223,20 @@ export default function HomePage() {
         .content-card {
           text-decoration: none;
           display: flex; align-items: center; gap: 12px;
-          background: var(--card);
-          border: 1px solid var(--line);
+          background: rgba(255,253,248,0.88);
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
+          border: 1px solid rgba(255,255,255,0.72);
           border-radius: 16px;
           padding: 14px 16px;
-          box-shadow: 0 1px 6px rgba(120,80,30,0.04);
-          transition: transform 0.13s ease, box-shadow 0.13s ease, border-color 0.13s ease;
+          box-shadow: 0 4px 20px rgba(120,80,30,0.1), 0 1px 4px rgba(120,80,30,0.06), inset 0 1px 0 rgba(255,255,255,0.8);
+          transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
         }
         @media (hover: hover) {
           .content-card:hover {
-            transform: translateY(-2px);
-            border-color: color-mix(in srgb, var(--c) 35%, transparent);
-            box-shadow: 0 6px 22px rgba(120,80,30,0.09);
+            transform: translateY(-3px);
+            background: rgba(255,253,248,0.98);
+            box-shadow: 0 10px 36px rgba(120,80,30,0.16), 0 2px 8px rgba(120,80,30,0.08), inset 0 1px 0 rgba(255,255,255,1);
           }
         }
 
@@ -263,19 +266,21 @@ export default function HomePage() {
 
         .tool-card {
           text-decoration: none;
-          background: var(--card);
-          border: 1px solid var(--line);
+          background: rgba(255,253,248,0.88);
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
+          border: 1px solid rgba(255,255,255,0.72);
           border-radius: 18px;
           padding: 16px 14px;
           display: flex; flex-direction: column; align-items: flex-start;
-          box-shadow: 0 1px 6px rgba(120,80,30,0.04);
-          transition: transform 0.13s ease, box-shadow 0.13s ease, border-color 0.13s ease;
+          box-shadow: 0 4px 20px rgba(120,80,30,0.1), 0 1px 4px rgba(120,80,30,0.06), inset 0 1px 0 rgba(255,255,255,0.8);
+          transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
         }
         @media (hover: hover) {
           .tool-card:hover {
-            transform: translateY(-2px);
-            border-color: color-mix(in srgb, var(--c) 35%, transparent);
-            box-shadow: 0 6px 22px rgba(120,80,30,0.09);
+            transform: translateY(-3px);
+            background: rgba(255,253,248,0.98);
+            box-shadow: 0 10px 36px rgba(120,80,30,0.16), 0 2px 8px rgba(120,80,30,0.08), inset 0 1px 0 rgba(255,255,255,1);
           }
         }
 
