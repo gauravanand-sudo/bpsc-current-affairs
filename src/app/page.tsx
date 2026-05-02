@@ -1,394 +1,247 @@
 import Link from "next/link";
 
-const CA_SOURCES = [
-  "PIB", "The Hindu", "Indian Express", "Yojana", "Kurukshetra",
-  "Down To Earth", "PRS India", "Prabhat Khabar", "Bihar Govt. Portal",
-  "UN / MEA / Reuters",
-];
-
-const STATIC_SOURCES = [
-  "Laxmikant", "Spectrum", "NCERT 6-12", "Majid Husain",
-  "Ramesh Singh", "G.C. Leong", "Bihar Economic Survey", "Bihar Gazetteer",
-];
-
-const MAIN_TRACKS = [
+const FEATURES = [
   {
     href: "/ca",
-    emoji: "📚",
-    title: "Study Sets",
-    note: "15 month CA + static linkages",
-    lines: [
-      "Theme-wise current affairs across all major subjects",
-      "Static linkage in every track",
-      "Bihar angle where it matters",
-    ],
+    emoji: "📖",
+    title: "Current Affairs",
+    desc: "Daily CA briefs, month-wise sets, and quick revision notes",
+    color: "#c06010",
   },
   {
     href: "/quizzes",
     emoji: "🎯",
-    title: "Quiz Sets",
-    note: "PYQ-trained prelims testing",
-    lines: [
-      "Built on 15 years prelims pattern sense",
-      "CA + static integration",
-      "Timed exam-style practice",
-    ],
+    title: "Practice Quiz",
+    desc: "Topic-wise MCQs with instant feedback and explanations",
+    color: "#0891b2",
   },
-  {
-    href: "/pyq",
-    emoji: "📝",
-    title: "PYQ Sets",
-    note: "See the real exam language",
-    lines: [
-      "Prelims direction awareness",
-      "Question style familiarity",
-      "Pattern-based revision",
-    ],
-  },
-  {
-    href: "/ca",
-    emoji: "🧭",
-    title: "Static Sets",
-    note: "Static built from current context",
-    lines: [
-      "Polity, economy, geo, env, history, Bihar",
-      "Focused on what gets asked",
-      "No random theory dumping",
-    ],
-  },
-];
-
-const SMALL_TOOLS = [
   {
     href: "/ask",
     emoji: "🧠",
-    title: "AI Tutor",
-    sub: "Instant doubt help",
+    title: "Ask AI",
+    desc: "Get instant answers to your BPSC doubts anytime",
+    color: "#6366f1",
   },
   {
     href: "/partner",
     emoji: "🤝",
     title: "Study Partner",
-    sub: "Find serious peers",
+    desc: "Find an accountability partner who matches your schedule",
+    color: "#15803d",
   },
   {
     href: "/leaderboard",
     emoji: "🏆",
     title: "Leaderboard",
-    sub: "Track the race",
+    desc: "Track your daily rank and compete with aspirants",
+    color: "#d97706",
   },
   {
-    href: "/support",
-    emoji: "💬",
-    title: "Group Chat",
-    sub: "Chat with peers",
+    href: "/ca/theme/bihar-special",
+    emoji: "🗺️",
+    title: "Bihar Special",
+    desc: "Bihar GS — history, geography, polity & economy",
+    color: "#b91c1c",
   },
 ];
 
+const PILLS = ["72nd BPSC", "Daily CA", "AI-Powered", "100% Free"];
+
 export default function HomePage() {
   return (
-    <main style={{ color: "var(--ink)" }}>
-      <section style={{ background: "#0c1220", padding: "20px 24px", marginTop: -1 }}>
-        <div style={{ maxWidth: 620, margin: "0 auto", borderLeft: "2px solid rgba(251,191,36,0.35)", paddingLeft: 16 }}>
-          <p style={{ fontFamily: "var(--font-display)", fontSize: "clamp(13px,1.6vw,15px)", fontWeight: 500, color: "rgba(254,243,199,0.88)", lineHeight: 1.9, fontStyle: "italic", marginBottom: 8 }}>
-            &ldquo;समर शेष है, नहीं पाप का भागी केवल व्याध,<br />
-            जो तटस्थ हैं, समय लिखेगा उनके भी अपराध।&rdquo;
-          </p>
-          <p style={{ fontSize: 11, fontWeight: 700, color: "#fbbf24" }}>
-            Ramdhari Singh &lsquo;Dinkar&rsquo; &nbsp;·&nbsp;
-            <span style={{ fontWeight: 400, color: "rgba(255,255,255,0.3)" }}>Rashtrakavi · Begusarai, Bihar</span>
-          </p>
+    <main style={{ background: "var(--bg)", minHeight: "100vh" }}>
+
+      {/* ── Hero ──────────────────────────────────────────────── */}
+      <section style={{
+        maxWidth: 680,
+        margin: "0 auto",
+        padding: "52px 20px 40px",
+        textAlign: "center",
+      }}>
+        {/* Pill badges */}
+        <div style={{
+          display: "flex", gap: 6, justifyContent: "center",
+          flexWrap: "wrap", marginBottom: 24,
+        }}>
+          {PILLS.map(p => (
+            <span key={p} style={{
+              display: "inline-block",
+              background: "var(--accent-soft)",
+              color: "var(--accent)",
+              fontSize: 11, fontWeight: 800,
+              letterSpacing: "0.1em", textTransform: "uppercase",
+              padding: "4px 12px", borderRadius: 999,
+              border: "1px solid var(--accent-border)",
+            }}>{p}</span>
+          ))}
+        </div>
+
+        <h1 style={{
+          fontFamily: "var(--font-display)",
+          fontSize: "clamp(2.2rem, 8vw, 3.8rem)",
+          lineHeight: 1.05,
+          letterSpacing: "-0.04em",
+          color: "var(--ink-strong)",
+          marginBottom: 16,
+        }}>
+          Everything you need<br />
+          for <span style={{ color: "var(--accent)" }}>BPSC Prelims</span>
+        </h1>
+
+        <p style={{
+          fontSize: 15,
+          color: "var(--ink-soft)",
+          lineHeight: 1.7,
+          maxWidth: 460,
+          margin: "0 auto 32px",
+        }}>
+          Daily Current Affairs, AI doubt solving, timed quizzes, and a study partner — built for Bihar aspirants. Completely free.
+        </p>
+
+        <div style={{ display: "flex", gap: 10, justifyContent: "center", flexWrap: "wrap" }}>
+          <Link href="/ca" className="btn-primary">
+            📖 Start Studying
+          </Link>
+          <Link href="/ask" className="btn-secondary">
+            🧠 Ask AI
+          </Link>
         </div>
       </section>
 
-      <section className="bpsc-hero" style={{ padding: "38px 16px 24px", borderBottom: "1px solid var(--line)" }}>
-        <div style={{ maxWidth: 980, margin: "0 auto" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 1.1fr) minmax(280px, 0.9fr)", gap: 14, alignItems: "stretch" }}>
-            <div
-              style={{
-                background: "linear-gradient(135deg, rgba(255,255,255,0.96), rgba(249,244,237,0.92))",
-                border: "1px solid var(--line)",
-                borderRadius: 24,
-                padding: "22px 18px",
-              }}
-            >
-              <p style={{ fontFamily: "monospace", fontSize: 10, letterSpacing: "0.26em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 8 }}>
-                🚨 72nd BPSC Prelims
-              </p>
-              <h1
-                style={{
-                  fontFamily: "var(--font-display)",
-                  fontWeight: 700,
-                  fontSize: "clamp(1.9rem, 5.5vw, 3.25rem)",
-                  lineHeight: 1.04,
-                  letterSpacing: "-0.03em",
-                  color: "var(--ink-strong)",
-                  maxWidth: 620,
-                  marginBottom: 10,
-                }}
-              >
-                15 months CA 📚 + static links 🧭 + 15 years PYQ training 🎯
-              </h1>
-              <p style={{ maxWidth: 640, fontSize: 14, lineHeight: 1.78, color: "var(--ink-soft)", marginBottom: 16 }}>
-                Full current affairs coverage, static linkage across all subjects, and exam-shaping built on deep learning from 15 years of prelims PYQ.
-              </p>
-
-              <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 16 }}>
-                {["📖 Current Affairs", "🏛️ Polity", "💰 Economy", "🌾 Bihar", "🌍 International", "🌿 Environment"].map((item) => (
-                  <span
-                    key={item}
-                    style={{
-                      borderRadius: 999,
-                      border: "1px solid var(--line)",
-                      background: "var(--card)",
-                      padding: "6px 11px",
-                      fontSize: 12,
-                      fontWeight: 700,
-                      color: "var(--ink-soft)",
-                    }}
-                  >
-                    {item}
-                  </span>
-                ))}
-              </div>
-
-              <div style={{ display: "flex", gap: 10, flexWrap: "wrap", alignItems: "center" }}>
-                <Link
-                  href="/ca"
-                  style={{
-                    background: "linear-gradient(135deg, #b86117, #d97706)",
-                    color: "#fff",
-                    borderRadius: 14,
-                    padding: "14px 22px",
-                    fontSize: 16,
-                    fontWeight: 700,
-                    fontFamily: "var(--font-display)",
-                    boxShadow: "0 8px 24px rgba(192,96,16,0.28)",
-                    display: "inline-block",
-                    textDecoration: "none",
-                  }}
-                >
-                  Start Studying →
-                </Link>
-                <span style={{ fontSize: 12, color: "var(--muted)", fontWeight: 700 }}>
-                  ₹0 • no signup • built for BPSC
-                </span>
-              </div>
+      {/* ── Stats strip ───────────────────────────────────────── */}
+      <div style={{ maxWidth: 860, margin: "0 auto 36px", padding: "0 16px" }}>
+        <div style={{
+          background: "var(--card)",
+          border: "1px solid var(--line)",
+          borderRadius: 20,
+          padding: "18px 8px",
+          display: "grid",
+          gridTemplateColumns: "repeat(4, 1fr)",
+          textAlign: "center",
+        }}>
+          {[
+            { num: "72nd",  label: "BPSC Prelims" },
+            { num: "Daily", label: "CA Updates" },
+            { num: "AI",    label: "Doubt Solving" },
+            { num: "Free",  label: "Always" },
+          ].map((s, i, arr) => (
+            <div key={i} style={{
+              borderRight: i < arr.length - 1 ? "1px solid var(--line)" : "none",
+              padding: "0 8px",
+            }}>
+              <div style={{
+                fontFamily: "var(--font-display)",
+                fontSize: "clamp(1.3rem, 4vw, 1.9rem)",
+                fontWeight: 700,
+                color: "var(--accent)",
+                letterSpacing: "-0.04em",
+                lineHeight: 1.1,
+              }}>{s.num}</div>
+              <div style={{
+                fontSize: 10.5, color: "var(--muted)",
+                fontWeight: 600, marginTop: 3,
+                letterSpacing: "0.04em",
+              }}>{s.label}</div>
             </div>
-
-            <div
-              style={{
-                background: "linear-gradient(135deg, #fff7ed 0%, #fde8c8 100%)",
-                border: "1px solid var(--accent-border)",
-                borderRadius: 24,
-                padding: "20px 18px",
-                color: "var(--ink)",
-              }}
-            >
-              <p style={{ fontFamily: "monospace", fontSize: 10, letterSpacing: "0.22em", textTransform: "uppercase", color: "var(--accent)", marginBottom: 8 }}>
-                ✅ What You Need
-              </p>
-              <h2 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.25rem, 3vw, 1.9rem)", lineHeight: 1.08, color: "var(--ink-strong)", marginBottom: 10 }}>
-                Enough to stay ahead in the race. 🚀
-              </h2>
-              <p style={{ fontSize: 13.5, lineHeight: 1.72, color: "var(--ink-soft)", marginBottom: 14 }}>
-                15 months current affairs, their static linkages, PYQ practice, quiz practice, and enough static knowledge. This is what we are giving here. 📚
-              </p>
-              <div style={{ display: "grid", gap: 8 }}>
-                {[
-                  "🗓️ 15 months current affairs",
-                  "🧭 Static linkages across subjects",
-                  "📝 PYQ practice",
-                  "🎯 Quiz practice",
-                  "📘 Enough static knowledge",
-                ].map((line) => (
-                  <div
-                    key={line}
-                    style={{
-                      borderRadius: 14,
-                      padding: "10px 12px",
-                      background: "rgba(255,255,255,0.62)",
-                      border: "1px solid rgba(192,96,16,0.14)",
-                      fontSize: 12.5,
-                      fontWeight: 700,
-                      color: "var(--ink-strong)",
-                    }}
-                  >
-                    {line}
-                  </div>
-                ))}
-              </div>
-            </div>
-          </div>
-
-          <div
-            style={{
-              marginTop: 12,
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
-              gap: 10,
-            }}
-          >
-            {SMALL_TOOLS.map((item) => (
-              <Link
-                key={item.href}
-                href={item.href}
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  minHeight: 82,
-                  textAlign: "center",
-                  background: "linear-gradient(180deg, rgba(255,255,255,0.96), rgba(249,244,237,0.92))",
-                  border: "1px solid var(--line)",
-                  borderRadius: 20,
-                  padding: "12px 10px",
-                  textDecoration: "none",
-                  boxShadow: "0 10px 24px rgba(120,80,30,0.05)",
-                }}
-              >
-                <div style={{ fontSize: 20, marginBottom: 4 }}>{item.emoji}</div>
-                <div style={{ fontSize: 12.5, fontWeight: 800, color: "var(--ink-strong)", fontFamily: "var(--font-display)", lineHeight: 1.2 }}>
-                  {item.title}
-                </div>
-                <div style={{ fontSize: 11, color: "var(--muted)", marginTop: 3, lineHeight: 1.3 }}>
-                  {item.sub}
-                </div>
-              </Link>
-            ))}
-          </div>
+          ))}
         </div>
-      </section>
-      <section style={{ borderTop: "1px solid var(--line)", background: "var(--panel)", padding: "34px 16px" }}>
-        <div style={{ maxWidth: 980, margin: "0 auto" }}>
-          <div style={{ display: "flex", alignItems: "end", justifyContent: "space-between", gap: 12, flexWrap: "wrap", marginBottom: 16 }}>
-            <div>
-              <p style={{ fontFamily: "monospace", fontSize: 10, letterSpacing: "0.28em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 8 }}>
-                🚀 Main Tracks
-              </p>
-              <h3 style={{ fontFamily: "var(--font-display)", fontSize: "clamp(1.25rem, 3vw, 1.8rem)", color: "var(--ink-strong)" }}>
-                Study only what moves rank.
-              </h3>
-            </div>
-            <p style={{ fontSize: 12.5, color: "var(--ink-soft)", maxWidth: 360, lineHeight: 1.7 }}>
-              📚 CA • 🧭 Static • 📝 PYQ • 🎯 Quiz
-            </p>
-          </div>
+      </div>
 
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 12 }}>
-            {MAIN_TRACKS.map((track) => (
-              <Link
-                key={track.title}
-                href={track.href}
-                style={{
-                  background: "var(--card)",
-                  border: "1px solid var(--line)",
-                  borderRadius: 20,
-                  padding: "18px 16px",
-                  textDecoration: "none",
-                }}
-              >
-                <div style={{ marginBottom: 10, fontSize: 26 }}>{track.emoji}</div>
-                <p style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: 18, color: "var(--ink-strong)", marginBottom: 4 }}>
-                  {track.title}
-                </p>
-                <p style={{ fontSize: 11.5, color: "var(--accent)", fontWeight: 700, marginBottom: 10 }}>
-                  {track.note}
-                </p>
-                {track.lines.map((line) => (
-                  <p key={line} style={{ fontSize: 12.5, color: "var(--ink-soft)", lineHeight: 1.65, marginBottom: 5 }}>
-                    {line}
-                  </p>
-                ))}
-                <p style={{ marginTop: 12, fontSize: 13, fontWeight: 700, color: "var(--accent)" }}>
-                  Open →
-                </p>
-              </Link>
-            ))}
-          </div>
+      {/* ── Feature cards ─────────────────────────────────────── */}
+      <section style={{ maxWidth: 860, margin: "0 auto", padding: "0 16px 72px" }}>
+        <div className="home-grid">
+          {FEATURES.map(f => (
+            <Link key={f.href} href={f.href} className="home-card" style={{
+              "--card-color": f.color,
+            } as React.CSSProperties}>
+              <div style={{
+                width: 52, height: 52, borderRadius: 16,
+                background: `color-mix(in srgb, ${f.color} 12%, transparent)`,
+                border: `1.5px solid color-mix(in srgb, ${f.color} 22%, transparent)`,
+                display: "grid", placeItems: "center",
+                fontSize: 26, marginBottom: 12, flexShrink: 0,
+              }}>{f.emoji}</div>
+              <h2 style={{
+                fontFamily: "var(--font-display)",
+                fontSize: 16.5, fontWeight: 700,
+                color: "var(--ink-strong)",
+                letterSpacing: "-0.025em",
+                marginBottom: 5,
+              }}>{f.title}</h2>
+              <p style={{
+                fontSize: 12.5, color: "var(--muted)",
+                lineHeight: 1.6, flex: 1,
+              }}>{f.desc}</p>
+              <span className="card-cta" style={{ color: f.color }}>
+                Open →
+              </span>
+            </Link>
+          ))}
         </div>
       </section>
 
-      <section style={{ borderTop: "1px solid var(--line)", background: "var(--bg)", padding: "34px 16px" }}>
-        <div style={{ maxWidth: 980, margin: "0 auto" }}>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 12, marginBottom: 12 }}>
-            <div style={{ background: "var(--card)", border: "1px solid var(--line)", borderRadius: 20, padding: "22px 18px" }}>
-              <p style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: 18, color: "var(--ink-strong)", marginBottom: 10 }}>
-                📦 Content
-              </p>
-              {[
-                "🗓️ 15 month current affairs coverage",
-                "🧭 Static linkages across all subjects",
-                "🎯 15 years prelims PYQ-trained direction",
-                "⚡ Built around what can clear the exam",
-              ].map((line) => (
-                <p key={line} style={{ fontSize: 12.5, color: "var(--ink-soft)", lineHeight: 1.7, marginBottom: 6 }}>
-                  {line}
-                </p>
-              ))}
-            </div>
+      <style>{`
+        .btn-primary {
+          display: inline-flex; align-items: center; gap: 8px;
+          background: var(--accent); color: #fff;
+          font-size: 14px; font-weight: 700;
+          padding: 13px 26px; border-radius: 14px;
+          text-decoration: none;
+          box-shadow: 0 4px 20px rgba(192,96,16,0.3);
+          transition: transform 0.14s ease, box-shadow 0.14s ease;
+        }
+        .btn-secondary {
+          display: inline-flex; align-items: center; gap: 8px;
+          background: var(--card); color: var(--ink-strong);
+          font-size: 14px; font-weight: 700;
+          padding: 13px 26px; border-radius: 14px;
+          text-decoration: none;
+          border: 1px solid var(--line-hi);
+          transition: transform 0.14s ease, border-color 0.14s ease;
+        }
+        @media (hover: hover) {
+          .btn-primary:hover  { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(192,96,16,0.36); }
+          .btn-secondary:hover { transform: translateY(-2px); border-color: var(--accent-border); }
+        }
 
-            <div style={{ background: "var(--card)", border: "1px solid var(--line)", borderRadius: 20, padding: "22px 18px" }}>
-              <p style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: 18, color: "var(--ink-strong)", marginBottom: 10 }}>
-                👥 Team
-              </p>
-              {[
-                "🏅 UPSC prelims high scorers",
-                "🌾 BPSC prelims high scorers",
-                "🧠 Senior AI researcher",
-              ].map((line) => (
-                <p key={line} style={{ fontSize: 12.5, color: "var(--ink-soft)", lineHeight: 1.7, marginBottom: 6 }}>
-                  {line}
-                </p>
-              ))}
-            </div>
-            <div style={{ background: "#0c1220", borderRadius: 20, padding: "22px 18px", color: "#f8fafc" }}>
-              <p style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: 18, marginBottom: 10 }}>
-                ⚠️ Get aware
-              </p>
-              <p style={{ fontSize: 12.5, lineHeight: 1.7, color: "rgba(241,245,249,0.82)", marginBottom: 12 }}>
-                Old strategy, fake completeness, random notes. Study what will clear the exam. Do that well and you stay ahead. 🏁
-              </p>
-              <Link
-                href="/ca"
-                style={{
-                  background: "linear-gradient(135deg, #b86117, #d97706)",
-                  color: "#fff",
-                  borderRadius: 14,
-                  padding: "12px 18px",
-                  fontSize: 14,
-                  fontWeight: 700,
-                  fontFamily: "var(--font-display)",
-                  display: "inline-block",
-                  textDecoration: "none",
-                }}
-              >
-                Take control →
-              </Link>
-            </div>
-          </div>
+        .home-grid {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 12px;
+        }
+        @media (min-width: 600px) {
+          .home-grid { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+        }
 
-          <div style={{ marginTop: 12, display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 12 }}>
-            <div style={{ background: "var(--card)", border: "1px solid var(--line)", borderRadius: 18, padding: "16px 14px" }}>
-              <p style={{ fontSize: 12, fontWeight: 700, color: "var(--ink-soft)", marginBottom: 10, letterSpacing: "0.04em" }}>
-                📰 Current affairs sources
-              </p>
-              <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
-                {CA_SOURCES.map((s) => <span key={s} className="source-badge">{s}</span>)}
-              </div>
-            </div>
-            <div style={{ background: "var(--card)", border: "1px solid var(--line)", borderRadius: 18, padding: "16px 14px" }}>
-              <p style={{ fontSize: 12, fontWeight: 700, color: "var(--ink-soft)", marginBottom: 10, letterSpacing: "0.04em" }}>
-                📘 Static references
-              </p>
-              <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
-                {STATIC_SOURCES.map((s) => <span key={s} className="source-badge">{s}</span>)}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+        .home-card {
+          text-decoration: none;
+          background: var(--card);
+          border: 1px solid var(--line);
+          border-radius: 22px;
+          padding: 22px 20px 18px;
+          display: flex; flex-direction: column;
+          box-shadow: 0 2px 10px rgba(120,80,30,0.045);
+          transition: transform 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+        }
+        @media (hover: hover) {
+          .home-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 32px rgba(120,80,30,0.1);
+            border-color: var(--line-hi);
+          }
+        }
+
+        .card-cta {
+          display: inline-flex; align-items: center; gap: 3px;
+          margin-top: 14px;
+          font-size: 11.5px; font-weight: 800;
+          letter-spacing: 0.02em;
+          transition: gap 0.14s ease;
+        }
+        @media (hover: hover) {
+          .home-card:hover .card-cta { gap: 6px; }
+        }
+      `}</style>
     </main>
   );
 }
