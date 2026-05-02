@@ -202,6 +202,7 @@ export default function PartnerPage() {
   const [checkins,   setCheckins]   = useState<PartnerCheckin[]>([]);
   const [msgText,    setMsgText]    = useState("");
   const [showPact,   setShowPact]   = useState(false);
+  const [mobileOpenChat, setMobileOpenChat] = useState(false);
 
   const [targetText,   setTargetText]   = useState("");
   const [focusMinutes, setFocusMinutes] = useState(90);
@@ -214,18 +215,22 @@ export default function PartnerPage() {
   const [genderFilter, setGenderFilter] = useState("Any gender");
 
   const msgScrollRef    = useRef<HTMLDivElement>(null);
+  const mobileScrollRef = useRef<HTMLDivElement>(null);
   const scrollAreaRef   = useRef<HTMLDivElement>(null);
   const activeConnIdRef = useRef<string | null>(null);
   const noticeTimerRef  = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   function scrollToBottomIfNear() {
-    const el = msgScrollRef.current;
-    if (!el) return;
-    if (el.scrollHeight - el.scrollTop - el.clientHeight < 120) el.scrollTop = el.scrollHeight;
+    for (const ref of [msgScrollRef, mobileScrollRef]) {
+      const el = ref.current;
+      if (el && el.scrollHeight - el.scrollTop - el.clientHeight < 120) el.scrollTop = el.scrollHeight;
+    }
   }
   function scrollToBottom() {
-    const el = msgScrollRef.current;
-    if (el) el.scrollTop = el.scrollHeight;
+    for (const ref of [msgScrollRef, mobileScrollRef]) {
+      const el = ref.current;
+      if (el) el.scrollTop = el.scrollHeight;
+    }
   }
 
   const [form, setForm] = useState({
@@ -294,7 +299,10 @@ export default function PartnerPage() {
   }
 
   useEffect(() => {
-    if (tab !== "chat" && scrollAreaRef.current) scrollAreaRef.current.scrollTop = 0;
+    if (tab !== "chat") {
+      if (scrollAreaRef.current) scrollAreaRef.current.scrollTop = 0;
+      setMobileOpenChat(false);
+    }
   }, [tab]);
 
   /* ── Auth + realtime ─────────────────────────────────────────────────── */
@@ -476,7 +484,7 @@ export default function PartnerPage() {
       .update({ status, responded_at: new Date().toISOString() }).eq("id", id);
     if (error) { setActionPending(null); showNotice(error.message, false); return; }
     await loadAll(); setActionPending(null);
-    if (status === "accepted") { setActiveConnectionId(id); setTab("chat"); }
+    if (status === "accepted") { setActiveConnectionId(id); setTab("chat"); setMobileOpenChat(true); }
   }
 
   async function sendMessage() {
@@ -598,10 +606,11 @@ export default function PartnerPage() {
         #partner-shell { bottom: 60px; }
         @media (min-width: 640px) {
           #partner-shell { bottom: 0; }
+          .mobile-chat-list { display: none !important; }
+          .mobile-chat-overlay { display: none !important; }
         }
         @media (max-width: 639px) {
-          .chat-sidebar { display: none !important; }
-          .chat-root { padding: 6px !important; }
+          .desktop-chat { display: none !important; }
         }
       `}</style>
 
@@ -876,7 +885,7 @@ export default function PartnerPage() {
                             <div style={{ marginTop: "auto", paddingTop: 4, display: "flex", flexDirection: "column", gap: 7 }}>
                               {conn?.status === "accepted" ? (
                                 <button
-                                  onClick={() => { setActiveConnectionId(conn.id); setTab("chat"); }}
+                                  onClick={() => { setActiveConnectionId(conn.id); setTab("chat"); setMobileOpenChat(true); }}
                                   style={{
                                     border: "none", borderRadius: 14, padding: "11px 16px",
                                     background: "linear-gradient(135deg, #14532d, #15803d)",
@@ -1084,7 +1093,7 @@ export default function PartnerPage() {
                               </p>
                               <p style={{ fontSize: 12, color: "var(--muted)", marginTop: 2 }}>{connFocus(row)}</p>
                             </div>
-                            <button onClick={() => { setActiveConnectionId(row.id); setTab("chat"); }} style={{
+                            <button onClick={() => { setActiveConnectionId(row.id); setTab("chat"); setMobileOpenChat(true); }} style={{
                               border: "none", borderRadius: 12, padding: "8px 16px",
                               background: "var(--accent)", color: "#fff", fontWeight: 700, cursor: "pointer", fontSize: 13,
                             }}>
@@ -1200,11 +1209,58 @@ export default function PartnerPage() {
           </div>
         )}
 
-        {/* ═══════════════ CHAT — absolute fill ═══════════════════════════ */}
+        {/* ── Mobile: conversation list ── */}
         {tab === "chat" && (
-          <div className="chat-root" style={{ position: "absolute", inset: 0, display: "flex", padding: 12, gap: 12, boxSizing: "border-box" }}>
+          <div className="mobile-chat-list" style={{ height: "100%", overflowY: "auto", overflowX: "hidden" }}>
+            <div style={{ maxWidth: 900, margin: "0 auto", padding: "12px 14px 80px" }}>
+              <p style={{ fontSize: 10, fontWeight: 800, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 12, paddingLeft: 4 }}>
+                Your chats
+              </p>
+              {accepted.length === 0 ? (
+                <div style={{ border: "1px dashed var(--line-hi)", borderRadius: 18, padding: "40px 20px", textAlign: "center" }}>
+                  <p style={{ fontSize: 32, marginBottom: 10 }}>💬</p>
+                  <p style={{ fontFamily: "var(--font-display)", fontSize: 16, color: "var(--ink-strong)", marginBottom: 8 }}>No chats yet</p>
+                  <p style={{ fontSize: 13, color: "var(--muted)", lineHeight: 1.65, marginBottom: 20 }}>
+                    Send a request in Discover. Chat unlocks once they accept.
+                  </p>
+                  <button onClick={() => setTab("discover")} style={{
+                    border: "none", borderRadius: 14, padding: "11px 22px",
+                    background: "var(--accent)", color: "#fff", fontWeight: 700, cursor: "pointer", fontSize: 14,
+                  }}>Find a partner →</button>
+                </div>
+              ) : (
+                <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+                  {accepted.map(conn => {
+                    const other = profileMap.get(otherUserId(conn));
+                    return (
+                      <button key={conn.id} onClick={() => { setActiveConnectionId(conn.id); setMobileOpenChat(true); }} style={{
+                        width: "100%", textAlign: "left", border: "none",
+                        background: "var(--card)", borderRadius: 18, padding: "14px 16px",
+                        cursor: "pointer", display: "flex", alignItems: "center", gap: 12,
+                        boxShadow: "0 1px 8px rgba(39,24,8,0.07)", marginBottom: 4,
+                      }}>
+                        <Avatar url={other?.avatar_url ?? null} name={other?.display_name ?? "?"} size={48} />
+                        <div style={{ flex: 1, minWidth: 0 }}>
+                          <p style={{ fontWeight: 700, fontSize: 16, color: "var(--ink-strong)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                            {other?.display_name ?? "Study Partner"}
+                          </p>
+                          <p style={{ fontSize: 12, color: "var(--muted)", marginTop: 3 }}>{connFocus(conn)}</p>
+                        </div>
+                        <span style={{ fontSize: 22, color: "var(--muted)", flexShrink: 0 }}>›</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
+            </div>
+          </div>
+        )}
 
-            {/* Sidebar — hidden on mobile */}
+        {/* ── Desktop: sidebar + chat panel ── */}
+        {tab === "chat" && (
+          <div className="desktop-chat" style={{ position: "absolute", inset: 0, display: "flex", padding: 12, gap: 12, boxSizing: "border-box" }}>
+
+            {/* Sidebar */}
             <div className="chat-sidebar" style={{
               width: 210, flexShrink: 0, display: "flex", flexDirection: "column",
               border: "1px solid var(--line)", borderRadius: 16, background: "var(--card)", overflow: "hidden",
@@ -1461,6 +1517,209 @@ export default function PartnerPage() {
           </div>
         )}
       </div>
+
+      {/* ── Mobile full-screen chat overlay ── */}
+      {mobileOpenChat && activeConnection && tab === "chat" && (() => {
+        const partner = profileMap.get(activePartnerId);
+        const lastSeven = Array.from({ length: 7 }, (_, i) =>
+          new Date(Date.now() - i * 86400000).toISOString().slice(0, 10)
+        ).reverse();
+        const perfectDays = lastSeven.filter(date => {
+          const rows = checkins.filter(r => r.checkin_date === date);
+          return rows.length >= 2 && rows.every(r => r.completed);
+        }).length;
+        return (
+          <div className="mobile-chat-overlay" style={{
+            position: "fixed", inset: 0, zIndex: 300,
+            display: "flex", flexDirection: "column",
+            background: "var(--bg)",
+          }}>
+            {/* Header */}
+            <div style={{
+              padding: "12px 16px",
+              paddingTop: "calc(12px + env(safe-area-inset-top))",
+              borderBottom: "1px solid var(--line)", flexShrink: 0,
+              display: "flex", alignItems: "center", gap: 10,
+              background: "var(--card)",
+            }}>
+              <button onClick={() => setMobileOpenChat(false)} style={{
+                background: "none", border: "none", fontSize: 24, cursor: "pointer",
+                color: "var(--accent)", padding: "0 4px", flexShrink: 0, lineHeight: 1,
+              }}>‹</button>
+              <Avatar url={partner?.avatar_url ?? null} name={partner?.display_name ?? "?"} size={36} />
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <p style={{ fontWeight: 700, fontSize: 15, color: "var(--ink-strong)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                  {partner?.display_name ?? "Study Partner"}
+                </p>
+                <p style={{ fontSize: 11, color: "var(--muted)" }}>{connFocus(activeConnection)} · private 1:1</p>
+              </div>
+              <button onClick={() => setShowPact(v => !v)} style={{
+                border: "1px solid var(--line-hi)", borderRadius: 10, padding: "5px 10px",
+                background: showPact ? "var(--accent-soft)" : "var(--panel)",
+                color: showPact ? "var(--accent)" : "var(--muted)",
+                fontWeight: 600, fontSize: 11, cursor: "pointer", flexShrink: 0,
+              }}>
+                {showPact ? "Hide" : "📋 Pact"}
+              </button>
+            </div>
+
+            {/* Daily pact */}
+            {showPact && (
+              <div style={{
+                padding: "12px 16px", borderBottom: "1px solid var(--line)", flexShrink: 0,
+                background: "linear-gradient(135deg, rgba(184,97,23,0.03), rgba(21,128,61,0.02))",
+                overflowY: "auto", maxHeight: "42%",
+              }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 10, gap: 10 }}>
+                  <div>
+                    <p style={{ fontFamily: "monospace", fontSize: 9.5, letterSpacing: "0.14em", color: "var(--accent)", textTransform: "uppercase", marginBottom: 3 }}>
+                      Today&apos;s pact
+                    </p>
+                    <p style={{ fontFamily: "var(--font-display)", fontSize: 15, fontWeight: 700, color: "var(--ink-strong)" }}>
+                      One honest block together
+                    </p>
+                  </div>
+                  <div style={{
+                    background: pactComplete ? "rgba(21,128,61,0.08)" : "rgba(184,97,23,0.07)",
+                    border: `1px solid ${pactComplete ? "rgba(21,128,61,0.22)" : "rgba(184,97,23,0.18)"}`,
+                    borderRadius: 12, padding: "6px 10px", textAlign: "center", flexShrink: 0,
+                  }}>
+                    <p style={{ fontSize: 11, fontWeight: 700, color: pactComplete ? "#15803d" : "var(--accent)" }}>
+                      {pactComplete ? "✓ Pact done" : "Pact open"}
+                    </p>
+                    <p style={{ fontSize: 10, color: "var(--muted)", marginTop: 2 }}>{perfectDays}/7 days</p>
+                  </div>
+                </div>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 72px", gap: 8, marginBottom: 8 }}>
+                  <input value={targetText} onChange={e => setTargetText(e.target.value)}
+                    placeholder="Today's target…" maxLength={220} style={{
+                      border: "1px solid var(--line)", borderRadius: 12, padding: "9px 12px",
+                      background: "var(--panel)", color: "var(--ink-strong)", fontWeight: 600, fontSize: 13,
+                    }} />
+                  <input type="number" value={focusMinutes} min={15} max={600}
+                    onChange={e => setFocusMinutes(Number(e.target.value))} style={{
+                      border: "1px solid var(--line)", borderRadius: 12, padding: "9px 8px",
+                      background: "var(--panel)", color: "var(--ink-strong)", fontWeight: 700,
+                      fontSize: 13, textAlign: "center",
+                    }} />
+                </div>
+                <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginBottom: 10 }}>
+                  {MOODS.map(m => (
+                    <button key={m} type="button" onClick={() => setMood(m)} style={{
+                      border: mood === m ? "1.5px solid var(--accent)" : "1px solid var(--line-hi)",
+                      background: mood === m ? "var(--accent-soft)" : "var(--panel)",
+                      color: mood === m ? "var(--accent)" : "var(--muted)",
+                      borderRadius: 999, padding: "4px 10px", fontSize: 11, fontWeight: 600, cursor: "pointer",
+                    }}>{m}</button>
+                  ))}
+                </div>
+                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8, marginBottom: 10 }}>
+                  {[
+                    { name: "You", checkin: myCheckin },
+                    { name: partner?.display_name ?? "Partner", checkin: partnerCheckin },
+                  ].map(({ name, checkin }) => (
+                    <div key={name} style={{
+                      borderRadius: 12, padding: "8px 10px",
+                      background: checkin?.completed ? "rgba(21,128,61,0.07)" : "var(--panel)",
+                      border: `1px solid ${checkin?.completed ? "rgba(21,128,61,0.18)" : "var(--line)"}`,
+                    }}>
+                      <p style={{ fontSize: 9.5, fontWeight: 700, color: "var(--muted)", letterSpacing: "0.06em", textTransform: "uppercase" }}>{name}</p>
+                      <p style={{ fontSize: 12, fontWeight: 700, color: checkin?.completed ? "#15803d" : "var(--ink-strong)", marginTop: 3 }}>
+                        {checkin?.completed ? "✓ Done" : checkin ? `${checkin.focus_minutes}m` : "Waiting"}
+                      </p>
+                    </div>
+                  ))}
+                  <div style={{ borderRadius: 12, padding: "8px 10px", background: "var(--panel)", border: "1px solid var(--line)" }}>
+                    <p style={{ fontSize: 9.5, fontWeight: 700, color: "var(--muted)", letterSpacing: "0.06em", textTransform: "uppercase" }}>Pair focus</p>
+                    <p style={{ fontSize: 12, fontWeight: 700, color: "var(--ink-strong)", marginTop: 3 }}>
+                      {Math.floor(pairFocusMins / 60)}h {pairFocusMins % 60}m
+                    </p>
+                  </div>
+                </div>
+                <div style={{ display: "flex", gap: 8 }}>
+                  <button disabled={actionPending === "lock"} onClick={() => void saveCheckin(false)} style={{
+                    flex: 1, border: "1px solid var(--accent-border)", borderRadius: 12, padding: "9px 0",
+                    background: "var(--accent-soft)", color: "var(--accent)", fontWeight: 700, cursor: "pointer",
+                    opacity: actionPending === "lock" ? 0.7 : 1, fontSize: 12,
+                  }}>
+                    {actionPending === "lock" ? "Locking…" : "Lock target"}
+                  </button>
+                  <button disabled={actionPending === "done"} onClick={() => void saveCheckin(true)} style={{
+                    flex: 1, border: "none", borderRadius: 12, padding: "9px 0",
+                    background: "linear-gradient(135deg, #14532d, #15803d)",
+                    color: "#fff", fontWeight: 700, cursor: "pointer",
+                    opacity: actionPending === "done" ? 0.7 : 1, fontSize: 12,
+                  }}>
+                    {actionPending === "done" ? "Marking…" : "Mark done ✓"}
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* Messages */}
+            <div ref={mobileScrollRef} style={{
+              flex: 1, minHeight: 0, overflowY: "auto",
+              padding: "12px 16px", display: "flex", flexDirection: "column", gap: 6,
+            }}>
+              {messages.length === 0 ? (
+                <div style={{ flex: 1, display: "grid", placeItems: "center", textAlign: "center", padding: "24px 16px" }}>
+                  <div>
+                    <p style={{ fontSize: 30, marginBottom: 10 }}>💬</p>
+                    <p style={{ fontFamily: "var(--font-display)", fontSize: 16, color: "var(--ink-strong)", marginBottom: 6 }}>Start this private thread</p>
+                    <p style={{ fontSize: 13, color: "var(--muted)", lineHeight: 1.65 }}>
+                      Share today&apos;s target, a mock score, or open the Daily Pact above.
+                    </p>
+                  </div>
+                </div>
+              ) : messages.map(msg => {
+                const mine = msg.sender_id === userId;
+                return (
+                  <div key={msg.id} style={{ display: "flex", justifyContent: mine ? "flex-end" : "flex-start" }}>
+                    <div style={{
+                      maxWidth: "80%",
+                      borderRadius: mine ? "18px 18px 4px 18px" : "18px 18px 18px 4px",
+                      background: mine ? "var(--accent)" : "var(--panel)",
+                      color: mine ? "#fff" : "var(--ink-strong)",
+                      padding: "10px 14px", lineHeight: 1.5, fontSize: 14,
+                      border: mine ? "none" : "1px solid var(--line)",
+                    }}>
+                      <p>{msg.body}</p>
+                      <p style={{ opacity: 0.55, fontSize: 10, marginTop: 4, textAlign: "right" }}>{timeAgo(msg.created_at)}</p>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Input */}
+            <div style={{
+              padding: "9px 12px",
+              paddingBottom: "calc(9px + env(safe-area-inset-bottom))",
+              borderTop: "1px solid var(--line)",
+              flexShrink: 0, display: "flex", gap: 8, background: "var(--card)",
+            }}>
+              <input
+                value={msgText}
+                onChange={e => setMsgText(e.target.value)}
+                onKeyDown={e => { if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); void sendMessage(); } }}
+                placeholder="Share a target, mock score, or doubt…"
+                style={{
+                  flex: 1, border: "1px solid var(--line-hi)", borderRadius: 14,
+                  padding: "10px 14px", background: "var(--panel)",
+                  color: "var(--ink-strong)", fontSize: 14,
+                }}
+              />
+              <button onClick={() => void sendMessage()} disabled={!msgText.trim()} style={{
+                border: "none", borderRadius: 14, padding: "0 18px",
+                background: "var(--accent)", color: "#fff", fontWeight: 700,
+                cursor: msgText.trim() ? "pointer" : "default",
+                opacity: msgText.trim() ? 1 : 0.5, fontSize: 18, flexShrink: 0,
+              }}>↑</button>
+            </div>
+          </div>
+        );
+      })()}
+
     </main>
   );
 }
