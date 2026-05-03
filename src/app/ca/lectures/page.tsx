@@ -38,46 +38,25 @@ const MONTHS: MonthData[] = [
 export default function CALecturesPage() {
   return (
     <main style={{ minHeight: "100vh", background: "var(--bg)", color: "var(--ink)", overflowX: "hidden" }}>
-      {/* Hero */}
-      <section style={{
-        padding: "56px 20px 44px",
-        textAlign: "center",
-        borderBottom: "1px solid var(--line)",
+      {/* Compact header */}
+      <div style={{
+        maxWidth: 960, margin: "0 auto",
+        padding: "14px 16px 0",
+        display: "flex", alignItems: "center", justifyContent: "space-between",
       }}>
-        <p style={{
-          fontFamily: "monospace", fontSize: 10,
-          letterSpacing: "0.3em", textTransform: "uppercase",
-          color: "var(--muted)", marginBottom: 14,
-        }}>
-          Current Affairs
-        </p>
         <h1 style={{
-          fontFamily: "var(--font-display)", fontWeight: 700,
-          fontSize: "clamp(1.9rem, 5.5vw, 3rem)",
-          lineHeight: 1.08, letterSpacing: "-0.03em",
+          fontFamily: "var(--font-display)", fontWeight: 800,
+          fontSize: 18, letterSpacing: "-0.02em",
           color: "var(--ink-strong)",
-          maxWidth: 680, margin: "0 auto 12px",
-        }}>
-          Month-wise Lectures & PDFs
-        </h1>
-        <p style={{
-          maxWidth: 540, margin: "0 auto",
-          fontSize: 14, lineHeight: 1.8, color: "var(--ink-soft)",
-        }}>
-          June 2025 → April 2026 · 7 subjects per month
-        </p>
-        <div style={{ marginTop: 22 }}>
-          <Link href="/ca" style={{
-            fontSize: 13, fontWeight: 600,
-            color: "var(--accent)", textDecoration: "none",
-          }}>
-            ← Study by theme
-          </Link>
-        </div>
-      </section>
+        }}>Current Affairs</h1>
+        <Link href="/study" style={{
+          fontSize: 12.5, fontWeight: 600,
+          color: "var(--muted)", textDecoration: "none",
+        }}>← Back</Link>
+      </div>
 
       {/* Month cards */}
-      <section style={{ maxWidth: 960, margin: "0 auto", padding: "36px 16px 72px" }}>
+      <section style={{ maxWidth: 960, margin: "0 auto", padding: "14px 16px 72px" }}>
         <div className="months-grid">
           {MONTHS.map((month) => (
             <div key={month.label} className="month-card">
