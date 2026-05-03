@@ -47,7 +47,7 @@ export default function Nav() {
     { href: "/", label: "Home", icon: "⌂" },
     { href: "/study", label: "Study", icon: "📖" },
     { href: "/quizzes", label: "Quiz", icon: "🎯" },
-    { href: "/ask", label: "Ask AI", icon: "🧠" },
+    { href: "/ask", label: "Ask Tutor", icon: "🧠" },
     { href: "/partner", label: "Partner", icon: "🤝" },
     { href: "/leaderboard", label: "Rank", icon: "🏆" },
   ];
