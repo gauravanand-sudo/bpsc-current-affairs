@@ -748,218 +748,91 @@ export default function PartnerPage() {
                     </div>
                   )}
 
-                  {/* ── Tinder-style cards ── */}
-                  <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: 14 }}>
-                    {candidates.map(({ profile, score, reasons }) => {
-                      const focus   = requestFocusByUser[profile.user_id] ?? REQUEST_FOCUSES[0];
-                      const pKey    = `request:${profile.user_id}`;
-                      const conn    = connWith(profile.user_id);
-                      const stageColor = STAGE_COLORS[profile.stage] ?? "var(--accent)";
-                      const scoreVal   = score;
-                      const scoreLabel = scoreVal >= 80 ? "🔥 Top match" : scoreVal >= 60 ? "⭐ Good match" : "Match";
-                      const scoreBg    = scoreVal >= 80 ? "#15803d" : scoreVal >= 60 ? "var(--accent)" : "var(--muted)";
+                  {/* ── Circular profile cards ── */}
+                  <div style={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(auto-fill, minmax(148px, 1fr))",
+                    gap: 14,
+                  }}>
+                    {candidates.map(({ profile }) => {
+                      const focus = requestFocusByUser[profile.user_id] ?? REQUEST_FOCUSES[0];
+                      const pKey  = `request:${profile.user_id}`;
+                      const conn  = connWith(profile.user_id);
+                      const genderIcon = profile.gender_preference === "Female" ? "👩" : profile.gender_preference === "Male" ? "👨" : "🧑";
 
                       return (
                         <article key={profile.user_id} style={{
-                          border: "1px solid var(--line)", borderRadius: 22,
-                          background: "var(--card)", overflow: "hidden",
-                          display: "flex", flexDirection: "column",
-                          boxShadow: "0 2px 14px rgba(39,24,8,0.06)",
+                          background: "var(--card)",
+                          border: "1px solid var(--line)",
+                          borderRadius: 20,
+                          padding: "20px 14px 16px",
+                          display: "flex", flexDirection: "column", alignItems: "center",
+                          textAlign: "center",
+                          boxShadow: "0 2px 12px rgba(39,24,8,0.05)",
+                          transition: "transform 0.15s, box-shadow 0.15s",
                         }}>
-                          {/* Card header — colored band */}
-                          <div style={{
-                            background: `linear-gradient(135deg, ${stageColor}22, ${stageColor}08)`,
-                            borderBottom: `1px solid ${stageColor}20`,
-                            padding: "18px 18px 14px",
-                            display: "flex", alignItems: "flex-start", gap: 12,
-                          }}>
-                            <Avatar url={profile.avatar_url} name={profile.display_name} size={52} />
-                            <div style={{ flex: 1, minWidth: 0 }}>
-                              <p style={{
-                                fontFamily: "var(--font-display)", fontSize: 17, fontWeight: 700,
-                                color: "var(--ink-strong)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis",
-                              }}>{profile.display_name}</p>
-                              <p style={{ fontSize: 12, color: "var(--ink-soft)", marginTop: 2 }}>
-                                {profile.exam_target}
-                              </p>
-                              <div style={{ display: "flex", alignItems: "center", gap: 6, marginTop: 6 }}>
-                                <span style={{
-                                  background: stageColor, color: "#fff",
-                                  borderRadius: 999, padding: "2px 9px", fontSize: 10.5, fontWeight: 700,
-                                }}>{profile.stage}</span>
-                                <span style={{
-                                  background: scoreBg, color: "#fff",
-                                  borderRadius: 999, padding: "2px 9px", fontSize: 10.5, fontWeight: 700,
-                                }}>{scoreLabel} · {scoreVal}</span>
-                              </div>
-                            </div>
+                          <div style={{ marginBottom: 12 }}>
+                            <Avatar url={profile.avatar_url} name={profile.display_name} size={72} />
                           </div>
 
-                          {/* Info rows */}
-                          <div style={{ padding: "14px 18px", display: "flex", flexDirection: "column", gap: 8, flex: 1 }}>
-                            {/* Quick info grid */}
-                            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 6 }}>
-                              {[
-                                { icon: "📍", val: profile.district },
-                                { icon: "🗣️", val: profile.language },
-                                { icon: "⏰", val: profile.daily_hours },
-                                { icon: profile.gender_preference === "Female" ? "👩" : profile.gender_preference === "Male" ? "👨" : "🧑", val: profile.gender_preference },
-                              ].map(({ icon, val }) => (
-                                <div key={val} style={{
-                                  background: "var(--panel)", borderRadius: 10, padding: "6px 10px",
-                                  display: "flex", alignItems: "center", gap: 5,
-                                }}>
-                                  <span style={{ fontSize: 13 }}>{icon}</span>
-                                  <span style={{ fontSize: 11.5, color: "var(--ink-soft)", fontWeight: 600, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{val}</span>
-                                </div>
-                              ))}
-                            </div>
+                          <p style={{
+                            fontFamily: "var(--font-display)", fontWeight: 800, fontSize: 14,
+                            color: "var(--ink-strong)", letterSpacing: "-0.02em",
+                            marginBottom: 10, lineHeight: 1.2,
+                            maxWidth: "100%", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
+                          }}>{profile.display_name}</p>
 
-                            {/* Study slots */}
-                            {profile.slots.length > 0 && (
-                              <div style={{ display: "flex", alignItems: "center", gap: 6, flexWrap: "wrap" }}>
-                                <span style={{ fontSize: 12 }}>🕐</span>
-                                {profile.slots.map(s => (
-                                  <span key={s} style={{
-                                    background: "rgba(99,102,241,0.08)", color: "#4f46e5",
-                                    border: "1px solid rgba(99,102,241,0.18)",
-                                    borderRadius: 999, padding: "2px 9px", fontSize: 11, fontWeight: 600,
-                                  }}>{s}</span>
-                                ))}
-                              </div>
-                            )}
-
-                            {/* Weak subjects */}
-                            {profile.weak_subjects.length > 0 && (
-                              <div>
-                                <p style={{ fontSize: 10.5, fontWeight: 700, color: "var(--muted)", letterSpacing: "0.06em", textTransform: "uppercase", marginBottom: 5 }}>
-                                  📚 Needs help with
-                                </p>
-                                <div style={{ display: "flex", flexWrap: "wrap", gap: 4 }}>
-                                  {profile.weak_subjects.slice(0, 4).map(s => (
-                                    <span key={s} style={{
-                                      background: "rgba(185,28,28,0.07)", color: "#b91c1c",
-                                      border: "1px solid rgba(185,28,28,0.18)",
-                                      borderRadius: 999, padding: "2px 9px", fontSize: 11, fontWeight: 600,
-                                    }}>{s}</span>
-                                  ))}
-                                </div>
-                              </div>
-                            )}
-
-                            {/* Strong subjects */}
-                            {profile.strong_subjects.length > 0 && (
-                              <div>
-                                <p style={{ fontSize: 10.5, fontWeight: 700, color: "var(--muted)", letterSpacing: "0.06em", textTransform: "uppercase", marginBottom: 5 }}>
-                                  💪 Can help you with
-                                </p>
-                                <div style={{ display: "flex", flexWrap: "wrap", gap: 4 }}>
-                                  {profile.strong_subjects.slice(0, 4).map(s => (
-                                    <span key={s} style={{
-                                      background: "rgba(21,128,61,0.08)", color: "#15803d",
-                                      border: "1px solid rgba(21,128,61,0.2)",
-                                      borderRadius: 999, padding: "2px 9px", fontSize: 11, fontWeight: 600,
-                                    }}>{s}</span>
-                                  ))}
-                                </div>
-                              </div>
-                            )}
-
-                            {/* Why match */}
-                            {reasons.length > 0 && (
-                              <div style={{
-                                background: "var(--panel)", borderRadius: 10, padding: "7px 10px",
-                                display: "flex", alignItems: "center", gap: 6,
-                              }}>
-                                <span style={{ fontSize: 13, flexShrink: 0 }}>✨</span>
-                                <p style={{ fontSize: 11.5, color: "var(--ink-soft)", lineHeight: 1.4 }}>
-                                  {reasons.join(" · ")}
-                                </p>
-                              </div>
-                            )}
-
-                            {/* Bio */}
-                            {profile.bio && (
-                              <p style={{
-                                fontSize: 12.5, color: "var(--ink-strong)", lineHeight: 1.6,
-                                borderLeft: "3px solid var(--line-hi)", paddingLeft: 10,
-                                fontStyle: "italic",
-                              }}>
-                                &ldquo;{profile.bio.slice(0, 100)}{profile.bio.length > 100 ? "…" : ""}&rdquo;
-                              </p>
-                            )}
-
-                            {/* ── CTA ── */}
-                            <div style={{ marginTop: "auto", paddingTop: 4, display: "flex", flexDirection: "column", gap: 7 }}>
-                              {conn?.status === "accepted" ? (
-                                <button
-                                  onClick={() => { setActiveConnectionId(conn.id); setTab("chat"); setMobileOpenChat(true); }}
-                                  style={{
-                                    border: "none", borderRadius: 14, padding: "11px 16px",
-                                    background: "linear-gradient(135deg, #14532d, #15803d)",
-                                    color: "#fff", fontWeight: 700, cursor: "pointer", fontSize: 13,
-                                    display: "flex", alignItems: "center", justifyContent: "center", gap: 7,
-                                  }}
-                                >
-                                  💬 Open chat →
-                                </button>
-                              ) : conn?.status === "pending" ? (
-                                <div style={{
-                                  border: "1px solid rgba(217,119,6,0.25)", borderRadius: 14,
-                                  padding: "10px 14px", background: "rgba(217,119,6,0.05)", textAlign: "center",
-                                }}>
-                                  <p style={{ fontSize: 12.5, fontWeight: 700, color: "#b45309" }}>
-                                    ⏳ Request pending
-                                  </p>
-                                  <p style={{ fontSize: 11, color: "var(--muted)", marginTop: 2 }}>
-                                    {conn.requester_id === userId ? "Waiting for their response" : "Check Requests to respond"}
-                                  </p>
-                                </div>
-                              ) : (
-                                <>
-                                  <button
-                                    disabled={actionPending === pKey}
-                                    onClick={() => void sendRequest(profile.user_id, focus)}
-                                    style={{
-                                      border: "none", borderRadius: 14, padding: "11px 16px",
-                                      background: "var(--accent)", color: "#fff", fontWeight: 700,
-                                      cursor: actionPending === pKey ? "wait" : "pointer", fontSize: 13,
-                                      opacity: actionPending === pKey ? 0.75 : 1,
-                                      display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
-                                    }}
-                                  >
-                                    {actionPending === pKey ? "Sending…" : `🤝 Study ${focus} →`}
-                                  </button>
-                                  <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
-                                    <span style={{ fontSize: 11, color: "var(--muted)", flexShrink: 0 }}>Topic:</span>
-                                    <select
-                                      value={focus}
-                                      onChange={e => setRequestFocusByUser(prev => ({ ...prev, [profile.user_id]: e.target.value }))}
-                                      style={{
-                                        flex: 1, border: "1px solid var(--line-hi)", borderRadius: 9,
-                                        padding: "5px 8px", background: "var(--panel)",
-                                        color: "var(--ink-strong)", fontWeight: 600, fontSize: 12,
-                                      }}
-                                    >
-                                      {REQUEST_FOCUSES.map(f => <option key={f} value={f}>{f}</option>)}
-                                    </select>
-                                  </div>
-                                </>
-                              )}
-                            </div>
+                          <div style={{ display: "flex", flexDirection: "column", gap: 5, marginBottom: 14, width: "100%" }}>
+                            <span style={{
+                              fontSize: 12, color: "var(--ink-soft)", fontWeight: 600,
+                              background: "var(--panel)", borderRadius: 8, padding: "4px 8px",
+                            }}>{genderIcon} {profile.gender_preference}</span>
+                            <span style={{
+                              fontSize: 12, color: "var(--ink-soft)", fontWeight: 600,
+                              background: "var(--panel)", borderRadius: 8, padding: "4px 8px",
+                            }}>📍 {profile.district}</span>
+                            <span style={{
+                              fontSize: 11.5, color: "var(--accent)", fontWeight: 700,
+                              background: "color-mix(in srgb, var(--accent) 8%, transparent)",
+                              border: "1px solid color-mix(in srgb, var(--accent) 18%, transparent)",
+                              borderRadius: 8, padding: "4px 8px", lineHeight: 1.3,
+                            }}>🎯 {profile.study_mode.split(" + ")[0]}</span>
                           </div>
 
-                          {/* Footer */}
-                          <div style={{
-                            padding: "8px 18px 10px", borderTop: "1px solid var(--line)",
-                            display: "flex", justifyContent: "space-between", alignItems: "center",
-                          }}>
-                            <p style={{ fontSize: 10.5, color: "var(--muted)" }}>Active {timeAgo(profile.updated_at)}</p>
-                            <button onClick={() => void reportUser(profile.user_id)}
-                              style={{ background: "none", border: "none", fontSize: 10.5, color: "var(--line-hi)", cursor: "pointer" }}>
-                              Report
-                            </button>
-                          </div>
+                          {conn?.status === "accepted" ? (
+                            <button
+                              onClick={() => { setActiveConnectionId(conn.id); setTab("chat"); setMobileOpenChat(true); }}
+                              style={{
+                                width: "100%", border: "none", borderRadius: 12, padding: "9px 12px",
+                                background: "#15803d", color: "#fff", fontWeight: 700,
+                                cursor: "pointer", fontSize: 12,
+                              }}
+                            >💬 Chat</button>
+                          ) : conn?.status === "pending" ? (
+                            <span style={{
+                              fontSize: 11.5, fontWeight: 700, color: "#b45309",
+                              background: "rgba(217,119,6,0.08)",
+                              border: "1px solid rgba(217,119,6,0.22)",
+                              borderRadius: 12, padding: "7px 10px", width: "100%",
+                              display: "block",
+                            }}>⏳ Pending</span>
+                          ) : (
+                            <button
+                              disabled={actionPending === pKey}
+                              onClick={() => void sendRequest(profile.user_id, focus)}
+                              style={{
+                                width: "100%", border: "none", borderRadius: 12, padding: "9px 12px",
+                                background: "var(--accent)", color: "#fff", fontWeight: 700,
+                                cursor: actionPending === pKey ? "wait" : "pointer", fontSize: 12,
+                                opacity: actionPending === pKey ? 0.7 : 1,
+                              }}
+                            >{actionPending === pKey ? "Sending…" : "🤝 Connect"}</button>
+                          )}
+
+                          <button onClick={() => void reportUser(profile.user_id)}
+                            style={{ background: "none", border: "none", fontSize: 10, color: "var(--line-hi)", cursor: "pointer", marginTop: 8 }}>
+                            Report
+                          </button>
                         </article>
                       );
                     })}
