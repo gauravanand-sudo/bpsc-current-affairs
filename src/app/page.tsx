@@ -4,10 +4,10 @@ import FloatingExamTimers from "@/components/FloatingExamTimers";
 
 const CONTENT = [
   {
-    href: "/ca",
+    href: "/ca/lectures",
     emoji: "📰",
     title: "Current Affairs",
-    desc: "Daily CA sets, month-wise revision",
+    desc: "Month-wise lectures & PDF notes",
     color: "#c06010",
   },
   {
