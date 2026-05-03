@@ -69,7 +69,7 @@ const MODES     = ["Accountability + Silent Study", "Doubt discussion", "Daily t
 const REQUEST_FOCUSES = ["Current Affairs", "Answer Writing", "Mock Analysis", "Daily Revision", "Doubt Solving", "Bihar Special"];
 const SLOTS     = ["Morning", "Afternoon", "Evening", "Late night"];
 const SUBJECTS  = ["Current Affairs", "Polity", "Economy", "History", "Geography", "Bihar Special", "Science", "Environment", "Maths", "Reasoning"];
-const MY_GENDERS     = ["Male", "Female", "No preference"];
+const MY_GENDERS     = ["Male", "Female"];
 const PARTNER_PREFS  = ["Any gender", "Male only", "Female only"];
 const MOODS          = ["locked in", "steady", "tired but showing up", "test mode"];
 
@@ -236,7 +236,7 @@ export default function PartnerPage() {
   const [form, setForm] = useState({
     exam_target: "72nd BPSC", stage: "Revision", district: "Patna",
     language: "Hindi + English",
-    gender_preference: "No preference",     // user's own gender
+    gender_preference: "Male",               // user's own gender
     partner_gender_preference: "Any gender", // preferred partner gender
     study_mode: "Accountability + Silent Study", daily_hours: "2-3 hrs/day",
     slots:           ["Evening"] as string[],
@@ -600,7 +600,11 @@ export default function PartnerPage() {
 
   /* ── Main render ─────────────────────────────────────────────────────── */
   return (
-    <main id="partner-shell" style={{ position: "fixed", top: 52, left: 0, right: 0, bottom: 0, display: "flex", flexDirection: "column", overflow: "hidden", background: "var(--bg)" }}>
+    <main id="partner-shell" style={{
+      position: "fixed", top: 52, left: 0, right: 0, bottom: 0, display: "flex", flexDirection: "column", overflow: "hidden",
+      backgroundImage: "linear-gradient(160deg, rgba(247,242,235,0.88) 0%, rgba(240,233,223,0.93) 100%), url('/partner.png')",
+      backgroundSize: "cover", backgroundPosition: "center",
+    }}>
       <style>{`
         @keyframes spin { to { transform: rotate(360deg); } }
         #partner-shell { bottom: 60px; }
@@ -620,6 +624,8 @@ export default function PartnerPage() {
             z-index: 150 !important;
           }
         }
+        .partner-tab-btn { transition: color 0.15s, background 0.15s; }
+        .partner-tab-btn:hover { background: rgba(255,255,255,0.08) !important; }
       `}</style>
 
       {/* ── Fixed toast ───────────────────────────────────────────────── */}
@@ -642,34 +648,44 @@ export default function PartnerPage() {
         </div>
       )}
 
-      {/* ── Tab bar — fixed, thin, non-scrollable ─────────────────────── */}
-      <div style={{
-        flexShrink: 0, background: "var(--card)",
-        borderBottom: "1px solid var(--line)", zIndex: 30,
-      }}>
-        <div style={{ maxWidth: 900, margin: "0 auto", display: "flex", padding: "0 8px" }}>
+      {/* ── Tab bar ───────────────────────────────────────────────────── */}
+      <div style={{ flexShrink: 0, zIndex: 30, padding: "10px 16px 0" }}>
+        <div style={{
+          maxWidth: 500, margin: "0 auto",
+          background: "rgba(30,18,8,0.82)",
+          backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)",
+          borderRadius: 18,
+          border: "1px solid rgba(255,255,255,0.08)",
+          display: "flex", padding: "4px",
+          boxShadow: "0 4px 24px rgba(0,0,0,0.18)",
+        }}>
           {TABS.map(t => (
             <button
               key={t.id}
               onClick={() => setTab(t.id)}
+              className="partner-tab-btn"
               style={{
-                flex: 1, background: "none", border: "none", cursor: "pointer",
-                padding: "7px 4px 9px",
-                borderBottom: tab === t.id ? "2.5px solid var(--accent)" : "2.5px solid transparent",
-                color: tab === t.id ? "var(--accent)" : "var(--muted)",
-                fontSize: 12, fontWeight: tab === t.id ? 700 : 500,
-                position: "relative", transition: "color 0.12s",
+                flex: 1, border: "none", cursor: "pointer",
+                padding: "8px 6px",
+                borderRadius: 14,
+                background: tab === t.id ? "rgba(192,96,16,0.9)" : "transparent",
+                color: tab === t.id ? "#fff" : "rgba(255,255,255,0.45)",
+                fontSize: 11, fontWeight: tab === t.id ? 700 : 500,
+                position: "relative",
                 display: "flex", flexDirection: "column", alignItems: "center", gap: 2,
+                boxShadow: tab === t.id ? "0 2px 10px rgba(192,96,16,0.4)" : "none",
+                letterSpacing: "0.02em",
               }}
             >
-              <span style={{ fontSize: 16, lineHeight: 1 }}>{t.emoji}</span>
+              <span style={{ fontSize: 15, lineHeight: 1 }}>{t.emoji}</span>
               <span>{t.label}</span>
               {t.badge != null && (
                 <span style={{
-                  position: "absolute", top: 5, right: "calc(50% - 18px)",
-                  background: "var(--accent)", color: "#fff",
-                  borderRadius: 999, fontSize: 8.5, fontWeight: 900,
-                  padding: "1px 4px", lineHeight: 1.6, minWidth: 14, textAlign: "center",
+                  position: "absolute", top: 3, right: "calc(50% - 20px)",
+                  background: tab === t.id ? "#fff" : "var(--accent)",
+                  color: tab === t.id ? "var(--accent)" : "#fff",
+                  borderRadius: 999, fontSize: 8, fontWeight: 900,
+                  padding: "1px 5px", lineHeight: 1.6, minWidth: 14, textAlign: "center",
                 }}>{t.badge}</span>
               )}
             </button>
@@ -683,7 +699,7 @@ export default function PartnerPage() {
         {/* Scrollable tabs */}
         {tab !== "chat" && (
           <div ref={scrollAreaRef} style={{ height: "100%", overflowY: "auto", overflowX: "hidden" }}>
-            <div style={{ maxWidth: 900, margin: "0 auto", padding: "16px 14px 80px" }}>
+            <div style={{ maxWidth: 900, margin: "0 auto", padding: "14px 14px 80px" }}>
 
               {/* ═══════════════ DISCOVER ═══════════════════════════════ */}
               {tab === "discover" && (
@@ -771,21 +787,25 @@ export default function PartnerPage() {
                           transition: "transform 0.15s, box-shadow 0.15s",
                         }}>
                           <p style={{
-                            fontFamily: "var(--font-display)", fontWeight: 800, fontSize: 15,
+                            fontFamily: "var(--font-display)", fontWeight: 800, fontSize: 16,
                             color: "var(--ink-strong)", letterSpacing: "-0.02em",
-                            marginBottom: 6, lineHeight: 1.2,
+                            marginBottom: 10, lineHeight: 1.2,
                           }}>{profile.display_name}</p>
 
-                          <p style={{
-                            fontSize: 13, color: "var(--ink-soft)", lineHeight: 1.6,
-                            marginBottom: 14,
-                          }}>
-                            {profile.gender_preference !== "No preference" ? profile.gender_preference : "Aspirant"}
-                            {" "}from {profile.district}.
+                          <div style={{ display: "flex", flexDirection: "column", gap: 5, marginBottom: 14 }}>
+                            <p style={{ fontSize: 13, color: "var(--ink-soft)" }}>
+                              <span style={{ fontWeight: 700, color: "var(--ink)" }}>Gender:</span> {profile.gender_preference}
+                            </p>
+                            <p style={{ fontSize: 13, color: "var(--ink-soft)" }}>
+                              <span style={{ fontWeight: 700, color: "var(--ink)" }}>District:</span> {profile.district}
+                            </p>
                             {profile.weak_subjects.length > 0 && (
-                              <> Looking for a study partner for <span style={{ color: "var(--accent)", fontWeight: 700 }}>{profile.weak_subjects.slice(0, 2).join(" & ")}</span>.</>
+                              <p style={{ fontSize: 13, color: "var(--ink-soft)" }}>
+                                <span style={{ fontWeight: 700, color: "var(--ink)" }}>Subjects:</span>{" "}
+                                <span style={{ color: "var(--accent)", fontWeight: 700 }}>{profile.weak_subjects.slice(0, 2).join(", ")}</span>
+                              </p>
                             )}
-                          </p>
+                          </div>
 
                           {conn?.status === "accepted" ? (
                             <button
@@ -978,17 +998,19 @@ export default function PartnerPage() {
 
               {/* ═══════════════ PROFILE ═════════════════════════════════ */}
               {tab === "profile" && (
-                <div style={{ maxWidth: 480, margin: "0 auto" }}>
+                <div style={{ maxWidth: 460, margin: "0 auto" }}>
+
                   {myProfile && (
                     <div style={{
-                      background: "rgba(21,128,61,0.06)", border: "1px solid rgba(21,128,61,0.18)",
-                      borderRadius: 16, padding: "12px 16px", marginBottom: 20,
+                      background: "linear-gradient(135deg, rgba(21,128,61,0.08), rgba(21,128,61,0.04))",
+                      border: "1px solid rgba(21,128,61,0.2)",
+                      borderRadius: 18, padding: "14px 18px", marginBottom: 28,
                       display: "flex", alignItems: "center", gap: 12,
                     }}>
-                      <span style={{ fontSize: 20 }}>✅</span>
+                      <span style={{ fontSize: 22 }}>✅</span>
                       <div style={{ flex: 1 }}>
                         <p style={{ fontSize: 13, fontWeight: 700, color: "#15803d" }}>Profile is live</p>
-                        <p style={{ fontSize: 12, color: "var(--ink-soft)", marginTop: 2 }}>Visible to other aspirants.</p>
+                        <p style={{ fontSize: 12, color: "var(--ink-soft)", marginTop: 2 }}>Visible to other aspirants</p>
                       </div>
                       <button onClick={() => setTab("discover")} style={{
                         border: "none", borderRadius: 10, padding: "7px 14px",
@@ -998,45 +1020,97 @@ export default function PartnerPage() {
                     </div>
                   )}
 
-                  <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
+
                     {/* Exam */}
-                    <section style={{ border: "1px solid var(--line)", borderRadius: 18, padding: "18px 16px", background: "var(--card)" }}>
-                      <h3 style={{ fontFamily: "var(--font-display)", fontSize: 14, fontWeight: 700, color: "var(--ink-strong)", marginBottom: 12 }}>
-                        🎯 Which exam are you preparing for?
-                      </h3>
-                      <SelectField label="" value={form.exam_target} values={EXAMS} onChange={v => setForm({ ...form, exam_target: v })} />
-                    </section>
+                    <div>
+                      <p style={{ fontSize: 11, fontWeight: 800, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 10 }}>
+                        Which exam?
+                      </p>
+                      <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+                        {EXAMS.map(e => (
+                          <button key={e} type="button" onClick={() => setForm({ ...form, exam_target: e })} style={{
+                            border: form.exam_target === e ? "2px solid var(--accent)" : "1.5px solid var(--line-hi)",
+                            background: form.exam_target === e ? "var(--accent-soft)" : "var(--card)",
+                            color: form.exam_target === e ? "var(--accent)" : "var(--ink-soft)",
+                            borderRadius: 12, padding: "9px 16px", fontSize: 13, fontWeight: 700,
+                            cursor: "pointer", transition: "all 0.12s",
+                          }}>{e}</button>
+                        ))}
+                      </div>
+                    </div>
 
                     {/* Gender */}
-                    <section style={{ border: "1px solid var(--line)", borderRadius: 18, padding: "18px 16px", background: "var(--card)" }}>
-                      <h3 style={{ fontFamily: "var(--font-display)", fontSize: 14, fontWeight: 700, color: "var(--ink-strong)", marginBottom: 12 }}>
-                        👤 Your gender
-                      </h3>
-                      <SelectField label="" value={form.gender_preference} values={MY_GENDERS} onChange={v => setForm({ ...form, gender_preference: v })} />
-                    </section>
+                    <div>
+                      <p style={{ fontSize: 11, fontWeight: 800, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 10 }}>
+                        Your gender
+                      </p>
+                      <div style={{ display: "flex", gap: 10 }}>
+                        {MY_GENDERS.map(g => (
+                          <button key={g} type="button" onClick={() => setForm({ ...form, gender_preference: g })} style={{
+                            flex: 1, border: form.gender_preference === g ? "2px solid var(--accent)" : "1.5px solid var(--line-hi)",
+                            background: form.gender_preference === g ? "var(--accent-soft)" : "var(--card)",
+                            color: form.gender_preference === g ? "var(--accent)" : "var(--ink-soft)",
+                            borderRadius: 14, padding: "14px 10px", fontSize: 14, fontWeight: 700,
+                            cursor: "pointer", transition: "all 0.12s",
+                            display: "flex", flexDirection: "column", alignItems: "center", gap: 6,
+                          }}>
+                            <span style={{ fontSize: 24 }}>{g === "Male" ? "👨" : "👩"}</span>
+                            {g}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
 
                     {/* District */}
-                    <section style={{ border: "1px solid var(--line)", borderRadius: 18, padding: "18px 16px", background: "var(--card)" }}>
-                      <h3 style={{ fontFamily: "var(--font-display)", fontSize: 14, fontWeight: 700, color: "var(--ink-strong)", marginBottom: 12 }}>
-                        📍 Your district
-                      </h3>
-                      <SelectField label="" value={form.district} values={DISTRICTS} onChange={v => setForm({ ...form, district: v })} />
-                    </section>
+                    <div>
+                      <p style={{ fontSize: 11, fontWeight: 800, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 10 }}>
+                        Your district
+                      </p>
+                      <div style={{ position: "relative" }}>
+                        <select value={form.district} onChange={e => setForm({ ...form, district: e.target.value })} style={{
+                          width: "100%", border: "1.5px solid var(--line-hi)", borderRadius: 14,
+                          padding: "13px 16px", background: "var(--card)", color: "var(--ink-strong)",
+                          fontWeight: 600, fontSize: 14, appearance: "none", WebkitAppearance: "none",
+                          cursor: "pointer",
+                        }}>
+                          {DISTRICTS.map(d => <option key={d} value={d}>{d}</option>)}
+                        </select>
+                        <span style={{ position: "absolute", right: 14, top: "50%", transform: "translateY(-50%)", pointerEvents: "none", color: "var(--muted)", fontSize: 12 }}>▾</span>
+                      </div>
+                    </div>
 
-                    {/* Subjects to study */}
-                    <section style={{ border: "1px solid var(--line)", borderRadius: 18, padding: "18px 16px", background: "var(--card)" }}>
-                      <h3 style={{ fontFamily: "var(--font-display)", fontSize: 14, fontWeight: 700, color: "var(--ink-strong)", marginBottom: 12 }}>
-                        📚 Which subjects do you want to study?
-                      </h3>
-                      <MultiField label="" values={SUBJECTS} selected={form.weak_subjects} onToggle={v => toggleArr("weak_subjects", v)} />
-                    </section>
+                    {/* Subjects */}
+                    <div>
+                      <p style={{ fontSize: 11, fontWeight: 800, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--muted)", marginBottom: 10 }}>
+                        Subjects to study
+                      </p>
+                      <div style={{ display: "flex", flexWrap: "wrap", gap: 7 }}>
+                        {SUBJECTS.map(s => {
+                          const active = form.weak_subjects.includes(s);
+                          return (
+                            <button key={s} type="button" onClick={() => toggleArr("weak_subjects", s)} style={{
+                              border: active ? "2px solid var(--accent)" : "1.5px solid var(--line-hi)",
+                              background: active ? "var(--accent-soft)" : "var(--card)",
+                              color: active ? "var(--accent)" : "var(--ink-soft)",
+                              borderRadius: 999, padding: "7px 14px", fontSize: 12.5, fontWeight: 600,
+                              cursor: "pointer", transition: "all 0.12s",
+                            }}>{s}</button>
+                          );
+                        })}
+                      </div>
+                    </div>
 
                     <button onClick={saveProfile} disabled={saving} style={{
-                      width: "100%", border: "none", borderRadius: 16, padding: "15px 20px",
-                      background: "var(--accent)", color: "#fff", fontWeight: 700,
-                      fontFamily: "var(--font-display)", cursor: saving ? "wait" : "pointer", fontSize: 15,
+                      width: "100%", border: "none", borderRadius: 16, padding: "16px 20px",
+                      background: saving ? "var(--muted)" : "var(--accent)",
+                      color: "#fff", fontWeight: 800,
+                      fontFamily: "var(--font-display)", cursor: saving ? "wait" : "pointer",
+                      fontSize: 15, letterSpacing: "-0.01em",
+                      boxShadow: saving ? "none" : "0 4px 20px rgba(192,96,16,0.3)",
+                      transition: "all 0.15s",
                     }}>
-                      {saving ? "Saving…" : myProfile ? "Update →" : "Find my study partner →"}
+                      {saving ? "Saving…" : myProfile ? "Save changes →" : "Go live →"}
                     </button>
                   </div>
                 </div>

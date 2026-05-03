@@ -38,11 +38,14 @@ const MONTHS: MonthData[] = [
 
 export default function CALecturesPage() {
   return (
-    <main style={{ minHeight: "100vh", background: "var(--bg)", color: "var(--ink)", overflowX: "hidden" }}>
+    <main style={{ minHeight: "100vh", color: "var(--ink)", overflowX: "hidden", background: "var(--bg)" }}>
       {/* Header */}
-      <div style={{ maxWidth: 960, margin: "0 auto", padding: "16px 16px 0", textAlign: "center", position: "relative" }}>
+      <div style={{ maxWidth: 960, margin: "0 auto", padding: "16px 16px 0", textAlign: "center", position: "relative", zIndex: 1 }}>
         <Link href="/study" style={{ position: "absolute", right: 16, top: 20, fontSize: 12.5, fontWeight: 600, color: "var(--muted)", textDecoration: "none" }}>← Back</Link>
-        <Image src="/logo3.png" alt="OneShot GS" width={180} height={68} style={{ objectFit: "contain", mixBlendMode: "darken", margin: "0 auto 6px" }} priority />
+        <Image src="/logo3.png" alt="OneShot GS" width={180} height={68} style={{
+          objectFit: "contain", display: "block", margin: "0 auto 6px",
+          filter: "drop-shadow(0 0 18px rgba(192,96,16,0.55)) drop-shadow(0 0 40px rgba(192,96,16,0.25))",
+        }} priority />
         <h1 style={{
           fontFamily: "var(--font-display)", fontWeight: 800,
           fontSize: 20, letterSpacing: "-0.025em",
@@ -54,7 +57,7 @@ export default function CALecturesPage() {
       </div>
 
       {/* Month cards */}
-      <section style={{ maxWidth: 960, margin: "0 auto", padding: "14px 16px 72px" }}>
+      <section style={{ maxWidth: 960, margin: "0 auto", padding: "14px 16px 72px", position: "relative", zIndex: 1 }}>
         <div className="months-grid">
           {MONTHS.map((month) => (
             <div key={month.label} className="month-card">

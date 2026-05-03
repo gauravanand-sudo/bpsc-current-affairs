@@ -3,7 +3,7 @@
 import { createClient } from "@supabase/supabase-js";
 
 let browserClient: ReturnType<typeof createClient> | null = null;
-const DEFAULT_APP_URL = "https://bpsc365.vercel.app";
+const DEFAULT_APP_URL = "https://www.oneshotgs.com";
 
 export function getSupabaseBrowserClient() {
   if (browserClient) return browserClient;
@@ -31,13 +31,17 @@ function normalizeBaseUrl(url: string) {
 }
 
 export function getAppBaseUrl() {
-  const configuredUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim();
-  if (configuredUrl) return normalizeBaseUrl(configuredUrl);
+  let configuredUrl = process.env.NEXT_PUBLIC_SITE_URL?.trim();
+  if (configuredUrl) {
+    // Ensure the URL always has a scheme
+    if (!configuredUrl.startsWith("http://") && !configuredUrl.startsWith("https://")) {
+      configuredUrl = `https://${configuredUrl}`;
+    }
+    return normalizeBaseUrl(configuredUrl);
+  }
 
   if (typeof window !== "undefined") {
     const origin = window.location.origin.trim();
-
-    // Avoid using transient OAuth or embedded origins as callback bases.
     if (origin.startsWith("http://") || origin.startsWith("https://")) {
       const { hostname } = new URL(origin);
       if (!hostname.endsWith(".supabase.co")) {
