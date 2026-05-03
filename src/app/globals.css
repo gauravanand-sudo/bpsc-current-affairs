@@ -49,6 +49,42 @@ body {
   scroll-behavior: smooth;
 }
 
+/* ── Clickable feel ─────────────────────────────────────────── */
+a, button, [role="button"] {
+  cursor: pointer;
+  touch-action: manipulation; /* no 300ms tap delay on mobile */
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Cards: press-down on tap/click */
+.content-card:active,
+.tool-card:active,
+.quiz-card:active,
+.month-card:active,
+.subject-card:active,
+.set-card:active {
+  transform: translateY(1px) scale(0.985) !important;
+  box-shadow: 0 2px 8px rgba(120,80,30,0.08) !important;
+  transition: transform 0.08s ease, box-shadow 0.08s ease !important;
+}
+
+/* Buttons: press feedback */
+.btn-yt:active:not(.btn-off),
+.btn-pdf:active:not(.btn-off),
+.pill-yt:active:not(.pill-off),
+.pill-pdf:active:not(.pill-off) {
+  transform: scale(0.94) !important;
+  opacity: 0.85 !important;
+  transition: transform 0.07s ease !important;
+}
+
+/* Add pointer cursor to card divs that are interactive */
+.month-card,
+.subject-card,
+.set-card {
+  cursor: default;
+}
+
 /* Hide scrollbars on horizontal pill rows */
 .hide-scrollbar {
   -ms-overflow-style: none;

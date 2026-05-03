@@ -58,7 +58,7 @@ const TOOLS = [
   {
     href: "/partner",
     emoji: "🤝",
-    title: "Study Partner",
+    title: "Find Study Partner",
     desc: "Find your accountability partner",
     color: "#15803d",
   },
