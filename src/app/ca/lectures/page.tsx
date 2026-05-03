@@ -37,7 +37,7 @@ const MONTHS: MonthData[] = [
 
 export default function CALecturesPage() {
   return (
-    <main style={{ minHeight: "100vh", background: "var(--bg)", color: "var(--ink)" }}>
+    <main style={{ minHeight: "100vh", background: "var(--bg)", color: "var(--ink)", overflowX: "hidden" }}>
       {/* Hero */}
       <section style={{
         padding: "56px 20px 44px",
@@ -122,7 +122,7 @@ export default function CALecturesPage() {
                       </div>
 
                       {/* Buttons */}
-                      <div style={{ display: "flex", gap: 6, flexShrink: 0 }}>
+                      <div style={{ display: "flex", gap: 6 }}>
                         {hasYt ? (
                           <a href={links.yt} target="_blank" rel="noopener noreferrer" className="pill-yt">
                             <YtIcon /> Lecture
@@ -177,7 +177,8 @@ export default function CALecturesPage() {
         .section-row {
           display: flex;
           align-items: center;
-          gap: 8px;
+          flex-wrap: wrap;
+          gap: 6px 8px;
           padding: 6px 8px;
           border-radius: 10px;
           background: color-mix(in srgb, var(--accent) 4%, transparent);
