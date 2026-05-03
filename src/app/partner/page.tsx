@@ -751,8 +751,8 @@ export default function PartnerPage() {
                   {/* ── Circular profile cards ── */}
                   <div style={{
                     display: "grid",
-                    gridTemplateColumns: "repeat(auto-fill, minmax(148px, 1fr))",
-                    gap: 14,
+                    gridTemplateColumns: "repeat(auto-fill, minmax(220px, 1fr))",
+                    gap: 12,
                   }}>
                     {candidates.map(({ profile }) => {
                       const focus = requestFocusByUser[profile.user_id] ?? REQUEST_FOCUSES[0];
@@ -765,37 +765,27 @@ export default function PartnerPage() {
                           background: "var(--card)",
                           border: "1px solid var(--line)",
                           borderRadius: 20,
-                          padding: "18px 14px 16px",
-                          display: "flex", flexDirection: "column", alignItems: "center",
-                          textAlign: "center",
+                          padding: "18px 16px 16px",
+                          display: "flex", flexDirection: "column",
                           boxShadow: "0 2px 12px rgba(39,24,8,0.05)",
                           transition: "transform 0.15s, box-shadow 0.15s",
                         }}>
                           <p style={{
                             fontFamily: "var(--font-display)", fontWeight: 800, fontSize: 15,
                             color: "var(--ink-strong)", letterSpacing: "-0.02em",
-                            marginBottom: 10, lineHeight: 1.2,
-                            maxWidth: "100%", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
+                            marginBottom: 6, lineHeight: 1.2,
                           }}>{profile.display_name}</p>
 
-                          <div style={{ display: "flex", flexDirection: "column", gap: 5, marginBottom: 14, width: "100%" }}>
-                            <span style={{
-                              fontSize: 12, color: "var(--ink-soft)", fontWeight: 600,
-                              background: "var(--panel)", borderRadius: 8, padding: "5px 8px",
-                            }}>{genderIcon} {profile.gender_preference}</span>
-                            <span style={{
-                              fontSize: 12, color: "var(--ink-soft)", fontWeight: 600,
-                              background: "var(--panel)", borderRadius: 8, padding: "5px 8px",
-                            }}>📍 {profile.district}</span>
+                          <p style={{
+                            fontSize: 13, color: "var(--ink-soft)", lineHeight: 1.6,
+                            marginBottom: 14,
+                          }}>
+                            {profile.gender_preference !== "No preference" ? profile.gender_preference : "Aspirant"}
+                            {" "}from {profile.district}.
                             {profile.weak_subjects.length > 0 && (
-                              <span style={{
-                                fontSize: 11.5, color: "var(--accent)", fontWeight: 700,
-                                background: "color-mix(in srgb, var(--accent) 8%, transparent)",
-                                border: "1px solid color-mix(in srgb, var(--accent) 18%, transparent)",
-                                borderRadius: 8, padding: "5px 8px", lineHeight: 1.4,
-                              }}>📚 {profile.weak_subjects.slice(0, 2).join(", ")}</span>
+                              <> Looking for a study partner for <span style={{ color: "var(--accent)", fontWeight: 700 }}>{profile.weak_subjects.slice(0, 2).join(" & ")}</span>.</>
                             )}
-                          </div>
+                          </p>
 
                           {conn?.status === "accepted" ? (
                             <button
