@@ -45,7 +45,7 @@ export default function Nav() {
 
   const tabs = [
     { href: "/", label: "Home", icon: "⌂" },
-    { href: "/ca", label: "Study", icon: "📖" },
+    { href: "/study", label: "Study", icon: "📖" },
     { href: "/quizzes", label: "Quiz", icon: "🎯" },
     { href: "/ask", label: "Ask AI", icon: "🧠" },
     { href: "/partner", label: "Partner", icon: "🤝" },
