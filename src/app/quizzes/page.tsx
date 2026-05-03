@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 const QUIZ_TYPES = [
   {
@@ -30,34 +31,21 @@ const QUIZ_TYPES = [
 export default function QuizzesPage() {
   return (
     <main style={{ minHeight: "100vh", background: "var(--bg)", color: "var(--ink)" }}>
-      {/* Hero */}
-      <section style={{
-        maxWidth: 860, margin: "0 auto",
-        padding: "64px 24px 52px", textAlign: "center",
-      }}>
-        <p style={{
-          fontFamily: "monospace", fontSize: 11, letterSpacing: "0.32em",
-          textTransform: "uppercase", color: "var(--accent)", marginBottom: 16,
-        }}>
-          BPSC Cosmos · Quiz
-        </p>
+      {/* Header */}
+      <div style={{ maxWidth: 860, margin: "0 auto", padding: "16px 16px 0", textAlign: "center" }}>
+        <Image src="/logo3.png" alt="OneShot GS" width={180} height={68} style={{ objectFit: "contain", mixBlendMode: "darken", margin: "0 auto 6px" }} priority />
         <h1 style={{
-          fontFamily: "var(--font-display)", fontSize: "clamp(1.8rem, 5vw, 3rem)",
-          fontWeight: 700, lineHeight: 1.1, color: "var(--ink-strong)",
-          letterSpacing: "-0.02em", marginBottom: 14,
-        }}>
-          Test Yourself — BPSC Style
-        </h1>
-        <p style={{
-          fontSize: 15, color: "var(--ink-soft)", lineHeight: 1.7,
-          maxWidth: 460, margin: "0 auto",
-        }}>
-          30-min timer · −⅓ negative marking · Score extrapolated to /150
+          fontFamily: "var(--font-display)", fontWeight: 800,
+          fontSize: 20, letterSpacing: "-0.025em",
+          color: "var(--ink-strong)", marginBottom: 4,
+        }}>Quiz</h1>
+        <p style={{ fontSize: 12.5, color: "var(--muted)", fontWeight: 600, letterSpacing: "0.01em" }}>
+          Only what scores. Zero fluff, zero filler.
         </p>
-      </section>
+      </div>
 
       {/* 3 options */}
-      <section style={{ maxWidth: 860, margin: "0 auto", padding: "0 20px 80px" }}>
+      <section style={{ maxWidth: 860, margin: "0 auto", padding: "14px 20px 80px" }}>
         <div className="quiz-grid">
           {QUIZ_TYPES.map((item) => (
             <Link
