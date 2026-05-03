@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 const SUBJECTS = [
   { key: "geo",      label: "Bihar Geography",  emoji: "🗺️", yt: "", pdf: "" },
@@ -9,18 +10,20 @@ const SUBJECTS = [
 export default function BiharGSPage() {
   return (
     <main style={{ minHeight: "100vh", background: "var(--bg)", color: "var(--ink)" }}>
-      {/* Compact header */}
-      <div style={{
-        maxWidth: 860, margin: "0 auto",
-        padding: "14px 16px 0",
-        display: "flex", alignItems: "center", justifyContent: "space-between",
-      }}>
+      {/* Header */}
+      <div style={{ maxWidth: 860, margin: "0 auto", padding: "12px 16px 0" }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
+          <Image src="/logo3.png" alt="OneShot GS" width={90} height={34} style={{ objectFit: "contain", mixBlendMode: "darken" }} priority />
+          <Link href="/study" style={{ fontSize: 12.5, fontWeight: 600, color: "var(--muted)", textDecoration: "none" }}>← Back</Link>
+        </div>
         <h1 style={{
           fontFamily: "var(--font-display)", fontWeight: 800,
-          fontSize: 18, letterSpacing: "-0.02em",
-          color: "var(--ink-strong)",
+          fontSize: 20, letterSpacing: "-0.025em",
+          color: "var(--ink-strong)", marginBottom: 2,
         }}>Bihar GS</h1>
-        <Link href="/study" style={{ fontSize: 12.5, fontWeight: 600, color: "var(--muted)", textDecoration: "none" }}>← Back</Link>
+        <p style={{ fontSize: 12.5, color: "var(--muted)", fontWeight: 500 }}>
+          Bihar ka GS — seedha, saral, solid.
+        </p>
       </div>
 
       {/* Subject cards */}
