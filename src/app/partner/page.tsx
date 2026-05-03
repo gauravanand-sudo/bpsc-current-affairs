@@ -69,7 +69,7 @@ const MODES     = ["Accountability + Silent Study", "Doubt discussion", "Daily t
 const REQUEST_FOCUSES = ["Current Affairs", "Answer Writing", "Mock Analysis", "Daily Revision", "Doubt Solving", "Bihar Special"];
 const SLOTS     = ["Morning", "Afternoon", "Evening", "Late night"];
 const SUBJECTS  = ["Current Affairs", "Polity", "Economy", "History", "Geography", "Bihar Special", "Science", "Environment", "Maths", "Reasoning"];
-const MY_GENDERS     = ["Male", "Female", "Non-binary", "Prefer not to say"];
+const MY_GENDERS     = ["Male", "Female", "No preference"];
 const PARTNER_PREFS  = ["Any gender", "Male only", "Female only"];
 const MOODS          = ["locked in", "steady", "tired but showing up", "test mode"];
 
@@ -236,7 +236,7 @@ export default function PartnerPage() {
   const [form, setForm] = useState({
     exam_target: "72nd BPSC", stage: "Revision", district: "Patna",
     language: "Hindi + English",
-    gender_preference: "Male",             // user's own gender
+    gender_preference: "No preference",     // user's own gender
     partner_gender_preference: "Any gender", // preferred partner gender
     study_mode: "Accountability + Silent Study", daily_hours: "2-3 hrs/day",
     slots:           ["Evening"] as string[],
