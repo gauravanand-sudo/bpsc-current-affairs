@@ -765,18 +765,14 @@ export default function PartnerPage() {
                           background: "var(--card)",
                           border: "1px solid var(--line)",
                           borderRadius: 20,
-                          padding: "20px 14px 16px",
+                          padding: "18px 14px 16px",
                           display: "flex", flexDirection: "column", alignItems: "center",
                           textAlign: "center",
                           boxShadow: "0 2px 12px rgba(39,24,8,0.05)",
                           transition: "transform 0.15s, box-shadow 0.15s",
                         }}>
-                          <div style={{ marginBottom: 12 }}>
-                            <Avatar url={profile.avatar_url} name={profile.display_name} size={72} />
-                          </div>
-
                           <p style={{
-                            fontFamily: "var(--font-display)", fontWeight: 800, fontSize: 14,
+                            fontFamily: "var(--font-display)", fontWeight: 800, fontSize: 15,
                             color: "var(--ink-strong)", letterSpacing: "-0.02em",
                             marginBottom: 10, lineHeight: 1.2,
                             maxWidth: "100%", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap",
@@ -785,18 +781,12 @@ export default function PartnerPage() {
                           <div style={{ display: "flex", flexDirection: "column", gap: 5, marginBottom: 14, width: "100%" }}>
                             <span style={{
                               fontSize: 12, color: "var(--ink-soft)", fontWeight: 600,
-                              background: "var(--panel)", borderRadius: 8, padding: "4px 8px",
+                              background: "var(--panel)", borderRadius: 8, padding: "5px 8px",
                             }}>{genderIcon} {profile.gender_preference}</span>
                             <span style={{
                               fontSize: 12, color: "var(--ink-soft)", fontWeight: 600,
-                              background: "var(--panel)", borderRadius: 8, padding: "4px 8px",
+                              background: "var(--panel)", borderRadius: 8, padding: "5px 8px",
                             }}>📍 {profile.district}</span>
-                            <span style={{
-                              fontSize: 11.5, color: "var(--accent)", fontWeight: 700,
-                              background: "color-mix(in srgb, var(--accent) 8%, transparent)",
-                              border: "1px solid color-mix(in srgb, var(--accent) 18%, transparent)",
-                              borderRadius: 8, padding: "4px 8px", lineHeight: 1.3,
-                            }}>🎯 {profile.study_mode.split(" + ")[0]}</span>
                           </div>
 
                           {conn?.status === "accepted" ? (
