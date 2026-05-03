@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Image from "next/image";
+import GlowLogo from "@/components/GlowLogo";
 
 const SUBJECTS = [
   { key: "polity",      label: "Polity & Constitution",   emoji: "⚖️",  color: "#b86117" },
@@ -17,7 +17,7 @@ export default function StaticQuizPage() {
     <main style={{ minHeight: "100vh", background: "var(--bg)", color: "var(--ink)" }}>
       <div style={{ maxWidth: 860, margin: "0 auto", padding: "16px 16px 0", textAlign: "center", position: "relative" }}>
         <Link href="/quizzes" style={{ position: "absolute", right: 16, top: 20, fontSize: 12.5, fontWeight: 600, color: "var(--muted)", textDecoration: "none" }}>← Back</Link>
-        <Image src="/logo3.png" alt="OneShot GS" width={180} height={68} style={{ objectFit: "contain", mixBlendMode: "darken", margin: "0 auto 6px" }} priority />
+        <GlowLogo style={{ margin: "0 auto 6px" }} />
         <h1 style={{ fontFamily: "var(--font-display)", fontWeight: 800, fontSize: 20, letterSpacing: "-0.025em", color: "var(--ink-strong)", marginBottom: 4 }}>Static GK Quiz</h1>
         <p style={{ fontSize: 12.5, color: "var(--muted)", fontWeight: 600, letterSpacing: "0.01em" }}>Only what scores. Zero fluff, zero filler.</p>
       </div>

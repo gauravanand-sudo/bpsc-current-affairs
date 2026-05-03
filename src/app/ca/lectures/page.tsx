@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Image from "next/image";
+import GlowLogo from "@/components/GlowLogo";
 
 const SECTIONS = [
   { key: "polity",      label: "Polity",                    emoji: "⚖️"  },
@@ -42,10 +42,7 @@ export default function CALecturesPage() {
       {/* Header */}
       <div style={{ maxWidth: 960, margin: "0 auto", padding: "16px 16px 0", textAlign: "center", position: "relative", zIndex: 1 }}>
         <Link href="/study" style={{ position: "absolute", right: 16, top: 20, fontSize: 12.5, fontWeight: 600, color: "var(--muted)", textDecoration: "none" }}>← Back</Link>
-        <Image src="/logo3.png" alt="OneShot GS" width={180} height={68} style={{
-          objectFit: "contain", display: "block", margin: "0 auto 6px",
-          filter: "drop-shadow(0 0 18px rgba(192,96,16,0.55)) drop-shadow(0 0 40px rgba(192,96,16,0.25))",
-        }} priority />
+        <GlowLogo style={{ margin: "0 auto 6px" }} />
         <h1 style={{
           fontFamily: "var(--font-display)", fontWeight: 800,
           fontSize: 20, letterSpacing: "-0.025em",

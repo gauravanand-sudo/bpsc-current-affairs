@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Image from "next/image";
+import GlowLogo from "@/components/GlowLogo";
 
 const QUIZ_TYPES = [
   {
@@ -33,7 +33,7 @@ export default function QuizzesPage() {
     <main style={{ minHeight: "100vh", background: "var(--bg)", color: "var(--ink)" }}>
       {/* Header */}
       <div style={{ maxWidth: 860, margin: "0 auto", padding: "16px 16px 0", textAlign: "center" }}>
-        <Image src="/logo3.png" alt="OneShot GS" width={180} height={68} style={{ objectFit: "contain", mixBlendMode: "darken", margin: "0 auto 6px" }} priority />
+        <GlowLogo style={{ margin: "0 auto 6px" }} />
         <h1 style={{
           fontFamily: "var(--font-display)", fontWeight: 800,
           fontSize: 20, letterSpacing: "-0.025em",

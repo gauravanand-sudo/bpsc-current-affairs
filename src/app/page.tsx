@@ -1,6 +1,6 @@
-import Image from "next/image";
 import Link from "next/link";
 import FloatingExamTimers from "@/components/FloatingExamTimers";
+import GlowLogo from "@/components/GlowLogo";
 
 const CONTENT = [
   {
@@ -128,13 +128,7 @@ export default function HomePage() {
         display: "flex", flexDirection: "column", alignItems: "center",
         padding: "40px 20px 28px", textAlign: "center",
       }}>
-        <Image
-          src="/logo3.png"
-          alt="OneShot GS"
-          width={300} height={112}
-          style={{ objectFit: "contain", display: "block", marginBottom: 8, mixBlendMode: "darken" }}
-          priority
-        />
+        <GlowLogo width={300} height={112} style={{ marginBottom: 8 }} />
         <p style={{
           fontSize: 13.5,
           color: "var(--ink-strong)",

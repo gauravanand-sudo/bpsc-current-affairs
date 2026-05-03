@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Image from "next/image";
+import GlowLogo from "@/components/GlowLogo";
 
 type Message = {
   role: "user" | "ai";
@@ -67,7 +67,7 @@ export default function AskPage() {
         backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)",
         display: "flex", alignItems: "center", gap: 10,
       }}>
-        <Image src="/logo3.png" alt="OneShot GS" width={100} height={38} style={{ objectFit: "contain", mixBlendMode: "darken", flexShrink: 0 }} priority />
+        <GlowLogo width={100} height={38} style={{ flexShrink: 0 }} />
         <div style={{ width: 1, height: 28, background: "var(--line)", flexShrink: 0 }} />
         <div>
           <p style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: 15, color: "var(--ink-strong)" }}>

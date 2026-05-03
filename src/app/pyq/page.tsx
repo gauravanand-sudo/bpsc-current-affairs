@@ -1,5 +1,5 @@
 import Link from "next/link";
-import Image from "next/image";
+import GlowLogo from "@/components/GlowLogo";
 
 const PRELIMS_SECTIONS = [
   {
@@ -176,7 +176,7 @@ export default function PyqPage() {
   return (
     <main style={{ color: "var(--ink)", background: "var(--bg)" }}>
       <div style={{ maxWidth: 980, margin: "0 auto", padding: "16px 20px 0", textAlign: "center" }}>
-        <Image src="/logo3.png" alt="OneShot GS" width={180} height={68} style={{ objectFit: "contain", mixBlendMode: "darken", margin: "0 auto 4px" }} priority />
+        <GlowLogo style={{ margin: "0 auto 4px" }} />
         <p style={{ fontSize: 12.5, color: "var(--muted)", fontWeight: 600, letterSpacing: "0.01em" }}>
           Only what scores. Zero fluff, zero filler.
         </p>
