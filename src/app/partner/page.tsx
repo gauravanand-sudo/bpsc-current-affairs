@@ -787,6 +787,14 @@ export default function PartnerPage() {
                               fontSize: 12, color: "var(--ink-soft)", fontWeight: 600,
                               background: "var(--panel)", borderRadius: 8, padding: "5px 8px",
                             }}>📍 {profile.district}</span>
+                            {profile.weak_subjects.length > 0 && (
+                              <span style={{
+                                fontSize: 11.5, color: "var(--accent)", fontWeight: 700,
+                                background: "color-mix(in srgb, var(--accent) 8%, transparent)",
+                                border: "1px solid color-mix(in srgb, var(--accent) 18%, transparent)",
+                                borderRadius: 8, padding: "5px 8px", lineHeight: 1.4,
+                              }}>📚 {profile.weak_subjects.slice(0, 2).join(", ")}</span>
+                            )}
                           </div>
 
                           {conn?.status === "accepted" ? (
@@ -980,7 +988,7 @@ export default function PartnerPage() {
 
               {/* ═══════════════ PROFILE ═════════════════════════════════ */}
               {tab === "profile" && (
-                <div style={{ maxWidth: 640, margin: "0 auto" }}>
+                <div style={{ maxWidth: 480, margin: "0 auto" }}>
                   {myProfile && (
                     <div style={{
                       background: "rgba(21,128,61,0.06)", border: "1px solid rgba(21,128,61,0.18)",
@@ -990,87 +998,55 @@ export default function PartnerPage() {
                       <span style={{ fontSize: 20 }}>✅</span>
                       <div style={{ flex: 1 }}>
                         <p style={{ fontSize: 13, fontWeight: 700, color: "#15803d" }}>Profile is live</p>
-                        <p style={{ fontSize: 12, color: "var(--ink-soft)", marginTop: 2 }}>
-                          Visible to other aspirants.
-                        </p>
+                        <p style={{ fontSize: 12, color: "var(--ink-soft)", marginTop: 2 }}>Visible to other aspirants.</p>
                       </div>
                       <button onClick={() => setTab("discover")} style={{
                         border: "none", borderRadius: 10, padding: "7px 14px",
                         background: "rgba(21,128,61,0.12)", color: "#15803d",
                         fontWeight: 700, cursor: "pointer", fontSize: 12, flexShrink: 0,
-                      }}>
-                        See matches →
-                      </button>
+                      }}>See matches →</button>
                     </div>
                   )}
 
-                  <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
-                    {/* Basics */}
-                    <section style={{ border: "1px solid var(--line)", borderRadius: 20, padding: "18px 16px", background: "var(--card)" }}>
-                      <h3 style={{ fontFamily: "var(--font-display)", fontSize: 15, fontWeight: 700, color: "var(--ink-strong)", marginBottom: 14 }}>📚 Basics</h3>
-                      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 12 }}>
-                        <SelectField label="Exam target" value={form.exam_target} values={EXAMS}     onChange={v => setForm({ ...form, exam_target: v })} />
-                        <SelectField label="Prep stage"  value={form.stage}       values={STAGES}    onChange={v => setForm({ ...form, stage: v })} />
-                        <SelectField label="District"    value={form.district}    values={DISTRICTS} onChange={v => setForm({ ...form, district: v })} />
-                        <SelectField label="Language"    value={form.language}    values={LANGUAGES} onChange={v => setForm({ ...form, language: v })} />
-                      </div>
+                  <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+                    {/* Exam */}
+                    <section style={{ border: "1px solid var(--line)", borderRadius: 18, padding: "18px 16px", background: "var(--card)" }}>
+                      <h3 style={{ fontFamily: "var(--font-display)", fontSize: 14, fontWeight: 700, color: "var(--ink-strong)", marginBottom: 12 }}>
+                        🎯 Which exam are you preparing for?
+                      </h3>
+                      <SelectField label="" value={form.exam_target} values={EXAMS} onChange={v => setForm({ ...form, exam_target: v })} />
                     </section>
 
-                    {/* Identity + preference */}
-                    <section style={{ border: "1px solid var(--line)", borderRadius: 20, padding: "18px 16px", background: "var(--card)" }}>
-                      <h3 style={{ fontFamily: "var(--font-display)", fontSize: 15, fontWeight: 700, color: "var(--ink-strong)", marginBottom: 14 }}>👤 Identity &amp; preference</h3>
-                      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 12 }}>
-                        <SelectField label="My gender"              value={form.gender_preference}         values={MY_GENDERS}    onChange={v => setForm({ ...form, gender_preference: v })} />
-                        <SelectField label="I prefer studying with" value={form.partner_gender_preference} values={PARTNER_PREFS}  onChange={v => setForm({ ...form, partner_gender_preference: v })} />
-                      </div>
+                    {/* Gender */}
+                    <section style={{ border: "1px solid var(--line)", borderRadius: 18, padding: "18px 16px", background: "var(--card)" }}>
+                      <h3 style={{ fontFamily: "var(--font-display)", fontSize: 14, fontWeight: 700, color: "var(--ink-strong)", marginBottom: 12 }}>
+                        👤 Your gender
+                      </h3>
+                      <SelectField label="" value={form.gender_preference} values={MY_GENDERS} onChange={v => setForm({ ...form, gender_preference: v })} />
                     </section>
 
-                    {/* Study habits */}
-                    <section style={{ border: "1px solid var(--line)", borderRadius: 20, padding: "18px 16px", background: "var(--card)" }}>
-                      <h3 style={{ fontFamily: "var(--font-display)", fontSize: 15, fontWeight: 700, color: "var(--ink-strong)", marginBottom: 14 }}>⏰ Study habits</h3>
-                      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 12, marginBottom: 14 }}>
-                        <SelectField label="Daily hours" value={form.daily_hours} values={HOURS} onChange={v => setForm({ ...form, daily_hours: v })} />
-                        <SelectField label="Study mode"  value={form.study_mode}  values={MODES} onChange={v => setForm({ ...form, study_mode: v })} />
-                      </div>
-                      <MultiField label="Available slots" values={SLOTS} selected={form.slots} onToggle={v => toggleArr("slots", v)} />
+                    {/* District */}
+                    <section style={{ border: "1px solid var(--line)", borderRadius: 18, padding: "18px 16px", background: "var(--card)" }}>
+                      <h3 style={{ fontFamily: "var(--font-display)", fontSize: 14, fontWeight: 700, color: "var(--ink-strong)", marginBottom: 12 }}>
+                        📍 Your district
+                      </h3>
+                      <SelectField label="" value={form.district} values={DISTRICTS} onChange={v => setForm({ ...form, district: v })} />
                     </section>
 
-                    {/* Subjects */}
-                    <section style={{ border: "1px solid var(--line)", borderRadius: 20, padding: "18px 16px", background: "var(--card)" }}>
-                      <h3 style={{ fontFamily: "var(--font-display)", fontSize: 15, fontWeight: 700, color: "var(--ink-strong)", marginBottom: 14 }}>🎯 Subjects</h3>
-                      <MultiField label="📕 Working on (weak)" values={SUBJECTS} selected={form.weak_subjects} onToggle={v => toggleArr("weak_subjects", v)} />
-                      <div style={{ marginTop: 14 }}>
-                        <MultiField label="💪 Can help others (strong)" values={SUBJECTS} selected={form.strong_subjects} onToggle={v => toggleArr("strong_subjects", v)} />
-                      </div>
-                    </section>
-
-                    {/* About */}
-                    <section style={{ border: "1px solid var(--line)", borderRadius: 20, padding: "18px 16px", background: "var(--card)" }}>
-                      <h3 style={{ fontFamily: "var(--font-display)", fontSize: 15, fontWeight: 700, color: "var(--ink-strong)", marginBottom: 14 }}>🙋 About you</h3>
-                      <label style={{ display: "block" }}>
-                        <span style={{ fontSize: 10.5, fontWeight: 700, color: "var(--muted)", letterSpacing: "0.08em", textTransform: "uppercase" }}>Short bio</span>
-                        <textarea
-                          value={form.bio}
-                          onChange={e => setForm({ ...form, bio: e.target.value })}
-                          maxLength={220} rows={3}
-                          placeholder="What kind of partner are you looking for? What's your current focus?"
-                          style={{
-                            display: "block", width: "100%", marginTop: 6,
-                            border: "1px solid var(--line)", borderRadius: 14, padding: "11px 13px",
-                            background: "var(--panel)", color: "var(--ink-strong)", resize: "vertical",
-                            fontSize: 13.5, lineHeight: 1.6,
-                          }}
-                        />
-                        <p style={{ fontSize: 11, color: "var(--muted)", marginTop: 4, textAlign: "right" }}>{form.bio.length}/220</p>
-                      </label>
+                    {/* Subjects to study */}
+                    <section style={{ border: "1px solid var(--line)", borderRadius: 18, padding: "18px 16px", background: "var(--card)" }}>
+                      <h3 style={{ fontFamily: "var(--font-display)", fontSize: 14, fontWeight: 700, color: "var(--ink-strong)", marginBottom: 12 }}>
+                        📚 Which subjects do you want to study?
+                      </h3>
+                      <MultiField label="" values={SUBJECTS} selected={form.weak_subjects} onToggle={v => toggleArr("weak_subjects", v)} />
                     </section>
 
                     <button onClick={saveProfile} disabled={saving} style={{
-                      width: "100%", border: "none", borderRadius: 18, padding: "16px 20px",
+                      width: "100%", border: "none", borderRadius: 16, padding: "15px 20px",
                       background: "var(--accent)", color: "#fff", fontWeight: 700,
-                      fontFamily: "var(--font-display)", cursor: saving ? "wait" : "pointer", fontSize: 16,
+                      fontFamily: "var(--font-display)", cursor: saving ? "wait" : "pointer", fontSize: 15,
                     }}>
-                      {saving ? "Saving…" : myProfile ? "Update profile →" : "Create profile & start matching →"}
+                      {saving ? "Saving…" : myProfile ? "Update →" : "Find my study partner →"}
                     </button>
                   </div>
                 </div>
