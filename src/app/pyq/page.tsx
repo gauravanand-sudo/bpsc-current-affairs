@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 const PRELIMS_SECTIONS = [
   {
@@ -174,9 +175,15 @@ function PlaceholderCard({
 export default function PyqPage() {
   return (
     <main style={{ color: "var(--ink)", background: "var(--bg)" }}>
+      <div style={{ maxWidth: 980, margin: "0 auto", padding: "16px 20px 0", textAlign: "center" }}>
+        <Image src="/logo3.png" alt="OneShot GS" width={180} height={68} style={{ objectFit: "contain", mixBlendMode: "darken", margin: "0 auto 4px" }} priority />
+        <p style={{ fontSize: 12.5, color: "var(--muted)", fontWeight: 600, letterSpacing: "0.01em" }}>
+          Only what scores. Zero fluff, zero filler.
+        </p>
+      </div>
       <section
         style={{
-          padding: "64px 20px 48px",
+          padding: "32px 20px 48px",
           borderBottom: "1px solid var(--line)",
           background:
             "linear-gradient(180deg, rgba(192,96,16,0.08) 0%, rgba(244,239,232,0.3) 100%)",

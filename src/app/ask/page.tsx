@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import Image from "next/image";
 
 type Message = {
   role: "user" | "ai";
@@ -66,18 +67,14 @@ export default function AskPage() {
         backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)",
         display: "flex", alignItems: "center", gap: 10,
       }}>
-        <div style={{
-          width: 36, height: 36, borderRadius: 10,
-          background: "linear-gradient(135deg, #b86117, #d97706)",
-          display: "flex", alignItems: "center", justifyContent: "center",
-          fontSize: 18, flexShrink: 0,
-        }}>🧠</div>
+        <Image src="/logo3.png" alt="OneShot GS" width={100} height={38} style={{ objectFit: "contain", mixBlendMode: "darken", flexShrink: 0 }} priority />
+        <div style={{ width: 1, height: 28, background: "var(--line)", flexShrink: 0 }} />
         <div>
           <p style={{ fontFamily: "var(--font-display)", fontWeight: 700, fontSize: 15, color: "var(--ink-strong)" }}>
-            BPSC AI Tutor
+            Ask Tutor
           </p>
           <p style={{ fontSize: 11, color: "var(--muted)" }}>
-            Ask any doubt — instant answer with exam angle
+            Only what scores. Zero fluff, zero filler.
           </p>
         </div>
         <div style={{

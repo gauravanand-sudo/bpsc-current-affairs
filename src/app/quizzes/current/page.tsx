@@ -1,6 +1,7 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import Link from "next/link";
+import Image from "next/image";
 import QuizSetCard from "@/components/QuizSetCard";
 import CollapsibleMonth from "@/components/CollapsibleMonth";
 
@@ -66,25 +67,12 @@ export default async function CurrentQuizPage() {
 
   return (
     <main style={{ minHeight: "100vh", background: "var(--bg)", color: "var(--ink)" }}>
-      <section style={{ maxWidth: 860, margin: "0 auto", padding: "56px 24px 40px", textAlign: "center" }}>
-        <p style={{
-          fontFamily: "monospace", fontSize: 11, letterSpacing: "0.32em",
-          textTransform: "uppercase", color: "var(--accent)", marginBottom: 16,
-        }}>Quiz · Current Affairs</p>
-        <h1 style={{
-          fontFamily: "var(--font-display)", fontSize: "clamp(1.8rem, 5vw, 3rem)",
-          fontWeight: 700, lineHeight: 1.1, color: "var(--ink-strong)",
-          letterSpacing: "-0.02em", marginBottom: 14,
-        }}>Month-wise Quizzes</h1>
-        <p style={{ fontSize: 14, color: "var(--ink-soft)", lineHeight: 1.7, maxWidth: 480, margin: "0 auto 6px" }}>
-          30-min timer · −⅓ negative marking · Score extrapolated to /150
-        </p>
-        <div style={{ marginTop: 18 }}>
-          <Link href="/quizzes" style={{ fontSize: 13, fontWeight: 600, color: "var(--accent)", textDecoration: "none" }}>
-            ← All Quizzes
-          </Link>
-        </div>
-      </section>
+      <div style={{ maxWidth: 860, margin: "0 auto", padding: "16px 16px 0", textAlign: "center", position: "relative" }}>
+        <Link href="/quizzes" style={{ position: "absolute", right: 16, top: 20, fontSize: 12.5, fontWeight: 600, color: "var(--muted)", textDecoration: "none" }}>← Back</Link>
+        <Image src="/logo3.png" alt="OneShot GS" width={180} height={68} style={{ objectFit: "contain", mixBlendMode: "darken", margin: "0 auto 6px" }} priority />
+        <h1 style={{ fontFamily: "var(--font-display)", fontWeight: 800, fontSize: 20, letterSpacing: "-0.025em", color: "var(--ink-strong)", marginBottom: 4 }}>Current Affairs Quiz</h1>
+        <p style={{ fontSize: 12.5, color: "var(--muted)", fontWeight: 600, letterSpacing: "0.01em" }}>Only what scores. Zero fluff, zero filler.</p>
+      </div>
 
       <section style={{ maxWidth: 860, margin: "0 auto", padding: "0 24px 80px" }}>
         <p style={{

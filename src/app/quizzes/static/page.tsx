@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 const SUBJECTS = [
   { key: "polity",      label: "Polity & Constitution",   emoji: "⚖️",  color: "#b86117" },
@@ -14,33 +15,14 @@ const SUBJECTS = [
 export default function StaticQuizPage() {
   return (
     <main style={{ minHeight: "100vh", background: "var(--bg)", color: "var(--ink)" }}>
-      <section style={{
-        padding: "56px 20px 44px", textAlign: "center",
-        borderBottom: "1px solid var(--line)",
-      }}>
-        <p style={{
-          fontFamily: "monospace", fontSize: 10,
-          letterSpacing: "0.3em", textTransform: "uppercase",
-          color: "var(--muted)", marginBottom: 14,
-        }}>Quiz · Static GK</p>
-        <h1 style={{
-          fontFamily: "var(--font-display)", fontWeight: 700,
-          fontSize: "clamp(1.9rem, 5.5vw, 3rem)",
-          lineHeight: 1.08, letterSpacing: "-0.03em",
-          color: "var(--ink-strong)", maxWidth: 680, margin: "0 auto 12px",
-        }}>Subject-wise Quizzes</h1>
-        <p style={{
-          maxWidth: 480, margin: "0 auto",
-          fontSize: 14, lineHeight: 1.8, color: "var(--ink-soft)",
-        }}>Pick a subject and test your static GK</p>
-        <div style={{ marginTop: 22 }}>
-          <Link href="/quizzes" style={{ fontSize: 13, fontWeight: 600, color: "var(--accent)", textDecoration: "none" }}>
-            ← All Quizzes
-          </Link>
-        </div>
-      </section>
+      <div style={{ maxWidth: 860, margin: "0 auto", padding: "16px 16px 0", textAlign: "center", position: "relative" }}>
+        <Link href="/quizzes" style={{ position: "absolute", right: 16, top: 20, fontSize: 12.5, fontWeight: 600, color: "var(--muted)", textDecoration: "none" }}>← Back</Link>
+        <Image src="/logo3.png" alt="OneShot GS" width={180} height={68} style={{ objectFit: "contain", mixBlendMode: "darken", margin: "0 auto 6px" }} priority />
+        <h1 style={{ fontFamily: "var(--font-display)", fontWeight: 800, fontSize: 20, letterSpacing: "-0.025em", color: "var(--ink-strong)", marginBottom: 4 }}>Static GK Quiz</h1>
+        <p style={{ fontSize: 12.5, color: "var(--muted)", fontWeight: 600, letterSpacing: "0.01em" }}>Only what scores. Zero fluff, zero filler.</p>
+      </div>
 
-      <section style={{ maxWidth: 860, margin: "0 auto", padding: "36px 16px 72px" }}>
+      <section style={{ maxWidth: 860, margin: "0 auto", padding: "14px 16px 72px" }}>
         <div className="subjects-grid">
           {SUBJECTS.map((sub) => (
             <div key={sub.key} className="subject-card" style={{ "--c": sub.color } as React.CSSProperties}>
