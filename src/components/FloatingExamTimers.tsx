@@ -1,151 +1,30 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import Link from "next/link";
 
-// ── Update dates when exam schedules are announced ────────────────────────────
-const EXAMS = [
-  { short: "BPSC 72nd", full: "72nd BPSC Prelims", date: new Date("2026-07-26T00:00:00+05:30"), color: "#c06010", start: new Date("2025-07-26T00:00:00+05:30") },
-  { short: "BPSC AEDO", full: "BPSC AEDO",         date: new Date("2026-09-15T00:00:00+05:30"), color: "#6366f1", start: new Date("2025-09-15T00:00:00+05:30") },
-  { short: "BSSC CGL",  full: "BSSC CGL",           date: new Date("2026-11-01T00:00:00+05:30"), color: "#15803d", start: new Date("2025-11-01T00:00:00+05:30") },
+const PROGRAMS = [
+  { exam: "UPSC 2027", price: "₹56K", emoji: "🚀", color: "#5b21b6" },
+  { exam: "UPSC 2028", price: "₹56K", emoji: "🌱", color: "#7c3aed" },
+  { exam: "72nd BPSC", price: "₹29K", emoji: "🔥", color: "#b91c1c" },
+  { exam: "73rd BPSC", price: "₹29K", emoji: "🎯", color: "#c06010" },
 ];
-// ─────────────────────────────────────────────────────────────────────────────
-
-function remaining(target: Date) {
-  const diff = target.getTime() - Date.now();
-  if (diff <= 0) return null;
-  return {
-    d: Math.floor(diff / 86400000),
-    h: Math.floor((diff % 86400000) / 3600000),
-    m: Math.floor((diff % 3600000) / 60000),
-    s: Math.floor((diff % 60000) / 1000),
-  };
-}
-
-function progressPct(start: Date, end: Date) {
-  const total = end.getTime() - start.getTime();
-  const elapsed = Date.now() - start.getTime();
-  return Math.min(100, Math.max(0, (elapsed / total) * 100));
-}
 
 export default function FloatingExamTimers() {
-  const [mounted, setMounted] = useState(false);
-  const [, setTick] = useState(0);
-
-  useEffect(() => {
-    setMounted(true);
-    const id = setInterval(() => setTick(t => t + 1), 1000);
-    return () => clearInterval(id);
-  }, []);
-
-  if (!mounted) return null;
-
   return (
     <>
+      <div className="program-float" aria-label="Complete programs">
+        <div className="program-float-head">FULL PROGRAMS <span>Pre + Mains + Interview</span></div>
+        {PROGRAMS.map((p) => (
+          <Link href="/#courses" key={p.exam} className="program-pill" style={{ "--pc": p.color } as React.CSSProperties}>
+            <span className="program-emoji">{p.emoji}</span>
+            <span><b>{p.exam}</b><small>Complete preparation</small></span>
+            <strong>{p.price}</strong>
+          </Link>
+        ))}
+      </div>
       <style>{`
-        @keyframes timerSlideIn {
-          from { opacity: 0; transform: translateX(28px) scale(0.96); }
-          to   { opacity: 1; transform: translateX(0) scale(1); }
-        }
-        @keyframes secondPulse {
-          0%, 100% { opacity: 1; transform: scale(1); }
-          50%       { opacity: 0.55; transform: scale(0.92); }
-        }
-        @keyframes barShimmer {
-          0%   { background-position: -200% center; }
-          100% { background-position:  200% center; }
-        }
-        .timer-card {
-          animation: timerSlideIn 0.55s cubic-bezier(0.22,1,0.36,1) both;
-        }
-        .timer-card:nth-child(1) { animation-delay: 0.08s; }
-        .timer-card:nth-child(2) { animation-delay: 0.18s; }
-        .timer-card:nth-child(3) { animation-delay: 0.28s; }
-        .sec-val {
-          display: inline-block;
-          animation: secondPulse 1s ease infinite;
-        }
-        .timer-bar-fill {
-          background-size: 200% auto;
-          animation: barShimmer 3s linear infinite;
-        }
-        /* Full cards on desktop */
-        .timers-full { display: flex; }
-        .timers-mini { display: none; }
-        @media (max-width: 767px) {
-          .timers-full { display: none; }
-          .timers-mini { display: flex; }
-        }
+        .program-float{position:fixed;top:94px;right:10px;z-index:88;width:190px;padding:8px;border-radius:17px;background:rgba(255,253,248,.86);backdrop-filter:blur(14px);border:1px solid rgba(120,80,30,.12);box-shadow:0 10px 30px rgba(70,35,10,.09)}.program-float-head{font-size:8px;font-weight:900;letter-spacing:.12em;color:#7c2d12;padding:3px 4px 7px}.program-float-head span{display:block;margin-top:2px;font-size:7px;letter-spacing:.04em;color:var(--muted)}.program-pill{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:7px;text-decoration:none;padding:7px 6px;border-radius:11px;transition:.14s}.program-pill:hover{background:#fff;transform:translateX(-2px)}.program-emoji{width:26px;height:26px;display:grid;place-items:center;border-radius:8px;background:color-mix(in srgb,var(--pc) 10%,white);font-size:13px}.program-pill b{display:block;font-size:9.5px;color:var(--ink-strong)}.program-pill small{display:block;font-size:7px;color:var(--muted);margin-top:1px}.program-pill strong{font-size:10px;color:var(--pc)}@media(max-width:900px){.program-float{display:none}}
       `}</style>
-
-      {/* ── Desktop: full cards ──────────────────────────────── */}
-      <div className="timers-full" style={{
-        position: "fixed", top: 94, right: 10,
-        flexDirection: "column", gap: 7,
-        zIndex: 90, pointerEvents: "none", opacity: 0.35,
-      }}>
-        {EXAMS.map(exam => {
-          const r = remaining(exam.date);
-          const pct = progressPct(exam.start, exam.date);
-          return (
-            <div key={exam.short} className="timer-card" style={{ padding: "6px 10px", minWidth: 140 }}>
-              <p style={{ fontSize: 8, fontWeight: 800, letterSpacing: "0.14em", textTransform: "uppercase", color: exam.color, marginBottom: 4 }}>{exam.short}</p>
-              {r ? (
-                <div style={{ display: "flex", gap: 8, alignItems: "flex-end" }}>
-                  <Unit val={r.d} label="d" color={exam.color} />
-                  <Unit val={r.h} label="h" color={exam.color} />
-                  <Unit val={r.m} label="m" color={exam.color} />
-                  <Unit val={r.s} label="s" color={exam.color} pulse />
-                </div>
-              ) : (
-                <p style={{ fontSize: 13, fontWeight: 800, color: exam.color }}>Exam Day 🎯</p>
-              )}
-            </div>
-          );
-        })}
-      </div>
-
-      {/* ── Mobile: mini pills ───────────────────────────────── */}
-      <div className="timers-mini" style={{
-        position: "fixed", top: 94, right: 8,
-        flexDirection: "column", gap: 4,
-        zIndex: 90, pointerEvents: "none", opacity: 0.35,
-      }}>
-        {EXAMS.map(exam => {
-          const r = remaining(exam.date);
-          return (
-            <div key={exam.short} className="timer-card" style={{
-              padding: "3px 6px",
-              display: "flex", alignItems: "center", gap: 5,
-            }}>
-              <span style={{ fontSize: 7, fontWeight: 800, letterSpacing: "0.1em", textTransform: "uppercase", color: exam.color, opacity: 0.6, lineHeight: 1 }}>
-                {exam.short}
-              </span>
-              {r ? (
-                <span style={{ fontSize: 11, fontWeight: 800, color: "var(--ink-strong)", opacity: 0.55, letterSpacing: "-0.02em", fontVariantNumeric: "tabular-nums" }}>
-                  {r.d}<span style={{ fontSize: 8, color: exam.color, fontWeight: 700 }}>d </span>
-                  <span className="sec-val">{String(r.h).padStart(2,"0")}</span><span style={{ fontSize: 8, color: exam.color, fontWeight: 700 }}>h</span>
-                </span>
-              ) : (
-                <span style={{ fontSize: 10, fontWeight: 800, color: exam.color }}>🎯</span>
-              )}
-            </div>
-          );
-        })}
-      </div>
     </>
-  );
-}
-
-function Unit({ val, label, color, pulse }: { val: number; label: string; color: string; pulse?: boolean }) {
-  const str = label === "d" ? String(val) : String(val).padStart(2, "0");
-  return (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 1 }}>
-      <span className={pulse ? "sec-val" : undefined} style={{
-        fontSize: label === "d" ? 18 : 15, fontWeight: 800,
-        color: "var(--ink-strong)", opacity: 0.55, lineHeight: 1,
-        letterSpacing: "-0.03em", fontVariantNumeric: "tabular-nums",
-      }}>{str}</span>
-      <span style={{ fontSize: 7.5, fontWeight: 800, letterSpacing: "0.1em", textTransform: "uppercase", color }}>{label}</span>
-    </div>
   );
 }
