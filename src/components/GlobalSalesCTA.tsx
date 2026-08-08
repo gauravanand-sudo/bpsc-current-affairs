@@ -14,12 +14,12 @@ export default function GlobalSalesCTA() {
         <div className="note-head"><span>PROGRAMS</span><b>UPSC & BPSC</b></div>
         {!compact && <p>Structured preparation from Prelims through Mains and Interview.</p>}
         {!compact && <div className="fee-row"><span><small>UPSC 2027/28</small><strong>₹56,000</strong></span><span><small>BPSC 72nd/73rd</small><strong>₹29,000</strong></span></div>}
-        <div className="note-actions"><Link href="/#courses">Explore Programs →</Link>{!compact && <Link href="/study" className="quiet">Start Free Study</Link>}</div>
+        <div className="note-actions"><Link href="/#programs">Explore Programs →</Link>{!compact && <Link href="/study" className="quiet">Start Free Study</Link>}</div>
       </aside>}
 
       <div className={`mobile-program-bar ${compact ? "compact" : ""}`}>
         <div><strong>Complete UPSC & BPSC Programs</strong><span>Prelims · Mains · Interview</span></div>
-        <Link href="/#courses">Explore →</Link>
+        <Link href="/#programs">Explore →</Link>
       </div>
 
       <style>{`
