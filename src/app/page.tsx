@@ -79,9 +79,27 @@ const TOOLS = [
 ];
 
 const FACULTIES = [
-  { name: "Ananya Sharma", initials: "AS" },
-  { name: "Priya Verma", initials: "PV" },
-  { name: "Neha Singh", initials: "NS" },
+  {
+    name: "Ruhani Chauhan",
+    emoji: "🏛️📜",
+    subject: "History Faculty",
+    exams: "BPSC • UPSC",
+    extras: "Ancient 🪷 • Medieval ⚔️ • Modern 🇮🇳",
+  },
+  {
+    name: "Ananya Sharma",
+    emoji: "⚖️🏛️",
+    subject: "Polity Faculty",
+    exams: "BPSC • UPSC",
+    extras: "Constitution 📘 • Governance 🏢 • Current Issues 📰",
+  },
+  {
+    name: "Priya Verma",
+    emoji: "🌍🗺️",
+    subject: "Geography Faculty",
+    exams: "BPSC • UPSC",
+    extras: "India 🇮🇳 • Bihar 🌾 • World 🌐",
+  },
 ];
 
 export default function HomePage() {
@@ -213,28 +231,32 @@ export default function HomePage() {
       </section>
 
       {/* ── Faculties section ─────────────────────────────────── */}
-      <section style={{ maxWidth: 860, margin: "24px auto 0", padding: "0 14px" }}>
+      <section style={{ maxWidth: 860, margin: "28px auto 0", padding: "0 14px" }}>
         <p style={{
-          fontSize: 10, fontWeight: 800, letterSpacing: "0.18em",
+          fontSize: 11, fontWeight: 900, letterSpacing: "0.14em",
           textTransform: "uppercase", color: "var(--muted)",
-          marginBottom: 10, paddingLeft: 4,
-        }}>Our Faculties</p>
+          marginBottom: 12, paddingLeft: 4,
+        }}>👩‍🏫✨ Our Faculties 📚🎓</p>
 
         <div className="faculty-grid">
           {FACULTIES.map(faculty => (
             <article key={faculty.name} className="faculty-card">
-              <div className="faculty-avatar">{faculty.initials}</div>
-              <div>
+              <div className="faculty-avatar">{faculty.emoji}</div>
+              <div style={{ minWidth: 0 }}>
                 <p style={{
                   fontFamily: "var(--font-display)",
-                  fontSize: 14.5, fontWeight: 800,
+                  fontSize: 15, fontWeight: 850,
                   color: "var(--ink-strong)",
                   letterSpacing: "-0.03em",
-                  marginBottom: 2,
-                }}>{faculty.name}</p>
+                  marginBottom: 4,
+                }}>✨ {faculty.name}</p>
                 <p style={{
-                  fontSize: 11.5, color: "var(--ink-soft)", lineHeight: 1.5, fontWeight: 500,
-                }}>Faculty</p>
+                  fontSize: 12, color: "var(--ink-strong)", lineHeight: 1.5, fontWeight: 750,
+                  marginBottom: 4,
+                }}>🎓 {faculty.subject} · 🎯 {faculty.exams}</p>
+                <p style={{
+                  fontSize: 11, color: "var(--ink-soft)", lineHeight: 1.55, fontWeight: 550,
+                }}>📚 {faculty.extras}</p>
               </div>
             </article>
           ))}
@@ -343,30 +365,36 @@ export default function HomePage() {
 
         .faculty-card {
           display: flex;
-          align-items: center;
+          align-items: flex-start;
           gap: 12px;
-          background: rgba(255,253,248,0.88);
+          background: rgba(255,253,248,0.90);
           backdrop-filter: blur(12px);
           -webkit-backdrop-filter: blur(12px);
-          border: 1px solid rgba(255,255,255,0.72);
+          border: 1px solid rgba(255,255,255,0.78);
           border-radius: 18px;
-          padding: 14px;
+          padding: 15px;
           box-shadow: 0 4px 20px rgba(120,80,30,0.1), 0 1px 4px rgba(120,80,30,0.06), inset 0 1px 0 rgba(255,255,255,0.8);
+          transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+        @media (hover: hover) {
+          .faculty-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 32px rgba(120,80,30,0.15), 0 2px 8px rgba(120,80,30,0.08);
+          }
         }
 
         .faculty-avatar {
-          width: 44px;
-          height: 44px;
-          border-radius: 50%;
+          width: 54px;
+          height: 54px;
+          border-radius: 16px;
           display: grid;
           place-items: center;
           flex-shrink: 0;
-          font-family: var(--font-display);
-          font-size: 13px;
-          font-weight: 800;
-          color: #7c3aed;
-          background: rgba(124,58,237,0.10);
-          border: 1px solid rgba(124,58,237,0.20);
+          font-size: 20px;
+          letter-spacing: -0.08em;
+          background: linear-gradient(145deg, rgba(124,58,237,0.12), rgba(217,119,6,0.10));
+          border: 1px solid rgba(124,58,237,0.18);
+          box-shadow: inset 0 1px 0 rgba(255,255,255,0.8);
         }
       `}</style>
     </main>
