@@ -27,7 +27,7 @@ export default function Nav() {
 
   const user = session?.user;
   const desktopLinks = [
-    { href: "/#courses", label: "Programs" },
+    { href: "/#programs", label: "Programs" },
     { href: "/study", label: "Free Study" },
     { href: "/quizzes", label: "Free Quiz" },
     { href: "/ask", label: "Ask Tutor" },
@@ -38,7 +38,7 @@ export default function Nav() {
     { href: "/", label: "Home", icon: "⌂" },
     { href: "/study", label: "Free Study", icon: "▤" },
     { href: "/quizzes", label: "Free Quiz", icon: "✓" },
-    { href: "/#courses", label: "Programs", icon: "◎" },
+    { href: "/#programs", label: "Programs", icon: "◎" },
     { href: "/partner", label: "Buddy", icon: "◇" },
   ];
   const isActive = (href: string) => href === "/" ? pathname === "/" : href.startsWith("/#") ? false : pathname.startsWith(href);
@@ -56,7 +56,7 @@ export default function Nav() {
           {desktopLinks.map(({ href, label }) => <Link key={href} href={href} className={isActive(href) ? "active" : ""}>{label}</Link>)}
         </div>
         <div className="nav-actions">
-          <Link href="/#courses" className="enroll-nav"><span>Explore Programs</span><b>→</b></Link>
+          <Link href="/#programs" className="enroll-nav"><span>Explore Programs</span><b>→</b></Link>
           {user ? (
             <>
               <Link href="/profile" className="profile-dot">{user.user_metadata?.avatar_url ? <img src={user.user_metadata.avatar_url} alt="Profile" /> : <span>{(user.user_metadata?.full_name ?? user.email ?? "U")[0].toUpperCase()}</span>}</Link>
