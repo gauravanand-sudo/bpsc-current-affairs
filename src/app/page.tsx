@@ -78,6 +78,12 @@ const TOOLS = [
   },
 ];
 
+const FACULTIES = [
+  { name: "Ananya Sharma", initials: "AS" },
+  { name: "Priya Verma", initials: "PV" },
+  { name: "Neha Singh", initials: "NS" },
+];
+
 export default function HomePage() {
   return (
     <main style={{
@@ -206,6 +212,35 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* ── Faculties section ─────────────────────────────────── */}
+      <section style={{ maxWidth: 860, margin: "24px auto 0", padding: "0 14px" }}>
+        <p style={{
+          fontSize: 10, fontWeight: 800, letterSpacing: "0.18em",
+          textTransform: "uppercase", color: "var(--muted)",
+          marginBottom: 10, paddingLeft: 4,
+        }}>Our Faculties</p>
+
+        <div className="faculty-grid">
+          {FACULTIES.map(faculty => (
+            <article key={faculty.name} className="faculty-card">
+              <div className="faculty-avatar">{faculty.initials}</div>
+              <div>
+                <p style={{
+                  fontFamily: "var(--font-display)",
+                  fontSize: 14.5, fontWeight: 800,
+                  color: "var(--ink-strong)",
+                  letterSpacing: "-0.03em",
+                  marginBottom: 2,
+                }}>{faculty.name}</p>
+                <p style={{
+                  fontSize: 11.5, color: "var(--ink-soft)", lineHeight: 1.5, fontWeight: 500,
+                }}>Faculty</p>
+              </div>
+            </article>
+          ))}
+        </div>
+      </section>
+
       <style>{`
         .ticker-track {
           animation: ticker 18s linear infinite;
@@ -295,6 +330,43 @@ export default function HomePage() {
           display: grid; place-items: center;
           background: color-mix(in srgb, var(--c) 11%, transparent);
           border: 1px solid color-mix(in srgb, var(--c) 20%, transparent);
+        }
+
+        .faculty-grid {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 10px;
+        }
+        @media (min-width: 540px) {
+          .faculty-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        .faculty-card {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          background: rgba(255,253,248,0.88);
+          backdrop-filter: blur(12px);
+          -webkit-backdrop-filter: blur(12px);
+          border: 1px solid rgba(255,255,255,0.72);
+          border-radius: 18px;
+          padding: 14px;
+          box-shadow: 0 4px 20px rgba(120,80,30,0.1), 0 1px 4px rgba(120,80,30,0.06), inset 0 1px 0 rgba(255,255,255,0.8);
+        }
+
+        .faculty-avatar {
+          width: 44px;
+          height: 44px;
+          border-radius: 50%;
+          display: grid;
+          place-items: center;
+          flex-shrink: 0;
+          font-family: var(--font-display);
+          font-size: 13px;
+          font-weight: 800;
+          color: #7c3aed;
+          background: rgba(124,58,237,0.10);
+          border: 1px solid rgba(124,58,237,0.20);
         }
       `}</style>
     </main>
