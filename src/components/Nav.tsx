@@ -27,32 +27,36 @@ export default function Nav() {
 
   const user = session?.user;
   const desktopLinks = [
-    { href: "/#courses", label: "Courses" },
-    { href: "/study", label: "Study" },
-    { href: "/quizzes", label: "Quiz" },
+    { href: "/#courses", label: "Programs" },
+    { href: "/study", label: "Free Study" },
+    { href: "/quizzes", label: "Free Quiz" },
     { href: "/ask", label: "Ask Tutor" },
     { href: "/partner", label: "Study Buddy" },
     { href: "/leaderboard", label: "Results" },
   ];
   const mobileTabs = [
     { href: "/", label: "Home", icon: "⌂" },
-    { href: "/#courses", label: "Courses", icon: "🎓" },
-    { href: "/quizzes", label: "Quiz", icon: "🎯" },
-    { href: "/partner", label: "Buddy", icon: "🤝" },
-    { href: "/ask", label: "Tutor", icon: "🧠" },
+    { href: "/study", label: "Free Study", icon: "▤" },
+    { href: "/quizzes", label: "Free Quiz", icon: "✓" },
+    { href: "/#courses", label: "Programs", icon: "◎" },
+    { href: "/partner", label: "Buddy", icon: "◇" },
   ];
   const isActive = (href: string) => href === "/" ? pathname === "/" : href.startsWith("/#") ? false : pathname.startsWith(href);
 
   return (
     <>
-      <div className="sales-topline">🎓 UPSC 2027/28 ₹56,000 &nbsp;•&nbsp; BPSC 72nd/73rd ₹29,000 &nbsp;•&nbsp; PRELIMS + MAINS + INTERVIEW</div>
+      <div className="academic-topline">
+        <span>OneShot GS</span>
+        <b>UPSC & BPSC · Prelims + Mains + Interview</b>
+        <span className="fees">UPSC ₹56,000 · BPSC ₹29,000</span>
+      </div>
       <nav className="main-nav">
-        <Link href="/" className="brand"><Image src="/logo3.png" alt="OneShot GS" width={110} height={42} priority /></Link>
+        <Link href="/" className="brand" aria-label="OneShot GS home"><Image src="/logo3.png" alt="OneShot GS" width={112} height={42} priority /></Link>
         <div className="desktop-nav">
           {desktopLinks.map(({ href, label }) => <Link key={href} href={href} className={isActive(href) ? "active" : ""}>{label}</Link>)}
         </div>
         <div className="nav-actions">
-          <Link href="/#courses" className="enroll-nav">Enroll Now</Link>
+          <Link href="/#courses" className="enroll-nav"><span>Explore Programs</span><b>→</b></Link>
           {user ? (
             <>
               <Link href="/profile" className="profile-dot">{user.user_metadata?.avatar_url ? <img src={user.user_metadata.avatar_url} alt="Profile" /> : <span>{(user.user_metadata?.full_name ?? user.email ?? "U")[0].toUpperCase()}</span>}</Link>
@@ -62,15 +66,15 @@ export default function Nav() {
         </div>
       </nav>
 
-      <nav className="mobile-tab-bar">
+      <nav className="mobile-tab-bar" aria-label="Primary navigation">
         {mobileTabs.map(({ href, label, icon }) => <Link key={href} href={href} className={isActive(href) ? "active" : ""}><span>{icon}</span><small>{label}</small></Link>)}
       </nav>
-      <div className="mobile-tab-spacer" style={{ height: hideMobileTabSpacer ? 0 : 60 }} />
+      <div className="mobile-tab-spacer" style={{ height: hideMobileTabSpacer ? 0 : 62 }} />
 
       <style>{`
-        .sales-topline{height:27px;display:flex;align-items:center;justify-content:center;background:#241006;color:#ffe2a8;font-size:9px;font-weight:900;letter-spacing:.1em;text-align:center;padding:0 8px;position:sticky;top:0;z-index:102}.main-nav{position:sticky;top:27px;z-index:101;height:54px;padding:0 14px;display:flex;align-items:center;justify-content:space-between;background:rgba(249,244,237,.97);backdrop-filter:blur(14px);border-bottom:1px solid rgba(120,80,30,.12)}.brand{display:flex;flex-shrink:0}.brand img{object-fit:contain;mix-blend-mode:darken}.desktop-nav{display:flex;align-items:center;gap:2px}.desktop-nav a{text-decoration:none;padding:7px 9px;border-radius:9px;color:var(--ink-soft);font-size:12px;font-weight:700}.desktop-nav a:hover,.desktop-nav a.active{background:#fff3e4;color:#9a3f0d}.nav-actions{display:flex;align-items:center;gap:7px}.enroll-nav{text-decoration:none;padding:8px 11px;border-radius:10px;background:linear-gradient(135deg,#a71919,#c06010);color:#fff;font-size:11px;font-weight:900;box-shadow:0 5px 15px rgba(170,50,20,.2)}.auth-link{border:0;background:none;color:var(--muted);font-size:10px;font-weight:700;cursor:pointer}.profile-dot{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:var(--accent);color:white;text-decoration:none;font-size:12px;font-weight:900;overflow:hidden}.profile-dot img{width:100%;height:100%;object-fit:cover}.mobile-tab-bar{display:none}.mobile-tab-spacer{display:none}
-        @media(max-width:850px){.desktop-nav{display:none}}
-        @media(max-width:639px){.sales-topline{height:24px;font-size:7.5px;letter-spacing:.06em}.main-nav{top:24px;height:50px}.brand img{width:94px;height:36px}.enroll-nav{font-size:9px;padding:7px 9px}.auth-link{display:none}.mobile-tab-bar{position:fixed;bottom:0;left:0;right:0;z-index:210;display:flex;background:rgba(249,244,237,.98);backdrop-filter:blur(16px);border-top:1px solid rgba(120,80,30,.13);padding-bottom:env(safe-area-inset-bottom)}.mobile-tab-bar a{flex:1;text-decoration:none;display:flex;flex-direction:column;align-items:center;gap:2px;padding:7px 2px 5px;color:var(--muted);border-top:2px solid transparent}.mobile-tab-bar a.active{color:#a44912;border-color:#c06010}.mobile-tab-bar span{font-size:18px;line-height:1}.mobile-tab-bar small{font-size:8.5px;font-weight:800}.mobile-tab-spacer{display:block}}
+        .academic-topline{height:28px;display:flex;align-items:center;justify-content:center;gap:18px;background:#172338;color:#e8edf5;border-bottom:1px solid rgba(255,255,255,.08);font-size:9px;letter-spacing:.055em;padding:0 12px;position:sticky;top:0;z-index:102}.academic-topline>span:first-child{font-family:var(--font-display);font-weight:700;color:#f3c981}.academic-topline b{font-weight:650}.academic-topline .fees{color:#c8d2e2}.main-nav{position:sticky;top:28px;z-index:101;height:58px;padding:0 18px;display:flex;align-items:center;justify-content:space-between;background:rgba(252,250,246,.97);backdrop-filter:blur(14px);border-bottom:1px solid rgba(32,45,64,.12);box-shadow:0 2px 10px rgba(24,35,52,.035)}.brand{display:flex;flex-shrink:0}.brand img{object-fit:contain;mix-blend-mode:darken}.desktop-nav{display:flex;align-items:center;gap:1px}.desktop-nav a{text-decoration:none;padding:8px 9px;border-radius:7px;color:#536174;font-size:11.5px;font-weight:650;transition:.15s ease}.desktop-nav a:hover,.desktop-nav a.active{background:#eef2f6;color:#172338}.nav-actions{display:flex;align-items:center;gap:8px}.enroll-nav{text-decoration:none;padding:9px 12px;border-radius:8px;background:#9f3e1b;color:#fff;font-size:10.5px;font-weight:750;display:flex;gap:9px;align-items:center;box-shadow:0 4px 12px rgba(122,48,22,.12)}.enroll-nav b{font-size:13px}.auth-link{border:0;background:none;color:#657184;font-size:10px;font-weight:650;cursor:pointer}.profile-dot{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;background:#273650;color:white;text-decoration:none;font-size:12px;font-weight:800;overflow:hidden}.profile-dot img{width:100%;height:100%;object-fit:cover}.mobile-tab-bar{display:none}.mobile-tab-spacer{display:none}
+        @media(max-width:900px){.desktop-nav{display:none}}
+        @media(max-width:639px){.academic-topline{height:25px;font-size:7.4px;gap:7px;letter-spacing:.025em}.academic-topline>span:first-child{display:none}.academic-topline b{white-space:nowrap}.main-nav{top:25px;height:52px;padding:0 12px}.brand img{width:96px;height:36px}.enroll-nav{font-size:9px;padding:7px 9px}.enroll-nav span{max-width:72px;white-space:nowrap}.auth-link{display:none}.mobile-tab-bar{position:fixed;bottom:0;left:0;right:0;z-index:210;display:flex;background:rgba(252,250,246,.985);backdrop-filter:blur(16px);border-top:1px solid rgba(32,45,64,.14);padding-bottom:env(safe-area-inset-bottom);box-shadow:0 -5px 22px rgba(24,35,52,.06)}.mobile-tab-bar a{flex:1;text-decoration:none;display:flex;flex-direction:column;align-items:center;gap:2px;padding:7px 1px 5px;color:#7b8695;border-top:2px solid transparent}.mobile-tab-bar a.active{color:#8f3517;border-color:#9f3e1b}.mobile-tab-bar span{font-size:17px;line-height:1;font-family:Georgia,serif}.mobile-tab-bar small{font-size:7.8px;font-weight:750;white-space:nowrap}.mobile-tab-spacer{display:block}}
       `}</style>
     </>
   );
