@@ -49,7 +49,7 @@ function finishQuestion(
   questionParts: string[],
   options: string[],
 ) {
-  if (!number || !questionParts.length || options.length !== 4) return;
+  if (!number || !questionParts.length || options.length !== 4 || options.some((x) => !compact(x))) return;
   if (output.some((q) => q.number === number)) return;
 
   output.push({
@@ -76,15 +76,12 @@ function parseUnlockIAS(html: string) {
 
   for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
-
     const qLine = line.match(/^Q:\s*(.+)$/i);
+
     if (qLine) {
       finishQuestion(output, number, questionParts, options);
-
-      // UnlockIAS prints a compact metadata line immediately before every question,
-      // ending in Q1, Q2 ... Q100. Use the nearest preceding occurrence.
       let detected: number | null = null;
-      for (let j = i - 1; j >= Math.max(0, i - 8); j--) {
+      for (let j = i - 1; j >= Math.max(0, i - 10); j--) {
         const m = lines[j].match(/\bQ(\d{1,3})\b/);
         if (m) {
           detected = Number(m[1]);
@@ -103,10 +100,8 @@ function parseUnlockIAS(html: string) {
     const option = line.match(/^\(([a-d])\)\s*(.*)$/i);
     if (option) {
       activeOption = "abcd".indexOf(option[1].toLowerCase());
-      if (activeOption >= 0) {
-        while (options.length <= activeOption) options.push("");
-        options[activeOption] = option[2];
-      }
+      while (options.length <= activeOption) options.push("");
+      options[activeOption] = option[2];
       continue;
     }
 
@@ -117,7 +112,6 @@ function parseUnlockIAS(html: string) {
     }
 
     if (activeOption >= 0 && activeOption < 4) {
-      // Ignore obvious card/navigation labels which can sit between option text and the button.
       if (!/^UPSC\s+\d{4}$/i.test(line)) options[activeOption] += ` ${line}`;
     } else {
       questionParts.push(line);
@@ -164,7 +158,6 @@ function parsePrayas(html: string) {
     }
 
     if (/^Question\s+\d+/i.test(line)) continue;
-
     if (activeOption >= 0) options[activeOption] += ` ${line}`;
     else questionParts.push(line);
   }
@@ -204,7 +197,7 @@ function parseQuizcherry(html: string) {
       continue;
     }
 
-    const option = line.match(/^(?:\d+\.\s*)?([A-D])\s+(.+)$/);
+    const option = line.match(/^(?:\d+\.\s*)?([A-D])(?:[\s.):-]*)(.+)$/);
     if (option) {
       activeOption = "ABCD".indexOf(option[1]);
       while (options.length <= activeOption) options.push("");
@@ -213,7 +206,6 @@ function parseQuizcherry(html: string) {
     }
 
     if (/^(Correct answer|Explanation|Option\s+[A-D])\b/i.test(line)) continue;
-
     if (activeOption >= 0) options[activeOption] += ` ${line}`;
     else questionParts.push(line);
   }
@@ -236,20 +228,14 @@ async function loadHtml(url: string) {
 
 async function loadGs1(year: number): Promise<UpscPrelimsQuestion[]> {
   if (year >= 2014 && year <= 2024) {
-    const html = await loadHtml(`https://www.unlockias.in/upsc-prelims-pyq/${year}`);
-    return parseUnlockIAS(html);
+    return parseUnlockIAS(await loadHtml(`https://www.unlockias.in/upsc-prelims-pyq/${year}`));
   }
-
   if (year === 2025) {
-    const html = await loadHtml("https://prayas.ai/upsc-prelims-previous-year-question-paper/2025?paper=gs1");
-    return parsePrayas(html);
+    return parsePrayas(await loadHtml("https://prayas.ai/upsc-prelims-previous-year-question-paper/2025?paper=gs1"));
   }
-
   if (year === 2026) {
-    const html = await loadHtml("https://quizcherry.com/previous-year-papers/en/upsc-prelims-2026-gs-set-a/");
-    return parseQuizcherry(html);
+    return parseQuizcherry(await loadHtml("https://quizcherry.com/previous-year-papers/en/upsc-prelims-2026-gs-set-a/"));
   }
-
   return [];
 }
 
@@ -259,7 +245,6 @@ export async function getUpscPrelimsPaper(year: number, paper: 1 | 2) {
   try {
     const questions = await loadGs1(year);
     if (!questions.length) return null;
-
     return {
       year,
       paper: 1 as const,
