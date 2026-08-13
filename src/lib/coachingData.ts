@@ -65,13 +65,6 @@ export const PROGRAMS: Program[] = [
 
 export const FACULTY = [
   {
-    name: "Ruhani Chauhan",
-    subject: "History · UPSC / BPSC",
-    record: "2× BPSC Prelims qualified · 1× UPSC Prelims qualified",
-    focus: "Ancient India · Medieval India · Modern India · Art & Culture",
-    image: "/faculty/ruhani.svg",
-  },
-  {
     name: "Ira Jain",
     subject: "Polity & Governance · UPSC / BPSC",
     record: "UPSC Prelims qualified · BPSC Mains appeared",
@@ -84,6 +77,13 @@ export const FACULTY = [
     record: "UPSC Prelims qualified · State PCS Prelims qualified",
     focus: "India · Bihar · World Geography · Environment",
     image: "/faculty/gargi.svg",
+  },
+  {
+    name: "Ruhani Chauhan",
+    subject: "Bihar Special · Polity · History",
+    record: "Preparing for UPSC/BPSC while teaching",
+    focus: "Bihar Special · Indian Polity · Ancient, Medieval & Modern History",
+    image: "/faculty/ruhani.jpg",
   },
 ];
 

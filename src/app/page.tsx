@@ -210,7 +210,7 @@ export default function HomePage() {
               </article>
             ))}
             <article className={styles.guestCard}>
-              <div className={styles.guestIcon}>IPS</div><small>SPECIAL GUEST SESSION</small><h3>Prof. Kumar Sir</h3><b>Retd. IPS</b><p>Administration, Ethics and Decision-Making for Mains and Interview.</p><Link href="/faculty">View session details →</Link>
+              <div className={styles.guestIcon}>IPS</div><small>SPECIAL GUEST SESSION</small><h3>Narayanan Sir</h3><b>Retd. IPS</b><p>Administration, Ethics and Decision-Making for Mains and Interview.</p><Link href="/faculty">View session details →</Link>
             </article>
           </div>
         </div>
