@@ -16,6 +16,11 @@ create index if not exists helpdesk_events_conversation_created_idx
 
 alter table public.helpdesk_events enable row level security;
 
+grant insert on table public.helpdesk_events to anon, authenticated;
+grant usage, select on sequence public.helpdesk_events_id_seq to anon, authenticated;
+
+revoke select, update, delete on table public.helpdesk_events from anon, authenticated;
+
 drop policy if exists "allow helpdesk event inserts" on public.helpdesk_events;
 create policy "allow helpdesk event inserts"
   on public.helpdesk_events
@@ -23,5 +28,5 @@ create policy "allow helpdesk event inserts"
   to anon, authenticated
   with check (true);
 
--- Intentionally no SELECT / UPDATE / DELETE policy for public clients.
--- Helpdesk data should be read only with trusted server credentials or in Supabase admin tools.
+-- Public clients may append events only. They cannot read, edit or delete helpdesk data.
+-- Read conversations from trusted server/admin tooling instead.
