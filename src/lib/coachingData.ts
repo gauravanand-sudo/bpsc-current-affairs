@@ -103,21 +103,21 @@ export const FACULTY = [
     subject: "History · BPSC / UPSC",
     record: "2× BPSC Prelims qualified · 1× UPSC Prelims qualified",
     focus: "Ancient India · Medieval India · Modern India · Art & Culture",
-    image: "/faculty/ruhani-chauhan.jpg",
+    image: "/faculty/ruhani.svg",
   },
   {
     name: "Ira Jain",
     subject: "Polity & Governance · BPSC / UPSC",
     record: "UPSC Prelims qualified · BPSC Mains appeared",
     focus: "Constitution · Governance · Social Justice · Current Issues",
-    image: "/faculty/ira-jain.jpg",
+    image: "/faculty/ira.svg",
   },
   {
     name: "Gargi Gupta",
     subject: "Geography & Environment · BPSC / UPSC",
     record: "UPSC Prelims qualified · State PCS Prelims qualified",
     focus: "India · Bihar · World Geography · Environment",
-    image: "/faculty/gargi-gupta.jpg",
+    image: "/faculty/gargi.svg",
   },
 ];
 
