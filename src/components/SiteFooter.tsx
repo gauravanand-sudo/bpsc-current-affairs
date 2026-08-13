@@ -11,33 +11,33 @@ const FOOTER_LINKS = [
     links: [
       ["UPSC CSE 2027", "/courses/upsc-2027"],
       ["73rd BPSC", "/courses/bpsc-73"],
-      ["All Courses", "/courses"],
-      ["Admissions", "/admissions"],
+      ["Courses", "/courses"],
+      ["Admissions & Fees", "/admissions"],
       ["Demo Class", "/demo"],
     ],
   },
   {
-    title: "Current Affairs & Practice",
+    title: "Resources",
     links: [
       ["Current Affairs", "/ca"],
       ["Free Quiz", "/quizzes"],
       ["UPSC Previous Papers", "/pyq"],
       ["Free Study", "/study"],
-      ["NCERT Desk", "/ncert"],
+      ["NCERT", "/ncert"],
     ],
   },
   {
-    title: "BPSC & Bihar",
+    title: "BPSC",
     links: [
       ["73rd BPSC Program", "/courses/bpsc-73"],
       ["Bihar GS", "/bihar-gs"],
       ["BPSC PYQs", "/pyq#bpsc"],
-      ["Bihar Current Affairs", "/ca"],
+      ["Current Affairs", "/ca"],
       ["Lucent GK Revision", "/lucent-gk"],
     ],
   },
   {
-    title: "Student Support",
+    title: "Support",
     links: [
       ["Faculty", "/faculty"],
       ["Ask Tutor", "/ask"],
@@ -57,13 +57,13 @@ export default function SiteFooter() {
       <div className={styles.counselling}>
         <div className={styles.counsellingInner}>
           <div>
-            <span>ACADEMIC COUNSELLING</span>
-            <h2>Not sure which preparation path fits your attempt?</h2>
-            <p>Explore the free resources first or speak with the OneShot GS admissions desk.</p>
+            <span>PROGRAMS &amp; FEES</span>
+            <h2>UPSC CSE 2027 · ₹1,60,000 &nbsp;|&nbsp; 73rd BPSC · ₹87,000</h2>
+            <p>Both programs cover Foundation, Prelims, Mains and Interview preparation.</p>
           </div>
           <div>
-            <Link href="/admissions">Book Free Counselling</Link>
-            <Link href="/demo">Watch Demo Class</Link>
+            <Link href="/admissions">Admissions &amp; Fees</Link>
+            <Link href="/demo">Demo Class</Link>
           </div>
         </div>
       </div>
@@ -73,10 +73,10 @@ export default function SiteFooter() {
           <Link href="/" className={styles.logo} aria-label="OneShot GS home">
             <Image src="/logo4.png" alt="OneShot GS" width={210} height={72} />
           </Link>
-          <p>UPSC CSE and BPSC preparation built around foundation teaching, current affairs, previous papers, testing, answer-writing, mentoring and interview guidance.</p>
+          <p>UPSC CSE 2027 and 73rd BPSC preparation, plus Current Affairs, PYQs, quizzes, study resources and student support.</p>
           <div className={styles.programMini}>
-            <Link href="/courses/upsc-2027"><b>UPSC CSE 2027</b><span>₹1,60,000 · Complete Program</span></Link>
-            <Link href="/courses/bpsc-73"><b>73rd BPSC</b><span>₹87,000 · Complete Program</span></Link>
+            <Link href="/courses/upsc-2027"><b>UPSC CSE 2027</b><span>₹1,60,000</span></Link>
+            <Link href="/courses/bpsc-73"><b>73rd BPSC</b><span>₹87,000</span></Link>
           </div>
         </div>
 
@@ -91,12 +91,12 @@ export default function SiteFooter() {
       </div>
 
       <div className={styles.studentStrip}>
-        <div><b>Student Corner</b><span>Use the free academic layer before enrolling.</span></div>
+        <div><b>Quick Links</b></div>
         <div><Link href="/study">Free Study</Link><Link href="/quizzes">Free Quiz</Link><Link href="/pyq">PYQs</Link><Link href="/ca">Current Affairs</Link><Link href="/ask">Ask Tutor</Link></div>
       </div>
 
       <div className={styles.footerBottom}>
-        <p>© 2026 OneShot GS · UPSC / BPSC Preparation</p>
+        <p>© 2026 OneShot GS · UPSC / BPSC</p>
         <div><Link href="/courses">Courses</Link><Link href="/faculty">Faculty</Link><Link href="/admissions">Admissions</Link><Link href="/support">Contact</Link></div>
       </div>
     </footer>
