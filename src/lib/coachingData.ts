@@ -67,14 +67,14 @@ export const FACULTY = [
   {
     name: "Ira Jain",
     subject: "Polity & Governance · UPSC / BPSC",
-    record: "UPSC Prelims qualified · BPSC Mains appeared",
+    record: "Ex-PCS Officer",
     focus: "Constitution · Governance · Social Justice · Current Issues",
     image: "/faculty/ira.svg",
   },
   {
     name: "Gargi Gupta",
     subject: "Geography & Environment · UPSC / BPSC",
-    record: "UPSC Prelims qualified · State PCS Prelims qualified",
+    record: "Ex-IRS Officer",
     focus: "India · Bihar · World Geography · Environment",
     image: "/faculty/gargi.svg",
   },

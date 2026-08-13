@@ -21,7 +21,7 @@ export default function GlowLogo({
         alt="OneShot GS"
         width={width}
         height={height}
-        style={{ objectFit: "contain", display: "block", position: "relative", filter: "brightness(1.06) saturate(1.05)" }}
+        style={{ objectFit: "contain", display: "block", position: "relative" }}
         priority
       />
     </div>

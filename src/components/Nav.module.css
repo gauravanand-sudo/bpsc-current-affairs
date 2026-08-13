@@ -5,7 +5,7 @@
 .header{position:sticky;top:0;z-index:201;height:72px;border-bottom:1px solid rgba(20,44,83,.1);background:rgba(255,255,255,.96);backdrop-filter:blur(18px);box-shadow:0 5px 24px rgba(18,43,82,.045)}
 .nav{width:min(1180px,calc(100% - 40px));height:100%;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:24px}
 .brand{width:166px;height:48px;display:flex;align-items:center;justify-content:flex-start;overflow:hidden;border-radius:8px;background:#fff;flex-shrink:0}
-.brand img{width:166px;height:auto;display:block;object-fit:contain;filter:brightness(1.06) saturate(1.05)}
+.brand img{width:166px;height:auto;display:block;object-fit:contain}
 .desktopLinks{display:flex;align-items:center;gap:3px}
 .desktopLinks a{position:relative;padding:9px 10px;border-radius:8px;font-size:10px;font-weight:750;color:#53647c;transition:.16s ease}
 .desktopLinks a:hover,.desktopLinks a.active{color:#173461;background:#f0f4fa}
