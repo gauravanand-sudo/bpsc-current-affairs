@@ -1,0 +1,43 @@
+import Image from "next/image";
+import Link from "next/link";
+import { FACULTY } from "@/lib/coachingData";
+
+export default function FacultyPage() {
+  return (
+    <main className="faculty-page">
+      <section className="hero">
+        <div className="shell hero-grid">
+          <div>
+            <span className="overline">FACULTY & ACADEMIC GUIDANCE</span>
+            <h1>Clear subject ownership. Exam-oriented teaching.</h1>
+            <p>The faculty structure is organised around core UPSC/BPSC subjects, PYQ relevance, revision and answer-writing—not generic motivational content.</p>
+            <div className="actions"><Link href="/demo" className="primary">View Demo Class</Link><Link href="/courses" className="secondary">Explore Programs</Link></div>
+          </div>
+          <aside><span>TEACHING MODEL</span><b>Concept → PYQ → Practice → Mains → Revision</b><p>Each subject is taught with the complete exam cycle in mind rather than as isolated lecture content.</p></aside>
+        </div>
+      </section>
+
+      <section className="shell section">
+        <header><div><span className="overline">CORE FACULTY</span><h2>Meet the teaching team.</h2></div><p>Faculty profiles are shown with their subject responsibility, exam experience and teaching focus.</p></header>
+        <div className="faculty-grid">
+          {FACULTY.map(f => (
+            <article key={f.name}>
+              <div className="photo"><Image src={f.image} alt={`${f.name}, ${f.subject}`} width={260} height={320} /></div>
+              <div className="copy"><span>{f.subject}</span><h3>{f.name}</h3><b>{f.record}</b><p>{f.focus}</p><div className="faculty-actions"><Link href="/demo">View Teaching Demo →</Link><Link href="/courses" className="outline">Programs</Link></div></div>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <section className="guest-wrap"><div className="shell guest"><div className="guest-mark">IPS</div><div><span className="overline light">SPECIAL GUEST LECTURE</span><h2>Prof. Kumar Sir · Retd. IPS</h2><p>Administration, Ethics and Decision-Making for UPSC/BPSC Mains and Interview, bringing public-service perspective into classroom discussion and interview preparation.</p><div className="tags"><span>Ethics</span><span>Administration</span><span>Mains</span><span>Interview</span></div></div><Link href="/courses">Explore Complete Programs →</Link></div></section>
+
+      <section className="shell section method"><div><span className="overline">HOW FACULTY INPUT IS USED</span><h2>Teaching should improve exam output.</h2></div><div className="method-grid"><article><b>01</b><h3>Concept clarity</h3><p>Build a clean conceptual base before rushing into notes and tests.</p></article><article><b>02</b><h3>PYQ orientation</h3><p>Use previous questions to decide depth, language and recurring themes.</p></article><article><b>03</b><h3>Practice design</h3><p>Convert topics into objective practice and Mains answer-writing.</p></article><article><b>04</b><h3>Revision</h3><p>Compress class content into exam-ready recall and revision cycles.</p></article></div></section>
+
+      <section className="shell final-cta"><div><span className="overline light">SEE THE METHOD BEFORE ENROLLING</span><h2>Take the working demo lesson.</h2><p>Use the sample Polity lesson to see how OneShot GS connects a concept to Prelims, Mains and revision.</p></div><div className="actions"><Link href="/demo" className="primary warm">Open Demo Class →</Link><Link href="/admissions" className="secondary dark">Admissions</Link></div></section>
+
+      <style>{`
+        .faculty-page{min-height:100vh;background:#f7f5f0;color:#172338}.shell{width:min(1080px,calc(100% - 32px));margin:0 auto}.overline{font-size:8px;letter-spacing:.16em;font-weight:850;color:#99502f}.overline.light{color:#dfb58e}.hero{padding:61px 0 46px;background:linear-gradient(180deg,#fdfcf9,#efebe4);border-bottom:1px solid #d9d6cf}.hero-grid{display:grid;grid-template-columns:minmax(0,1.45fr) 300px;gap:48px;align-items:end}.hero h1{font-family:var(--font-display);font-size:clamp(43px,6vw,70px);line-height:.95;letter-spacing:-.06em;margin:10px 0 15px;max-width:800px}.hero p{font-size:13px;line-height:1.8;color:#596676;max-width:720px}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:20px}.primary,.secondary{padding:11px 15px;border-radius:6px;text-decoration:none;font-size:10px;font-weight:850}.primary{background:#21324d;color:#fff}.secondary{background:#fff;border:1px solid #d1d6dc;color:#21324d}.hero aside{background:#fff;border:1px solid #d2d2ce;border-top:4px solid #9f3e1b;padding:18px}.hero aside>span{font-size:7px;letter-spacing:.14em;color:#98502e;font-weight:850}.hero aside b{display:block;font-family:var(--font-display);font-size:20px;line-height:1.15;margin:9px 0}.hero aside p{font-size:8.5px;line-height:1.6;color:#697583}.section{padding:53px 0}.section header{display:flex;justify-content:space-between;align-items:end;gap:28px;margin-bottom:22px}.section header h2,.method h2{font-family:var(--font-display);font-size:clamp(29px,4vw,43px);line-height:1.04;letter-spacing:-.045em;margin-top:7px}.section header>p{max-width:380px;text-align:right;font-size:10px;line-height:1.65;color:#687482}.faculty-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.faculty-grid article{background:#fff;border:1px solid #d8d5cf}.photo{height:220px;overflow:hidden;background:#e8e7e2}.photo img{width:100%;height:100%;object-fit:cover;object-position:center 24%;filter:brightness(.82) saturate(.72) contrast(.96)}.copy{padding:16px}.copy>span{font-size:7.5px;letter-spacing:.09em;color:#984e2d;font-weight:850}.copy h3{font-family:var(--font-display);font-size:23px;margin:6px 0}.copy>b{font-size:8.5px;color:#344961}.copy>p{font-size:9px;line-height:1.6;color:#697482;margin-top:8px}.faculty-actions{display:flex;gap:6px;margin-top:14px}.faculty-actions a{flex:1;text-align:center;text-decoration:none;background:#21324d;color:#fff;padding:9px;border-radius:4px;font-size:8px;font-weight:850}.faculty-actions .outline{background:#fff;border:1px solid #d1d6dc;color:#21324d}.guest-wrap{background:#172338;color:#fff}.guest{padding:33px 0;display:grid;grid-template-columns:70px 1fr auto;gap:20px;align-items:center}.guest-mark{width:70px;height:70px;border:1px solid rgba(255,255,255,.25);display:grid;place-items:center;font-family:Georgia,serif;color:#e3b88e;font-size:20px}.guest h2{font-family:var(--font-display);font-size:29px;margin:5px 0}.guest p{font-size:9.5px;line-height:1.65;color:#cbd4df;max-width:680px}.tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:9px}.tags span{font-size:7.5px;border:1px solid rgba(255,255,255,.14);padding:5px 7px;color:#d7dfe8}.guest>a{text-decoration:none;background:#f1ece5;color:#26364f;padding:10px 12px;font-size:8.5px;font-weight:850}.method{display:grid;grid-template-columns:.7fr 1.3fr;gap:35px;align-items:start}.method-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.method-grid article{background:#fff;border:1px solid #d9d6d0;padding:15px}.method-grid b{font-family:Georgia,serif;color:#a34a27;font-size:18px}.method-grid h3{font-family:var(--font-display);font-size:16px;margin:7px 0 4px}.method-grid p{font-size:8.5px;line-height:1.6;color:#687482}.final-cta{margin-bottom:42px;padding:28px;background:#26364f;color:#fff;display:flex;align-items:center;justify-content:space-between;gap:28px}.final-cta h2{font-family:var(--font-display);font-size:clamp(28px,4vw,41px);line-height:1.03;letter-spacing:-.04em;margin:6px 0}.final-cta p{font-size:9.5px;color:#c7d1dd;max-width:650px}.primary.warm{background:#a34821}.secondary.dark{background:transparent;color:#fff;border-color:rgba(255,255,255,.24)}@media(max-width:800px){.hero-grid{grid-template-columns:1fr;gap:24px}.faculty-grid{grid-template-columns:1fr 1fr}.section header{flex-direction:column;align-items:flex-start;gap:8px}.section header>p{text-align:left}.guest{grid-template-columns:60px 1fr}.guest>a{grid-column:2}.method{grid-template-columns:1fr}.final-cta{flex-direction:column;align-items:flex-start}}@media(max-width:520px){.faculty-grid,.method-grid{grid-template-columns:1fr}.hero{padding:43px 0 32px}.guest{grid-template-columns:1fr}.guest>a{grid-column:1}.final-cta{width:calc(100% - 24px)}}
+      `}</style>
+    </main>
+  );
+}
