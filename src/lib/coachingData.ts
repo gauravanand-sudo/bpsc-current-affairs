@@ -197,7 +197,7 @@ export const FACULTY = [
     subject: "Bihar Special · Polity",
     record: "Bihar Special · Polity · Mains Copy Evaluator",
     focus: "Bihar History · Geography · Economy · Polity · Mains Answer Evaluation",
-    image: "/faculty/ruhani-v2.webp",
+    image: "/faculty/ruhani.webp",
   },
 ];
 
