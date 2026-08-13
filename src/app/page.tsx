@@ -3,6 +3,7 @@ import Link from "next/link";
 import BatchUpdatePopup from "@/components/BatchUpdatePopup";
 import styles from "./home.module.css";
 import { FACULTY, PROGRAMS } from "@/lib/coachingData";
+import { getProgramPricing } from "@/lib/programPricing";
 
 const QUICK_LINKS = [
   { label: "UPSC PYQs", detail: "GS-I papers · 2014–2026", href: "/pyq" },
@@ -38,8 +39,8 @@ function TickerGroup({ academic = false }: { academic?: boolean }) {
         </>
       ) : (
         <>
-          <span>UPSC CSE 2027 · ₹1,60,000</span><i>◆</i>
-          <span>73RD BPSC · ₹87,000</span><i>◆</i>
+          <span>UPSC CSE 2027 · ₹2,00,000 → ₹1,60,000 · 20% OFF</span><i>◆</i>
+          <span>73RD BPSC · ₹1,20,000 → ₹87,000 · 27.5% OFF</span><i>◆</i>
           <span>FOUNDATION + PRELIMS + MAINS + INTERVIEW</span><i>◆</i>
           <span>DEMO CLASS AVAILABLE</span><i>◆</i>
           <span>ADMISSION QUERY · TALK TO US</span><i>◆</i>
@@ -70,21 +71,25 @@ export default function HomePage() {
               <span>PROGRAMS &amp; FEES</span>
               <h2>Current flagship courses</h2>
             </div>
-            {PROGRAMS.map((program) => (
-              <div className={styles.admissionCourse} key={program.slug}>
-                <div>
-                  <small>{program.exam}</small>
-                  <h3>{program.title}</h3>
-                  <p>{program.target}</p>
+            {PROGRAMS.map((program) => {
+              const pricing = getProgramPricing(program.slug);
+              return (
+                <div className={styles.admissionCourse} key={program.slug}>
+                  <div>
+                    <small>{program.exam}</small>
+                    <h3>{program.title}</h3>
+                    <p>{program.target}</p>
+                  </div>
+                  <div className={styles.priceBox}>
+                    <span>REGULAR FEE</span>
+                    <s>{pricing?.regularPrice}</s>
+                    <div className={styles.currentPrice}><strong>{program.price}</strong><em>{pricing?.discount}</em></div>
+                    <small>{pricing?.saving}</small>
+                  </div>
+                  <Link href={`/courses/${program.slug}`}>Course details →</Link>
                 </div>
-                <div className={styles.priceBox}>
-                  <span>REGULAR PROGRAM FEE</span>
-                  <strong>{program.price}</strong>
-                  <em>CURRENT FEE</em>
-                </div>
-                <Link href={`/courses/${program.slug}`}>Course details →</Link>
-              </div>
-            ))}
+              );
+            })}
           </aside>
         </div>
       </section>
@@ -111,24 +116,28 @@ export default function HomePage() {
             <Link href="/courses" className={styles.textLink}>Compare courses →</Link>
           </div>
           <div className={styles.programGrid}>
-            {PROGRAMS.map((program, index) => (
-              <article className={styles.programCard} key={program.slug}>
-                <div className={styles.programTop}>
-                  <div><span>{index === 0 ? "UPSC CIVIL SERVICES" : "BIHAR PUBLIC SERVICE COMMISSION"}</span><h3>{program.exam}</h3></div>
-                  <div className={`${styles.priceBox} ${styles.cardPrice}`}>
-                    <span>REGULAR PROGRAM FEE</span>
-                    <strong>{program.price}</strong>
-                    <em>CURRENT FEE</em>
+            {PROGRAMS.map((program, index) => {
+              const pricing = getProgramPricing(program.slug);
+              return (
+                <article className={styles.programCard} key={program.slug}>
+                  <div className={styles.programTop}>
+                    <div><span>{index === 0 ? "UPSC CIVIL SERVICES" : "BIHAR PUBLIC SERVICE COMMISSION"}</span><h3>{program.exam}</h3></div>
+                    <div className={`${styles.priceBox} ${styles.cardPrice}`}>
+                      <span>REGULAR FEE</span>
+                      <s>{pricing?.regularPrice}</s>
+                      <div className={styles.currentPrice}><strong>{program.price}</strong><em>{pricing?.discount}</em></div>
+                      <small>{pricing?.saving}</small>
+                    </div>
                   </div>
-                </div>
-                <div className={styles.programTarget}>{program.target}</div>
-                <ul className={styles.programList}>{program.includes.slice(0, 6).map((item) => <li key={item}>{item}</li>)}</ul>
-                <div className={styles.programActions}>
-                  <Link href={`/courses/${program.slug}`}>View Course</Link>
-                  <Link href="/demo">Demo</Link>
-                </div>
-              </article>
-            ))}
+                  <div className={styles.programTarget}>{program.target}</div>
+                  <ul className={styles.programList}>{program.includes.slice(0, 6).map((item) => <li key={item}>{item}</li>)}</ul>
+                  <div className={styles.programActions}>
+                    <Link href={`/courses/${program.slug}`}>View Course</Link>
+                    <Link href="/demo">Demo</Link>
+                  </div>
+                </article>
+              );
+            })}
           </div>
         </div>
       </section>
