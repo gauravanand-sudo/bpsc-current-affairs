@@ -189,8 +189,8 @@ export default function HomePage() {
           </div>
           <div className={styles.facultyGrid}>
             {FEATURED_FACULTY.map((faculty) => (
-              <article key={faculty.name}>
-                <div className={styles.facultyImage}><Image src={faculty.image} alt={faculty.name} width={360} height={450} sizes="(max-width: 640px) 100vw, (max-width: 980px) 50vw, 33vw" /></div>
+              <article className="home-faculty-card" key={faculty.name}>
+                <div className={`${styles.facultyImage} home-faculty-image`}><Image src={faculty.image} alt={faculty.name} width={360} height={450} sizes="(max-width: 430px) 84px, 92px" /></div>
                 <div className={styles.facultyBody}>
                   <span>{faculty.tier} · {faculty.subject}</span>
                   <h3>{faculty.name}</h3>
@@ -202,6 +202,16 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      <style>{`
+        .home-faculty-card.home-faculty-card{grid-template-columns:92px 1fr;min-height:140px}
+        .home-faculty-image.home-faculty-image{height:140px;min-height:140px}
+        .home-faculty-image img{object-position:center 20%}
+        @media(max-width:430px){
+          .home-faculty-card.home-faculty-card{grid-template-columns:84px 1fr;min-height:132px}
+          .home-faculty-image.home-faculty-image{height:132px;min-height:132px}
+        }
+      `}</style>
 
       <BatchUpdatePopup />
     </main>
