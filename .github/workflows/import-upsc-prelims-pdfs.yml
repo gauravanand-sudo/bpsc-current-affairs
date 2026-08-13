@@ -17,101 +17,51 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Install parser dependencies
-        run: python -m pip install --quiet requests beautifulsoup4
+      - name: Install downloader
+        run: python -m pip install --quiet requests
 
       - name: Download UPSC GS Paper I PDFs
         shell: python
         run: |
           import os
-          import re
           import sys
           import time
-          from urllib.parse import urljoin
-
           import requests
-          from bs4 import BeautifulSoup
 
           OUT = 'public/pyq/upsc/prelims'
           os.makedirs(OUT, exist_ok=True)
 
-          HEADERS = {
-              'User-Agent': 'Mozilla/5.0 (compatible; OneShotGS-PYQ-Importer/1.0; +https://oneshotgs.com)'
+          SOURCES = {
+              2026: [
+                  'https://upsc.gov.in/sites/default/files/QP_CSP_2026_GENERAL_STUDIES_PAPER-I_25052026.pdf',
+                  'https://www.sanskritiias.com/uploaded_files/pdf/UPSC_Paper__I_2026_%28Sec_A%29_for_Website_Solved.pdf',
+              ],
+              2025: [
+                  'https://www.upsc.gov.in/sites/default/files/QP-CSP-25-GENERAL-STUDIES-PAPER-I-26052025.pdf',
+                  'https://www.sanskritiias.com/uploaded_files/files/UPSC-Prelims-2025-Paper-Set-D.pdf',
+              ],
+              2024: [
+                  'https://www.upsc.gov.in/sites/default/files/QP-CSP-24-GENERAL-STUDIES-PAPER-I-180624.pdf',
+                  'https://www.sanskritiias.com/uploaded_files/pdf/upsc_cse_2024_gs_paper_SET-A.pdf',
+              ],
+              2023: ['https://sanskritiias.com/uploaded_files/files/upsc-2023-gs-paer-1-final.pdf'],
+              2022: ['https://www.sanskritiias.com/uploaded_files/pdf/upsc-prelims-exam-paper-2022.pdf'],
+              2021: ['https://www.sanskritiias.com/uploaded_files/pdfs/General-Studies-Paper-I.pdf'],
+              2020: ['https://www.sanskritiias.com/uploaded_files/pdfs/UPSC_Pre_Paper-1B.pdf'],
+              2019: ['https://www.sanskritiias.com/uploaded_files/exam-paper/prelims/2019/upsc-prelims-csp-p1-2019.pdf'],
+              2018: ['https://www.sanskritiias.com/uploaded_files/exam-paper/prelims/2018/upsc-CSP-18-GS-I-2018.pdf'],
+              2017: ['https://www.sanskritiias.com/uploaded_files/exam-paper/prelims/2017/CSP-17-GS_PAPER-I-2017.pdf'],
+              2016: ['https://www.sanskritiias.com/uploaded_files/exam-paper/prelims/2016/GENERAL-STUDIES-PAPER-I-2016.pdf'],
+              2015: ['https://www.sanskritiias.com/uploaded_files/exam-paper/prelims/2015/General-studies-I-2015.pdf'],
+              2014: ['https://www.sanskritiias.com/uploaded_files/exam-paper/prelims/2014/General-studies-I-2014.pdf'],
           }
+
           session = requests.Session()
-          session.headers.update(HEADERS)
-
-          INDEX_URLS = [
-              'https://www.upsc.gov.in/examinations/previous-question-papers',
-              'https://www.upsc.gov.in/examinations/previous-question-papers/archives',
-          ]
-
-          def get(url):
-              r = session.get(url, timeout=90)
-              r.raise_for_status()
-              return r
-
-          def clean(s):
-              return re.sub(r'\s+', ' ', s or '').strip()
-
-          def is_gs1(label):
-              t = clean(label).lower().replace('–', '-').replace('—', '-')
-              if 'general studies' not in t:
-                  return False
-              if 'engineering aptitude' in t:
-                  return False
-              if re.search(r'paper\s*-?\s*ii\b', t):
-                  return False
-              return bool(re.search(r'paper\s*-?\s*i\b', t) or re.search(r'paper\s*1\b', t))
-
-          def find_from_index(year):
-              target = f'Civil Services (Preliminary) Examination, {year}'.lower()
-              for index_url in INDEX_URLS:
-                  html = get(index_url).text
-                  soup = BeautifulSoup(html, 'html.parser')
-                  text = soup.get_text(' ', strip=True).lower()
-                  if target not in text:
-                      continue
-
-                  # Locate an element containing the examination title and inspect
-                  # the following document links until the next examination block.
-                  title_node = soup.find(string=lambda x: x and target in clean(x).lower())
-                  if title_node:
-                      anchor = title_node.parent
-                      seen = 0
-                      for el in anchor.find_all_next(['a', 'h2', 'h3', 'h4', 'div', 'strong']):
-                          if el is anchor:
-                              continue
-                          etext = clean(el.get_text(' ', strip=True))
-                          low = etext.lower()
-                          if year != 2026 and seen > 0 and 'examination,' in low and str(year) not in low and el.name in {'h2','h3','h4'}:
-                              break
-                          if el.name == 'a':
-                              seen += 1
-                              href = el.get('href', '')
-                              if is_gs1(etext) and href:
-                                  return urljoin(index_url, href)
-                          if seen > 80:
-                              break
-
-                  # Fallback: take a bounded HTML window after the exact exam title.
-                  lower = html.lower()
-                  pos = lower.find(target)
-                  if pos >= 0:
-                      window = html[pos:pos + 180000]
-                      wsoup = BeautifulSoup(window, 'html.parser')
-                      for a in wsoup.find_all('a', href=True):
-                          if is_gs1(a.get_text(' ', strip=True)):
-                              return urljoin(index_url, a['href'])
-              return None
-
-          def find_2026():
-              page = 'https://www.upsc.gov.in/examinations/Civil%20Services%20%28Preliminary%29%20Examination%2C%202026'
-              soup = BeautifulSoup(get(page).text, 'html.parser')
-              for a in soup.find_all('a', href=True):
-                  if is_gs1(a.get_text(' ', strip=True)):
-                      return urljoin(page, a['href'])
-              return None
+          session.headers.update({
+              'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 Chrome/126 Safari/537.36',
+              'Accept': 'application/pdf,text/html;q=0.9,*/*;q=0.8',
+              'Referer': 'https://www.sanskritiias.com/',
+          })
 
           failures = []
           for year in range(2014, 2027):
@@ -120,24 +70,33 @@ jobs:
                   print(f'{year}: already present')
                   continue
 
-              url = find_2026() if year == 2026 else find_from_index(year)
-              if not url:
-                  failures.append(f'{year}: GS Paper I link not found')
-                  continue
+              success = False
+              errors = []
+              for url in SOURCES[year]:
+                  try:
+                      print(f'{year}: trying {url}')
+                      response = session.get(url, timeout=180, allow_redirects=True)
+                      response.raise_for_status()
+                      content = response.content
+                      if not content.startswith(b'%PDF'):
+                          raise RuntimeError(
+                              f'not PDF: status={response.status_code}, '
+                              f'content-type={response.headers.get("content-type")}'
+                          )
+                      if len(content) < 10000:
+                          raise RuntimeError(f'PDF unexpectedly small: {len(content)} bytes')
+                      with open(dest, 'wb') as handle:
+                          handle.write(content)
+                      print(f'{year}: saved {len(content) / 1024 / 1024:.2f} MB')
+                      success = True
+                      break
+                  except Exception as exc:
+                      errors.append(f'{url} -> {exc}')
+                      print(f'{year}: source failed: {exc}')
+                  time.sleep(1)
 
-              print(f'{year}: {url}')
-              try:
-                  r = get(url)
-                  content = r.content
-                  ctype = r.headers.get('content-type', '')
-                  if not content.startswith(b'%PDF'):
-                      raise RuntimeError(f'not a PDF (content-type={ctype}, first bytes={content[:20]!r})')
-                  with open(dest, 'wb') as f:
-                      f.write(content)
-                  print(f'{year}: saved {len(content)/1024/1024:.2f} MB')
-              except Exception as exc:
-                  failures.append(f'{year}: {exc}')
-              time.sleep(0.5)
+              if not success:
+                  failures.append(f'{year}: ' + ' | '.join(errors))
 
           if failures:
               print('\nIMPORT FAILURES:', file=sys.stderr)
