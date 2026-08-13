@@ -1,168 +1,46 @@
 import Link from "next/link";
-import GlowLogo from "@/components/GlowLogo";
 
-const SUBJECTS = [
-  { key: "ancient",    label: "Ancient History",           emoji: "🏺",  yt: "", pdf: "" },
-  { key: "medieval",   label: "Medieval History",          emoji: "🕌",  yt: "", pdf: "" },
-  { key: "modern",     label: "Modern History",            emoji: "📜",  yt: "", pdf: "" },
-  { key: "geo-india",  label: "Indian Geography",          emoji: "🗺️", yt: "", pdf: "" },
-  { key: "geo-world",  label: "World Geography",           emoji: "🌍",  yt: "", pdf: "" },
-  { key: "polity",     label: "Indian Polity & Constitution", emoji: "⚖️", yt: "", pdf: "" },
-  { key: "economy",    label: "Indian Economy",            emoji: "📊",  yt: "", pdf: "" },
-  { key: "physics",    label: "Physics",                   emoji: "⚡",  yt: "", pdf: "" },
-  { key: "chemistry",  label: "Chemistry",                 emoji: "🧪",  yt: "", pdf: "" },
-  { key: "biology",    label: "Biology",                   emoji: "🧬",  yt: "", pdf: "" },
-  { key: "environment",label: "Environment & Ecology",     emoji: "🌿",  yt: "", pdf: "" },
-  { key: "computer",   label: "Computer & Technology",     emoji: "💻",  yt: "", pdf: "" },
-  { key: "sports",     label: "Sports",                    emoji: "🏅",  yt: "", pdf: "" },
-  { key: "culture",    label: "Art & Culture",             emoji: "🎭",  yt: "", pdf: "" },
-  { key: "misc",       label: "Miscellaneous GK",          emoji: "📚",  yt: "", pdf: "" },
+const TOPICS = [
+  ["Ancient History", "Chronology, dynasties, religion, literature and key sites"],
+  ["Medieval History", "Sultanate, Mughals, Bhakti-Sufi traditions and administration"],
+  ["Modern History", "Company rule, reform movements, nationalism and freedom struggle"],
+  ["Indian Geography", "Physiography, rivers, climate, soils, agriculture and resources"],
+  ["World Geography", "Continents, oceans, physical features, climate and mapping"],
+  ["Indian Polity", "Constitution, rights, institutions, Parliament, judiciary and federalism"],
+  ["Indian Economy", "Basic terms, banking, inflation, budget, agriculture and development"],
+  ["Physics", "Units, motion, energy, heat, light, sound and electricity basics"],
+  ["Chemistry", "Matter, elements, compounds, acids-bases, metals and everyday chemistry"],
+  ["Biology", "Cells, human systems, disease, nutrition, genetics and ecology"],
+  ["Environment", "Ecology, biodiversity, climate, pollution and conservation"],
+  ["Computer & Tech", "Digital basics, internet, cyber concepts and common technology terms"],
+  ["Art & Culture", "Architecture, dance, music, painting, religion and heritage"],
+  ["Sports & Awards", "High-frequency factual revision where relevant to the exam cycle"],
+  ["Miscellaneous GK", "Institutions, symbols, important places and recurring factual themes"],
+];
+
+const RULES = [
+  ["01", "Use for revision", "Treat factual GK as a compact revision layer, not the foundation of the entire syllabus."],
+  ["02", "Prioritise PYQ themes", "Revise facts that previous UPSC/BPSC papers have shown to be testable."],
+  ["03", "Practise retrieval", "Close the source and answer Static GS questions before rereading."],
+  ["04", "Maintain an error list", "Keep only facts you repeatedly miss; do not build another giant notebook."],
 ];
 
 export default function LucentGKPage() {
   return (
-    <main style={{ minHeight: "100vh", background: "var(--bg)", color: "var(--ink)" }}>
-      {/* Header */}
-      <div style={{ maxWidth: 960, margin: "0 auto", padding: "16px 16px 0", textAlign: "center", position: "relative" }}>
-        <Link href="/study" style={{ position: "absolute", right: 16, top: 20, fontSize: 12.5, fontWeight: 600, color: "var(--muted)", textDecoration: "none" }}>← Back</Link>
-        <GlowLogo style={{ margin: "0 auto 6px" }} />
-        <h1 style={{
-          fontFamily: "var(--font-display)", fontWeight: 800,
-          fontSize: 20, letterSpacing: "-0.025em",
-          color: "var(--ink-strong)", marginBottom: 4,
-        }}>Lucent GK</h1>
-        <p style={{ fontSize: 12.5, color: "var(--muted)", fontWeight: 600, letterSpacing: "0.01em" }}>
-          Only what scores. Zero fluff, zero filler.
-        </p>
-      </div>
+    <main className="page">
+      <section className="hero"><div className="shell"><Link href="/study" className="back">← Free Study</Link><span className="overline">RAPID GK REVISION</span><h1>Lucent GK Revision Desk</h1><p>This page is a topic map for fast factual revision. It does not reproduce copyrighted book content; instead, every topic leads into working Static GS practice, official PYQs or the tutor desk.</p><div className="actions"><a href="#topics" className="primary">Open Revision Map</a><Link href="/quizzes/static" className="secondary">Static GS Quiz</Link><Link href="/pyq" className="text-link">Official PYQs →</Link></div></div></section>
 
-      {/* Subject cards */}
-      <section style={{ maxWidth: 960, margin: "0 auto", padding: "14px 16px 72px" }}>
-        <div className="subjects-grid">
-          {SUBJECTS.map((sub) => {
-            const hasYt = !!sub.yt;
-            const hasPdf = !!sub.pdf;
-            return (
-              <div key={sub.key} className="subject-card">
-                <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
-                  <span style={{
-                    fontSize: 24, width: 46, height: 46,
-                    borderRadius: 13, display: "grid", placeItems: "center",
-                    background: "color-mix(in srgb, #7c3aed 10%, transparent)",
-                    border: "1px solid color-mix(in srgb, #7c3aed 20%, transparent)",
-                    flexShrink: 0,
-                  }}>{sub.emoji}</span>
-                  <p style={{
-                    fontFamily: "var(--font-display)",
-                    fontSize: 15.5, fontWeight: 800,
-                    color: "var(--ink-strong)",
-                    letterSpacing: "-0.025em",
-                    lineHeight: 1.3,
-                  }}>{sub.label}</p>
-                </div>
+      <section id="topics" className="shell section"><header><div><span className="overline">15 REVISION BLOCKS</span><h2>Use factual GK as a compact second pass.</h2></div><p>Pick a block, revise briefly, then answer questions. The goal is retrieval, not passive rereading.</p></header><div className="topic-grid">{TOPICS.map(([title,copy],i) => <article key={title}><span>{String(i+1).padStart(2,"0")}</span><h3>{title}</h3><p>{copy}</p><div><Link href="/quizzes/static">Practice →</Link><Link href="/pyq" className="outline">PYQs</Link></div></article>)}</div></section>
 
-                <div style={{ display: "flex", gap: 8 }}>
-                  {hasYt ? (
-                    <a href={sub.yt} target="_blank" rel="noopener noreferrer" className="btn-yt">
-                      <YtIcon /> Watch Lecture
-                    </a>
-                  ) : (
-                    <span className="btn-yt btn-off"><YtIcon /> Coming Soon</span>
-                  )}
-                  {hasPdf ? (
-                    <a href={sub.pdf} target="_blank" rel="noopener noreferrer" className="btn-pdf">
-                      <DlIcon /> Download PDF
-                    </a>
-                  ) : (
-                    <span className="btn-pdf btn-off"><DlIcon /> Coming Soon</span>
-                  )}
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </section>
+      <section className="rules-wrap"><div className="shell section"><header className="light"><div><span className="overline light-text">HOW TO USE A RAPID GK SOURCE</span><h2>Keep it subordinate to the exam.</h2></div><p>Previous papers and your error log decide what deserves repetition.</p></header><div className="rules-grid">{RULES.map(([n,title,copy]) => <article key={n}><span>{n}</span><h3>{title}</h3><p>{copy}</p></article>)}</div></div></section>
+
+      <section className="shell bridge"><div><span className="overline">BUILD A BETTER REVISION STACK</span><h2>Foundation first. Rapid revision second.</h2><p>Use NCERT for conceptual base, current affairs for live issues, PYQs for exam depth and rapid GK only for compression and recall.</p></div><div className="bridge-links"><Link href="/ncert">NCERT Foundation</Link><Link href="/ca/lectures">Current Affairs</Link><Link href="/pyq">PYQ Library</Link><Link href="/ask">Ask Tutor</Link></div></section>
+
+      <section className="shell final"><div><span className="overline light-text">NEED A COMPLETE REVISION PLAN?</span><h2>Complete UPSC/BPSC programs sequence foundation, practice, writing and revision across the whole attempt.</h2></div><div className="actions"><Link href="/courses" className="primary warm">View Programs →</Link><Link href="/demo" className="secondary dark">Demo Class</Link></div></section>
 
       <style>{`
-        .subjects-grid {
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 12px;
-        }
-        @media (min-width: 500px) {
-          .subjects-grid { grid-template-columns: 1fr 1fr; gap: 13px; }
-        }
-        @media (min-width: 780px) {
-          .subjects-grid { grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
-        }
-
-        .subject-card {
-          background: var(--card);
-          border: 1px solid var(--line);
-          border-radius: 20px;
-          padding: 20px 18px 18px;
-          transition: transform 0.15s ease, box-shadow 0.15s ease;
-        }
-        @media (hover: hover) {
-          .subject-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 32px rgba(124,58,237,0.10);
-          }
-        }
-
-        .btn-yt, .btn-pdf {
-          display: inline-flex;
-          align-items: center;
-          gap: 6px;
-          padding: 8px 13px;
-          border-radius: 10px;
-          font-size: 12.5px;
-          font-weight: 700;
-          text-decoration: none;
-          flex: 1;
-          justify-content: center;
-          white-space: nowrap;
-          transition: opacity 0.12s ease, transform 0.12s ease;
-        }
-        .btn-yt {
-          background: #ff2a2a;
-          color: #fff;
-        }
-        @media (hover: hover) {
-          .btn-yt:not(.btn-off):hover { opacity: 0.85; transform: translateY(-1px); }
-        }
-        .btn-pdf {
-          background: color-mix(in srgb, #7c3aed 12%, transparent);
-          color: #7c3aed;
-          border: 1px solid color-mix(in srgb, #7c3aed 25%, transparent);
-        }
-        @media (hover: hover) {
-          .btn-pdf:not(.btn-off):hover { opacity: 0.78; transform: translateY(-1px); }
-        }
-        .btn-off {
-          opacity: 0.35;
-          cursor: default;
-          pointer-events: none;
-        }
+        .page{min-height:100vh;background:#f7f5f0;color:#172338}.shell{width:min(1080px,calc(100% - 32px));margin:0 auto}.overline{font-size:8px;letter-spacing:.16em;font-weight:850;color:#99502f}.light-text{color:#e0b58e}.hero{padding:52px 0 40px;background:linear-gradient(180deg,#fdfcf9,#efebe4);border-bottom:1px solid #d9d5ce}.back{display:block;width:max-content;text-decoration:none;color:#6e7986;font-size:8px;font-weight:800;margin-bottom:17px}.hero h1{font-family:var(--font-display);font-size:clamp(43px,7vw,70px);line-height:.94;letter-spacing:-.06em;margin:8px 0 12px}.hero p{font-size:12px;line-height:1.75;color:#596676;max-width:760px}.actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:18px}.primary,.secondary{padding:10px 14px;border-radius:6px;text-decoration:none;font-size:9px;font-weight:850}.primary{background:#21324d;color:#fff}.secondary{background:#fff;border:1px solid #d0d6dd;color:#21324d}.text-link{text-decoration:none;color:#91401f;font-size:9px;font-weight:850;padding:9px}.section{padding:49px 0}.section header{display:flex;justify-content:space-between;align-items:end;gap:26px;margin-bottom:20px}.section header h2,.bridge h2{font-family:var(--font-display);font-size:clamp(28px,4vw,41px);line-height:1.04;letter-spacing:-.045em;margin-top:7px}.section header>p{max-width:390px;text-align:right;font-size:9.5px;line-height:1.65;color:#687482}.topic-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.topic-grid article{background:#fff;border:1px solid #d9d6d0;padding:14px;display:flex;flex-direction:column;min-height:175px}.topic-grid article>span{font-family:Georgia,serif;color:#7457a8;font-size:15px}.topic-grid h3{font-family:var(--font-display);font-size:16px;margin:7px 0 4px}.topic-grid p{font-size:8px;line-height:1.55;color:#687482;flex:1}.topic-grid article>div{display:flex;gap:5px;margin-top:10px}.topic-grid a{flex:1;text-align:center;text-decoration:none;background:#21324d;color:#fff;padding:8px 5px;border-radius:4px;font-size:7.2px;font-weight:850}.topic-grid .outline{background:#fff;color:#21324d;border:1px solid #d1d6dc}.rules-wrap{background:#172338;color:#fff}.light>p{color:#c6d0dc!important}.rules-grid{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid rgba(255,255,255,.13)}.rules-grid article{padding:17px;border-right:1px solid rgba(255,255,255,.12)}.rules-grid article:last-child{border-right:0}.rules-grid span{font-family:Georgia,serif;color:#d8a776;font-size:18px}.rules-grid h3{font-family:var(--font-display);font-size:15px;margin:9px 0 4px}.rules-grid p{font-size:8px;line-height:1.6;color:#c5d0dc}.bridge{padding:47px 0;display:grid;grid-template-columns:.8fr 1.2fr;gap:32px;align-items:center}.bridge>div>p{font-size:9.5px;line-height:1.65;color:#687482;margin-top:7px}.bridge-links{display:grid;grid-template-columns:1fr 1fr;gap:7px}.bridge-links a{text-align:center;text-decoration:none;background:#fff;border:1px solid #d9d6d0;color:#21324d;padding:12px 8px;font-size:8.3px;font-weight:850}.final{margin-bottom:40px;padding:25px;background:#26364f;color:#fff;display:flex;justify-content:space-between;align-items:center;gap:24px}.final h2{font-family:var(--font-display);font-size:clamp(26px,4vw,38px);line-height:1.04;letter-spacing:-.04em;margin-top:6px;max-width:700px}.primary.warm{background:#a34821}.secondary.dark{background:transparent;color:#fff;border-color:rgba(255,255,255,.24)}@media(max-width:780px){.topic-grid{grid-template-columns:1fr 1fr}.section header{flex-direction:column;align-items:flex-start;gap:7px}.section header>p{text-align:left}.bridge{grid-template-columns:1fr}.final{flex-direction:column;align-items:flex-start}}@media(max-width:500px){.topic-grid,.rules-grid,.bridge-links{grid-template-columns:1fr}.hero{padding:39px 0 30px}.final{width:calc(100% - 24px)}}
       `}</style>
     </main>
-  );
-}
-
-function YtIcon() {
-  return (
-    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style={{ flexShrink: 0 }}>
-      <path d="M21.543 6.498C22 8.28 22 12 22 12s0 3.72-.457 5.502c-.254.985-.997 1.76-1.938 2.022C17.896 20 12 20 12 20s-5.893 0-7.605-.476c-.945-.266-1.687-1.04-1.938-2.022C2 15.72 2 12 2 12s0-3.72.457-5.502c.254-.985.997-1.76 1.938-2.022C6.107 4 12 4 12 4s5.896 0 7.605.476c.945.266 1.687 1.04 1.938 2.022zM10 15.5l6-3.5-6-3.5v7z"/>
-    </svg>
-  );
-}
-
-function DlIcon() {
-  return (
-    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
-      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-      <polyline points="7 10 12 15 17 10"/>
-      <line x1="12" y1="15" x2="12" y2="3"/>
-    </svg>
   );
 }
