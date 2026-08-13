@@ -1,0 +1,229 @@
+/* OneShot GS shared institutional theme — homepage is the visual source of truth. */
+
+:is(.faculty-page,.pyq-page,.study-page,.quiz-hub,.demo-page,.course-page,main.page,.ca-hub,.profile-page,.leaderboard-page,.partner-page){
+  --os-navy:#12345b;
+  --os-blue:#174f86;
+  --os-red:#d9272e;
+  --os-bg:#f5f7fa;
+  --os-card:#fff;
+  --os-text:#26384d;
+  --os-muted:#607083;
+  --os-line:#d8e0e7;
+  min-height:100vh!important;
+  background:#fff!important;
+  color:var(--os-text)!important;
+  font-family:Arial,"Helvetica Neue",sans-serif!important;
+}
+
+:is(.faculty-page,.pyq-page,.study-page,.quiz-hub,.demo-page,.course-page,main.page,.ca-hub,.profile-page,.leaderboard-page,.partner-page) :where(h1,h2,h3,h4,h5,p,a,button,span,b,strong,small,li,summary,dt,dd,label,input,select,textarea){
+  font-family:Arial,"Helvetica Neue",sans-serif!important;
+}
+
+:is(.faculty-page,.pyq-page,.study-page,.quiz-hub,.demo-page,.course-page,main.page) .shell{
+  width:min(1180px,calc(100% - 32px))!important;
+  margin-inline:auto!important;
+}
+
+:is(.faculty-page,.pyq-page,.study-page,.quiz-hub,.demo-page,.course-page,main.page) :is(.hero,.faculty-hero,.course-hero){
+  background:#f5f7fa!important;
+  border-bottom:1px solid #dce3e9!important;
+  padding:34px 0!important;
+}
+
+:is(.faculty-page,.pyq-page,.study-page,.quiz-hub,.demo-page,.course-page,main.page) :is(.overline,.eyebrow,.kicker){
+  color:#d9272e!important;
+  font-size:10px!important;
+  font-weight:800!important;
+  letter-spacing:.08em!important;
+  text-transform:uppercase!important;
+}
+
+:is(.faculty-page,.pyq-page,.study-page,.quiz-hub,.demo-page,.course-page,main.page) h1{
+  color:#12345b!important;
+  font-size:clamp(31px,4.3vw,42px)!important;
+  line-height:1.12!important;
+  letter-spacing:-.025em!important;
+  font-weight:700!important;
+}
+
+:is(.faculty-page,.pyq-page,.study-page,.quiz-hub,.demo-page,.course-page,main.page) h2{
+  color:#12345b!important;
+  font-size:clamp(23px,3vw,29px)!important;
+  line-height:1.2!important;
+  letter-spacing:-.015em!important;
+  font-weight:700!important;
+}
+
+:is(.faculty-page,.pyq-page,.study-page,.quiz-hub,.demo-page,.course-page,main.page) h3{
+  color:#12345b!important;
+  font-weight:700!important;
+  letter-spacing:0!important;
+}
+
+:is(.faculty-page,.pyq-page,.study-page,.quiz-hub,.demo-page,.course-page,main.page) p{
+  color:#607083!important;
+}
+
+:is(.faculty-page,.pyq-page,.study-page,.quiz-hub,.demo-page,.course-page,main.page) :is(.section,.links-section){
+  padding-top:44px!important;
+  padding-bottom:44px!important;
+}
+
+:is(.faculty-page,.pyq-page,.study-page,.quiz-hub,.demo-page,.course-page,main.page) :is(article,.card,.panel,.course-index,.fee-card,.status-card,.source-card,.topic-card,.subject-card,.month-card,.set-card){
+  border-color:#d8e0e7!important;
+  border-radius:3px!important;
+  box-shadow:0 2px 8px rgba(18,52,91,.04)!important;
+}
+
+:is(.faculty-page,.pyq-page,.study-page,.quiz-hub,.demo-page,.course-page,main.page) article{
+  background:#fff!important;
+}
+
+:is(.faculty-page,.pyq-page,.study-page,.quiz-hub,.demo-page,.course-page,main.page) :is(.primary,.primary.warm){
+  background:#d9272e!important;
+  color:#fff!important;
+  border-color:#d9272e!important;
+  border-radius:3px!important;
+  font-weight:700!important;
+}
+
+:is(.faculty-page,.pyq-page,.study-page,.quiz-hub,.demo-page,.course-page,main.page) :is(.secondary,.outline){
+  background:#fff!important;
+  color:#174f86!important;
+  border:1px solid #cbd5df!important;
+  border-radius:3px!important;
+  font-weight:700!important;
+}
+
+:is(.faculty-page,.pyq-page,.study-page,.quiz-hub,.demo-page,.course-page,main.page) :is(.primary,.secondary,.outline,button,a){
+  transition:background-color .15s ease,border-color .15s ease,transform .15s ease,box-shadow .15s ease!important;
+}
+
+:is(.faculty-page,.pyq-page,.study-page,.quiz-hub,.demo-page,.course-page,main.page) :is(.primary,.secondary,.outline):hover{
+  transform:translateY(-1px)!important;
+}
+
+/* Dark academic bands */
+:is(.faculty-page,.pyq-page,.study-page,.quiz-hub,.demo-page,.course-page,main.page) :is(.roadmap,.guest-wrap,.compare-wrap,.dark-section,.final-cta,.final,.demo-band){
+  background:#12345b!important;
+  color:#fff!important;
+  border-color:#27496e!important;
+}
+:is(.faculty-page,.pyq-page,.study-page,.quiz-hub,.demo-page,.course-page,main.page) :is(.roadmap,.guest-wrap,.compare-wrap,.dark-section,.final-cta,.final,.demo-band) :is(h1,h2,h3,h4,b,strong){color:#fff!important}
+:is(.faculty-page,.pyq-page,.study-page,.quiz-hub,.demo-page,.course-page,main.page) :is(.roadmap,.guest-wrap,.compare-wrap,.dark-section,.final-cta,.final,.demo-band) p{color:#d6e0ea!important}
+
+/* Faculty */
+.faculty-page .hero-grid{gap:30px!important;align-items:center!important}
+.faculty-page .hero aside{border:1px solid #d8e0e7!important;border-top:3px solid #d9272e!important;border-radius:3px!important;box-shadow:0 2px 8px rgba(18,52,91,.04)!important}
+.faculty-page .team-strip{border-color:#d8e0e7!important;background:#fff!important;margin-bottom:24px!important}
+.faculty-page .team-strip span{border-color:#e3e8ed!important;color:#607083!important}
+.faculty-page .team-strip b{color:#d9272e!important}
+.faculty-page .faculty-group{margin-top:28px!important}
+.faculty-page .group-heading{border-color:#d8e0e7!important}
+.faculty-page .group-heading span{background:#174f86!important;border-radius:2px!important}
+.faculty-page .faculty-grid{gap:12px!important}
+.faculty-page .faculty-grid article{border:1px solid #d8e0e7!important;border-top:3px solid #174f86!important}
+.faculty-page .faculty-grid article[data-tier="Founder"]{border-top-color:#d9272e!important}
+.faculty-page .faculty-grid article[data-tier="Junior Faculty"]{border-top-color:#4f7598!important}
+.faculty-page .role-badge{border-radius:2px!important;background:#edf3f8!important;color:#174f86!important}
+.faculty-page .copy>span{color:#d9272e!important}
+.faculty-page .faculty-actions a{background:#174f86!important;color:#fff!important;border-radius:2px!important}
+.faculty-page .faculty-actions .outline{background:#fff!important;color:#174f86!important;border:1px solid #ccd6df!important}
+.faculty-page .guest-mark{font-family:Arial,"Helvetica Neue",sans-serif!important;color:#fff!important;border-color:rgba(255,255,255,.28)!important}
+.faculty-page .guest>a{background:#d9272e!important;color:#fff!important;border-radius:2px!important}
+.faculty-page .method-grid article{border-color:#d8e0e7!important}
+.faculty-page .method-grid b{font-family:Arial,"Helvetica Neue",sans-serif!important;color:#d9272e!important}
+
+/* Course detail */
+.course-page .hero-grid{grid-template-columns:minmax(0,1.35fr) 340px!important;gap:34px!important;align-items:center!important}
+.course-page .back{color:#174f86!important}
+.course-page .fee-card{background:#fff!important;border:1px solid #d8e0e7!important;border-top:3px solid #d9272e!important;padding:17px!important}
+.course-page .fee-card>span{color:#d9272e!important}
+.course-page .fee-card>strong{color:#12345b!important;font-size:30px!important}
+.course-page .fee-card dl>div{border-color:#e3e8ed!important}
+.course-page .fee-card button{background:#d9272e!important;border-radius:2px!important}
+.course-page .fee-card>a{background:#fff!important;color:#174f86!important;border:1px solid #cbd5df!important;border-radius:2px!important}
+.course-page .stage-row span{background:#fff!important;border:1px solid #d8e0e7!important;color:#174f86!important;border-radius:2px!important}
+.course-page .subnav{top:105px!important;background:rgba(255,255,255,.97)!important;border-color:#dce3e9!important}
+.course-page .subnav a{color:#174f86!important}
+.course-page .coverage-grid article{border-color:#d8e0e7!important;border-radius:2px!important}
+.course-page .coverage-grid span,.course-page .phase-grid>article>span{font-family:Arial,"Helvetica Neue",sans-serif!important;color:#d9272e!important;font-weight:800!important}
+.course-page .phase-grid{border-color:rgba(255,255,255,.2)!important}
+.course-page .phase-grid article{background:transparent!important;border-color:rgba(255,255,255,.16)!important}
+.course-page .fit-list>div{background:#fff!important;border:1px solid #d8e0e7!important;border-radius:2px!important}
+.course-page .resource-links a{background:#fff!important;color:#174f86!important;border:1px solid #d8e0e7!important;border-radius:2px!important}
+.course-page .faq details{border-color:#d8e0e7!important}
+.course-page .modal-card{border-top:4px solid #d9272e!important;border-radius:3px!important}
+.course-page .modal-actions button{background:#174f86!important}.course-page .modal-actions a{background:#d9272e!important}
+
+/* PYQ */
+.pyq-page .hero,.pyq-page .pyq-hero{background:#f5f7fa!important}
+.pyq-page .year-card,.pyq-page .paper-card,.pyq-page .archive-card{background:#fff!important;border:1px solid #d8e0e7!important;border-radius:3px!important}
+.pyq-page :is(.year-card,.paper-card,.archive-card):hover{border-color:#9fb0bf!important;box-shadow:0 5px 14px rgba(18,52,91,.07)!important}
+.pyq-page :is(.open,.download,.open-pdf,.download-pdf){border-radius:2px!important;font-weight:700!important}
+.pyq-page :is(.open,.open-pdf){background:#174f86!important;color:#fff!important}
+.pyq-page :is(.download,.download-pdf){background:#fff!important;color:#174f86!important;border:1px solid #cbd5df!important}
+.pyq-page :is(.bpsc-band,.official-band){background:#12345b!important;color:#fff!important}
+.pyq-page :is(.bpsc-band,.official-band) :is(h2,h3,b,strong){color:#fff!important}
+.pyq-page :is(.bpsc-band,.official-band) p{color:#d6e0ea!important}
+
+/* Study / quiz hubs */
+:is(.study-page,.quiz-hub) :is(.hero,.study-hero,.quiz-hero){background:#f5f7fa!important}
+:is(.study-page,.quiz-hub) :is(.content-grid,.tool-grid,.quiz-grid,.resource-grid){gap:12px!important}
+:is(.study-page,.quiz-hub) :is(.content-card,.tool-card,.quiz-card,.resource-card){background:#fff!important;border:1px solid #d8e0e7!important;border-radius:3px!important;box-shadow:0 2px 8px rgba(18,52,91,.04)!important}
+:is(.study-page,.quiz-hub) :is(.content-card,.tool-card,.quiz-card,.resource-card):hover{border-color:#9fb0bf!important;box-shadow:0 5px 14px rgba(18,52,91,.07)!important;transform:translateY(-1px)!important}
+:is(.study-page,.quiz-hub) :is(.number,.icon,.badge){border-radius:2px!important}
+.study-page :is(.dark-card,.featured){background:#12345b!important;color:#fff!important}
+.study-page :is(.dark-card,.featured) :is(h2,h3,b,strong){color:#fff!important}
+.study-page :is(.dark-card,.featured) p{color:#d6e0ea!important}
+
+/* Demo */
+.demo-page :is(.lesson-card,.preview-card,.demo-card,.video-card){background:#fff!important;border:1px solid #d8e0e7!important;border-radius:3px!important;box-shadow:0 2px 8px rgba(18,52,91,.04)!important}
+.demo-page :is(.lesson-card,.preview-card,.demo-card,.video-card) :is(.number,.tag){background:#edf3f8!important;color:#174f86!important;border-radius:2px!important}
+.demo-page .watch,.demo-page .demo-action{background:#d9272e!important;color:#fff!important;border-radius:2px!important}
+
+/* NCERT / Bihar GS / GS Revision / GK reference pages share main.page */
+main.page{background:#fff!important;color:#26384d!important}
+main.page :is(.hero,.top,.intro){background:#f5f7fa!important;border-bottom:1px solid #dce3e9!important;padding-top:34px!important;padding-bottom:34px!important}
+main.page :is(.grid,.cards,.source-grid,.topic-grid,.subject-grid){gap:12px!important}
+main.page :is(.card,.source,.topic,.subject,article){background:#fff!important;border:1px solid #d8e0e7!important;border-radius:3px!important;box-shadow:0 2px 8px rgba(18,52,91,.04)!important}
+main.page :is(.card,.source,.topic,.subject,article):hover{border-color:#9fb0bf!important}
+main.page :is(.tag,.pill,.badge,.number){border-radius:2px!important}
+main.page :is(.dark,.band,.cta){background:#12345b!important;color:#fff!important}
+main.page :is(.dark,.band,.cta) :is(h2,h3,b,strong){color:#fff!important}
+main.page :is(.dark,.band,.cta) p{color:#d6e0ea!important}
+
+/* Current Affairs hub */
+.ca-hub{background:#fff!important}
+.ca-hub .ca-hero{background:#f5f7fa!important;border-bottom:1px solid #dce3e9!important;padding:34px 0!important}
+.ca-hub .ca-shell{width:min(1120px,calc(100% - 32px))!important;margin:0 auto!important}
+.ca-hub .ca-kicker{font-size:10px!important;letter-spacing:.08em!important;font-weight:800!important;color:#d9272e!important;text-transform:uppercase!important}
+.ca-hub h1{font-size:clamp(31px,4.3vw,42px)!important;line-height:1.12!important;letter-spacing:-.025em!important;color:#12345b!important;margin:7px 0 9px!important}
+.ca-hub .ca-hero p{font-size:13px!important;line-height:1.65!important;color:#607083!important;max-width:720px!important}
+.ca-hub .ca-grid{display:grid!important;grid-template-columns:repeat(3,1fr)!important;gap:12px!important;padding:42px 0!important}
+.ca-hub .ca-card{display:block!important;background:#fff!important;border:1px solid #d8e0e7!important;border-radius:3px!important;padding:17px!important;box-shadow:0 2px 8px rgba(18,52,91,.04)!important}
+.ca-hub .ca-card:hover{border-color:#9fb0bf!important;box-shadow:0 5px 14px rgba(18,52,91,.07)!important;transform:translateY(-1px)!important}
+.ca-hub .ca-card-head{display:flex!important;align-items:center!important;gap:10px!important;margin-bottom:8px!important}
+.ca-hub .ca-card h3{font-size:17px!important;color:#12345b!important}
+.ca-hub .ca-card p{font-size:11px!important;line-height:1.55!important;color:#607083!important;margin-bottom:11px!important}
+.ca-hub .ca-open{font-size:10px!important;font-weight:800!important;color:#174f86!important}
+
+/* App-style utility surfaces: make controls use the same visual language without breaking functionality. */
+:is(.profile-page,.leaderboard-page,.partner-page){background:#f5f7fa!important;color:#26384d!important}
+:is(.profile-page,.leaderboard-page,.partner-page) :is(button,input,select,textarea){border-radius:3px!important;font-family:Arial,"Helvetica Neue",sans-serif!important}
+:is(.profile-page,.leaderboard-page,.partner-page) button{font-weight:700!important}
+
+@media(max-width:900px){
+  .course-page .hero-grid{grid-template-columns:1fr!important}
+  .ca-hub .ca-grid{grid-template-columns:1fr 1fr!important}
+}
+@media(max-width:700px){
+  :is(.faculty-page,.pyq-page,.study-page,.quiz-hub,.demo-page,.course-page,main.page) .shell{width:min(100% - 22px,1180px)!important}
+  :is(.faculty-page,.pyq-page,.study-page,.quiz-hub,.demo-page,.course-page,main.page) :is(.hero,.faculty-hero,.course-hero){padding:27px 0!important}
+  :is(.faculty-page,.pyq-page,.study-page,.quiz-hub,.demo-page,.course-page,main.page) h1{font-size:30px!important}
+  :is(.faculty-page,.pyq-page,.study-page,.quiz-hub,.demo-page,.course-page,main.page) :is(.section,.links-section){padding-top:36px!important;padding-bottom:36px!important}
+  .ca-hub .ca-shell{width:min(100% - 22px,1120px)!important}.ca-hub .ca-grid{grid-template-columns:1fr!important;padding:34px 0!important}
+}
+@media(prefers-reduced-motion:reduce){
+  :is(.faculty-page,.pyq-page,.study-page,.quiz-hub,.demo-page,.course-page,main.page,.ca-hub) *{scroll-behavior:auto!important;transition:none!important}
+}
