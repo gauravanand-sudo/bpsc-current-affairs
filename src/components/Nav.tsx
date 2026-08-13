@@ -17,13 +17,14 @@ const MENUS = [
         links: [
           ["Complete Program", "/courses/upsc-2027"],
           ["Admissions & Fees", "/admissions"],
-          ["Talk to Admissions", "/ask?intent=admission"],
+          ["Talk to Admissions", "/talk-to-us?intent=admission"],
           ["Demo Class", "/demo"],
         ],
       },
       {
         title: "Resources",
         links: [
+          ["Talk to Tutor", "/ask"],
           ["UPSC Previous Papers", "/pyq"],
           ["Current Affairs", "/ca"],
           ["Free Study", "/study"],
@@ -40,13 +41,14 @@ const MENUS = [
         links: [
           ["Complete Program", "/courses/bpsc-73"],
           ["Admissions & Fees", "/admissions"],
-          ["Talk to Admissions", "/ask?intent=admission"],
+          ["Talk to Admissions", "/talk-to-us?intent=admission"],
           ["Demo Class", "/demo"],
         ],
       },
       {
         title: "Resources",
         links: [
+          ["Talk to Tutor", "/ask"],
           ["Bihar GS", "/bihar-gs"],
           ["BPSC PYQs", "/pyq#bpsc"],
           ["Current Affairs", "/ca"],
@@ -72,8 +74,8 @@ const MENUS = [
         links: [
           ["Free Quiz", "/quizzes"],
           ["Previous Year Papers", "/pyq"],
-          ["Academic Query", "/ask?intent=academic"],
-          ["Helpdesk / Talk to Us", "/ask"],
+          ["Talk to Tutor", "/ask"],
+          ["Talk to Us / Helpdesk", "/talk-to-us"],
           ["Study Buddy", "/partner"],
         ],
       },
@@ -84,8 +86,8 @@ const MENUS = [
 const MOBILE_TABS = [
   { href: "/", label: "Home", icon: "⌂" },
   { href: "/courses", label: "Courses", icon: "▦" },
-  { href: "/ask", label: "Talk", icon: "?" },
-  { href: "/quizzes", label: "Quiz", icon: "✓" },
+  { href: "/ask", label: "Tutor", icon: "T" },
+  { href: "/talk-to-us", label: "Talk", icon: "?" },
   { href: "/pyq", label: "PYQs", icon: "≡" },
 ];
 
@@ -93,7 +95,7 @@ export default function Nav() {
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
   const pathname = usePathname();
-  const hideMobileTabSpacer = ["/support", "/partner", "/ask"].includes(pathname);
+  const hideMobileTabSpacer = ["/support", "/partner", "/ask", "/talk-to-us"].includes(pathname);
 
   useEffect(() => {
     try {
@@ -138,7 +140,7 @@ export default function Nav() {
         <div className={styles.utilityInner}>
           <p><b>Programs:</b> UPSC CSE 2027 ₹1,60,000 · 73rd BPSC ₹87,000</p>
           <div>
-            <Link href="/ask">Helpdesk</Link>
+            <Link href="/talk-to-us">Talk to Us</Link>
             <Link href="/admissions">Admissions &amp; Fees</Link>
             <Link href="/demo">Demo Class</Link>
             <Link href="/faculty">Faculty</Link>
@@ -164,8 +166,8 @@ export default function Nav() {
             <b>Foundation · Prelims · Mains · Interview</b>
           </div>
           <div className={styles.headerActions}>
-            <Link href="/ask" className={styles.ask}>Talk to Us</Link>
-            <Link href="/admissions" className={styles.admission}>Admissions &amp; Fees <span>→</span></Link>
+            <Link href="/ask" className={styles.ask}>Talk to Tutor</Link>
+            <Link href="/talk-to-us" className={styles.admission}>Talk to Us <span>→</span></Link>
             {user && (
               <Link href="/profile" className={styles.profile} aria-label="Open profile">
                 {user.user_metadata?.avatar_url ? <Image src={user.user_metadata.avatar_url} alt="Profile" width={34} height={34} unoptimized /> : <span>{(user.user_metadata?.full_name ?? user.email ?? "U")[0].toUpperCase()}</span>}
@@ -195,7 +197,8 @@ export default function Nav() {
           <Link href="/ca" className={isActive("/ca") ? styles.active : ""}>Current Affairs</Link>
           <Link href="/pyq" className={isActive("/pyq") ? styles.active : ""}>PYQs</Link>
           <Link href="/faculty" className={isActive("/faculty") ? styles.active : ""}>Faculty</Link>
-          <Link href="/ask" className={isActive("/ask") ? styles.active : ""}>Talk to Us</Link>
+          <Link href="/ask" className={isActive("/ask") ? styles.active : ""}>Talk to Tutor</Link>
+          <Link href="/talk-to-us" className={isActive("/talk-to-us") ? styles.active : ""}>Talk to Us</Link>
         </div>
       </nav>
 
