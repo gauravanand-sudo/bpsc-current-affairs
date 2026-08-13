@@ -3,77 +3,30 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 
-type Intent = "admission" | "course" | "payment" | "academic" | "technical" | "general";
 type Message = { role: "user" | "assistant"; text: string };
-type Profile = {
-  name?: string;
-  email?: string;
-  phone?: string;
-  exam?: string;
-  city?: string;
-  stage?: string;
-  callbackTime?: string;
-  device?: string;
-  courseInterest?: string;
-};
 
-const STARTERS: Array<{ intent: Intent; title: string; copy: string; prompt: string }> = [
-  { intent: "admission", title: "Admission", copy: "Course selection, eligibility, callback or enrollment query", prompt: "I want to discuss admission." },
-  { intent: "course", title: "Courses & Fees", copy: "UPSC 2027 / 73rd BPSC coverage, fee or program question", prompt: "I have a course or fee question." },
-  { intent: "payment", title: "Payment Help", copy: "Enrollment payment or transaction-related help", prompt: "I need help with payment or enrollment payment." },
-  { intent: "academic", title: "Academic Query", copy: "UPSC / BPSC concept, strategy, Prelims or Mains doubt", prompt: "I have an academic question." },
-  { intent: "technical", title: "Technical Help", copy: "Website, login, page, PDF, quiz or account issue", prompt: "I have a technical issue on the website." },
-  { intent: "general", title: "Other Query", copy: "Anything else you want the OneShot GS team to know", prompt: "I have another query." },
+const SUGGESTIONS = [
+  "Explain basic structure doctrine for UPSC Prelims and Mains",
+  "What Bihar economy themes should I revise for 73rd BPSC?",
+  "Compare Finance Commission and GST Council",
+  "How should I structure a GS2 answer on cooperative federalism?",
+  "Explain monsoon mechanism with Prelims elimination traps",
+  "Give me an Ethics case-study framework for administrative conflict",
 ];
-
-const INTENT_LABEL: Record<Intent, string> = {
-  admission: "Admission",
-  course: "Courses & Fees",
-  payment: "Payment Help",
-  academic: "Academic Query",
-  technical: "Technical Help",
-  general: "General Helpdesk",
-};
-
-function createConversationId() {
-  if (typeof crypto !== "undefined" && "randomUUID" in crypto) return crypto.randomUUID();
-  return `00000000-0000-4000-8000-${Math.random().toString(16).slice(2).padEnd(12, "0").slice(0, 12)}`;
-}
 
 export default function AskPage() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
-  const [intent, setIntent] = useState<Intent>("general");
-  const [profile, setProfile] = useState<Profile>({});
-  const [conversationId, setConversationId] = useState("");
   const [loading, setLoading] = useState(false);
-  const [status, setStatus] = useState("");
   const bottomRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    try {
-      const existing = localStorage.getItem("oneshot_helpdesk_conversation");
-      const id = existing || createConversationId();
-      if (!existing) localStorage.setItem("oneshot_helpdesk_conversation", id);
-      setConversationId(id);
-
-      const requested = new URLSearchParams(window.location.search).get("intent") as Intent | null;
-      if (requested && STARTERS.some((item) => item.intent === requested)) setIntent(requested);
-    } catch {
-      setConversationId(createConversationId());
-    }
-  }, []);
 
   useEffect(() => { bottomRef.current?.scrollIntoView({ behavior: "smooth" }); }, [messages, loading]);
 
-  async function talk(question?: string, nextIntent?: Intent) {
+  async function ask(question?: string) {
     const q = (question ?? input).trim();
     if (!q || loading) return;
-    const activeIntent = nextIntent ?? intent;
     const history = messages;
-    setIntent(activeIntent);
     setInput("");
-    setStatus("");
     setMessages((prev) => [...prev, { role: "user", text: q }]);
     setLoading(true);
 
@@ -81,35 +34,15 @@ export default function AskPage() {
       const res = await fetch("/api/ask", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          question: q,
-          conversationId: conversationId || createConversationId(),
-          messages: history,
-          profile,
-          intent: activeIntent,
-          pagePath: typeof window !== "undefined" ? `${window.location.pathname}${window.location.search}` : "/ask",
-        }),
+        body: JSON.stringify({ question: q, messages: history }),
       });
-      const data = await res.json() as {
-        answer?: string;
-        intent?: Intent;
-        profile?: Profile;
-        stored?: boolean;
-        notified?: boolean;
-        conversationId?: string;
-        error?: string;
-      };
-
-      const answer = data.answer || (data.error ? "The helpdesk assistant is temporarily unavailable. Please try again shortly." : "Please tell me a little more about your query.");
-      setMessages((prev) => [...prev, { role: "assistant", text: answer }]);
-      if (data.intent) setIntent(data.intent);
-      if (data.profile) setProfile(data.profile);
-      if (data.conversationId && data.conversationId !== conversationId) {
-        setConversationId(data.conversationId);
-        try { localStorage.setItem("oneshot_helpdesk_conversation", data.conversationId); } catch { /* no-op */ }
+      const data = await res.json() as { answer?: string; error?: string };
+      let answer = data.answer ?? "";
+      if (!answer) {
+        if (data.error === "AI not configured") answer = "Talk to Tutor is temporarily unavailable. Please use Free Study, PYQs or try again shortly.";
+        else answer = "I couldn't answer that right now. Please try again.";
       }
-      if (data.stored && data.notified) setStatus("Conversation saved · helpdesk email updated");
-      else if (data.stored) setStatus("Conversation saved for helpdesk follow-up");
+      setMessages((prev) => [...prev, { role: "assistant", text: answer }]);
     } catch {
       setMessages((prev) => [...prev, { role: "assistant", text: "Connection error. Please try again." }]);
     } finally {
@@ -117,79 +50,41 @@ export default function AskPage() {
     }
   }
 
-  const captured = [
-    profile.name && ["Name", profile.name],
-    profile.phone && ["Phone", profile.phone],
-    profile.email && ["Email", profile.email],
-    (profile.exam || profile.courseInterest) && ["Exam", profile.exam || profile.courseInterest],
-  ].filter(Boolean) as string[][];
-
   return (
-    <main className="help-page">
-      <section className="help-head">
+    <main className="tutor-page">
+      <section className="tutor-head">
         <div className="shell head-grid">
           <div>
-            <span>ONESHOT GS HELPDESK</span>
-            <h1>Talk to Us</h1>
-            <p>Admissions, course queries, payment help, academic doubts and website support — all in one conversation.</p>
+            <span>ACADEMIC TUTOR · UPSC / BPSC</span>
+            <h1>Talk to Tutor</h1>
+            <p>Concepts, Prelims, Mains, Essay, Ethics, Bihar Special, Current Affairs and exam strategy.</p>
           </div>
-          <div className="head-links"><Link href="/courses">Courses</Link><Link href="/admissions">Admissions &amp; Fees</Link><Link href="/pyq">PYQs</Link></div>
+          <div className="head-links"><Link href="/study">Free Study</Link><Link href="/pyq">PYQs</Link><Link href="/talk-to-us">Talk to Us</Link></div>
         </div>
       </section>
 
-      <section className="shell help-grid">
-        <aside className="help-menu">
-          <div className="menu-title"><span>START HERE</span><h2>What do you need help with?</h2></div>
-          <div className="starter-list">
-            {STARTERS.map((item) => (
-              <button key={item.intent} className={intent === item.intent ? "active" : ""} onClick={() => void talk(item.prompt, item.intent)} disabled={loading}>
-                <b>{item.title}</b><span>{item.copy}</span>
-              </button>
-            ))}
-          </div>
-          <div className="privacy-note">
-            <b>Privacy &amp; payment safety</b>
-            <p>Details you provide may be stored for follow-up. Never share passwords, OTPs, UPI PINs, CVV or full card details in chat.</p>
-          </div>
+      <section className="shell tutor-grid">
+        <aside className="side-panel">
+          <span>TRY A QUESTION</span>
+          <h2>Academic doubts only</h2>
+          <div className="suggestions">{SUGGESTIONS.map((suggestion) => <button key={suggestion} onClick={() => void ask(suggestion)} disabled={loading}>{suggestion}</button>)}</div>
+          <div className="help-note"><b>Admissions or support?</b><p>Fees, enrollment, payment issues, technical help and callbacks are handled separately.</p><Link href="/talk-to-us">Open Talk to Us →</Link></div>
         </aside>
 
         <div className="chat-card">
-          <div className="chat-top">
-            <div><span>CONVERSATION TYPE</span><b>{INTENT_LABEL[intent]}</b></div>
-            {captured.length > 0 && <div className="captured">{captured.map(([label, value]) => <span key={label}><b>{label}:</b> {value}</span>)}</div>}
-          </div>
-
+          <div className="chat-top"><div><span>ONESHOT GS</span><b>Academic Tutor</b></div><Link href="/talk-to-us">Need helpdesk?</Link></div>
           <div className="messages">
-            {messages.length === 0 && (
-              <div className="welcome">
-                <span>TALK TO US</span>
-                <h2>How can we help?</h2>
-                <p>Choose a category on the left or type your query. For admissions and human follow-up, the assistant will collect only the contact details the team needs.</p>
-                <div className="quick-mobile">{STARTERS.slice(0, 4).map((item) => <button key={item.intent} onClick={() => void talk(item.prompt, item.intent)}>{item.title}</button>)}</div>
-              </div>
-            )}
-            {messages.map((message, index) => (
-              <div key={`${message.role}-${index}`} className={`message ${message.role}`}>
-                <span>{message.role === "user" ? "YOU" : "ONESHOT GS"}</span>
-                <p>{message.text}</p>
-              </div>
-            ))}
-            {loading && <div className="message assistant"><span>ONESHOT GS</span><p>Checking that for you…</p></div>}
+            {messages.length === 0 && <div className="welcome"><span>TALK TO TUTOR</span><h2>What are you studying?</h2><p>Ask a syllabus concept, Prelims doubt, Mains demand, Bihar-specific topic or answer-writing question.</p></div>}
+            {messages.map((message, index) => <div key={`${message.role}-${index}`} className={`message ${message.role}`}><span>{message.role === "user" ? "YOU" : "TUTOR"}</span><p>{message.text}</p></div>)}
+            {loading && <div className="message assistant"><span>TUTOR</span><p>Working through the exam angle…</p></div>}
             <div ref={bottomRef} />
           </div>
-
-          <div className="composer-wrap">
-            {status && <div className="save-status">✓ {status}</div>}
-            <form onSubmit={(event) => { event.preventDefault(); void talk(); }} className="composer">
-              <textarea value={input} onChange={(event) => setInput(event.target.value)} placeholder="Type your admission, course, academic or helpdesk query…" rows={3} maxLength={1600} />
-              <button type="submit" disabled={loading || !input.trim()}>Send →</button>
-            </form>
-          </div>
+          <form onSubmit={(event) => { event.preventDefault(); void ask(); }} className="composer"><textarea value={input} onChange={(event) => setInput(event.target.value)} placeholder="Ask an UPSC / BPSC academic question…" rows={3} maxLength={1600} /><button type="submit" disabled={loading || !input.trim()}>Ask Tutor →</button></form>
         </div>
       </section>
 
       <style>{`
-        .help-page{min-height:100vh;background:#f5f7fa;color:#26384d;font-family:Arial,"Helvetica Neue",sans-serif}.shell{width:min(1120px,calc(100% - 32px));margin:0 auto}.help-head{background:#fff;border-bottom:1px solid #dbe2e8}.head-grid{min-height:125px;display:flex;align-items:center;justify-content:space-between;gap:30px}.help-head span,.menu-title>span,.welcome>span,.message>span,.chat-top>div:first-child>span{font-size:10px;font-weight:700;letter-spacing:.08em;color:#d9272e}.help-head h1{font-size:36px;line-height:1.1;color:#12345b;margin:4px 0;font-weight:700}.help-head p{font-size:13px;color:#647386}.head-links{display:flex;gap:7px;flex-wrap:wrap}.head-links a{padding:9px 11px;border:1px solid #d5dde5;background:#fff;color:#174f86;font-size:10px;font-weight:700}.help-grid{display:grid;grid-template-columns:310px 1fr;gap:14px;padding:22px 0 42px}.help-menu,.chat-card{background:#fff;border:1px solid #d8e0e7}.help-menu{align-self:start}.menu-title{padding:16px 17px;border-bottom:1px solid #dfe5ea}.menu-title h2{font-size:18px;color:#12345b;margin-top:3px}.starter-list{display:grid}.starter-list button{padding:12px 16px;text-align:left;background:#fff;border:0;border-bottom:1px solid #e3e7eb;cursor:pointer}.starter-list button:hover,.starter-list button.active{background:#f1f5f9;border-left:3px solid #d9272e;padding-left:13px}.starter-list b,.starter-list span{display:block}.starter-list b{font-size:11px;color:#12345b}.starter-list span{font-size:9px;line-height:1.45;color:#6d7987;margin-top:2px}.privacy-note{padding:15px 17px;background:#fff8f8;border-top:1px solid #f1d9da}.privacy-note b{font-size:10px;color:#a92328}.privacy-note p{font-size:9px;line-height:1.55;color:#6f6062;margin-top:4px}.chat-card{height:min(690px,calc(100dvh - 190px));min-height:570px;display:flex;flex-direction:column}.chat-top{min-height:55px;padding:10px 15px;border-bottom:1px solid #dfe5ea;background:#f8fafc;display:flex;align-items:center;justify-content:space-between;gap:16px}.chat-top>div:first-child>b{display:block;font-size:12px;color:#12345b;margin-top:1px}.captured{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end}.captured>span{padding:4px 6px;background:#eaf1f7;color:#53677c;font-size:8px}.captured b{color:#174f86}.messages{flex:1;min-height:0;overflow-y:auto;padding:18px;display:flex;flex-direction:column;gap:10px;background:#fff}.welcome{max-width:550px;margin:auto;text-align:center}.welcome h2{font-size:27px;color:#12345b;margin:5px 0}.welcome p{font-size:11px;line-height:1.6;color:#697787}.quick-mobile{display:none}.message{max-width:82%;padding:11px 13px;border:1px solid #dbe2e8;background:#f5f7fa}.message.user{align-self:flex-end;background:#174f86;border-color:#174f86;color:#fff}.message.user>span{color:#dfeaf5}.message.assistant{align-self:flex-start}.message p{white-space:pre-wrap;font-size:11px;line-height:1.65;margin-top:3px}.composer-wrap{border-top:1px solid #dce3e9;background:#f8fafc}.save-status{padding:6px 13px 0;color:#2d6b45;font-size:9px;font-weight:700}.composer{padding:10px;display:grid;grid-template-columns:1fr auto;gap:8px}.composer textarea{resize:none;border:1px solid #cfd8e1;background:#fff;padding:10px 11px;font-family:inherit;font-size:11px;line-height:1.5;color:#26384d;outline:none}.composer textarea:focus{border-color:#174f86}.composer button{min-width:86px;border:0;background:#d9272e;color:#fff;padding:0 16px;font-size:10px;font-weight:700;cursor:pointer}.composer button:disabled{opacity:.45;cursor:not-allowed}@media(max-width:780px){.head-grid{align-items:flex-start;flex-direction:column;padding:24px 0;min-height:0}.help-grid{grid-template-columns:1fr}.help-menu{display:none}.chat-card{height:calc(100dvh - 170px);min-height:530px}.quick-mobile{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-top:16px}.quick-mobile button{padding:9px;border:1px solid #d7dfe7;background:#fff;color:#174f86;font-size:9px;font-weight:700}.captured{display:none}.composer{grid-template-columns:1fr}.composer button{padding:11px}.message{max-width:92%}}@media(max-width:480px){.shell{width:calc(100% - 20px)}.help-head h1{font-size:31px}.head-links{display:none}.chat-card{height:calc(100dvh - 135px);border-inline:0}.help-grid{width:100%;padding-top:0}.messages{padding:13px}.welcome{padding:0 12px}}
+        .tutor-page{min-height:100vh;background:#f5f7fa;color:#26384d;font-family:Arial,"Helvetica Neue",sans-serif}.shell{width:min(1120px,calc(100% - 32px));margin:0 auto}.tutor-head{background:#fff;border-bottom:1px solid #dbe2e8}.head-grid{min-height:125px;display:flex;align-items:center;justify-content:space-between;gap:30px}.tutor-head span,.side-panel>span,.welcome>span,.message>span,.chat-top span{font-size:10px;font-weight:700;letter-spacing:.08em;color:#174f86}.tutor-head h1{font-size:36px;line-height:1.1;color:#12345b;margin:4px 0;font-weight:700}.tutor-head p{font-size:13px;color:#647386}.head-links{display:flex;gap:7px;flex-wrap:wrap}.head-links a{padding:9px 11px;border:1px solid #d5dde5;background:#fff;color:#174f86;font-size:10px;font-weight:700}.tutor-grid{display:grid;grid-template-columns:310px 1fr;gap:14px;padding:22px 0 42px}.side-panel,.chat-card{background:#fff;border:1px solid #d8e0e7}.side-panel{padding:16px;align-self:start}.side-panel h2{font-size:18px;color:#12345b;margin:4px 0 12px}.suggestions{display:grid;gap:6px}.suggestions button{border:1px solid #dce3e9;background:#f8fafc;text-align:left;padding:10px;color:#40546a;font-size:10px;line-height:1.45;cursor:pointer}.suggestions button:hover{border-color:#174f86;background:#fff}.help-note{margin-top:15px;padding-top:13px;border-top:1px solid #e1e6eb}.help-note b{font-size:10px;color:#12345b}.help-note p{font-size:9px;line-height:1.5;color:#6a7888;margin:3px 0 7px}.help-note a{font-size:9px;font-weight:700;color:#d9272e}.chat-card{height:min(690px,calc(100dvh - 190px));min-height:570px;display:flex;flex-direction:column}.chat-top{min-height:55px;padding:10px 15px;border-bottom:1px solid #dfe5ea;background:#f8fafc;display:flex;align-items:center;justify-content:space-between}.chat-top b{display:block;font-size:12px;color:#12345b;margin-top:1px}.chat-top a{font-size:9px;font-weight:700;color:#d9272e}.messages{flex:1;min-height:0;overflow-y:auto;padding:18px;display:flex;flex-direction:column;gap:10px;background:#fff}.welcome{max-width:560px;margin:auto;text-align:center}.welcome h2{font-size:27px;color:#12345b;margin:5px 0}.welcome p{font-size:11px;line-height:1.6;color:#697787}.message{max-width:82%;padding:11px 13px;border:1px solid #dbe2e8;background:#f5f7fa}.message.user{align-self:flex-end;background:#174f86;border-color:#174f86;color:#fff}.message.user>span{color:#dfeaf5}.message.assistant{align-self:flex-start}.message p{white-space:pre-wrap;font-size:11px;line-height:1.65;margin-top:3px}.composer{border-top:1px solid #dce3e9;padding:10px;display:grid;grid-template-columns:1fr auto;gap:8px;background:#f8fafc}.composer textarea{resize:none;border:1px solid #cfd8e1;background:#fff;padding:10px 11px;font-family:inherit;font-size:11px;line-height:1.5;color:#26384d;outline:none}.composer textarea:focus{border-color:#174f86}.composer button{min-width:105px;border:0;background:#174f86;color:#fff;padding:0 16px;font-size:10px;font-weight:700;cursor:pointer}.composer button:disabled{opacity:.45;cursor:not-allowed}@media(max-width:780px){.head-grid{align-items:flex-start;flex-direction:column;padding:24px 0;min-height:0}.tutor-grid{grid-template-columns:1fr}.side-panel{display:none}.chat-card{height:calc(100dvh - 170px);min-height:530px}.composer{grid-template-columns:1fr}.composer button{padding:11px}.message{max-width:92%}}@media(max-width:480px){.shell{width:calc(100% - 20px)}.tutor-head h1{font-size:31px}.head-links{display:none}.chat-card{height:calc(100dvh - 135px);border-inline:0}.tutor-grid{width:100%;padding-top:0}.messages{padding:13px}.welcome{padding:0 12px}}
       `}</style>
     </main>
   );
