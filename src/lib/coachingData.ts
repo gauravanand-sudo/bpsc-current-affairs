@@ -69,14 +69,14 @@ export const FACULTY = [
     subject: "Polity & Governance · UPSC / BPSC",
     record: "Ex-PCS Officer",
     focus: "Constitution · Governance · Social Justice · Current Issues",
-    image: "/faculty/ira.svg",
+    image: "/faculty/ira-hd.webp",
   },
   {
     name: "Gargi Gupta",
     subject: "Geography & Environment · UPSC / BPSC",
     record: "Ex-IRS Officer",
     focus: "India · Bihar · World Geography · Environment",
-    image: "/faculty/gargi.svg",
+    image: "/faculty/gargi-hd.webp",
   },
   {
     name: "Ruhani Chauhan",
