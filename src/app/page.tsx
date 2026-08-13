@@ -6,8 +6,8 @@ import { FACULTY, PROGRAMS } from "@/lib/coachingData";
 const QUICK_LINKS = [
   { label: "UPSC PYQs", detail: "GS-I papers · 2014–2026", href: "/pyq" },
   { label: "Current Affairs", detail: "UPSC + BPSC study desk", href: "/ca" },
-  { label: "Talk to Us", detail: "Admissions · Helpdesk · Academic query", href: "/ask" },
-  { label: "Free Study", detail: "NCERT + GS + Bihar GS", href: "/study" },
+  { label: "Talk to Tutor", detail: "Academic doubts · exam strategy", href: "/ask" },
+  { label: "Talk to Us", detail: "Admissions · payment · helpdesk", href: "/talk-to-us" },
 ];
 
 const RESOURCES = [
@@ -15,8 +15,8 @@ const RESOURCES = [
   { title: "Current Affairs", copy: "Source-backed Current Affairs desk for UPSC and BPSC preparation.", href: "/ca", tag: "CA" },
   { title: "Free Study", copy: "NCERT, General Studies, Bihar GS and revision resources.", href: "/study", tag: "GS" },
   { title: "Free Quiz", copy: "Current Affairs and static GS practice.", href: "/quizzes", tag: "MCQ" },
-  { title: "Talk to Us", copy: "Admissions, courses, payment help, academic queries and technical support.", href: "/ask", tag: "HELP" },
-  { title: "Demo Class", copy: "View the available OneShot GS demo class before enrollment.", href: "/demo", tag: "DEMO" },
+  { title: "Talk to Tutor", copy: "Academic doubts, concepts, Prelims, Mains and exam strategy.", href: "/ask", tag: "TUTOR" },
+  { title: "Talk to Us", copy: "Admissions, courses, payment help, technical support and callbacks.", href: "/talk-to-us", tag: "HELP" },
 ];
 
 const FEATURED_FACULTY = [
@@ -35,8 +35,8 @@ export default function HomePage() {
             <p>Two complete programs covering Foundation, Prelims, Mains and Interview preparation.</p>
             <div className={styles.heroActions}>
               <Link href="/courses" className={styles.primary}>View Courses</Link>
-              <Link href="/admissions" className={styles.secondary}>Admissions &amp; Fees</Link>
-              <Link href="/ask" className={styles.secondary}>Talk to Us</Link>
+              <Link href="/ask" className={styles.secondary}>Talk to Tutor</Link>
+              <Link href="/talk-to-us" className={styles.secondary}>Talk to Us</Link>
             </div>
           </div>
 
@@ -99,7 +99,7 @@ export default function HomePage() {
       <section className={styles.studentSection}>
         <div className={styles.shell}>
           <div className={styles.sectionHead}>
-            <div><span>STUDENT RESOURCES</span><h2>Study, practice and helpdesk</h2></div>
+            <div><span>STUDENT RESOURCES</span><h2>Study, practice and support</h2></div>
           </div>
           <div className={styles.studentGrid}>
             {RESOURCES.map((item) => (
