@@ -6,6 +6,8 @@ type HelpdeskProfile = {
   city?: string;
   stage?: string;
   callbackTime?: string;
+  device?: string;
+  courseInterest?: string;
 };
 
 type TranscriptMessage = { role: "user" | "assistant"; text: string };
@@ -93,9 +95,11 @@ export async function emailHelpdeskTranscript(args: {
     `Email: ${clean(args.profile.email)}`,
     `Phone / WhatsApp: ${clean(args.profile.phone)}`,
     `Exam: ${clean(args.profile.exam)}`,
+    `Course interest: ${clean(args.profile.courseInterest)}`,
     `Preparation stage: ${clean(args.profile.stage)}`,
     `City: ${clean(args.profile.city)}`,
     `Preferred callback time: ${clean(args.profile.callbackTime)}`,
+    `Device / browser: ${clean(args.profile.device)}`,
     "",
     "TRANSCRIPT",
     transcriptText,
