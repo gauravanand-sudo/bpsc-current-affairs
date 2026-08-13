@@ -17,6 +17,7 @@ const MENUS = [
         links: [
           ["Complete Program", "/courses/upsc-2027"],
           ["Admissions & Fees", "/admissions"],
+          ["Talk to Admissions", "/ask?intent=admission"],
           ["Demo Class", "/demo"],
         ],
       },
@@ -39,6 +40,7 @@ const MENUS = [
         links: [
           ["Complete Program", "/courses/bpsc-73"],
           ["Admissions & Fees", "/admissions"],
+          ["Talk to Admissions", "/ask?intent=admission"],
           ["Demo Class", "/demo"],
         ],
       },
@@ -70,7 +72,8 @@ const MENUS = [
         links: [
           ["Free Quiz", "/quizzes"],
           ["Previous Year Papers", "/pyq"],
-          ["Ask Tutor", "/ask"],
+          ["Academic Query", "/ask?intent=academic"],
+          ["Helpdesk / Talk to Us", "/ask"],
           ["Study Buddy", "/partner"],
         ],
       },
@@ -81,7 +84,7 @@ const MENUS = [
 const MOBILE_TABS = [
   { href: "/", label: "Home", icon: "⌂" },
   { href: "/courses", label: "Courses", icon: "▦" },
-  { href: "/ca", label: "CA", icon: "◫" },
+  { href: "/ask", label: "Talk", icon: "?" },
   { href: "/quizzes", label: "Quiz", icon: "✓" },
   { href: "/pyq", label: "PYQs", icon: "≡" },
 ];
@@ -127,7 +130,7 @@ export default function Nav() {
   }
 
   const user = session?.user;
-  const isActive = (href: string) => href === "/" ? pathname === "/" : pathname.startsWith(href.split("#")[0]);
+  const isActive = (href: string) => href === "/" ? pathname === "/" : pathname.startsWith(href.split("?")[0].split("#")[0]);
 
   return (
     <>
@@ -135,6 +138,7 @@ export default function Nav() {
         <div className={styles.utilityInner}>
           <p><b>Programs:</b> UPSC CSE 2027 ₹1,60,000 · 73rd BPSC ₹87,000</p>
           <div>
+            <Link href="/ask">Helpdesk</Link>
             <Link href="/admissions">Admissions &amp; Fees</Link>
             <Link href="/demo">Demo Class</Link>
             <Link href="/faculty">Faculty</Link>
@@ -160,7 +164,7 @@ export default function Nav() {
             <b>Foundation · Prelims · Mains · Interview</b>
           </div>
           <div className={styles.headerActions}>
-            <Link href="/ask" className={styles.ask}>Ask Tutor</Link>
+            <Link href="/ask" className={styles.ask}>Talk to Us</Link>
             <Link href="/admissions" className={styles.admission}>Admissions &amp; Fees <span>→</span></Link>
             {user && (
               <Link href="/profile" className={styles.profile} aria-label="Open profile">
@@ -191,7 +195,7 @@ export default function Nav() {
           <Link href="/ca" className={isActive("/ca") ? styles.active : ""}>Current Affairs</Link>
           <Link href="/pyq" className={isActive("/pyq") ? styles.active : ""}>PYQs</Link>
           <Link href="/faculty" className={isActive("/faculty") ? styles.active : ""}>Faculty</Link>
-          <Link href="/demo" className={isActive("/demo") ? styles.active : ""}>Demo</Link>
+          <Link href="/ask" className={isActive("/ask") ? styles.active : ""}>Talk to Us</Link>
         </div>
       </nav>
 
