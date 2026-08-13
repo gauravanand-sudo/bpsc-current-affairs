@@ -81,10 +81,10 @@ export default function HomePage() {
                     <p>{program.target}</p>
                   </div>
                   <div className={styles.priceBox}>
-                    <span>REGULAR FEE</span>
-                    <s>{pricing?.regularPrice}</s>
-                    <div className={styles.currentPrice}><strong>{program.price}</strong><em>{pricing?.discount}</em></div>
-                    <small>{pricing?.saving}</small>
+                    <span>{pricing?.regularPrice}</span>
+                    <strong>{program.price}</strong>
+                    <em>{pricing?.discount}</em>
+                    <small style={{ marginTop: 4, color: "#617083", fontSize: 8, fontWeight: 700 }}>{pricing?.saving}</small>
                   </div>
                   <Link href={`/courses/${program.slug}`}>Course details →</Link>
                 </div>
@@ -123,10 +123,10 @@ export default function HomePage() {
                   <div className={styles.programTop}>
                     <div><span>{index === 0 ? "UPSC CIVIL SERVICES" : "BIHAR PUBLIC SERVICE COMMISSION"}</span><h3>{program.exam}</h3></div>
                     <div className={`${styles.priceBox} ${styles.cardPrice}`}>
-                      <span>REGULAR FEE</span>
-                      <s>{pricing?.regularPrice}</s>
-                      <div className={styles.currentPrice}><strong>{program.price}</strong><em>{pricing?.discount}</em></div>
-                      <small>{pricing?.saving}</small>
+                      <span>{pricing?.regularPrice}</span>
+                      <strong>{program.price}</strong>
+                      <em>{pricing?.discount}</em>
+                      <small style={{ marginTop: 4, color: "#617083", fontSize: 8, fontWeight: 700 }}>{pricing?.saving}</small>
                     </div>
                   </div>
                   <div className={styles.programTarget}>{program.target}</div>
