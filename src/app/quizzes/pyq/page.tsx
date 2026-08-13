@@ -1,82 +1,34 @@
 import Link from "next/link";
-import GlowLogo from "@/components/GlowLogo";
+import { BPSC_PYQ, UPSC_PYQ } from "@/lib/coachingData";
 
-const PYQ_SETS = [
-  { key: "72nd", label: "72nd BPSC",  year: "2025", sets: 3 },
-  { key: "70th", label: "70th BPSC",  year: "2024", sets: 3 },
-  { key: "69th", label: "69th BPSC",  year: "2023", sets: 3 },
-  { key: "68th", label: "68th BPSC",  year: "2022", sets: 3 },
-  { key: "67th", label: "67th BPSC",  year: "2021", sets: 3 },
-  { key: "66th", label: "66th BPSC",  year: "2020", sets: 3 },
-  { key: "65th", label: "65th BPSC",  year: "2019", sets: 3 },
-  { key: "64th", label: "64th BPSC",  year: "2018", sets: 2 },
-];
+function PracticeCard({ title, stage, year, href, papers }: { title: string; stage: string; year?: string; href: string; papers: string[] }) {
+  return (
+    <article className="practice-card">
+      <div className="top"><span>{stage}</span>{year && <b>{year}</b>}</div>
+      <h3>{title}</h3>
+      <p>{papers.slice(0,3).join(" · ")}</p>
+      <div className="actions"><a href={href} target="_blank" rel="noopener noreferrer">Open Official Paper ↗</a><Link href="/quizzes/static" className="outline">Practice GS</Link></div>
+    </article>
+  );
+}
 
 export default function PYQQuizPage() {
+  const recentUpsc = UPSC_PYQ.slice(0, 5);
+  const recentBpsc = BPSC_PYQ.slice(0, 6);
   return (
-    <main style={{ minHeight: "100vh", background: "var(--bg)", color: "var(--ink)" }}>
-      <div style={{ maxWidth: 860, margin: "0 auto", padding: "16px 16px 0", textAlign: "center", position: "relative" }}>
-        <Link href="/quizzes" style={{ position: "absolute", right: 16, top: 20, fontSize: 12.5, fontWeight: 600, color: "var(--muted)", textDecoration: "none" }}>← Back</Link>
-        <GlowLogo style={{ margin: "0 auto 6px" }} />
-        <h1 style={{ fontFamily: "var(--font-display)", fontWeight: 800, fontSize: 20, letterSpacing: "-0.025em", color: "var(--ink-strong)", marginBottom: 4 }}>PYQ Quiz</h1>
-        <p style={{ fontSize: 12.5, color: "var(--muted)", fontWeight: 600, letterSpacing: "0.01em" }}>Only what scores. Zero fluff, zero filler.</p>
-      </div>
+    <main className="page">
+      <section className="hero"><div className="shell"><span className="overline">PYQ PRACTICE DESK</span><h1>Open the official paper, then practise the underlying GS.</h1><p>There are no “coming soon” cards here. Every paper card opens a real official-source page, and every practice button takes you into the working quiz system.</p><div className="hero-actions"><Link href="/pyq">Full PYQ Library</Link><Link href="/quizzes/static" className="outline">Start Static GS Quiz</Link><Link href="/quizzes/current" className="outline">Current Affairs Quiz</Link></div></div></section>
 
-      <section style={{ maxWidth: 860, margin: "0 auto", padding: "14px 16px 72px" }}>
-        <div style={{ display: "flex", flexDirection: "column", gap: 24 }}>
-          {PYQ_SETS.map((exam) => (
-            <div key={exam.key}>
-              {/* Exam header */}
-              <div style={{ display: "flex", alignItems: "baseline", gap: 10, marginBottom: 12 }}>
-                <p style={{
-                  fontFamily: "var(--font-display)",
-                  fontSize: 17, fontWeight: 800,
-                  color: "var(--ink-strong)", letterSpacing: "-0.025em",
-                }}>{exam.label}</p>
-                <span style={{ fontSize: 12, color: "var(--muted)", fontWeight: 500 }}>{exam.year}</span>
-              </div>
+      <section className="shell section"><header><div><span className="overline">UPSC CSE</span><h2>Recent official papers.</h2></div><p>Use the paper first, then practise the subjects that produced mistakes.</p></header><div className="grid">{recentUpsc.map(item => <PracticeCard key={item.label} title={item.label} stage={item.stage} year={item.year} href={item.href} papers={item.papers} />)}</div></section>
 
-              {/* Set cards */}
-              <div className="sets-row">
-                {Array.from({ length: exam.sets }, (_, i) => i + 1).map((set) => (
-                  <div key={set} className="set-card">
-                    <p style={{
-                      fontFamily: "var(--font-display)",
-                      fontSize: 15, fontWeight: 800,
-                      color: "var(--ink-strong)", marginBottom: 4,
-                    }}>Set {set}</p>
-                    <p style={{ fontSize: 11.5, color: "var(--muted)", marginBottom: 12 }}>
-                      {exam.label} · Paper {set}
-                    </p>
-                    <span style={{
-                      fontSize: 11.5, fontWeight: 700,
-                      color: "var(--muted)", opacity: 0.6,
-                      letterSpacing: "0.04em",
-                    }}>Coming soon</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
+      <section className="bpsc-wrap"><div className="shell section"><header className="light"><div><span className="overline light-text">BPSC CCE</span><h2>Recent CCE question-booklet access.</h2></div><p>Open the official BPSC booklet source, attempt the paper, then use Free Quiz to close the weak areas.</p></header><div className="grid dark-grid">{recentBpsc.map(item => <PracticeCard key={item.label} title={item.label} stage={item.stage} year={item.year} href={item.href} papers={item.papers} />)}</div></div></section>
+
+      <section className="shell section workflow"><div><span className="overline">THE 4-STEP PYQ LOOP</span><h2>Make every paper produce a revision list.</h2></div><div className="steps"><article><b>1</b><span>Attempt</span><p>Use exam-like timing.</p></article><article><b>2</b><span>Audit</span><p>Tag concept, recall and elimination mistakes.</p></article><article><b>3</b><span>Revise</span><p>Open Free Study for the exact weak topics.</p></article><article><b>4</b><span>Retest</span><p>Use Free Quiz after revision.</p></article></div></section>
+
+      <section className="shell final"><div><span className="overline light-text">NEED A GUIDED PYQ PLAN?</span><h2>Complete programs build PYQs into the preparation sequence.</h2></div><div className="hero-actions"><Link href="/courses" className="warm">View Programs →</Link><Link href="/study" className="outline-dark">Free Study</Link></div></section>
 
       <style>{`
-        .sets-row {
-          display: grid;
-          grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-          gap: 10px;
-        }
-        .set-card {
-          background: var(--card);
-          border: 1px solid var(--line);
-          border-radius: 16px;
-          padding: 16px 16px 14px;
-          transition: transform 0.15s ease, box-shadow 0.15s ease;
-        }
-        @media (hover: hover) {
-          .set-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(120,80,30,0.09); }
-        }
+        .page{min-height:100vh;background:#f7f5f0;color:#172338}.shell{width:min(1060px,calc(100% - 32px));margin:0 auto}.overline{font-size:8px;letter-spacing:.16em;font-weight:850;color:#98502e}.light-text{color:#e1b68f}.hero{padding:55px 0 42px;background:linear-gradient(180deg,#fdfcf9,#efebe4);border-bottom:1px solid #d9d5ce}.hero h1{font-family:var(--font-display);font-size:clamp(40px,6vw,64px);line-height:.96;letter-spacing:-.058em;max-width:820px;margin:9px 0 14px}.hero p{font-size:12px;line-height:1.75;color:#5c6876;max-width:720px}.hero-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:18px}.hero-actions a{padding:10px 13px;background:#21324d;color:#fff;text-decoration:none;border-radius:5px;font-size:9px;font-weight:850}.hero-actions .outline{background:#fff;color:#21324d;border:1px solid #d1d6dc}.section{padding:48px 0}.section header{display:flex;justify-content:space-between;align-items:end;gap:25px;margin-bottom:20px}.section header h2,.workflow h2{font-family:var(--font-display);font-size:clamp(28px,4vw,40px);line-height:1.04;letter-spacing:-.043em;margin-top:6px}.section header>p{max-width:380px;text-align:right;font-size:9.5px;line-height:1.6;color:#697583}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.practice-card{background:#fff;border:1px solid #d9d6d0;padding:15px;display:flex;flex-direction:column;min-height:190px}.practice-card .top{display:flex;justify-content:space-between;gap:10px}.practice-card .top span{font-size:7px;letter-spacing:.09em;color:#99502e;font-weight:850}.practice-card .top b{font-family:Georgia,serif;color:#6c7784}.practice-card h3{font-family:var(--font-display);font-size:18px;line-height:1.12;margin:7px 0}.practice-card>p{font-size:8px;line-height:1.55;color:#687482;flex:1}.practice-card .actions{display:flex;gap:6px;margin-top:12px}.practice-card .actions a{flex:1;text-align:center;text-decoration:none;background:#21324d;color:#fff;padding:9px 7px;border-radius:4px;font-size:7.5px;font-weight:850}.practice-card .actions .outline{background:#fff;color:#21324d;border:1px solid #d1d6dc}.bpsc-wrap{background:#172338;color:#fff}.light>p{color:#c6d0db!important}.dark-grid .practice-card{background:rgba(255,255,255,.045);border-color:rgba(255,255,255,.14)}.dark-grid .practice-card .top span{color:#e2b58e}.dark-grid .practice-card .top b{color:#aeb8c4}.dark-grid .practice-card>p{color:#c3ceda}.dark-grid .practice-card .actions a{background:#f0ebe4;color:#26364f}.dark-grid .practice-card .actions .outline{background:transparent;color:#fff;border-color:rgba(255,255,255,.22)}.workflow{display:grid;grid-template-columns:.72fr 1.28fr;gap:30px;align-items:start}.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}.steps article{background:#fff;border:1px solid #d9d6d0;padding:13px}.steps b{font-family:Georgia,serif;color:#a34821;font-size:18px}.steps span{display:block;font-family:var(--font-display);font-size:13px;margin:6px 0 3px}.steps p{font-size:7.8px;line-height:1.5;color:#6b7785}.final{margin-bottom:40px;padding:26px;background:#26364f;color:#fff;display:flex;justify-content:space-between;gap:22px;align-items:center}.final h2{font-family:var(--font-display);font-size:clamp(25px,4vw,38px);line-height:1.04;letter-spacing:-.04em;margin-top:5px}.hero-actions .warm{background:#a34821}.hero-actions .outline-dark{background:transparent;border:1px solid rgba(255,255,255,.24)}@media(max-width:800px){.grid{grid-template-columns:1fr 1fr}.section header{flex-direction:column;align-items:flex-start;gap:7px}.section header>p{text-align:left}.workflow{grid-template-columns:1fr}.final{flex-direction:column;align-items:flex-start}}@media(max-width:520px){.grid,.steps{grid-template-columns:1fr}.hero{padding:40px 0 30px}.final{width:calc(100% - 24px)}}
       `}</style>
     </main>
   );
