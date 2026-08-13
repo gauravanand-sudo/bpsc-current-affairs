@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import BatchUpdatePopup from "@/components/BatchUpdatePopup";
 import styles from "./home.module.css";
 import { FACULTY, PROGRAMS } from "@/lib/coachingData";
 
@@ -23,6 +24,30 @@ const FEATURED_FACULTY = [
   ...FACULTY.slice(0, 5),
   FACULTY[FACULTY.length - 1],
 ];
+
+function TickerGroup({ academic = false }: { academic?: boolean }) {
+  return (
+    <div className={styles.tickerGroup} aria-hidden="true">
+      {academic ? (
+        <>
+          <span>UPSC PRELIMS GS-I · 2014–2026</span><i>◆</i>
+          <span>CURRENT AFFAIRS · UPSC + BPSC</span><i>◆</i>
+          <span>FREE QUIZ + FREE STUDY</span><i>◆</i>
+          <span>TALK TO TUTOR · ACADEMIC DOUBTS</span><i>◆</i>
+          <span>TALK TO US · ADMISSIONS + HELPDESK</span><i>◆</i>
+        </>
+      ) : (
+        <>
+          <span>UPSC CSE 2027 · ₹1,60,000</span><i>◆</i>
+          <span>73RD BPSC · ₹87,000</span><i>◆</i>
+          <span>FOUNDATION + PRELIMS + MAINS + INTERVIEW</span><i>◆</i>
+          <span>DEMO CLASS AVAILABLE</span><i>◆</i>
+          <span>ADMISSION QUERY · TALK TO US</span><i>◆</i>
+        </>
+      )}
+    </div>
+  );
+}
 
 export default function HomePage() {
   return (
@@ -52,13 +77,21 @@ export default function HomePage() {
                   <h3>{program.title}</h3>
                   <p>{program.target}</p>
                 </div>
-                <strong>{program.price}</strong>
+                <div className={styles.priceBox}>
+                  <span>REGULAR PROGRAM FEE</span>
+                  <strong>{program.price}</strong>
+                  <em>CURRENT FEE</em>
+                </div>
                 <Link href={`/courses/${program.slug}`}>Course details →</Link>
               </div>
             ))}
           </aside>
         </div>
       </section>
+
+      <div className={`${styles.ticker} ${styles.tickerRed}`} aria-label="Program updates">
+        <div className={styles.tickerTrack}><TickerGroup /><TickerGroup /></div>
+      </div>
 
       <section className={styles.newsBar}>
         <div className={styles.shell}>
@@ -82,7 +115,11 @@ export default function HomePage() {
               <article className={styles.programCard} key={program.slug}>
                 <div className={styles.programTop}>
                   <div><span>{index === 0 ? "UPSC CIVIL SERVICES" : "BIHAR PUBLIC SERVICE COMMISSION"}</span><h3>{program.exam}</h3></div>
-                  <strong>{program.price}</strong>
+                  <div className={`${styles.priceBox} ${styles.cardPrice}`}>
+                    <span>REGULAR PROGRAM FEE</span>
+                    <strong>{program.price}</strong>
+                    <em>CURRENT FEE</em>
+                  </div>
                 </div>
                 <div className={styles.programTarget}>{program.target}</div>
                 <ul className={styles.programList}>{program.includes.slice(0, 6).map((item) => <li key={item}>{item}</li>)}</ul>
@@ -95,6 +132,10 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      <div className={`${styles.ticker} ${styles.tickerNavy}`} aria-label="Study resources">
+        <div className={`${styles.tickerTrack} ${styles.tickerTrackReverse}`}><TickerGroup academic /><TickerGroup academic /></div>
+      </div>
 
       <section className={styles.studentSection}>
         <div className={styles.shell}>
@@ -151,6 +192,8 @@ export default function HomePage() {
           </div>
         </div>
       </section>
+
+      <BatchUpdatePopup />
     </main>
   );
 }
