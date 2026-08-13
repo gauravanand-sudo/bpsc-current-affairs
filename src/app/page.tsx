@@ -1,130 +1,138 @@
 import Image from "next/image";
 import Link from "next/link";
 import styles from "./home.module.css";
-import { FACULTY, FAQ, FREE_RESOURCES, PROGRAMS, TESTIMONIALS } from "@/lib/coachingData";
+import { FACULTY, FAQ, PROGRAMS, TESTIMONIALS } from "@/lib/coachingData";
 
-const SYSTEM = [
-  { step: "01", title: "Build the base", copy: "NCERTs, core GS and exam-specific foundations taught in a clear sequence." },
-  { step: "02", title: "Decode PYQs", copy: "Understand recurring themes, demand patterns and what the exam actually rewards." },
-  { step: "03", title: "Master Prelims", copy: "Daily MCQs, elimination drills, sectional tests and full-length mock cycles." },
-  { step: "04", title: "Write for Mains", copy: "Answer-writing, Essay, Ethics, evaluation and structured value addition." },
-  { step: "05", title: "Face the board", copy: "Profile work, current issues, mock interviews and final-stage mentoring." },
+const WHATS_NEW = [
+  { label: "NEW", title: "UPSC Prelims GS-I papers · 2014–2026", href: "/pyq" },
+  { label: "CA", title: "Current Affairs study desk", href: "/ca" },
+  { label: "FREE", title: "UPSC / BPSC quizzes", href: "/quizzes" },
 ];
 
-const RESOURCE_ICONS: Record<string, string> = {
-  "/study": "01",
-  "/quizzes": "02",
-  "/pyq": "03",
-  "/ask": "04",
-  "/partner": "05",
-};
+const PILLARS = [
+  {
+    number: "01",
+    title: "Concept-first teaching",
+    copy: "NCERTs, core General Studies and exam-specific foundations arranged in a clear learning sequence.",
+  },
+  {
+    number: "02",
+    title: "Integrated current affairs",
+    copy: "Current issues are connected with static subjects, Prelims elimination and Mains answer enrichment.",
+  },
+  {
+    number: "03",
+    title: "Testing & evaluation",
+    copy: "Sectional practice, full-length mocks, answer-writing and feedback are built into the preparation cycle.",
+  },
+  {
+    number: "04",
+    title: "Mentorship & doubt support",
+    copy: "Ask Tutor, revision planning and structured mentoring keep preparation focused across every stage.",
+  },
+];
 
-const HERO_STATS = [
-  ["15 years", "UPSC PYQs mapped"],
-  ["5 stages", "Foundation to interview"],
-  ["2 tracks", "UPSC + BPSC"],
+const STUDENT_CORNER = [
+  { eyebrow: "CURRENT AFFAIRS", title: "Daily & Monthly CA", copy: "Source-backed current affairs for UPSC and BPSC.", href: "/ca", icon: "CA" },
+  { eyebrow: "QUESTION PAPERS", title: "UPSC PYQ Library", copy: "Open and download original GS-I papers from 2014–2026.", href: "/pyq", icon: "PYQ" },
+  { eyebrow: "PRACTICE", title: "Free Quiz", copy: "Current affairs and static GS practice with exam-level framing.", href: "/quizzes", icon: "Q" },
+  { eyebrow: "OPEN LIBRARY", title: "Free Study", copy: "NCERT, GS, Bihar Special and revision desks.", href: "/study", icon: "GS" },
+  { eyebrow: "DOUBT SUPPORT", title: "Ask Tutor", copy: "Get UPSC / BPSC concepts clarified and structure the next step.", href: "/ask", icon: "?" },
+  { eyebrow: "ACCOUNTABILITY", title: "Study Buddy", copy: "Find a preparation partner and build study accountability.", href: "/partner", icon: "SB" },
+];
+
+const PREPARATION_PATH = [
+  ["Foundation", "NCERT + GS + Bihar Special where relevant"],
+  ["Prelims", "PYQs + MCQs + sectional and full-length practice"],
+  ["Mains", "Answer-writing + Essay + Ethics + evaluation"],
+  ["Interview", "Profile work + current issues + mock guidance"],
 ];
 
 export default function HomePage() {
   return (
     <main className={styles.home}>
       <section className={styles.hero}>
-        <div className={styles.heroGlow} />
         <div className={`${styles.shell} ${styles.heroGrid}`}>
           <div className={styles.heroCopy}>
-            <div className={styles.heroBadge}>
-              <span /> Admissions open for 2027–28
-            </div>
-            <h1>
-              Prepare once.
-              <br />
-              <span>Clear with confidence.</span>
-            </h1>
-            <p className={styles.heroLead}>
-              A complete UPSC and BPSC learning system that brings classes, current affairs,
-              PYQs, tests, answer-writing and personal mentoring into one focused journey.
+            <div className={styles.heroKicker}>UPSC CSE 2027 · 73RD BPSC</div>
+            <h1>Serious preparation.<br /><span>One complete academic system.</span></h1>
+            <p>
+              OneShot GS brings foundation teaching, current affairs, PYQs, Prelims practice,
+              Mains answer-writing, mentoring and interview preparation into one focused UPSC / BPSC pathway.
             </p>
             <div className={styles.heroActions}>
-              <Link href="/courses" className={styles.primaryButton}>
-                Explore programs <span>→</span>
-              </Link>
-              <Link href="/demo" className={styles.playButton}>
-                <i>▶</i> Watch a demo class
-              </Link>
+              <Link href="/courses" className={styles.primary}>Explore Courses</Link>
+              <Link href="/demo" className={styles.secondary}>Watch Demo Class</Link>
             </div>
-            <div className={styles.heroTrust}>
-              <div className={styles.avatarStack} aria-hidden="true">
-                {FACULTY.map((faculty) => (
-                  <Image key={faculty.name} src={faculty.image} alt="" width={34} height={34} />
-                ))}
-              </div>
-              <p><b>Learn with exam-experienced faculty</b><span>Concepts, practice and mentorship in one place</span></p>
+            <div className={styles.heroLinks}>
+              <Link href="/study">Free Study</Link>
+              <Link href="/quizzes">Daily Practice</Link>
+              <Link href="/pyq">Previous Year Papers</Link>
+              <Link href="/ca">Current Affairs</Link>
             </div>
           </div>
 
-          <div className={styles.heroVisual} aria-label="Inside the OneShot GS learning platform">
-            <div className={styles.visualDots} />
-            <div className={styles.dashboardCard}>
-              <div className={styles.dashboardTop}>
+          <aside className={styles.admissionPanel}>
+            <div className={styles.panelHead}>
+              <span>ADMISSIONS OPEN</span>
+              <h2>Flagship Programs</h2>
+              <p>Foundation to Interview · complete guided preparation.</p>
+            </div>
+            {PROGRAMS.map((program) => (
+              <div className={styles.admissionCourse} key={program.slug}>
                 <div>
-                  <span>YOUR LEARNING DESK</span>
-                  <h2>Today&apos;s focused plan</h2>
+                  <small>{program.exam}</small>
+                  <h3>{program.title}</h3>
+                  <p>{program.target}</p>
                 </div>
-                <div className={styles.streak}><b>12</b><span>day streak</span></div>
+                <strong>{program.price}</strong>
+                <Link href={`/courses/${program.slug}`}>View Details <span>→</span></Link>
               </div>
-
-              <div className={styles.progressBlock}>
-                <div><span>Daily progress</span><b>68%</b></div>
-                <div className={styles.progressTrack}><span /></div>
-              </div>
-
-              <div className={styles.taskList}>
-                <div className={styles.taskDone}><i>✓</i><p><b>Polity foundation</b><span>Fundamental Rights · 42 min</span></p><em>Done</em></div>
-                <div className={styles.taskActive}><i>▶</i><p><b>June Current Affairs</b><span>Study Set 06 · Bihar focus</span></p><em>Resume</em></div>
-                <div><i>03</i><p><b>Prelims practice</b><span>30 MCQs · negative marking</span></p><em>Start</em></div>
-              </div>
-
-              <div className={styles.mentorNote}>
-                <span>MENTOR NOTE</span>
-                <p>Revise the PYQ pattern before attempting today&apos;s test.</p>
-                <Link href="/ask">Ask tutor →</Link>
-              </div>
-            </div>
-            <div className={styles.floatingResult}>
-              <span>Weekly accuracy</span><strong>+18%</strong><small>Improving steadily</small>
-            </div>
-            <div className={styles.floatingClass}>
-              <i>●</i><div><b>Live class</b><span>Polity · 7:00 PM</span></div>
-            </div>
-          </div>
-        </div>
-
-        <div className={`${styles.shell} ${styles.heroStats}`}>
-          {HERO_STATS.map(([value, label]) => <div key={label}><strong>{value}</strong><span>{label}</span></div>)}
-          <Link href="/admissions">Book free counselling <span>↗</span></Link>
+            ))}
+            <Link href="/admissions" className={styles.counsellingButton}>Book Free Academic Counselling</Link>
+          </aside>
         </div>
       </section>
 
-      <section className={styles.programSection}>
+      <section className={styles.newsBar}>
         <div className={styles.shell}>
-          <div className={styles.sectionHeading}>
-            <div><span className={styles.eyebrow}>FLAGSHIP PROGRAMS</span><h2>One serious program for one serious attempt.</h2></div>
-            <p>Choose your exam. We connect every stage—from learning the basics to facing the interview board.</p>
+          <div className={styles.newsTitle}><span>●</span> WHAT&apos;S NEW</div>
+          <div className={styles.newsItems}>
+            {WHATS_NEW.map((item) => (
+              <Link key={item.title} href={item.href}><b>{item.label}</b><span>{item.title}</span><i>→</i></Link>
+            ))}
           </div>
+        </div>
+      </section>
 
+      <section className={styles.programs}>
+        <div className={styles.shell}>
+          <div className={styles.sectionHead}>
+            <div><span>OUR PROGRAMS</span><h2>Choose your examination pathway</h2></div>
+            <p>Two focused flagship programs. No confusing catalogue. Each one connects Foundation, Prelims, Mains and Interview preparation.</p>
+          </div>
           <div className={styles.programGrid}>
             {PROGRAMS.map((program, index) => (
-              <article key={program.slug} className={index === 0 ? styles.programFeatured : styles.programCard}>
-                <div className={styles.programHeader}>
-                  <div><span>{index === 0 ? "MOST POPULAR" : "BIHAR FOCUSED"}</span><h3>{program.exam}</h3></div>
-                  <div><strong>{program.price}</strong><small>Complete program</small></div>
+              <article className={styles.programCard} key={program.slug}>
+                <div className={styles.programTop}>
+                  <div><span>{index === 0 ? "UPSC CIVIL SERVICES" : "BIHAR PUBLIC SERVICE COMMISSION"}</span><h3>{program.exam}</h3></div>
+                  <strong>{program.price}</strong>
                 </div>
-                <p>{program.note}</p>
-                <div className={styles.programPill}>{program.target}</div>
-                <ul>{program.includes.slice(0, 6).map(item => <li key={item}><i>✓</i>{item}</li>)}</ul>
+                <p className={styles.programNote}>{program.note}</p>
+                <div className={styles.programTarget}>{program.target}</div>
+                <div className={styles.programColumns}>
+                  <div>
+                    <b>Program includes</b>
+                    <ul>{program.includes.slice(0, 5).map((item) => <li key={item}>{item}</li>)}</ul>
+                  </div>
+                  <div>
+                    <b>Best suited for</b>
+                    <ul>{program.bestFor.map((item) => <li key={item}>{item}</li>)}</ul>
+                  </div>
+                </div>
                 <div className={styles.programActions}>
-                  <Link href={`/courses/${program.slug}`}>View full program <span>→</span></Link>
-                  <Link href="/demo">Try demo</Link>
+                  <Link href={`/courses/${program.slug}`}>View Complete Program</Link>
+                  <Link href="/admissions">Talk to Counsellor</Link>
                 </div>
               </article>
             ))}
@@ -132,36 +140,17 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className={styles.ecosystemSection}>
+      <section className={styles.whySection}>
         <div className={styles.shell}>
-          <div className={styles.centerHeading}>
-            <span className={styles.eyebrow}>THE ONESHOT ADVANTAGE</span>
-            <h2>Everything your preparation needs.<br /><span>Nothing that distracts you.</span></h2>
-            <p>Use the academic ecosystem before you enroll. The free layer stays open to every serious aspirant.</p>
+          <div className={styles.centerHead}>
+            <span>WHY ONESHOT GS</span>
+            <h2>Four pillars of disciplined preparation</h2>
+            <p>Teaching, content, practice and support work together instead of operating as disconnected products.</p>
           </div>
-          <div className={styles.resourceGrid}>
-            {FREE_RESOURCES.map((resource) => (
-              <Link href={resource.href} key={resource.href} className={styles.resourceCard}>
-                <div><span>{RESOURCE_ICONS[resource.href]}</span><i>↗</i></div>
-                <small>{resource.eyebrow}</small>
-                <h3>{resource.title}</h3>
-                <p>{resource.description}</p>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <section className={styles.journeySection}>
-        <div className={styles.shell}>
-          <div className={styles.sectionHeading}>
-            <div><span className={styles.eyebrow}>YOUR PREPARATION JOURNEY</span><h2>A clear path from day one to final selection.</h2></div>
-            <p>No random resource hopping. Every learning activity moves you towards the next exam stage.</p>
-          </div>
-          <div className={styles.journeyGrid}>
-            {SYSTEM.map((item, index) => (
-              <article key={item.step}>
-                <div><span>{item.step}</span>{index < SYSTEM.length - 1 && <i />}</div>
+          <div className={styles.pillarGrid}>
+            {PILLARS.map((item) => (
+              <article key={item.number}>
+                <span>{item.number}</span>
                 <h3>{item.title}</h3>
                 <p>{item.copy}</p>
               </article>
@@ -170,63 +159,110 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section className={styles.pyqSection}>
-        <div className={`${styles.shell} ${styles.pyqGrid}`}>
-          <div className={styles.pyqCopy}>
-            <span className={styles.eyebrowLight}>PYQ INTELLIGENCE DESK</span>
-            <h2>Don&apos;t just solve past papers. <span>Decode the exam.</span></h2>
-            <p>Study UPSC and BPSC questions by year, subject, topic, demand and recurring theme—then practise the pattern inside the same platform.</p>
-            <ul>
-              <li><i>✓</i> UPSC Prelims 2012–2026</li>
-              <li><i>✓</i> UPSC Mains 2011–2025</li>
-              <li><i>✓</i> Official BPSC CCE archive</li>
-            </ul>
-            <div className={styles.pyqActions}><Link href="/pyq">Explore PYQ desk →</Link><Link href="/quizzes/pyq">Practice PYQs</Link></div>
+      <section className={styles.studentSection}>
+        <div className={styles.shell}>
+          <div className={styles.sectionHead}>
+            <div><span>STUDENT CORNER</span><h2>Free academic resources</h2></div>
+            <p>Use the academic layer before enrolling. Previous papers, current affairs, quizzes, study resources and doubt support remain accessible.</p>
           </div>
-          <div className={styles.insightPanel}>
-            <div className={styles.insightTop}><div><span>UPSC PRELIMS · POLITY</span><h3>Topic recurrence</h3></div><b>15Y</b></div>
-            <div className={styles.chart}>
-              {[72, 48, 85, 62, 92].map((height, index) => <div key={height}><span style={{ height: `${height}%` }} /><small>{["FR", "Parl.", "Bodies", "Gov.", "Const."][index]}</small></div>)}
+          <div className={styles.studentGrid}>
+            {STUDENT_CORNER.map((item) => (
+              <Link href={item.href} key={item.title} className={styles.studentCard}>
+                <div className={styles.studentIcon}>{item.icon}</div>
+                <div><span>{item.eyebrow}</span><h3>{item.title}</h3><p>{item.copy}</p></div>
+                <b>→</b>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className={styles.academicsBand}>
+        <div className={`${styles.shell} ${styles.academicsGrid}`}>
+          <div className={styles.caBlock}>
+            <span>CURRENT AFFAIRS</span>
+            <h2>Daily issues. Monthly consolidation. Exam relevance.</h2>
+            <p>Study current affairs through source-backed desks and connect them with static GS, Bihar relevance and question practice.</p>
+            <div>
+              <Link href="/ca">Current Affairs Desk</Link>
+              <Link href="/quizzes">Current Affairs Quiz</Link>
             </div>
-            <div className={styles.insightFooter}><span><i /> High-frequency theme</span><b>View 128 mapped questions →</b></div>
+          </div>
+          <div className={styles.pyqBlock}>
+            <div><span>PREVIOUS YEAR PAPERS</span><b>13 YEARS</b></div>
+            <h3>UPSC Prelims GS-I · 2014–2026</h3>
+            <p>Original papers are hosted on OneShot GS. Open the full paper or download it directly year-wise.</p>
+            <Link href="/pyq">Open PYQ Library →</Link>
+          </div>
+          <div className={styles.demoBlock}>
+            <span>BEFORE YOU ENROLL</span>
+            <h3>Attend a demo class</h3>
+            <p>See the teaching approach and explore the free academic layer first.</p>
+            <Link href="/demo">Watch Demo →</Link>
           </div>
         </div>
       </section>
 
       <section className={styles.facultySection}>
         <div className={styles.shell}>
-          <div className={styles.sectionHeading}>
-            <div><span className={styles.eyebrow}>MEET YOUR FACULTY</span><h2>Learn from mentors who understand the exam.</h2></div>
-            <Link href="/faculty" className={styles.textLink}>View all faculty →</Link>
+          <div className={styles.sectionHead}>
+            <div><span>FACULTY TEAM</span><h2>Meet your educators</h2></div>
+            <Link href="/faculty" className={styles.textLink}>View Faculty Details →</Link>
           </div>
           <div className={styles.facultyGrid}>
-            {FACULTY.map((faculty, index) => (
+            {FACULTY.map((faculty) => (
               <article key={faculty.name}>
-                <div className={styles.facultyImage}>
-                  <span>{String(index + 1).padStart(2, "0")}</span>
-                  <Image src={faculty.image} alt={`${faculty.name}, ${faculty.subject}`} width={360} height={410} />
+                <div className={styles.facultyImage}><Image src={faculty.image} alt={faculty.name} width={340} height={390} /></div>
+                <div className={styles.facultyBody}>
+                  <span>{faculty.subject}</span>
+                  <h3>{faculty.name}</h3>
+                  <b>{faculty.record}</b>
+                  <p>{faculty.focus}</p>
                 </div>
-                <div className={styles.facultyBody}><small>{faculty.subject}</small><h3>{faculty.name}</h3><b>{faculty.record}</b><p>{faculty.focus}</p></div>
               </article>
             ))}
-            <article className={styles.guestCard}>
-              <div className={styles.guestIcon}>IPS</div><small>SPECIAL GUEST SESSION</small><h3>Narayanan Sir</h3><b>Retd. IPS</b><p>Administration, Ethics and Decision-Making for Mains and Interview.</p><Link href="/faculty">View session details →</Link>
+            <article className={styles.guestFaculty}>
+              <div className={styles.guestBadge}>IPS</div>
+              <span>SPECIAL GUEST SESSION</span>
+              <h3>Narayanan Sir</h3>
+              <b>Retd. IPS</b>
+              <p>Administration, Ethics and Decision-Making for Mains and Interview.</p>
+              <Link href="/faculty">View Faculty Page →</Link>
             </article>
           </div>
         </div>
       </section>
 
-      <section className={styles.testimonialSection}>
+      <section className={styles.pathSection}>
         <div className={styles.shell}>
-          <div className={styles.centerHeading}>
-            <span className={styles.eyebrow}>LEARNER STORIES</span>
-            <h2>Structure changes preparation.</h2>
-            <p>What aspirants experience when classes, practice and revision finally work together.</p>
+          <div className={styles.centerHead}>
+            <span>COMPLETE PREPARATION FRAMEWORK</span>
+            <h2>From first chapter to final interview</h2>
+          </div>
+          <div className={styles.pathGrid}>
+            {PREPARATION_PATH.map(([title, copy], index) => (
+              <article key={title}>
+                <div><span>{String(index + 1).padStart(2, "0")}</span>{index < PREPARATION_PATH.length - 1 && <i />}</div>
+                <h3>{title}</h3>
+                <p>{copy}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className={styles.testimonials}>
+        <div className={styles.shell}>
+          <div className={styles.sectionHead}>
+            <div><span>ASPIRANT FEEDBACK</span><h2>What structured preparation changes</h2></div>
+            <p>Feedback from learners using the OneShot GS preparation system.</p>
           </div>
           <div className={styles.testimonialGrid}>
-            {TESTIMONIALS.slice(0, 3).map((item, index) => (
-              <article key={item.quote} className={index === 1 ? styles.testimonialFeatured : ""}>
-                <div className={styles.quoteMark}>“</div><div className={styles.stars}>★★★★★</div><blockquote>{item.quote}</blockquote><div className={styles.learner}><span>{String(index + 1).padStart(2, "0")}</span><p><b>Verified learner</b><small>{item.meta}</small></p></div>
+            {TESTIMONIALS.slice(0, 3).map((item) => (
+              <article key={item.quote}>
+                <div>“</div>
+                <p>{item.quote}</p>
+                <span>{item.meta}</span>
               </article>
             ))}
           </div>
@@ -235,15 +271,28 @@ export default function HomePage() {
 
       <section className={styles.faqSection}>
         <div className={`${styles.shell} ${styles.faqGrid}`}>
-          <div><span className={styles.eyebrow}>FREQUENTLY ASKED</span><h2>Questions before you begin?</h2><p>Explore the free learning layer, attend a demo or speak with the admissions team.</p><Link href="/admissions">Talk to a counsellor →</Link></div>
-          <div className={styles.faqList}>{FAQ.map(([question, answer], index) => <details key={question} open={index === 0}><summary>{question}<span>+</span></summary><p>{answer}</p></details>)}</div>
+          <div className={styles.faqIntro}>
+            <span>ADMISSIONS & ACADEMICS</span>
+            <h2>Common questions</h2>
+            <p>Explore the free resources, attend a demo class or speak to the admissions desk before deciding.</p>
+            <Link href="/admissions">Academic Counselling →</Link>
+          </div>
+          <div className={styles.faqList}>
+            {FAQ.map(([question, answer], index) => (
+              <details key={question} open={index === 0}>
+                <summary>{question}<span>+</span></summary>
+                <p>{answer}</p>
+              </details>
+            ))}
+          </div>
         </div>
       </section>
 
-      <section className={`${styles.shell} ${styles.finalCta}`}>
-        <div className={styles.ctaOrb} />
-        <div><span>YOUR SERIOUS ATTEMPT STARTS HERE</span><h2>Turn preparation into progress.</h2><p>Choose UPSC CSE 2027 or 73rd BPSC and get a complete path from foundation to interview.</p></div>
-        <div><Link href="/courses">Explore programs →</Link><Link href="/demo">Watch demo</Link></div>
+      <section className={styles.finalCta}>
+        <div className={`${styles.shell} ${styles.finalGrid}`}>
+          <div><span>UPSC CSE 2027 · 73RD BPSC</span><h2>Begin with a clear academic plan.</h2><p>Choose the program that matches your examination and preparation stage.</p></div>
+          <div><Link href="/courses">Explore Programs</Link><Link href="/admissions">Book Free Counselling</Link></div>
+        </div>
       </section>
     </main>
   );
