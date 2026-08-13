@@ -1,220 +1,55 @@
 import Link from "next/link";
-import GlowLogo from "@/components/GlowLogo";
 
-const SECTIONS = [
-  { key: "polity",      label: "Polity",                    emoji: "⚖️"  },
-  { key: "economics",   label: "Economics",                  emoji: "📊"  },
-  { key: "environment", label: "Environment",                emoji: "🌿"  },
-  { key: "st",          label: "Science & Tech",             emoji: "🔬"  },
-  { key: "ir",          label: "International Relations",    emoji: "🌍"  },
-  { key: "geo",         label: "Geography",                  emoji: "🗺️" },
-  { key: "culture",     label: "Culture / Society / History",emoji: "🏛️" },
+const SOURCES = [
+  { code: "PIB", title: "Press Information Bureau", area: "Government policies & schemes", description: "Use ministry-wise releases for schemes, cabinet decisions, reports and government initiatives.", href: "https://www.pib.gov.in/AllRelease.aspx?MenuId=3&lang=1&reg=3" },
+  { code: "PRS", title: "PRS Monthly Policy Review", area: "Parliament & public policy", description: "Monthly summaries of Bills, Parliament, policy changes and major economic developments.", href: "https://prsindia.org/policy/monthly-policy-review" },
+  { code: "RBI", title: "Reserve Bank of India", area: "Economy & monetary policy", description: "Press releases and policy material for inflation, banking, monetary policy and financial-sector issues.", href: "https://www.rbi.org.in/Scripts/BS_PressReleaseDisplay.aspx" },
+  { code: "MEA", title: "Ministry of External Affairs", area: "International Relations", description: "Official media and video briefings for bilateral relations, summits and foreign-policy developments.", href: "https://www.mea.gov.in/video-briefings.htm" },
+  { code: "ENV", title: "MoEFCC New Releases", area: "Environment", description: "Notifications and new releases for environment, climate, biodiversity, forests and regulations.", href: "https://moef.gov.in/new_releases/update" },
+  { code: "BI", title: "Bihar Government Updates", area: "Bihar Current Affairs", description: "State-level press releases, schemes and administrative developments relevant to BPSC preparation.", href: "https://state.bihar.gov.in/lrc/SectionInformation.html?editForm=&rowId=8929" },
 ];
 
-type SectionLinks = { yt: string; pdf: string };
-type MonthData = {
-  label: string;
-  emoji: string;
-  sections: Record<string, SectionLinks>;
-};
-
-const empty = (): SectionLinks => ({ yt: "", pdf: "" });
-const emptySections = () =>
-  Object.fromEntries(SECTIONS.map((s) => [s.key, empty()]));
-
-const MONTHS: MonthData[] = [
-  { label: "June 2025",      emoji: "☀️",  sections: { ...emptySections(), polity: { yt: "", pdf: "https://drive.google.com/file/d/1-lWB0usLdLRbZ8s4tDgLYtkO3w5jCw7J/view?usp=sharing" } } },
-  { label: "July 2025",      emoji: "🌧️",  sections: emptySections() },
-  { label: "August 2025",    emoji: "🎑",  sections: emptySections() },
-  { label: "September 2025", emoji: "🍂",  sections: emptySections() },
-  { label: "October 2025",   emoji: "🏮",  sections: emptySections() },
-  { label: "November 2025",  emoji: "🌾",  sections: emptySections() },
-  { label: "December 2025",  emoji: "❄️",  sections: emptySections() },
-  { label: "January 2026",   emoji: "🎊",  sections: emptySections() },
-  { label: "February 2026",  emoji: "🌸",  sections: emptySections() },
-  { label: "March 2026",     emoji: "🌿",  sections: emptySections() },
-  { label: "April 2026",     emoji: "🌻",  sections: emptySections() },
+const SYLLABUS = [
+  ["Polity & Governance", "Bills, constitutional bodies, Supreme Court issues, schemes, governance reforms"],
+  ["Economy", "RBI, inflation, growth, fiscal issues, banking, agriculture, employment and external sector"],
+  ["International Relations", "Bilateral visits, neighbourhood, groupings, conflicts, treaties and Indian interests"],
+  ["Environment", "Climate, biodiversity, protected areas, environmental rules and major reports"],
+  ["Science & Technology", "Space, health, biotechnology, digital public infrastructure and emerging technology"],
+  ["Bihar Special", "State schemes, administration, economy, infrastructure, geography and Bihar-linked national issues"],
 ];
 
-export default function CALecturesPage() {
+const WORKFLOW = [
+  ["01", "Read the source", "Start with the official release or a reliable policy summary, not a social-media note."],
+  ["02", "Map to syllabus", "Tag every item to Polity, Economy, IR, Environment, Science or Bihar Special."],
+  ["03", "Make a 5-line note", "Write what happened, why it matters, one static link and one exam angle."],
+  ["04", "Practise", "Turn important items into MCQs or a Mains question before the month ends."],
+  ["05", "Revise", "Revisit the monthly list before mocks instead of rereading every source."],
+];
+
+const ARCHIVE = [
+  { title: "June 2025 · Polity PDF", meta: "OneShot GS archive", href: "https://drive.google.com/file/d/1-lWB0usLdLRbZ8s4tDgLYtkO3w5jCw7J/view?usp=sharing" },
+];
+
+export default function CurrentAffairsPage() {
   return (
-    <main style={{ minHeight: "100vh", color: "var(--ink)", overflowX: "hidden", background: "var(--bg)" }}>
-      {/* Header */}
-      <div style={{ maxWidth: 960, margin: "0 auto", padding: "16px 16px 0", textAlign: "center", position: "relative", zIndex: 1 }}>
-        <Link href="/study" style={{ position: "absolute", right: 16, top: 20, fontSize: 12.5, fontWeight: 600, color: "var(--muted)", textDecoration: "none" }}>← Back</Link>
-        <GlowLogo style={{ margin: "0 auto 6px" }} />
-        <h1 style={{
-          fontFamily: "var(--font-display)", fontWeight: 800,
-          fontSize: 20, letterSpacing: "-0.025em",
-          color: "var(--ink-strong)", marginBottom: 4,
-        }}>Current Affairs</h1>
-        <p style={{ fontSize: 12.5, color: "var(--muted)", fontWeight: 600, letterSpacing: "0.01em" }}>
-          Only what scores. Zero fluff, zero filler.
-        </p>
-      </div>
+    <main className="ca-page">
+      <section className="hero"><div className="shell hero-grid"><div><Link href="/study" className="back">← Free Study</Link><span className="overline">CURRENT AFFAIRS DESK</span><h1>Read less. Track the sources that actually matter.</h1><p>Use this desk to connect government releases, Parliament and policy, the economy, international relations, environment and Bihar updates to the UPSC/BPSC syllabus.</p><div className="actions"><a href="#sources" className="primary">Open Source Desk</a><Link href="/quizzes/current" className="secondary">Current Affairs Quiz</Link><Link href="/pyq" className="text-link">See PYQ relevance →</Link></div></div><aside><span>WEEKLY RULE</span><strong>Source → syllabus → note → practice → revision</strong><p>Do not try to save every news item. Keep only developments that connect to the syllabus, previous questions or a recurring policy theme.</p></aside></div></section>
 
-      {/* Month cards */}
-      <section style={{ maxWidth: 960, margin: "0 auto", padding: "14px 16px 72px", position: "relative", zIndex: 1 }}>
-        <div className="months-grid">
-          {MONTHS.map((month) => (
-            <div key={month.label} className="month-card">
-              {/* Month header */}
-              <div style={{
-                display: "flex", alignItems: "center", gap: 11,
-                marginBottom: 16,
-                paddingBottom: 14,
-                borderBottom: "1px solid var(--line)",
-              }}>
-                <span style={{
-                  fontSize: 24, width: 44, height: 44,
-                  borderRadius: 12, display: "grid", placeItems: "center",
-                  background: "color-mix(in srgb, var(--accent) 10%, transparent)",
-                  border: "1px solid color-mix(in srgb, var(--accent) 18%, transparent)",
-                  flexShrink: 0,
-                }}>{month.emoji}</span>
-                <p style={{
-                  fontFamily: "var(--font-display)",
-                  fontSize: 17, fontWeight: 800,
-                  color: "var(--ink-strong)",
-                  letterSpacing: "-0.025em",
-                }}>{month.label}</p>
-              </div>
+      <section id="sources" className="shell section"><header><div><span className="overline">PRIMARY SOURCE DESK</span><h2>Six sources cover most high-value tracking.</h2></div><p>Every button below opens a working external source. Use the source for facts and the OneShot workflow for exam conversion.</p></header><div className="source-grid">{SOURCES.map(source => <a key={source.code} href={source.href} target="_blank" rel="noopener noreferrer" className="source-card"><div className="code">{source.code}</div><span>{source.area}</span><h3>{source.title}</h3><p>{source.description}</p><b>Open Source ↗</b></a>)}</div></section>
 
-              {/* Sections */}
-              <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
-                {SECTIONS.map((sec) => {
-                  const links = month.sections[sec.key];
-                  const hasYt = !!links.yt;
-                  const hasPdf = !!links.pdf;
-                  return (
-                    <div key={sec.key} className="section-row">
-                      {/* Subject label */}
-                      <div style={{ display: "flex", alignItems: "center", gap: 7, flex: 1, minWidth: 0 }}>
-                        <span style={{ fontSize: 15, flexShrink: 0 }}>{sec.emoji}</span>
-                        <span style={{
-                          fontSize: 12.5, fontWeight: 700,
-                          color: "var(--ink-soft)",
-                          whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis",
-                        }}>{sec.label}</span>
-                      </div>
+      <section className="syllabus-wrap"><div className="shell section"><header className="light"><div><span className="overline light-text">WHAT TO TRACK</span><h2>Current affairs should sit inside static GS.</h2></div><p>Use these six buckets so monthly revision remains manageable.</p></header><div className="syllabus-grid">{SYLLABUS.map(([title,copy],i) => <article key={title}><span>0{i+1}</span><h3>{title}</h3><p>{copy}</p></article>)}</div></div></section>
 
-                      {/* Buttons */}
-                      <div style={{ display: "flex", gap: 6 }}>
-                        {hasYt ? (
-                          <a href={links.yt} target="_blank" rel="noopener noreferrer" className="pill-yt">
-                            <YtIcon /> Lecture
-                          </a>
-                        ) : (
-                          <span className="pill-yt pill-off"><YtIcon /> Lecture</span>
-                        )}
-                        {hasPdf ? (
-                          <a href={links.pdf} target="_blank" rel="noopener noreferrer" className="pill-pdf">
-                            <DlIcon /> PDF
-                          </a>
-                        ) : (
-                          <span className="pill-pdf pill-off"><DlIcon /> PDF</span>
-                        )}
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
+      <section className="shell section workflow"><div><span className="overline">THE ONESHOT CURRENT-AFFAIRS LOOP</span><h2>Convert a release into exam output in five steps.</h2><p>A source is useful only when it produces a note, a question, or a revision item.</p></div><div className="workflow-grid">{WORKFLOW.map(([n,title,copy]) => <article key={n}><span>{n}</span><h3>{title}</h3><p>{copy}</p></article>)}</div></section>
+
+      <section className="shell practice-band"><div><span className="overline light-text">PRACTISE WHAT YOU READ</span><h2>Current affairs becomes useful when you retrieve it.</h2><p>Use the free quiz after a study session, then return to the exact source or static topic that produced your mistake.</p></div><div className="practice-links"><Link href="/quizzes/current">Current Affairs Quiz →</Link><Link href="/quizzes/static">Static GS Quiz</Link><Link href="/ask">Ask Tutor</Link></div></section>
+
+      {ARCHIVE.length > 0 && <section className="shell section archive"><header><div><span className="overline">ONESHOT ARCHIVE</span><h2>Existing downloadable material.</h2></div><p>Older OneShot GS material remains accessible where a working file is already available.</p></header><div className="archive-grid">{ARCHIVE.map(item => <a href={item.href} target="_blank" rel="noopener noreferrer" key={item.title}><span>{item.meta}</span><h3>{item.title}</h3><b>Open PDF ↗</b></a>)}</div></section>}
+
+      <section className="shell final"><div><span className="overline light-text">NEED CURRENT AFFAIRS INSIDE A FULL PLAN?</span><h2>Complete programs integrate current affairs with static GS, tests and Mains writing.</h2></div><div className="actions"><Link href="/courses" className="primary warm">View Programs →</Link><Link href="/demo" className="secondary dark">Demo Class</Link></div></section>
 
       <style>{`
-        .months-grid {
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 14px;
-        }
-        @media (min-width: 600px) {
-          .months-grid { grid-template-columns: 1fr 1fr; }
-        }
-        @media (min-width: 900px) {
-          .months-grid { grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
-        }
-
-        .month-card {
-          background: var(--card);
-          border: 1px solid var(--line);
-          border-radius: 20px;
-          padding: 18px 16px 16px;
-          transition: box-shadow 0.15s ease, transform 0.15s ease;
-        }
-        @media (hover: hover) {
-          .month-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 28px rgba(120,80,30,0.11);
-          }
-        }
-
-        .section-row {
-          display: flex;
-          align-items: center;
-          flex-wrap: wrap;
-          gap: 6px 8px;
-          padding: 6px 8px;
-          border-radius: 10px;
-          background: color-mix(in srgb, var(--accent) 4%, transparent);
-        }
-
-        .pill-yt, .pill-pdf {
-          display: inline-flex;
-          align-items: center;
-          gap: 4px;
-          padding: 4px 9px;
-          border-radius: 7px;
-          font-size: 11px;
-          font-weight: 700;
-          text-decoration: none;
-          white-space: nowrap;
-          transition: opacity 0.12s ease;
-        }
-
-        .pill-yt {
-          background: #ff2a2a;
-          color: #fff;
-        }
-        @media (hover: hover) {
-          .pill-yt:not(.pill-off):hover { opacity: 0.82; }
-        }
-
-        .pill-pdf {
-          background: color-mix(in srgb, var(--accent) 13%, transparent);
-          color: var(--accent);
-          border: 1px solid color-mix(in srgb, var(--accent) 25%, transparent);
-        }
-        @media (hover: hover) {
-          .pill-pdf:not(.pill-off):hover { opacity: 0.75; }
-        }
-
-        .pill-off {
-          opacity: 0.32;
-          cursor: default;
-          pointer-events: none;
-        }
+        .ca-page{min-height:100vh;background:#f7f5f0;color:#172338}.shell{width:min(1080px,calc(100% - 32px));margin:0 auto}.overline{font-size:8px;letter-spacing:.16em;font-weight:850;color:#99502f}.light-text{color:#e0b58e}.hero{padding:56px 0 43px;background:linear-gradient(180deg,#fdfcf9,#efebe4);border-bottom:1px solid #d9d5ce}.hero-grid{display:grid;grid-template-columns:minmax(0,1.4fr) 300px;gap:45px;align-items:end}.back{display:block;width:max-content;text-decoration:none;color:#6e7986;font-size:8px;font-weight:800;margin-bottom:18px}.hero h1{font-family:var(--font-display);font-size:clamp(42px,6vw,67px);line-height:.96;letter-spacing:-.058em;margin:9px 0 14px;max-width:800px}.hero p{font-size:12.5px;line-height:1.8;color:#596676;max-width:720px}.actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:19px}.primary,.secondary{padding:10px 14px;border-radius:6px;text-decoration:none;font-size:9.5px;font-weight:850}.primary{background:#21324d;color:#fff}.secondary{background:#fff;border:1px solid #d0d6dd;color:#21324d}.text-link{text-decoration:none;color:#91401f;font-size:9px;font-weight:850;padding:9px}.hero aside{background:#fff;border:1px solid #d2d2ce;border-top:4px solid #9f3e1b;padding:17px}.hero aside>span{font-size:7px;letter-spacing:.14em;color:#98502e;font-weight:850}.hero aside strong{display:block;font-family:var(--font-display);font-size:20px;line-height:1.15;margin:8px 0}.hero aside p{font-size:8.5px;line-height:1.6;color:#697583}.section{padding:49px 0}.section header{display:flex;justify-content:space-between;align-items:end;gap:26px;margin-bottom:20px}.section header h2,.workflow h2,.practice-band h2{font-family:var(--font-display);font-size:clamp(28px,4vw,41px);line-height:1.04;letter-spacing:-.045em;margin-top:7px}.section header>p{max-width:390px;text-align:right;font-size:9.5px;line-height:1.65;color:#687482}.source-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.source-card{text-decoration:none;color:#172338;background:#fff;border:1px solid #d9d6d0;padding:15px;display:flex;flex-direction:column;min-height:215px}.source-card .code{width:42px;height:42px;display:grid;place-items:center;background:#edf1f5;border:1px solid #ced5dd;font-family:var(--font-display);font-size:10px;font-weight:850}.source-card>span{font-size:7px;letter-spacing:.08em;color:#99502e;font-weight:850;margin-top:13px}.source-card h3{font-family:var(--font-display);font-size:18px;margin:5px 0}.source-card p{font-size:8.5px;line-height:1.6;color:#687482;flex:1}.source-card b{font-size:8px;color:#8f3f20;margin-top:10px}.syllabus-wrap{background:#172338;color:#fff}.light>p{color:#c6d0dc!important}.syllabus-grid{display:grid;grid-template-columns:repeat(3,1fr);border:1px solid rgba(255,255,255,.13)}.syllabus-grid article{padding:16px;border-right:1px solid rgba(255,255,255,.12);border-bottom:1px solid rgba(255,255,255,.12)}.syllabus-grid article:nth-child(3n){border-right:0}.syllabus-grid article:nth-last-child(-n+3){border-bottom:0}.syllabus-grid article>span{font-family:Georgia,serif;color:#d9a777;font-size:17px}.syllabus-grid h3{font-family:var(--font-display);font-size:15px;margin:8px 0 4px}.syllabus-grid p{font-size:8px;line-height:1.6;color:#c5d0dc}.workflow{display:grid;grid-template-columns:.7fr 1.3fr;gap:32px;align-items:start}.workflow>div>p{font-size:9.5px;line-height:1.65;color:#687482;margin-top:7px}.workflow-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}.workflow-grid article{background:#fff;border:1px solid #d9d6d0;padding:13px}.workflow-grid span{font-family:Georgia,serif;color:#a34821;font-size:16px}.workflow-grid h3{font-family:var(--font-display);font-size:13px;margin:7px 0 4px}.workflow-grid p{font-size:7.5px;line-height:1.55;color:#687482}.practice-band{padding:25px;background:#26364f;color:#fff;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center}.practice-band p{font-size:9px;line-height:1.6;color:#c6d0dc;margin-top:7px}.practice-links{display:grid;gap:6px;min-width:190px}.practice-links a{text-align:center;text-decoration:none;background:#f1ece5;color:#26364f;padding:9px;font-size:8px;font-weight:850}.archive-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.archive-grid a{text-decoration:none;color:#172338;background:#fff;border:1px solid #d9d6d0;padding:15px}.archive-grid span{font-size:7px;color:#99502e;font-weight:850}.archive-grid h3{font-family:var(--font-display);font-size:17px;margin:6px 0 11px}.archive-grid b{font-size:8px;color:#8f3f20}.final{margin-bottom:40px;padding:26px;background:#26364f;color:#fff;display:flex;justify-content:space-between;align-items:center;gap:25px}.final h2{font-family:var(--font-display);font-size:clamp(26px,4vw,39px);line-height:1.04;letter-spacing:-.04em;margin-top:6px;max-width:720px}.primary.warm{background:#a34821}.secondary.dark{background:transparent;color:#fff;border-color:rgba(255,255,255,.24)}@media(max-width:800px){.hero-grid{grid-template-columns:1fr;gap:22px}.source-grid{grid-template-columns:1fr 1fr}.section header{flex-direction:column;align-items:flex-start;gap:7px}.section header>p{text-align:left}.workflow{grid-template-columns:1fr}.workflow-grid{grid-template-columns:1fr 1fr 1fr}.practice-band{grid-template-columns:1fr}.final{flex-direction:column;align-items:flex-start}}@media(max-width:520px){.source-grid,.syllabus-grid,.workflow-grid,.archive-grid{grid-template-columns:1fr}.syllabus-grid article,.syllabus-grid article:nth-child(3n),.syllabus-grid article:nth-last-child(-n+3){border-right:0;border-bottom:1px solid rgba(255,255,255,.12)}.syllabus-grid article:last-child{border-bottom:0}.hero{padding:40px 0 31px}.final{width:calc(100% - 24px)}}
       `}</style>
     </main>
-  );
-}
-
-function YtIcon() {
-  return (
-    <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" style={{ flexShrink: 0 }}>
-      <path d="M21.543 6.498C22 8.28 22 12 22 12s0 3.72-.457 5.502c-.254.985-.997 1.76-1.938 2.022C17.896 20 12 20 12 20s-5.893 0-7.605-.476c-.945-.266-1.687-1.04-1.938-2.022C2 15.72 2 12 2 12s0-3.72.457-5.502c.254-.985.997-1.76 1.938-2.022C6.107 4 12 4 12 4s5.896 0 7.605.476c.945.266 1.687 1.04 1.938 2.022zM10 15.5l6-3.5-6-3.5v7z"/>
-    </svg>
-  );
-}
-
-function DlIcon() {
-  return (
-    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
-      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-      <polyline points="7 10 12 15 17 10"/>
-      <line x1="12" y1="15" x2="12" y2="3"/>
-    </svg>
   );
 }
