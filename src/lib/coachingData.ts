@@ -109,7 +109,7 @@ export const TESTIMONIALS = [
 export const FREE_RESOURCES = [
   { href: "/study", title: "Free Study", eyebrow: "OPEN LIBRARY", description: "NCERT, General Studies, Bihar GS, Current Affairs and subject-wise study rooms for UPSC / BPSC." },
   { href: "/quizzes", title: "Free Quiz", eyebrow: "PRACTICE", description: "Current Affairs, static GS and PYQ-oriented practice for UPSC / BPSC recall and elimination." },
-  { href: "/pyq", title: "UPSC / BPSC PYQs", eyebrow: "ON-SITE PYQ DESK", description: "Year-wise PYQ study with on-site categorisation plus links to official commission papers." },
+  { href: "/pyq", title: "UPSC / BPSC PYQs", eyebrow: "QUESTION PAPERS", description: "Open and download original UPSC Prelims GS-I papers year-wise on OneShot GS, with BPSC paper sources alongside." },
   { href: "/ask", title: "Ask Tutor", eyebrow: "DOUBT SUPPORT", description: "Clarify UPSC / BPSC concepts and structure your next study step." },
   { href: "/partner", title: "Study Buddy", eyebrow: "ACCOUNTABILITY", description: "Find a study buddy for UPSC / BPSC preparation and add accountability to self-study." },
 ];
@@ -129,21 +129,21 @@ export const UPSC_PYQ: PyqGroup[] = [
     label: "UPSC CSE Prelims 2026",
     year: "2026",
     stage: "Prelims",
-    papers: ["General Studies Paper I", "General Studies Paper II (CSAT)"],
-    href: OFFICIAL_LINKS.upscPrelims2026,
-    source: "UPSC",
-    note: "Official examination page with question papers uploaded after the 24 May 2026 examination.",
+    papers: ["General Studies Paper I"],
+    href: "/pyq/upsc/prelims/2026.pdf",
+    source: "OneShot GS hosted paper",
+    note: "Original General Studies Paper I PDF available to open or download directly on OneShot GS.",
   },
-  ...Array.from({ length: 14 }, (_, index) => {
+  ...Array.from({ length: 12 }, (_, index) => {
     const year = String(2025 - index);
     return {
-      label: `UPSC CSE ${year}`,
+      label: `UPSC CSE Prelims ${year}`,
       year,
-      stage: "Prelims + Mains",
-      papers: ["Prelims GS I", "Prelims CSAT", "Mains Essay", "Mains GS I-IV"],
-      href: OFFICIAL_LINKS.upscPyqArchive,
-      source: "UPSC Previous Question Papers",
-      note: "Use the on-site taxonomy for study and the official archive for exact paper wording.",
+      stage: "Prelims",
+      papers: ["General Studies Paper I"],
+      href: `/pyq/upsc/prelims/${year}.pdf`,
+      source: "OneShot GS hosted paper",
+      note: "Original General Studies Paper I PDF available to open or download directly on OneShot GS.",
     } satisfies PyqGroup;
   }),
 ];
@@ -168,8 +168,8 @@ export const BPSC_PYQ: PyqGroup[] = [
 ];
 
 export const FAQ = [
-  ["Can I use OneShot GS without buying a course?", "Yes. Free Study, Free Quiz, PYQ study, Ask Tutor and Study Buddy remain available as open UPSC / BPSC preparation tools."],
+  ["Can I use OneShot GS without buying a course?", "Yes. Free Study, Free Quiz, UPSC previous papers, Ask Tutor and Study Buddy remain available as open UPSC / BPSC preparation tools."],
   ["What does the complete program fee include?", "UPSC 2027 at ₹1,60,000 and 73rd BPSC at ₹87,000 are both end-to-end programs covering Foundation, Prelims, Mains and Interview preparation."],
   ["Can I see the teaching experience before enrolling?", "Yes. The Demo Class page and free academic layer are available before enrollment."],
-  ["How are PYQs handled on OneShot GS?", "The PYQ desk renders an on-site taxonomy and paraphrased study view, while exact question-paper wording remains linked to official UPSC and BPSC sources."],
+  ["How are UPSC previous papers handled on OneShot GS?", "UPSC Prelims General Studies Paper I PDFs for 2014–2026 are hosted year-wise on OneShot GS, with separate actions to open the full paper or download it. BPSC papers remain linked to the commission's question-booklet archive."],
 ];
