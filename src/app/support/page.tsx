@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
 
 export default function SupportPage() {
-  redirect("/ask?intent=general");
+  redirect("/talk-to-us?intent=general");
 }
