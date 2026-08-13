@@ -1,376 +1,53 @@
 import Link from "next/link";
-import GlowLogo from "@/components/GlowLogo";
+import { BPSC_PYQ, OFFICIAL_LINKS, UPSC_PYQ } from "@/lib/coachingData";
 
-const PRELIMS_SECTIONS = [
-  {
-    title: "Prelims",
-    description:
-      "All BPSC Prelims previous year question papers in one place. Add your PDF links here later.",
-    badge: "Objective",
-    placeholder: "Add Prelims PYQ PDF link",
-  },
-];
-
-const MAINS_SECTIONS = [
-  {
-    title: "GS 1",
-    description:
-      "History, culture, geography and society related mains papers placeholder.",
-    badge: "Mains",
-    placeholder: "Add GS 1 PYQ PDF link",
-  },
-  {
-    title: "GS 2",
-    description:
-      "Governance, polity, economy, science, Bihar and current affairs related mains papers placeholder.",
-    badge: "Mains",
-    placeholder: "Add GS 2 PYQ PDF link",
-  },
-  {
-    title: "Essay",
-    description:
-      "Essay previous year papers placeholder for structured practice and topic trend tracking.",
-    badge: "Mains",
-    placeholder: "Add Essay PYQ PDF link",
-  },
-  {
-    title: "Optional History",
-    description:
-      "History optional previous year papers placeholder for focused optional preparation.",
-    badge: "Optional",
-    placeholder: "Add History Optional PYQ PDF link",
-  },
-];
-
-function PlaceholderCard({
-  title,
-  description,
-  badge,
-  placeholder,
-}: {
-  title: string;
-  description: string;
-  badge: string;
-  placeholder: string;
-}) {
+function PaperCard({ item }: { item: (typeof UPSC_PYQ)[number] }) {
   return (
-    <article
-      style={{
-        background: "var(--card)",
-        border: "1px solid var(--line)",
-        borderRadius: 20,
-        padding: "22px 20px",
-        boxShadow: "0 10px 30px rgba(120,80,30,0.06)",
-      }}
-    >
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          gap: 12,
-          marginBottom: 14,
-        }}
-      >
-        <h3
-          style={{
-            fontFamily: "var(--font-display)",
-            fontWeight: 700,
-            fontSize: 22,
-            color: "var(--ink-strong)",
-            letterSpacing: "-0.02em",
-          }}
-        >
-          {title}
-        </h3>
-        <span
-          style={{
-            background: "var(--accent-soft)",
-            color: "var(--accent)",
-            border: "1px solid var(--accent-border)",
-            borderRadius: 999,
-            padding: "5px 10px",
-            fontSize: 11,
-            fontWeight: 700,
-            letterSpacing: "0.08em",
-            textTransform: "uppercase",
-            whiteSpace: "nowrap",
-          }}
-        >
-          {badge}
-        </span>
-      </div>
-
-      <p
-        style={{
-          fontSize: 14,
-          lineHeight: 1.8,
-          color: "var(--ink-soft)",
-          marginBottom: 18,
-        }}
-      >
-        {description}
-      </p>
-
-      <div
-        style={{
-          border: "1px dashed var(--accent-border)",
-          background: "rgba(192,96,16,0.05)",
-          borderRadius: 16,
-          padding: "16px 14px",
-          marginBottom: 16,
-        }}
-      >
-        <p
-          style={{
-            fontSize: 12,
-            fontWeight: 700,
-            letterSpacing: "0.12em",
-            textTransform: "uppercase",
-            color: "var(--muted)",
-            marginBottom: 8,
-          }}
-        >
-          Placeholder
-        </p>
-        <p style={{ fontSize: 15, color: "var(--ink-strong)", fontWeight: 600 }}>
-          {placeholder}
-        </p>
-      </div>
-
-      <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
-        <span
-          style={{
-            display: "inline-block",
-            borderRadius: 10,
-            padding: "10px 14px",
-            background: "linear-gradient(135deg, #c06010, #d97706)",
-            color: "#fff",
-            fontSize: 13,
-            fontWeight: 700,
-            fontFamily: "var(--font-display)",
-          }}
-        >
-          PDF Link Coming Soon
-        </span>
-        <span
-          style={{
-            display: "inline-block",
-            borderRadius: 10,
-            padding: "10px 14px",
-            background: "rgba(255,253,248,0.88)",
-            border: "1px solid var(--line-hi)",
-            color: "var(--ink-soft)",
-            fontSize: 13,
-            fontWeight: 600,
-          }}
-        >
-          Year-wise / Paper-wise
-        </span>
-      </div>
+    <article className="paper-card">
+      <div className="paper-head"><div><span>{item.stage}</span><h3>{item.label}</h3></div>{item.year && <b>{item.year}</b>}</div>
+      <ul>{item.papers.map(paper => <li key={paper}>{paper}</li>)}</ul>
+      {item.note && <p className="note">{item.note}</p>}
+      <a href={item.href} target="_blank" rel="noopener noreferrer">Open Official Source ↗</a>
+      <small>Source: {item.source}</small>
     </article>
   );
 }
 
 export default function PyqPage() {
   return (
-    <main style={{ color: "var(--ink)", background: "var(--bg)" }}>
-      <div style={{ maxWidth: 980, margin: "0 auto", padding: "16px 20px 0", textAlign: "center" }}>
-        <GlowLogo style={{ margin: "0 auto 4px" }} />
-        <p style={{ fontSize: 12.5, color: "var(--muted)", fontWeight: 600, letterSpacing: "0.01em" }}>
-          Only what scores. Zero fluff, zero filler.
-        </p>
-      </div>
-      <section
-        style={{
-          padding: "32px 20px 48px",
-          borderBottom: "1px solid var(--line)",
-          background:
-            "linear-gradient(180deg, rgba(192,96,16,0.08) 0%, rgba(244,239,232,0.3) 100%)",
-        }}
-      >
-        <div style={{ maxWidth: 980, margin: "0 auto" }}>
-          <div
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: 8,
-              background: "rgba(192,96,16,0.1)",
-              border: "1px solid var(--accent-border)",
-              borderRadius: 20,
-              padding: "5px 14px",
-              marginBottom: 24,
-            }}
-          >
-            <span
-              style={{
-                width: 6,
-                height: 6,
-                borderRadius: "50%",
-                background: "var(--accent)",
-                display: "inline-block",
-              }}
-            />
-            <span
-              style={{
-                fontSize: 11,
-                fontWeight: 700,
-                color: "var(--accent)",
-                letterSpacing: "0.14em",
-                textTransform: "uppercase",
-              }}
-            >
-              Previous Year Questions
-            </span>
+    <main className="pyq-page">
+      <section className="hero">
+        <div className="shell hero-grid">
+          <div>
+            <span className="overline">PREVIOUS YEAR QUESTIONS</span>
+            <h1>UPSC & BPSC PYQs, organised around official sources.</h1>
+            <p>Use previous question papers as a syllabus filter: identify recurring themes, calibrate depth, practise elimination for Prelims and build answer-writing patterns for Mains.</p>
+            <div className="actions"><a href="#upsc" className="primary">UPSC PYQs</a><a href="#bpsc" className="secondary">BPSC PYQs</a><Link href="/quizzes/pyq" className="text-link">PYQ Practice →</Link></div>
           </div>
-
-          <h1
-            style={{
-              fontFamily: "var(--font-display)",
-              fontWeight: 700,
-              fontSize: "clamp(2.1rem, 6vw, 3.8rem)",
-              lineHeight: 1.05,
-              letterSpacing: "-0.03em",
-              color: "var(--ink-strong)",
-              maxWidth: 760,
-              marginBottom: 18,
-            }}
-          >
-            BPSC PYQ Hub —
-            <br />
-            <span style={{ color: "var(--accent)" }}>Prelims + Mains, one clean place.</span>
-          </h1>
-
-          <p
-            style={{
-              fontSize: 16,
-              lineHeight: 1.85,
-              color: "var(--ink-soft)",
-              maxWidth: 700,
-              marginBottom: 28,
-            }}
-          >
-            Yahan par aap Prelims aur Mains ke previous year papers ke PDF links add kar sakte ho.
-            Abhi ke liye maine placeholders bana diye hain for Prelims, GS 1, GS 2, Essay and Optional History.
-          </p>
-
-          <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-            <Link
-              href="/"
-              style={{
-                background: "linear-gradient(135deg, #c06010, #d97706)",
-                color: "#fff",
-                borderRadius: 12,
-                padding: "12px 20px",
-                fontSize: 14,
-                fontWeight: 700,
-                fontFamily: "var(--font-display)",
-                textDecoration: "none",
-                display: "inline-block",
-              }}
-            >
-              Home →
-            </Link>
-            <Link
-              href="/ca"
-              style={{
-                border: "1.5px solid var(--line-hi)",
-                background: "rgba(255,253,248,0.88)",
-                color: "var(--ink-soft)",
-                borderRadius: 12,
-                padding: "12px 20px",
-                fontSize: 14,
-                fontWeight: 600,
-                textDecoration: "none",
-                display: "inline-block",
-              }}
-            >
-              Study Sets →
-            </Link>
-          </div>
+          <aside className="source-card"><span>PRIMARY SOURCES</span><div><b>UPSC</b><p>Previous Question Papers archive</p><a href={OFFICIAL_LINKS.upscPyqArchive} target="_blank" rel="noopener noreferrer">Open UPSC ↗</a></div><div><b>BPSC</b><p>Question Booklets section</p><a href={OFFICIAL_LINKS.bpscQuestionBooklets} target="_blank" rel="noopener noreferrer">Open BPSC ↗</a></div><small>Question papers are linked to commission sources so you can verify the original paper.</small></aside>
         </div>
       </section>
 
-      <section style={{ padding: "34px 20px 20px" }}>
-        <div style={{ maxWidth: 980, margin: "0 auto" }}>
-          <div style={{ marginBottom: 18 }}>
-            <p
-              style={{
-                fontSize: 11,
-                fontWeight: 700,
-                letterSpacing: "0.16em",
-                textTransform: "uppercase",
-                color: "var(--muted)",
-                marginBottom: 8,
-              }}
-            >
-              Prelims
-            </p>
-            <h2
-              style={{
-                fontFamily: "var(--font-display)",
-                fontWeight: 700,
-                fontSize: "clamp(1.5rem, 4vw, 2.1rem)",
-                color: "var(--ink-strong)",
-                letterSpacing: "-0.02em",
-              }}
-            >
-              Objective paper placeholders
-            </h2>
-          </div>
+      <section className="method-strip"><div className="shell"><article><b>01</b><span>Attempt</span><p>Solve under time pressure before checking notes.</p></article><article><b>02</b><span>Classify</span><p>Tag mistakes as concept, recall, elimination or time-management errors.</p></article><article><b>03</b><span>Revise</span><p>Return to the exact topic that produced the error.</p></article><article><b>04</b><span>Repeat</span><p>Re-attempt marked questions after a revision gap.</p></article></div></section>
 
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-              gap: 16,
-              marginBottom: 42,
-            }}
-          >
-            {PRELIMS_SECTIONS.map((item) => (
-              <PlaceholderCard key={item.title} {...item} />
-            ))}
-          </div>
-
-          <div style={{ marginBottom: 18 }}>
-            <p
-              style={{
-                fontSize: 11,
-                fontWeight: 700,
-                letterSpacing: "0.16em",
-                textTransform: "uppercase",
-                color: "var(--muted)",
-                marginBottom: 8,
-              }}
-            >
-              Mains
-            </p>
-            <h2
-              style={{
-                fontFamily: "var(--font-display)",
-                fontWeight: 700,
-                fontSize: "clamp(1.5rem, 4vw, 2.1rem)",
-                color: "var(--ink-strong)",
-                letterSpacing: "-0.02em",
-              }}
-            >
-              GS, Essay and Optional placeholders
-            </h2>
-          </div>
-
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-              gap: 16,
-            }}
-          >
-            {MAINS_SECTIONS.map((item) => (
-              <PlaceholderCard key={item.title} {...item} />
-            ))}
-          </div>
-        </div>
+      <section id="upsc" className="shell section">
+        <header><div><span className="overline">UPSC CSE</span><h2>Prelims + Mains official-paper access.</h2></div><p>The UPSC archive publishes previous question papers by examination and year, including recent Civil Services Prelims and Mains papers.</p></header>
+        <div className="paper-grid">{UPSC_PYQ.map(item => <PaperCard key={item.label} item={item} />)}</div>
+        <div className="archive-bar"><div><b>Need a paper not listed above?</b><span>Use the UPSC official archive filters for older years and optional subjects.</span></div><a href={OFFICIAL_LINKS.upscPyqArchive} target="_blank" rel="noopener noreferrer">Browse Full UPSC Archive ↗</a></div>
       </section>
+
+      <section id="bpsc" className="bpsc-wrap"><div className="shell section"><header className="light-head"><div><span className="overline light">BPSC CCE</span><h2>Question booklets from recent BPSC cycles.</h2></div><p>BPSC’s official Question Booklets section is the source page for previous examination papers. The cards below organise the CCE cycles you are most likely to use for preparation.</p></header><div className="paper-grid dark-grid">{BPSC_PYQ.map(item => <PaperCard key={item.label} item={item} />)}</div><div className="archive-bar dark-bar"><div><b>Official BPSC booklet selector</b><span>Use the commission page for older CCE and other BPSC examinations.</span></div><a href={OFFICIAL_LINKS.bpscQuestionBooklets} target="_blank" rel="noopener noreferrer">Browse BPSC Question Booklets ↗</a></div></div></section>
+
+      <section className="shell section prep-section">
+        <div><span className="overline">TURN PYQs INTO PREPARATION</span><h2>Don’t collect papers. Build a loop.</h2><p>For each paper: attempt it, mark the topic, revise the underlying concept, then move into a targeted quiz or answer-writing drill.</p></div>
+        <div className="prep-links"><Link href="/quizzes/pyq"><b>PYQ Practice</b><span>Use the practice hub →</span></Link><Link href="/quizzes"><b>Free Quiz</b><span>Test static + current topics →</span></Link><Link href="/study"><b>Free Study</b><span>Revise weak topics →</span></Link><Link href="/courses"><b>Complete Programs</b><span>See guided preparation →</span></Link></div>
+      </section>
+
+      <section className="shell final-cta"><div><span className="overline light">PYQ-LED PREPARATION</span><h2>Use the paper to decide what deserves your time.</h2><p>Start free with official PYQs and practice. Move into a complete program when you want sequencing, evaluation and mentoring.</p></div><div className="actions"><Link href="/quizzes/pyq" className="primary warm">Start PYQ Practice →</Link><Link href="/courses" className="secondary dark">View Programs</Link></div></section>
+
+      <style>{`
+        .pyq-page{min-height:100vh;background:#f7f5f0;color:#172338}.shell{width:min(1100px,calc(100% - 32px));margin:0 auto}.overline{font-size:8px;letter-spacing:.16em;font-weight:850;color:#98502e}.overline.light{color:#e1b68f}.hero{padding:61px 0 47px;background:linear-gradient(180deg,#fdfcf9,#efebe4);border-bottom:1px solid #d9d5ce}.hero-grid{display:grid;grid-template-columns:minmax(0,1.42fr) 300px;gap:48px;align-items:end}.hero h1{font-family:var(--font-display);font-size:clamp(43px,6vw,70px);line-height:.95;letter-spacing:-.06em;margin:10px 0 15px;max-width:820px}.hero p{font-size:13px;line-height:1.8;color:#596676;max-width:720px}.actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:20px}.primary,.secondary{padding:11px 15px;border-radius:6px;text-decoration:none;font-size:10px;font-weight:850}.primary{background:#21324d;color:#fff}.secondary{background:#fff;border:1px solid #d0d6dd;color:#21324d}.text-link{padding:10px;text-decoration:none;color:#91401f;font-size:10px;font-weight:850}.source-card{background:#fff;border:1px solid #d1d2cf;border-top:4px solid #9f3e1b;padding:17px}.source-card>span{font-size:7px;letter-spacing:.14em;color:#98502e;font-weight:850}.source-card>div{padding:11px 0;border-bottom:1px solid #e6e2dc}.source-card b{font-size:9px}.source-card p{font-size:8px;color:#707c89;margin:2px 0 5px}.source-card a{font-size:8px;color:#8f3f20;font-weight:850;text-decoration:none}.source-card>small{display:block;font-size:7.8px;line-height:1.55;color:#7b8591;margin-top:10px}.method-strip{background:#172338;color:#fff}.method-strip>div{display:grid;grid-template-columns:repeat(4,1fr)}.method-strip article{padding:18px;border-right:1px solid rgba(255,255,255,.12)}.method-strip article:last-child{border-right:0}.method-strip b{font-family:Georgia,serif;color:#d8a877;font-size:17px}.method-strip span{display:block;font-family:var(--font-display);font-size:13px;margin:4px 0}.method-strip p{font-size:8px;line-height:1.5;color:#c6d0db}.section{padding:53px 0}.section header{display:flex;justify-content:space-between;align-items:end;gap:28px;margin-bottom:22px}.section header h2,.prep-section h2{font-family:var(--font-display);font-size:clamp(29px,4vw,43px);line-height:1.04;letter-spacing:-.045em;margin-top:7px}.section header>p{max-width:400px;text-align:right;font-size:10px;line-height:1.65;color:#687482}.paper-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.paper-card{background:#fff;border:1px solid #d9d6cf;padding:16px;display:flex;flex-direction:column;min-height:230px}.paper-head{display:flex;justify-content:space-between;gap:10px}.paper-head span{font-size:7px;letter-spacing:.09em;color:#99502e;font-weight:850}.paper-head h3{font-family:var(--font-display);font-size:19px;line-height:1.1;margin:5px 0}.paper-head>b{font-family:Georgia,serif;color:#687482;font-size:18px}.paper-card ul{list-style:none;padding:0;display:grid;gap:6px;margin:12px 0;flex:1}.paper-card li{font-size:8.5px;color:#586574}.paper-card li:before{content:'•';color:#9f3e1b;margin-right:7px}.paper-card .note{font-size:7.8px;line-height:1.5;color:#77818d;margin-bottom:9px}.paper-card>a{text-decoration:none;background:#21324d;color:#fff;padding:9px;text-align:center;border-radius:4px;font-size:8px;font-weight:850}.paper-card>small{display:block;text-align:center;font-size:7px;color:#8a9199;margin-top:7px}.archive-bar{margin-top:10px;border:1px solid #d8d5cf;background:#fff;padding:14px;display:flex;justify-content:space-between;align-items:center;gap:16px}.archive-bar b,.archive-bar span{display:block}.archive-bar b{font-size:9px}.archive-bar span{font-size:8px;color:#707c89;margin-top:2px}.archive-bar>a{text-decoration:none;background:#9f3e1b;color:#fff;padding:9px 11px;border-radius:4px;font-size:8px;font-weight:850;white-space:nowrap}.bpsc-wrap{background:#172338;color:#fff}.light-head>p{color:#c6d0dc!important}.dark-grid .paper-card{background:rgba(255,255,255,.045);border-color:rgba(255,255,255,.14);color:#fff}.dark-grid .paper-head span{color:#e4b88e}.dark-grid .paper-head>b{color:#aab6c4}.dark-grid .paper-card li{color:#c7d1dd}.dark-grid .paper-card .note{color:#aeb8c5}.dark-grid .paper-card>a{background:#f1ece5;color:#26364f}.dark-grid .paper-card>small{color:#9eabba}.dark-bar{background:rgba(255,255,255,.04);border-color:rgba(255,255,255,.14)}.dark-bar span{color:#aeb9c5}.dark-bar>a{background:#a34821}.prep-section{display:grid;grid-template-columns:.8fr 1.2fr;gap:34px;align-items:start}.prep-section>div>p{font-size:10px;line-height:1.7;color:#687482;margin-top:8px}.prep-links{display:grid;grid-template-columns:1fr 1fr;gap:8px}.prep-links a{background:#fff;border:1px solid #d9d6d0;padding:14px;text-decoration:none;color:#172338}.prep-links b,.prep-links span{display:block}.prep-links b{font-size:9px}.prep-links span{font-size:8px;color:#6b7785;margin-top:4px}.final-cta{margin-bottom:42px;padding:28px;background:#26364f;color:#fff;display:flex;justify-content:space-between;gap:28px;align-items:center}.final-cta h2{font-family:var(--font-display);font-size:clamp(28px,4vw,41px);line-height:1.03;letter-spacing:-.04em;margin:6px 0}.final-cta p{font-size:9.5px;color:#c7d1dd;max-width:650px}.primary.warm{background:#a34821}.secondary.dark{background:transparent;color:#fff;border-color:rgba(255,255,255,.24)}@media(max-width:820px){.hero-grid{grid-template-columns:1fr;gap:24px}.paper-grid{grid-template-columns:1fr 1fr}.section header{flex-direction:column;align-items:flex-start;gap:8px}.section header>p{text-align:left}.prep-section{grid-template-columns:1fr}.final-cta{flex-direction:column;align-items:flex-start}}@media(max-width:560px){.method-strip>div{grid-template-columns:1fr 1fr}.method-strip article:nth-child(2){border-right:0}.paper-grid,.prep-links{grid-template-columns:1fr}.archive-bar{align-items:flex-start;flex-direction:column}.hero{padding:42px 0 32px}.final-cta{width:calc(100% - 24px)}}
+      `}</style>
     </main>
   );
 }
