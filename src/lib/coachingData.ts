@@ -80,7 +80,7 @@ export const FACULTY = [
     subject: "Geography & Environment · UPSC",
     record: "Founder · Geography Faculty",
     focus: "India · World Geography · Environment",
-    image: "/faculty/gargi-hd.webp",
+    image: "/faculty/gargi-hd-v2.webp",
   },
   {
     name: "Dr. Aditi Sen",
@@ -125,7 +125,7 @@ export const FACULTY = [
     subject: "CSAT & Prelims Strategy · UPSC",
     record: "Aptitude Faculty · Test Strategy Mentor",
     focus: "Quantitative Aptitude · Reasoning · Comprehension · Attempt Strategy",
-    image: "/faculty/neha-prakash.webp",
+    image: "/faculty/neha-prakash-v2.webp",
   },
   {
     name: "Rahul Dev",
@@ -143,7 +143,7 @@ export const FACULTY = [
     subject: "International Relations & Current Affairs",
     record: "IR Faculty · Current Affairs Discussion Lead",
     focus: "India's Foreign Policy · Global Institutions · Security · Issue Linkages",
-    image: "/faculty/sana-khan.webp",
+    image: "/faculty/sana-khan-v2.webp",
   },
   {
     name: "Vivek Anand",
@@ -161,7 +161,7 @@ export const FACULTY = [
     subject: "Study Planning & Learner Support",
     record: "Academic Counsellor",
     focus: "Course Planning · Backlog Recovery · Revision Cycles · Progress Reviews",
-    image: "/faculty/ananya-rao.webp",
+    image: "/faculty/ananya-rao-v2.webp",
   },
   {
     name: "Raghav Bhatia",
@@ -179,7 +179,7 @@ export const FACULTY = [
     subject: "Art & Culture",
     record: "Art & Culture · Mains Copy Evaluator",
     focus: "Indian Art & Culture · Mains Answer Evaluation",
-    image: "/faculty/kavya-joshi.webp",
+    image: "/faculty/kavya-joshi-v2.webp",
   },
   {
     name: "Nisha Verma",
@@ -188,7 +188,7 @@ export const FACULTY = [
     subject: "Current Affairs & Prelims Practice",
     record: "Current Affairs · MCQ Practice",
     focus: "Current Affairs · Prelims Elimination · Practice Discussions",
-    image: "/faculty/nisha-verma.webp",
+    image: "/faculty/nisha-verma-v2.webp",
   },
   {
     name: "Ruhani Chauhan",
@@ -197,7 +197,7 @@ export const FACULTY = [
     subject: "Bihar Special · Polity",
     record: "Bihar Special · Polity · Mains Copy Evaluator",
     focus: "Bihar History · Geography · Economy · Polity · Mains Answer Evaluation",
-    image: "/faculty/ruhani.webp",
+    image: "/faculty/ruhani-v2.webp",
   },
 ];
 

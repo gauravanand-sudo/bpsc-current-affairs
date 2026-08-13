@@ -190,7 +190,7 @@ export default function HomePage() {
           <div className={styles.facultyGrid}>
             {FEATURED_FACULTY.map((faculty) => (
               <article className="home-faculty-card" key={faculty.name}>
-                <div className={`${styles.facultyImage} home-faculty-image`}><Image src={faculty.image} alt={faculty.name} width={360} height={450} sizes="(max-width: 430px) 84px, 92px" /></div>
+                <div className={`${styles.facultyImage} home-faculty-image`}><Image src={faculty.image} alt={faculty.name} width={360} height={450} sizes="(max-width: 430px) 74px, 78px" /></div>
                 <div className={styles.facultyBody}>
                   <span>{faculty.tier} · {faculty.subject}</span>
                   <h3>{faculty.name}</h3>
@@ -204,12 +204,12 @@ export default function HomePage() {
       </section>
 
       <style>{`
-        .home-faculty-card.home-faculty-card{grid-template-columns:92px 1fr;min-height:140px}
-        .home-faculty-image.home-faculty-image{height:140px;min-height:140px}
-        .home-faculty-image img{object-position:center 20%}
+        .home-faculty-card.home-faculty-card{grid-template-columns:78px 1fr;min-height:120px}
+        .home-faculty-image.home-faculty-image{height:120px;min-height:120px}
+        .home-faculty-image img{object-fit:contain;object-position:center;background:#eef2f5}
         @media(max-width:430px){
-          .home-faculty-card.home-faculty-card{grid-template-columns:84px 1fr;min-height:132px}
-          .home-faculty-image.home-faculty-image{height:132px;min-height:132px}
+          .home-faculty-card.home-faculty-card{grid-template-columns:74px 1fr;min-height:112px}
+          .home-faculty-image.home-faculty-image{height:112px;min-height:112px}
         }
       `}</style>
 
