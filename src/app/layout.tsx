@@ -7,6 +7,7 @@ import SiteFooter from "@/components/SiteFooter";
 import SupportButton from "@/components/SupportButton";
 import "./globals.css";
 import "./institutional-theme.css";
+import "./ca-legacy-theme.css";
 
 const bodyFont = Plus_Jakarta_Sans({ variable: "--font-body", subsets: ["latin"] });
 const displayFont = Space_Grotesk({ variable: "--font-display", subsets: ["latin"], weight: ["500", "700"] });
