@@ -8,28 +8,53 @@ export default function SiteFooter() {
   if (["/support", "/partner", "/ask"].includes(pathname) || pathname.endsWith("/quiz")) return null;
 
   return (
-    <footer className="academic-footer">
-      <div className="footer-inner">
-        <div className="footer-intro">
-          <span className="footer-label">ONESHOT GS · UPSC & BPSC</span>
-          <h2>Study freely. Enroll when you need a complete preparation system.</h2>
-          <p>Open study resources and practice remain available through Free Study and Free Quiz. Complete programs add structured classes, tests, Mains evaluation, mentoring and Interview guidance.</p>
-          <div className="footer-actions"><Link href="/study">Start Free Study</Link><Link href="/quizzes" className="secondary">Take a Free Quiz</Link><Link href="/#programs" className="program">Explore Programs →</Link></div>
+    <footer className="site-footer">
+      <div className="footer-main">
+        <div className="footer-brand">
+          <span>ONESHOT GS · UPSC & BPSC COACHING</span>
+          <h2>Prepare from Prelims to Interview in one academic system.</h2>
+          <p>Complete programs, working demo class, official-source PYQs, Free Study, Free Quiz, faculty guidance and student support.</p>
+          <div className="footer-ctas"><Link href="/demo">View Demo Class</Link><Link href="/admissions" className="warm">Admissions →</Link></div>
         </div>
-        <div className="program-table">
-          <div className="table-head"><span>COMPLETE PROGRAM</span><span>FEE</span></div>
-          <Link href="/courses/upsc-2027"><span><b>UPSC CSE</b><small>2027 / 2028</small></span><strong>₹56,000</strong></Link>
-          <Link href="/courses/bpsc-72"><span><b>BPSC</b><small>72nd / 73rd</small></span><strong>₹29,000</strong></Link>
-          <p>Both pathways cover Prelims, Mains and Interview preparation.</p>
+
+        <div className="footer-column">
+          <b>COURSES</b>
+          <Link href="/courses/upsc-2027">UPSC 2027 · ₹56,000</Link>
+          <Link href="/courses/upsc-2028">UPSC 2028 · ₹56,000</Link>
+          <Link href="/courses/bpsc-72">72nd BPSC · ₹29,000</Link>
+          <Link href="/courses/bpsc-73">73rd BPSC · ₹29,000</Link>
+          <Link href="/courses" className="highlight">Compare all courses →</Link>
+        </div>
+
+        <div className="footer-column">
+          <b>ACADEMIC RESOURCES</b>
+          <Link href="/study">Free Study</Link>
+          <Link href="/quizzes">Free Quiz</Link>
+          <Link href="/pyq">UPSC & BPSC PYQs</Link>
+          <Link href="/faculty">Faculty</Link>
+          <Link href="/demo">Demo Class</Link>
+        </div>
+
+        <div className="footer-column">
+          <b>STUDENT SUPPORT</b>
+          <Link href="/ask">Ask Tutor</Link>
+          <Link href="/partner">Find Study Buddy</Link>
+          <Link href="/support">Support Desk</Link>
+          <Link href="/admissions">Admissions & Counselling</Link>
+          <Link href="/leaderboard">Results / Leaderboard</Link>
         </div>
       </div>
-      <div className="footer-bottom">
-        <div><b>OneShot GS</b><span>Academic preparation for serious UPSC & BPSC aspirants.</span></div>
-        <nav><Link href="/study">Free Study</Link><Link href="/quizzes">Free Quiz</Link><Link href="/pyq">PYQs</Link><Link href="/ask">Ask Tutor</Link><Link href="/partner">Study Buddy</Link><Link href="/#programs">Programs</Link></nav>
+
+      <div className="fee-band">
+        <div><span>UPSC COMPLETE PROGRAM</span><b>₹56,000</b><small>2027 / 2028 · Prelims + Mains + Interview</small></div>
+        <div><span>BPSC COMPLETE PROGRAM</span><b>₹29,000</b><small>72nd / 73rd · Prelims + Mains + Interview</small></div>
+        <p>Payment flow is temporarily unavailable while the backend team fixes the technical issue. Program information, demo class and free resources remain accessible.</p>
       </div>
+
+      <div className="footer-bottom"><div><b>OneShot GS</b><span>Academic preparation for serious UPSC & BPSC aspirants.</span></div><nav><Link href="/courses">Courses</Link><Link href="/demo">Demo</Link><Link href="/pyq">PYQs</Link><Link href="/study">Free Study</Link><Link href="/quizzes">Free Quiz</Link><Link href="/admissions">Admissions</Link></nav></div>
+
       <style>{`
-        .academic-footer{margin-top:46px;background:#172338;color:#edf1f6;padding:42px 18px 92px;border-top:4px solid #9f3e1b}.footer-inner{max-width:1080px;margin:0 auto;display:grid;grid-template-columns:1.35fr .65fr;gap:54px}.footer-label{font-size:8px;letter-spacing:.16em;font-weight:850;color:#dfb58e}.footer-intro h2{font-family:var(--font-display);font-size:clamp(28px,4vw,43px);line-height:1.03;letter-spacing:-.045em;max-width:700px;margin:9px 0 11px}.footer-intro p{max-width:720px;font-size:11px;line-height:1.7;color:#c8d1dd}.footer-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:17px}.footer-actions a{text-decoration:none;padding:9px 12px;border-radius:5px;background:#f4f1ea;color:#23344d;font-size:9.5px;font-weight:800}.footer-actions .secondary{background:transparent;color:#e2e8f0;border:1px solid rgba(255,255,255,.19)}.footer-actions .program{background:#9f3e1b;color:#fff}.program-table{border:1px solid rgba(255,255,255,.14);align-self:start}.table-head,.program-table>a{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:center;padding:11px 13px;border-bottom:1px solid rgba(255,255,255,.12)}.table-head{font-size:7px;letter-spacing:.13em;color:#9eacbd}.program-table>a{text-decoration:none;color:#fff}.program-table>a:hover{background:rgba(255,255,255,.045)}.program-table b,.program-table small{display:block}.program-table b{font-size:10px}.program-table small{font-size:8px;color:#abb7c6;margin-top:2px}.program-table strong{font-size:18px;font-family:var(--font-display)}.program-table>p{padding:10px 13px;font-size:8.5px;line-height:1.55;color:#aeb8c5}.footer-bottom{max-width:1080px;margin:30px auto 0;padding-top:18px;border-top:1px solid rgba(255,255,255,.1);display:flex;align-items:end;justify-content:space-between;gap:25px}.footer-bottom>div b,.footer-bottom>div span{display:block}.footer-bottom>div b{font-family:var(--font-display);font-size:13px}.footer-bottom>div span{font-size:8px;color:#9eabba;margin-top:3px}.footer-bottom nav{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:13px}.footer-bottom nav a{text-decoration:none;color:#bdc7d3;font-size:8.5px}.footer-bottom nav a:hover{color:#fff}
-        @media(max-width:760px){.academic-footer{padding-bottom:145px}.footer-inner{grid-template-columns:1fr;gap:28px}.footer-bottom{align-items:start;flex-direction:column}.footer-bottom nav{justify-content:flex-start}}
+        .site-footer{margin-top:48px;background:#172338;color:#edf1f6;padding:44px 18px 92px;border-top:4px solid #9f3e1b}.footer-main{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1.35fr .72fr .72fr .72fr;gap:36px}.footer-brand>span,.footer-column>b{font-size:7.5px;letter-spacing:.14em;font-weight:850;color:#dfb58e}.footer-brand h2{font-family:var(--font-display);font-size:clamp(27px,3.7vw,40px);line-height:1.04;letter-spacing:-.045em;margin:8px 0 10px;max-width:620px}.footer-brand p{font-size:9.5px;line-height:1.7;color:#c7d1dd;max-width:630px}.footer-ctas{display:flex;gap:7px;flex-wrap:wrap;margin-top:16px}.footer-ctas a{text-decoration:none;background:#f1ece5;color:#26364f;border-radius:4px;padding:9px 11px;font-size:8.5px;font-weight:850}.footer-ctas .warm{background:#a34821;color:#fff}.footer-column{display:flex;flex-direction:column;align-items:flex-start;gap:9px}.footer-column>b{margin-bottom:2px}.footer-column a{text-decoration:none;color:#c1ccd8;font-size:8.5px;line-height:1.3}.footer-column a:hover{color:#fff}.footer-column .highlight{color:#e6b991;font-weight:800}.fee-band{max-width:1100px;margin:30px auto 0;border:1px solid rgba(255,255,255,.13);display:grid;grid-template-columns:.8fr .8fr 1.4fr}.fee-band>div,.fee-band>p{padding:13px 15px;border-right:1px solid rgba(255,255,255,.11)}.fee-band>p{border-right:0;font-size:8px;line-height:1.6;color:#aeb9c6;display:flex;align-items:center}.fee-band span,.fee-band b,.fee-band small{display:block}.fee-band span{font-size:6.8px;letter-spacing:.1em;color:#dcae83;font-weight:850}.fee-band b{font-family:var(--font-display);font-size:20px;margin:2px 0}.fee-band small{font-size:7.3px;color:#aeb8c5}.footer-bottom{max-width:1100px;margin:27px auto 0;padding-top:17px;border-top:1px solid rgba(255,255,255,.1);display:flex;align-items:end;justify-content:space-between;gap:24px}.footer-bottom>div b,.footer-bottom>div span{display:block}.footer-bottom>div b{font-family:var(--font-display);font-size:12px}.footer-bottom>div span{font-size:7.5px;color:#9eabba;margin-top:3px}.footer-bottom nav{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:13px}.footer-bottom nav a{text-decoration:none;color:#b8c4d1;font-size:8px}@media(max-width:900px){.footer-main{grid-template-columns:1.3fr 1fr 1fr}.footer-column:last-child{grid-column:2/4}.fee-band{grid-template-columns:1fr 1fr}.fee-band>p{grid-column:1/3;border-top:1px solid rgba(255,255,255,.11)}}@media(max-width:680px){.site-footer{padding-bottom:100px}.footer-main{grid-template-columns:1fr 1fr;gap:28px}.footer-brand{grid-column:1/3}.footer-column:last-child{grid-column:auto}.footer-bottom{align-items:flex-start;flex-direction:column}.footer-bottom nav{justify-content:flex-start}}@media(max-width:430px){.footer-main{grid-template-columns:1fr}.footer-brand{grid-column:1}.fee-band{grid-template-columns:1fr}.fee-band>div,.fee-band>p{border-right:0;border-bottom:1px solid rgba(255,255,255,.11)}.fee-band>p{grid-column:1}.fee-band>p:last-child{border-bottom:0}}
       `}</style>
     </footer>
   );
