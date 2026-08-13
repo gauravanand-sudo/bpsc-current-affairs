@@ -6,7 +6,7 @@ import { FACULTY, PROGRAMS } from "@/lib/coachingData";
 const QUICK_LINKS = [
   { label: "UPSC PYQs", detail: "GS-I papers · 2014–2026", href: "/pyq" },
   { label: "Current Affairs", detail: "UPSC + BPSC study desk", href: "/ca" },
-  { label: "Free Quiz", detail: "Static GS + Current Affairs", href: "/quizzes" },
+  { label: "Talk to Us", detail: "Admissions · Helpdesk · Academic query", href: "/ask" },
   { label: "Free Study", detail: "NCERT + GS + Bihar GS", href: "/study" },
 ];
 
@@ -15,7 +15,7 @@ const RESOURCES = [
   { title: "Current Affairs", copy: "Source-backed Current Affairs desk for UPSC and BPSC preparation.", href: "/ca", tag: "CA" },
   { title: "Free Study", copy: "NCERT, General Studies, Bihar GS and revision resources.", href: "/study", tag: "GS" },
   { title: "Free Quiz", copy: "Current Affairs and static GS practice.", href: "/quizzes", tag: "MCQ" },
-  { title: "Ask Tutor", copy: "UPSC / BPSC concept and study-plan support.", href: "/ask", tag: "ASK" },
+  { title: "Talk to Us", copy: "Admissions, courses, payment help, academic queries and technical support.", href: "/ask", tag: "HELP" },
   { title: "Demo Class", copy: "View the available OneShot GS demo class before enrollment.", href: "/demo", tag: "DEMO" },
 ];
 
@@ -35,8 +35,8 @@ export default function HomePage() {
             <p>Two complete programs covering Foundation, Prelims, Mains and Interview preparation.</p>
             <div className={styles.heroActions}>
               <Link href="/courses" className={styles.primary}>View Courses</Link>
-              <Link href="/demo" className={styles.secondary}>Demo Class</Link>
               <Link href="/admissions" className={styles.secondary}>Admissions &amp; Fees</Link>
+              <Link href="/ask" className={styles.secondary}>Talk to Us</Link>
             </div>
           </div>
 
@@ -99,7 +99,7 @@ export default function HomePage() {
       <section className={styles.studentSection}>
         <div className={styles.shell}>
           <div className={styles.sectionHead}>
-            <div><span>STUDENT RESOURCES</span><h2>Study, practice and papers</h2></div>
+            <div><span>STUDENT RESOURCES</span><h2>Study, practice and helpdesk</h2></div>
           </div>
           <div className={styles.studentGrid}>
             {RESOURCES.map((item) => (
@@ -133,7 +133,7 @@ export default function HomePage() {
       <section className={styles.facultySection}>
         <div className={styles.shell}>
           <div className={styles.sectionHead}>
-            <div><span>FACULTY, MENTORS & GUIDANCE</span><h2>A specialist team for every exam stage</h2></div>
+            <div><span>FACULTY, MENTORS &amp; GUIDANCE</span><h2>A specialist team for every exam stage</h2></div>
             <Link href="/faculty" className={styles.textLink}>View all 13 profiles →</Link>
           </div>
           <div className={styles.facultyGrid}>
