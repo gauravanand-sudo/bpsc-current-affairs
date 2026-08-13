@@ -1,9 +1,9 @@
 import Link from "next/link";
 
 const QUIZ_TYPES = [
-  { href: "/quizzes/current", code: "CA", title: "Current Affairs", desc: "Month-wise practice to test retention, issue-linking and factual recall for UPSC / BPSC.", scope: "UPSC / BPSC", action: "Practice Current Affairs" },
-  { href: "/quizzes/static", code: "GS", title: "Static General Studies", desc: "Subject-wise questions across Polity, History, Geography, Economy, Science and Environment.", scope: "UPSC / BPSC", action: "Practice Static GS" },
-  { href: "/quizzes/pyq", code: "PYQ", title: "UPSC / BPSC PYQ Practice", desc: "Use the on-site PYQ taxonomy, official paper sources and targeted practice after each paper.", scope: "Previous papers", action: "Open PYQ Practice" },
+  { href: "/quizzes/current", code: "CA", title: "Current Affairs", desc: "30 live quizzes across January-June 2026, with five month-specific UPSC-level sets every month.", scope: "30 LIVE TESTS", action: "Practice Current Affairs" },
+  { href: "/quizzes/static", code: "GS", title: "Static General Studies", desc: "Eight complete subject tests across Polity, History, Geography, Economy, Science, Environment, Bihar and IR.", scope: "8 LIVE TESTS", action: "Practice Static GS" },
+  { href: "/quizzes/pyq", code: "PYQ", title: "UPSC / BPSC PYQ Practice", desc: "Four playable PYQ-pattern tests plus direct access to original UPSC and BPSC papers.", scope: "4 LIVE TESTS", action: "Open PYQ Practice" },
 ];
 
 const PRACTICE = [

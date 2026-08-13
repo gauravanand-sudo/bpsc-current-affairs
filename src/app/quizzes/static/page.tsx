@@ -1,70 +1,52 @@
 import Link from "next/link";
 import GlowLogo from "@/components/GlowLogo";
+import { STATIC_QUIZZES } from "@/lib/quizBank";
 
-const SUBJECTS = [
-  { key: "polity",      label: "Polity & Constitution",   emoji: "⚖️",  color: "#b86117" },
-  { key: "economy",     label: "Economy",                  emoji: "📊",  color: "#2d7a4f" },
-  { key: "history",     label: "History",                  emoji: "🏺",  color: "#5b4fcf" },
-  { key: "geography",   label: "Geography",                emoji: "🗺️", color: "#0e7490" },
-  { key: "environment", label: "Environment & Ecology",    emoji: "🌿",  color: "#15803d" },
-  { key: "st",          label: "Science & Technology",     emoji: "🔬",  color: "#6d28d9" },
-  { key: "bihar",       label: "Bihar Special",            emoji: "🏵️", color: "#c04a00" },
-  { key: "world",       label: "World Affairs",            emoji: "🌍",  color: "#1d4ed8" },
-];
+const PRESENTATION: Record<string, { emoji: string; color: string }> = {
+  polity: { emoji: "⚖️", color: "#b86117" },
+  economy: { emoji: "📊", color: "#2d7a4f" },
+  history: { emoji: "🏺", color: "#5b4fcf" },
+  geography: { emoji: "🗺️", color: "#0e7490" },
+  environment: { emoji: "🌿", color: "#15803d" },
+  st: { emoji: "🔬", color: "#6d28d9" },
+  bihar: { emoji: "🏵️", color: "#c04a00" },
+  world: { emoji: "🌍", color: "#1d4ed8" },
+};
 
 export default function StaticQuizPage() {
   return (
-    <main style={{ minHeight: "100vh", background: "var(--bg)", color: "var(--ink)" }}>
-      <div style={{ maxWidth: 860, margin: "0 auto", padding: "16px 16px 0", textAlign: "center", position: "relative" }}>
-        <Link href="/quizzes" style={{ position: "absolute", right: 16, top: 20, fontSize: 12.5, fontWeight: 600, color: "var(--muted)", textDecoration: "none" }}>← Back</Link>
-        <GlowLogo style={{ margin: "0 auto 6px" }} />
-        <h1 style={{ fontFamily: "var(--font-display)", fontWeight: 800, fontSize: 20, letterSpacing: "-0.025em", color: "var(--ink-strong)", marginBottom: 4 }}>Static GK Quiz</h1>
-        <p style={{ fontSize: 12.5, color: "var(--muted)", fontWeight: 600, letterSpacing: "0.01em" }}>Only what scores. Zero fluff, zero filler.</p>
-      </div>
+    <main className="static-page">
+      <section className="static-hero">
+        <div>
+          <Link href="/quizzes" className="back">← Quiz Hub</Link>
+          <GlowLogo style={{ margin: "0 auto 8px" }} />
+          <span>STATIC GS · UPSC / BPSC FOUNDATION</span>
+          <h1>Eight subjects. No dead cards.</h1>
+          <p>Every subject now opens a complete timed test with statement-based questions, −⅓ negative marking, explanations and topic-wise performance analysis.</p>
+        </div>
+      </section>
 
-      <section style={{ maxWidth: 860, margin: "0 auto", padding: "14px 16px 72px" }}>
-        <div className="subjects-grid">
-          {SUBJECTS.map((sub) => (
-            <div key={sub.key} className="subject-card" style={{ "--c": sub.color } as React.CSSProperties}>
-              <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 12 }}>
-                <span style={{
-                  fontSize: 26, width: 48, height: 48,
-                  borderRadius: 13, display: "grid", placeItems: "center",
-                  background: `color-mix(in srgb, ${sub.color} 10%, transparent)`,
-                  border: `1px solid color-mix(in srgb, ${sub.color} 20%, transparent)`,
-                  flexShrink: 0,
-                }}>{sub.emoji}</span>
-                <p style={{
-                  fontFamily: "var(--font-display)",
-                  fontSize: 16, fontWeight: 800,
-                  color: "var(--ink-strong)", letterSpacing: "-0.025em",
-                }}>{sub.label}</p>
-              </div>
-              <span style={{
-                fontSize: 12.5, fontWeight: 700,
-                color: sub.color, opacity: 0.55,
-                letterSpacing: "0.04em",
-              }}>Coming soon</span>
-            </div>
-          ))}
+      <section className="subject-shell">
+        <div className="subject-grid">
+          {STATIC_QUIZZES.map((quiz) => {
+            const present = PRESENTATION[quiz.slug];
+            return (
+              <Link key={quiz.slug} href={`/quizzes/static/${quiz.slug}/quiz`} className="subject-card" style={{ "--c": present.color } as React.CSSProperties}>
+                <div className="subject-top">
+                  <span>{present.emoji}</span>
+                  <small>{quiz.quiz.questions.length} QUESTIONS · {Math.ceil(quiz.quiz.duration / 60)} MIN</small>
+                </div>
+                <h2>{quiz.title}</h2>
+                <p>{quiz.description}</p>
+                <div><b>Start UPSC-level test →</b><i>LIVE</i></div>
+              </Link>
+            );
+          })}
         </div>
       </section>
 
       <style>{`
-        .subjects-grid {
-          display: grid; grid-template-columns: 1fr; gap: 12px;
-        }
-        @media (min-width: 500px) { .subjects-grid { grid-template-columns: 1fr 1fr; gap: 13px; } }
-        @media (min-width: 780px) { .subjects-grid { grid-template-columns: 1fr 1fr 1fr 1fr; gap: 14px; } }
-        .subject-card {
-          background: var(--card); border: 1px solid var(--line);
-          border-radius: 20px; padding: 20px 18px 16px;
-          transition: transform 0.15s ease, box-shadow 0.15s ease;
-          cursor: default;
-        }
-        @media (hover: hover) {
-          .subject-card:hover { transform: translateY(-3px); box-shadow: 0 10px 32px rgba(120,80,30,0.10); }
-        }
+        .static-page{min-height:100vh;background:#f7f5f0;color:#172338}.static-hero{padding:38px 16px 32px;background:linear-gradient(180deg,#fff,#eceff2);border-bottom:1px solid #d5d9df}.static-hero>div{width:min(860px,100%);margin:auto;text-align:center;position:relative}.back{position:absolute;left:0;top:0;text-decoration:none;font-size:11px;font-weight:750;color:#687585}.static-hero span{font-size:8px;letter-spacing:.18em;font-weight:900;color:#9b4b29}.static-hero h1{font-family:var(--font-display);font-size:clamp(38px,6vw,61px);line-height:.97;letter-spacing:-.055em;margin:10px 0}.static-hero p{max-width:650px;margin:auto;font-size:12px;line-height:1.75;color:#5f6a78}.subject-shell{width:min(1050px,calc(100% - 32px));margin:auto;padding:42px 0 76px}.subject-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.subject-card{text-decoration:none;color:#172338;background:#fff;border:1px solid #dbd8d2;border-top:3px solid var(--c);border-radius:13px;padding:19px;min-height:235px;display:flex;flex-direction:column;transition:.18s ease}.subject-card:hover{transform:translateY(-4px);box-shadow:0 14px 34px rgba(30,46,66,.09)}.subject-top{display:flex;justify-content:space-between;align-items:center;gap:10px}.subject-top>span{width:44px;height:44px;display:grid;place-items:center;border-radius:12px;background:color-mix(in srgb,var(--c) 10%,white);font-size:22px}.subject-top small{font-size:7px;line-height:1.4;text-align:right;letter-spacing:.08em;color:#7c8794}.subject-card h2{font-family:var(--font-display);font-size:20px;line-height:1.12;letter-spacing:-.03em;margin:18px 0 7px}.subject-card p{font-size:9.5px;line-height:1.65;color:#687482;flex:1}.subject-card>div:last-child{display:flex;justify-content:space-between;align-items:center;margin-top:18px}.subject-card b{font-size:9px;color:var(--c)}.subject-card i{font-style:normal;font-size:7px;font-weight:900;color:#15803d;background:#ecf8ef;padding:4px 7px;border-radius:20px}@media(max-width:850px){.subject-grid{grid-template-columns:1fr 1fr}}@media(max-width:520px){.back{position:static;display:block;margin-bottom:12px}.subject-grid{grid-template-columns:1fr}.subject-shell{width:calc(100% - 24px)}}
       `}</style>
     </main>
   );

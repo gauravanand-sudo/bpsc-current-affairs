@@ -18,27 +18,38 @@ export default function QuizSetCard({
   month,
   num,
   cats,
+  questionCount = 5,
+  durationMinutes = 10,
+  studyHref,
+  studyLabel = "Study the set first →",
 }: {
   month: string;
   num: number;
   cats: string[];
+  questionCount?: number;
+  durationMinutes?: number;
+  studyHref?: string;
+  studyLabel?: string;
 }) {
   const [out150, setOut150] = useState<number | null>(null);
 
   useEffect(() => {
-    try {
-      const raw = localStorage.getItem(`bpsc_quiz_${month}_set-${num}-english`);
-      if (raw) {
-        const parsed = JSON.parse(raw) as {
-          bestScore?: number; maxScore?: number; outOf150?: number;
-        };
-        if (parsed.bestScore !== undefined && parsed.maxScore) {
-          setOut150(Math.round((parsed.bestScore / parsed.maxScore) * 150 * 10) / 10);
-        } else if (parsed.outOf150 !== undefined) {
-          setOut150(parsed.outOf150);
+    const timer = window.setTimeout(() => {
+      try {
+        const raw = localStorage.getItem(`bpsc_quiz_${month}_set-${num}-english`);
+        if (raw) {
+          const parsed = JSON.parse(raw) as {
+            bestScore?: number; maxScore?: number; outOf150?: number;
+          };
+          if (parsed.bestScore !== undefined && parsed.maxScore) {
+            setOut150(Math.round((parsed.bestScore / parsed.maxScore) * 150 * 10) / 10);
+          } else if (parsed.outOf150 !== undefined) {
+            setOut150(parsed.outOf150);
+          }
         }
-      }
-    } catch { /* ignore */ }
+      } catch { /* ignore */ }
+    }, 0);
+    return () => window.clearTimeout(timer);
   }, [month, num]);
 
   const isDone = out150 !== null;
@@ -146,15 +157,15 @@ export default function QuizSetCard({
             borderRadius: 10, padding: "10px 14px", textDecoration: "none",
           }}>
             <span style={{ fontSize: 13, fontWeight: 700, color: "var(--ink-strong)" }}>Start Quiz →</span>
-            <span style={{ fontSize: 12, fontWeight: 600, color: "var(--accent)" }}>30 min</span>
+            <span style={{ fontSize: 12, fontWeight: 600, color: "var(--accent)" }}>{questionCount} Q · {durationMinutes} min</span>
           </Link>
         )}
 
-        <Link href={`/ca/${month}/set-${num}-english`} style={{
+        <Link href={studyHref ?? `/ca/${month}/set-${num}-english`} style={{
           fontSize: 11, color: "var(--muted)", textDecoration: "none",
           textAlign: "center", letterSpacing: "0.04em",
         }}>
-          📖 Study the set first →
+          📖 {studyLabel}
         </Link>
       </div>
     </div>

@@ -1,38 +1,51 @@
 import Link from "next/link";
 import { OFFICIAL_LINKS } from "@/lib/coachingData";
-
-const UPSC_SETS = [
-  ["UPSC Prelims 2012–2016", "5 papers · GS I + CSAT", "Polity · History · Geography · Economy · Environment · Science"],
-  ["UPSC Prelims 2017–2021", "5 papers · GS I + CSAT", "Statement logic · elimination · mapping · institutions · ecology"],
-  ["UPSC Prelims 2022–2026", "5 papers · GS I + CSAT", "Recent issue-linked static · conceptual elimination · mapping"],
-  ["UPSC Mains 2011–2015", "Essay + GS I-IV", "Demand words · foundational themes · answer structure"],
-  ["UPSC Mains 2016–2020", "Essay + GS I-IV", "Governance · society · economy · security · ethics"],
-  ["UPSC Mains 2021–2025", "Essay + GS I-IV", "Contemporary application · interlinking · judgement · ethics"],
-];
-
-const WORKFLOW = [
-  ["1", "Attempt", "Open the original paper and solve before reading analysis."],
-  ["2", "Tag", "Year → paper → subject → topic → subtopic → demand."],
-  ["3", "Audit", "Mark concept, recall, elimination, writing or time-management errors."],
-  ["4", "Revise", "Return to the exact weak area in Free Study."],
-  ["5", "Retest", "Use Static GS, Current Affairs or another PYQ after revision."],
-];
+import { PYQ_QUIZZES } from "@/lib/quizBank";
 
 export default function PYQQuizPage() {
   return (
-    <main className="page">
-      <section className="hero"><div className="shell"><span className="overline">UPSC / BPSC PYQ PRACTICE</span><h1>Practice previous papers through a classification loop.</h1><p>The main PYQ desk now lives on OneShot GS. Use it to read paraphrased question abstracts, understand the taxonomy and move between original papers, revision and quizzes without dead “coming soon” cards.</p><div className="hero-actions"><Link href="/pyq">Open PYQ Intelligence Desk</Link><Link href="/quizzes/static" className="outline">Static GS Quiz</Link><Link href="/quizzes/current" className="outline">Current Affairs Quiz</Link></div></div></section>
+    <main className="pyq-page">
+      <section className="pyq-hero">
+        <div className="shell">
+          <Link href="/quizzes" className="back">← Quiz Hub</Link>
+          <span>UPSC / BPSC PYQ-ORIENTED PRACTICE</span>
+          <h1>Practice the patterns previous papers repeatedly reward.</h1>
+          <p>These are original, paraphrased drills built from recurring PYQ concepts—not copied paper text. Attempt them under negative marking, then use the official archives for exact questions.</p>
+          <div className="hero-actions">
+            <a href="#tests">Start PYQ-pattern tests →</a>
+            <Link href="/pyq" className="outline">Open PYQ Intelligence Desk</Link>
+          </div>
+        </div>
+      </section>
 
-      <section className="shell section"><header><div><span className="overline">15-YEAR UPSC PRACTICE MAP</span><h2>Six study blocks covering Prelims and Mains.</h2></div><p>Use the on-site PYQ desk for classification, then verify exact wording in the official paper.</p></header><div className="grid">{UPSC_SETS.map(([title,meta,topics]) => <article key={title}><span>UPSC CSE</span><h3>{title}</h3><b>{meta}</b><p>{topics}</p><div className="card-actions"><Link href="/pyq">Study on OneShot GS →</Link><a href={OFFICIAL_LINKS.upscPyqArchive} target="_blank" rel="noopener noreferrer">Official paper ↗</a></div></article>)}</div></section>
+      <section id="tests" className="shell test-section">
+        <header><div><span>4 LIVE TESTS</span><h2>UPSC concepts + Bihar-specific traps.</h2></div><p>Each set uses the same engine as Current Affairs: timer, navigator, −⅓ marking, saved best attempt and detailed review.</p></header>
+        <div className="test-grid">
+          {PYQ_QUIZZES.map((quiz, index) => (
+            <Link key={quiz.slug} href={`/quizzes/pyq/${quiz.slug}/quiz`}>
+              <div className="number">0{index + 1}</div>
+              <small>{quiz.slug.startsWith("bpsc") ? "BPSC PRELIMS" : "UPSC PRELIMS"}</small>
+              <h3>{quiz.title.replace("PYQ Patterns - ", "")}</h3>
+              <p>{quiz.description}</p>
+              <div><b>{quiz.quiz.questions.length} questions · {Math.ceil(quiz.quiz.duration / 60)} min</b><strong>Start →</strong></div>
+            </Link>
+          ))}
+        </div>
+      </section>
 
-      <section className="bpsc-wrap"><div className="shell section"><header className="light"><div><span className="overline light-text">73RD BPSC PREPARATION</span><h2>Use previous CCE papers as a Bihar-specific trend map.</h2></div><p>BPSC is integrated alongside UPSC: previous CCE papers, Bihar-specific themes, General Studies patterns and Mains answer demands.</p></header><div className="bpsc-grid"><article><span>BPSC PRELIMS</span><h3>CCE objective-paper analysis</h3><p>Classify History, Geography, Polity, Economy, Science, Current Affairs and Bihar-specific questions.</p><Link href="/pyq#bpsc">Study BPSC PYQs →</Link></article><article><span>BPSC MAINS</span><h3>Demand + Bihar enrichment</h3><p>Tag directive words, syllabus units, Bihar examples, data and ideal answer structure.</p><Link href="/pyq#bpsc">Open Mains study desk →</Link></article><article><span>OFFICIAL SOURCE</span><h3>BPSC Question Booklets</h3><p>Use the Commission archive whenever you need the exact original wording.</p><a href={OFFICIAL_LINKS.bpscQuestionBooklets} target="_blank" rel="noopener noreferrer">Official BPSC booklets ↗</a></article></div></div></section>
-
-      <section className="shell section workflow"><div><span className="overline">THE PYQ LOOP</span><h2>Every paper should produce a revision list.</h2></div><div className="steps">{WORKFLOW.map(([n,title,copy]) => <article key={n}><b>{n}</b><span>{title}</span><p>{copy}</p></article>)}</div></section>
-
-      <section className="shell final"><div><span className="overline light-text">GUIDED PYQ PREPARATION</span><h2>UPSC 2027 and 73rd BPSC build PYQs into the full course sequence.</h2></div><div className="hero-actions"><Link href="/courses" className="warm">View Courses →</Link><Link href="/study" className="outline-dark">Free Study</Link></div></section>
+      <section className="official">
+        <div className="shell official-grid">
+          <div><span>EXACT ORIGINAL WORDING</span><h2>Always verify from the commission paper.</h2><p>The practice sets teach demand and elimination. The official archives remain the source for original question wording.</p></div>
+          <div>
+            <a href={OFFICIAL_LINKS.upscPyqArchive} target="_blank" rel="noopener noreferrer">Official UPSC papers ↗</a>
+            <a href={OFFICIAL_LINKS.bpscQuestionBooklets} target="_blank" rel="noopener noreferrer">Official BPSC booklets ↗</a>
+            <Link href="/pyq">OneShot GS PYQ desk →</Link>
+          </div>
+        </div>
+      </section>
 
       <style>{`
-        .page{min-height:100vh;background:#f7f5f0;color:#172338}.shell{width:min(1060px,calc(100% - 32px));margin:0 auto}.overline{font-size:8px;letter-spacing:.16em;font-weight:850;color:#98502e}.light-text{color:#e1b68f}.hero{padding:55px 0 42px;background:linear-gradient(180deg,#fdfcf9,#efebe4);border-bottom:1px solid #d9d5ce}.hero h1{font-family:var(--font-display);font-size:clamp(40px,6vw,64px);line-height:.96;letter-spacing:-.058em;max-width:840px;margin:9px 0 14px}.hero p{font-size:12px;line-height:1.75;color:#5c6876;max-width:740px}.hero-actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:18px}.hero-actions a{padding:10px 13px;background:#21324d;color:#fff;text-decoration:none;border-radius:5px;font-size:9px;font-weight:850}.hero-actions .outline{background:#fff;color:#21324d;border:1px solid #d1d6dc}.section{padding:48px 0}.section header{display:flex;justify-content:space-between;align-items:end;gap:25px;margin-bottom:20px}.section header h2,.workflow h2{font-family:var(--font-display);font-size:clamp(28px,4vw,40px);line-height:1.04;letter-spacing:-.043em;margin-top:6px}.section header>p{max-width:390px;text-align:right;font-size:9.5px;line-height:1.6;color:#697583}.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.grid article{background:#fff;border:1px solid #d9d6d0;padding:16px;display:flex;flex-direction:column;min-height:205px}.grid article>span,.bpsc-grid article>span{font-size:7px;letter-spacing:.09em;color:#99502e;font-weight:850}.grid h3,.bpsc-grid h3{font-family:var(--font-display);font-size:18px;line-height:1.12;margin:7px 0}.grid b{font-size:8px;color:#40536a}.grid p,.bpsc-grid p{font-size:8.2px;line-height:1.6;color:#687482;flex:1}.card-actions{display:flex;gap:6px;margin-top:12px}.card-actions a{flex:1;text-align:center;text-decoration:none;background:#21324d;color:#fff;padding:9px 7px;border-radius:4px;font-size:7.5px;font-weight:850}.card-actions a:last-child{background:#fff;color:#21324d;border:1px solid #d1d6dc}.bpsc-wrap{background:#172338;color:#fff}.light>p{color:#c6d0db!important}.bpsc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.bpsc-grid article{background:rgba(255,255,255,.045);border:1px solid rgba(255,255,255,.14);padding:16px;display:flex;flex-direction:column}.bpsc-grid article>span{color:#e1b68f}.bpsc-grid p{color:#c3ceda}.bpsc-grid a{display:inline-block;margin-top:12px;text-decoration:none;background:#f0ebe4;color:#26364f;padding:9px;text-align:center;font-size:7.7px;font-weight:850}.workflow{display:grid;grid-template-columns:.65fr 1.35fr;gap:30px;align-items:start}.steps{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}.steps article{background:#fff;border:1px solid #d9d6d0;padding:13px}.steps b{font-family:Georgia,serif;color:#a34821;font-size:18px}.steps span{display:block;font-family:var(--font-display);font-size:13px;margin:6px 0 3px}.steps p{font-size:7.8px;line-height:1.5;color:#6b7785}.final{margin-bottom:40px;padding:26px;background:#26364f;color:#fff;display:flex;justify-content:space-between;gap:22px;align-items:center}.final h2{font-family:var(--font-display);font-size:clamp(25px,4vw,38px);line-height:1.04;letter-spacing:-.04em;margin-top:5px}.hero-actions .warm{background:#a34821}.hero-actions .outline-dark{background:transparent;border:1px solid rgba(255,255,255,.24)}@media(max-width:800px){.grid,.bpsc-grid{grid-template-columns:1fr 1fr}.section header{flex-direction:column;align-items:flex-start;gap:7px}.section header>p{text-align:left}.workflow{grid-template-columns:1fr}.steps{grid-template-columns:1fr 1fr}.final{flex-direction:column;align-items:flex-start}}@media(max-width:520px){.grid,.bpsc-grid,.steps{grid-template-columns:1fr}.hero{padding:40px 0 30px}.final{width:calc(100% - 24px)}}
+        .pyq-page{min-height:100vh;background:#f7f5f0;color:#172338}.shell{width:min(1020px,calc(100% - 32px));margin:auto}.pyq-hero{padding:55px 0 43px;background:linear-gradient(135deg,#15233a,#263d60);color:#fff}.pyq-hero .shell{position:relative}.back{position:absolute;right:0;top:0;color:#bcc9d9;text-decoration:none;font-size:10px}.pyq-hero span,.test-section header span,.official span{font-size:8px;letter-spacing:.18em;font-weight:900;color:#e2b88e}.pyq-hero h1{font-family:var(--font-display);font-size:clamp(40px,6vw,65px);line-height:.96;letter-spacing:-.055em;max-width:870px;margin:10px 0 15px}.pyq-hero p{max-width:720px;color:#c8d2df;font-size:11.5px;line-height:1.75}.hero-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:21px}.hero-actions a{background:#a64922;color:#fff;padding:11px 14px;border-radius:6px;text-decoration:none;font-size:9px;font-weight:850}.hero-actions .outline{background:transparent;border:1px solid rgba(255,255,255,.24)}.test-section{padding:48px 0 58px}.test-section header{display:flex;justify-content:space-between;align-items:end;gap:30px;margin-bottom:20px}.test-section header span{color:#9b4e2b}.test-section h2,.official h2{font-family:var(--font-display);font-size:clamp(29px,4vw,42px);letter-spacing:-.045em;line-height:1.03;margin-top:6px}.test-section header>p{max-width:380px;text-align:right;font-size:10px;line-height:1.65;color:#687482}.test-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px}.test-grid>a{background:#fff;border:1px solid #d9d6d0;border-radius:11px;padding:21px;text-decoration:none;color:#172338;display:grid;grid-template-columns:50px 1fr;column-gap:15px;transition:.15s}.test-grid>a:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(27,43,63,.08)}.number{grid-row:1/5;font-family:Georgia,serif;font-size:30px;color:#a24b27;border-right:1px solid #e2ddd6}.test-grid small{font-size:7px;letter-spacing:.1em;color:#9a4e2c;font-weight:900}.test-grid h3{font-family:var(--font-display);font-size:20px;margin:6px 0}.test-grid p{font-size:9px;line-height:1.65;color:#697582}.test-grid>a>div:last-child{display:flex;justify-content:space-between;margin-top:16px;gap:10px}.test-grid b,.test-grid strong{font-size:8px}.test-grid b{color:#7c8692}.test-grid strong{color:#9d4825}.official{background:#172338;color:#fff;padding:42px 0}.official-grid{display:grid;grid-template-columns:1fr 330px;align-items:center;gap:38px}.official p{font-size:10px;line-height:1.7;color:#c5d0dc;margin-top:9px}.official-grid>div:last-child{display:grid;gap:8px}.official-grid a{display:block;text-align:center;text-decoration:none;padding:11px;background:#f3eee8;color:#26364f;font-size:9px;font-weight:850;border-radius:5px}@media(max-width:720px){.test-section header{flex-direction:column;align-items:flex-start}.test-section header>p{text-align:left}.test-grid,.official-grid{grid-template-columns:1fr}}@media(max-width:500px){.test-grid{grid-template-columns:1fr}.back{position:static;display:block;margin-bottom:15px}.shell{width:calc(100% - 24px)}}
       `}</style>
     </main>
   );

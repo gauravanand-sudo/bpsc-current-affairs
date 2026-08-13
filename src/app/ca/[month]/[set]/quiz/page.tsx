@@ -2,6 +2,7 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import Link from "next/link";
 import QuizEngine, { type QuizData, type QuizQuestion } from "@/components/QuizEngine";
+import { getCurrentAffairsQuiz } from "@/lib/quizBank";
 
 /* ─── Format normalizer ──────────────────────────────────────────
    Accepts two shapes from JSON:
@@ -95,21 +96,13 @@ function quizFileName(setParam: string): string {
   return setParam + "-quiz.json";
 }
 
-function monthLabel(ym: string) {
-  const [y, m] = ym.split("-");
-  return new Date(+y, +m - 1, 1).toLocaleDateString("en-IN", {
-    month: "long",
-    year: "numeric",
-  });
-}
-
 function setLabel(month: string, s: string) {
   const monthName = new Date(+month.split("-")[0], +month.split("-")[1] - 1, 1).toLocaleDateString("en-IN", {
     month: "long",
   });
   const setNum = s.match(/(\d+)/)?.[1] ?? "1";
   const lang = s.endsWith("-english") ? " English" : s.endsWith("-hindi") ? " Hindi" : "";
-  return `${monthName} - Quiz Set ${setNum}/15${lang}`;
+  return `${monthName} - Quiz Set ${setNum}/5${lang}`;
 }
 
 export default async function QuizPage({
@@ -124,14 +117,16 @@ export default async function QuizPage({
   const fileName = quizFileName(set);
   const filePath = path.join(process.cwd(), "data", "ca", month, fileName);
 
-  let quizData: QuizData | null = null;
-  try {
-    const raw = await fs.readFile(filePath, "utf8");
-    const parsed = JSON.parse(raw);
-    const title = setLabel(month, set);
-    quizData = normalizeQuiz(parsed, title);
-  } catch {
-    // file not available yet or unparseable
+  let quizData: QuizData | null = getCurrentAffairsQuiz(month, set);
+  if (!quizData) {
+    try {
+      const raw = await fs.readFile(filePath, "utf8");
+      const parsed = JSON.parse(raw);
+      const title = setLabel(month, set);
+      quizData = normalizeQuiz(parsed, title);
+    } catch {
+      // file not available yet or unparseable
+    }
   }
 
   /* ── Quiz not ready ───────────────────────────────────────── */
@@ -193,6 +188,15 @@ export default async function QuizPage({
 
   /* ── Quiz ready ───────────────────────────────────────────── */
   return (
-    <QuizEngine data={quizData} month={month} setName={set} reviewMode={resolvedSearchParams?.review === "best"} />
+    <QuizEngine
+      data={quizData}
+      month={month}
+      setName={set}
+      reviewMode={resolvedSearchParams?.review === "best"}
+      libraryHref="/quizzes/current"
+      libraryLabel="All Monthly Quizzes"
+      studyHref="/ca"
+      studyLabel="Current Affairs Desk →"
+    />
   );
 }

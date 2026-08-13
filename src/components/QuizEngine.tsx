@@ -27,7 +27,7 @@ export type QuizData = {
 type Answers = Record<number, number>;
 
 const LABELS = ["A", "B", "C", "D"];
-const BPSC_TOTAL = 150;
+const NORMALIZED_TOTAL = 150;
 const ESTIMATED_POOL = 500000;
 
 type TopicBucket = {
@@ -54,7 +54,7 @@ function calcResult(questions: QuizQuestion[], answers: Answers, neg: number) {
   const score    = Math.max(0, Math.round(raw * 100) / 100);
   const rawScore = Math.round(raw * 100) / 100;
   const pct      = questions.length ? (score / questions.length) * 100 : 0;
-  const outOf150 = Math.round((raw / questions.length) * BPSC_TOTAL * 10) / 10;
+  const outOf150 = Math.round((raw / questions.length) * NORMALIZED_TOTAL * 10) / 10;
   return { score, rawScore, pct, outOf150, correct, wrong, unattempted };
 }
 
@@ -132,8 +132,19 @@ function coachSummary(args: {
 /* ─── QuizEngine ────────────────────────────────────────────── */
 export default function QuizEngine({
   data, month, setName, reviewMode = false,
+  libraryHref = "/ca",
+  libraryLabel = "All Sets",
+  studyHref,
+  studyLabel = "Revise Cards →",
 }: {
-  data: QuizData; month: string; setName: string; reviewMode?: boolean;
+  data: QuizData;
+  month: string;
+  setName: string;
+  reviewMode?: boolean;
+  libraryHref?: string;
+  libraryLabel?: string;
+  studyHref?: string;
+  studyLabel?: string;
 }) {
   const { questions, negativeMarking, cutoff, duration } = data;
   const total = questions.length;
@@ -267,7 +278,6 @@ export default function QuizEngine({
       timeTaken: elapsed,
       answers: answersRef.current,
     });
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cutoff, data.title, month, negativeMarking, questions, setName, total]);
 
   useEffect(() => {
@@ -340,11 +350,12 @@ export default function QuizEngine({
   }
 
   function selectOption(idx: number) {
-    setAnswers(prev =>
-      prev[current] === idx
-        ? (({ [current]: _, ...rest }) => rest)(prev)
-        : { ...prev, [current]: idx }
-    );
+    setAnswers(prev => {
+      if (prev[current] !== idx) return { ...prev, [current]: idx };
+      const next = { ...prev };
+      delete next[current];
+      return next;
+    });
     setFlash(idx);
     setTimeout(() => setFlash(null), 180);
   }
@@ -352,7 +363,8 @@ export default function QuizEngine({
   function toggleFlag() {
     setFlagged(prev => {
       const n = new Set(prev);
-      n.has(current) ? n.delete(current) : n.add(current);
+      if (n.has(current)) n.delete(current);
+      else n.add(current);
       return n;
     });
   }
@@ -362,11 +374,13 @@ export default function QuizEngine({
     const r = calcResult(questions, answers, negativeMarking);
     return (
       <ResultScreen
-        result={r} qualified={r.score >= cutoff} cutoff={cutoff}
-        bpscCutoff={Math.round((cutoff / total) * BPSC_TOTAL)}
+        result={r} qualified={r.score >= cutoff}
+        scaledCutoff={Math.round((cutoff / total) * NORMALIZED_TOTAL)}
         timeTaken={timeTaken} questions={questions} answers={answers}
         total={total} showReview={showReview} setShowReview={setShowReview}
-        negativeMarking={negativeMarking} month={month} setName={setName}
+        negativeMarking={negativeMarking} setName={setName}
+        libraryHref={libraryHref} libraryLabel={libraryLabel}
+        studyHref={studyHref} studyLabel={studyLabel}
       />
     );
   }
@@ -798,15 +812,18 @@ export default function QuizEngine({
 
 /* ─── Result Screen ─────────────────────────────────────────── */
 function ResultScreen({
-  result, qualified, cutoff, bpscCutoff, timeTaken,
+  result, qualified, scaledCutoff, timeTaken,
   questions, answers, total, showReview, setShowReview,
-  negativeMarking, month, setName,
+  negativeMarking, setName,
+  libraryHref, libraryLabel, studyHref, studyLabel,
 }: {
   result: ReturnType<typeof calcResult>;
-  qualified: boolean; cutoff: number; bpscCutoff: number;
+  qualified: boolean; scaledCutoff: number;
   timeTaken: number; questions: QuizQuestion[]; answers: Answers;
   total: number; showReview: boolean; setShowReview: (v: boolean) => void;
-  negativeMarking: number; month: string; setName: string;
+  negativeMarking: number; setName: string;
+  libraryHref: string; libraryLabel: string;
+  studyHref?: string; studyLabel: string;
 }) {
   const { score, pct, outOf150, correct, wrong, unattempted, rawScore } = result;
   const col = pct >= 70 ? "#16a34a" : pct >= 50 ? "#d97706" : "#dc2626";
@@ -882,14 +899,14 @@ function ResultScreen({
               <span style={{ fontSize: 16, color: "var(--muted)", fontWeight: 400 }}> / 150</span>
             </p>
             <p style={{ fontSize: 13, color: "var(--ink-soft)", marginBottom: 4 }}>
-              Scaled to BPSC 150-question paper
+              Normalized to a 150-mark practice scale
             </p>
             <p style={{ fontSize: 12, color: "var(--muted)" }}>
-              Typical BPSC cutoff ≈ <strong style={{ color: "var(--ink-soft)" }}>{bpscCutoff}/150</strong>
+              Qualifying benchmark ≈ <strong style={{ color: "var(--ink-soft)" }}>{scaledCutoff}/150</strong>
               &nbsp;·&nbsp;
-              {outOf150 >= bpscCutoff
-                ? <span style={{ color: "#16a34a", fontWeight: 600 }}>✓ Above cutoff</span>
-                : <span style={{ color: "#dc2626", fontWeight: 600 }}>✗ Below cutoff</span>
+              {outOf150 >= scaledCutoff
+                ? <span style={{ color: "#16a34a", fontWeight: 600 }}>✓ Above benchmark</span>
+                : <span style={{ color: "#dc2626", fontWeight: 600 }}>✗ Below benchmark</span>
               }
             </p>
           </div>
@@ -1054,7 +1071,7 @@ function ResultScreen({
             🏆 Leaderboard
           </Link>
           <Link
-            href={`/ask?q=I+just+finished+a+BPSC+quiz+on+${encodeURIComponent(setName.replace(/-/g, " "))}+and+scored+${score.toFixed(1)}%25.+Help+me+review+my+weak+areas.`}
+            href={`/ask?q=I+just+finished+a+GS+quiz+on+${encodeURIComponent(setName.replace(/-/g, " "))}+and+scored+${score.toFixed(1)}%25.+Help+me+review+my+weak+areas.`}
             style={{
               flex: 1, minWidth: 140, padding: "13px 16px", borderRadius: 11,
               background: "linear-gradient(135deg, rgba(192,96,16,0.1), rgba(217,119,6,0.08))",
@@ -1081,21 +1098,23 @@ function ResultScreen({
           >
             {showReview ? "Hide Review" : "Review All Questions →"}
           </button>
+          {studyHref && (
+            <Link
+              href={studyHref}
+              style={{
+                flex: 1, minWidth: 120, padding: "11px", borderRadius: 11,
+                border: "1px solid var(--line-hi)",
+                background: "var(--card)", color: "var(--ink-soft)",
+                fontSize: 13, fontWeight: 600, textDecoration: "none",
+                textAlign: "center", fontFamily: "var(--font-display)",
+                display: "block",
+              }}
+            >
+              {studyLabel}
+            </Link>
+          )}
           <Link
-            href={`/ca/${month}/${setName}`}
-            style={{
-              flex: 1, minWidth: 120, padding: "11px", borderRadius: 11,
-              border: "1px solid var(--line-hi)",
-              background: "var(--card)", color: "var(--ink-soft)",
-              fontSize: 13, fontWeight: 600, textDecoration: "none",
-              textAlign: "center", fontFamily: "var(--font-display)",
-              display: "block",
-            }}
-          >
-            Revise Cards →
-          </Link>
-          <Link
-            href="/ca"
+            href={libraryHref}
             style={{
               flex: 1, minWidth: 100, padding: "11px", borderRadius: 11,
               border: "1px solid var(--line-hi)",
@@ -1105,7 +1124,7 @@ function ResultScreen({
               display: "block",
             }}
           >
-            All Sets
+            {libraryLabel}
           </Link>
         </div>
 
