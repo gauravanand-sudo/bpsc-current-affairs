@@ -1,98 +1,185 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { OFFICIAL_LINKS } from "@/lib/coachingData";
 
-const YEARS = Array.from({ length: 15 }, (_, i) => 2026 - i);
+const PAPERS: Record<number, { gs1: string; gs2: string; source: "UPSC" | "Archive mirror" }> = {
+  2026: {
+    gs1: "https://www.upsc.gov.in/sites/default/files/QP_CSP_2026_GENERAL_STUDIES_PAPER-I_25052026.pdf",
+    gs2: "https://www.upsc.gov.in/sites/default/files/QP_CSP_2026_GENERAL_STUDIES_PAPER-II_25052026.pdf",
+    source: "UPSC",
+  },
+  2025: {
+    gs1: "https://www.upsc.gov.in/sites/default/files/QP-CSP-25-GENERAL-STUDIES-PAPER-I-26052025.pdf",
+    gs2: "https://www.upsc.gov.in/sites/default/files/QP-CSP-25-GENERAL-STUDIES-PAPER-II-26052025.pdf",
+    source: "UPSC",
+  },
+  2024: {
+    gs1: "https://www.upsc.gov.in/sites/default/files/QP-CSP-24-GENERAL-STUDIES-PAPER-I-180624.pdf",
+    gs2: "https://www.upsc.gov.in/sites/default/files/QP-CSP-24-GENERAL-STUDIES-PAPER-II-180624.pdf",
+    source: "UPSC",
+  },
+  2023: {
+    gs1: "https://www.upsc.gov.in/sites/default/files/QP_CS_Pre_Exam_2023_280523.pdf",
+    gs2: "https://www.upsc.gov.in/sites/default/files/QP_CS_Pre_Exam_2023_GENERAL_STUDIES_PAPER_II_280523.pdf",
+    source: "UPSC",
+  },
+  2022: {
+    gs1: "https://www.upsc.gov.in/sites/default/files/GENERAL%20STUDIES%20PAPER%20I.pdf",
+    gs2: "https://www.upsc.gov.in/sites/default/files/GENERAL%20STUDIES%20PAPER%20II.pdf",
+    source: "UPSC",
+  },
+  2021: {
+    gs1: "https://www.upsc.gov.in/sites/default/files/QP-CSP-21-GeneralStudiesPaper-I-121021.pdf",
+    gs2: "https://www.upsc.gov.in/sites/default/files/QP-CSP-21-GeneralStudiesPaper-II-121021.pdf",
+    source: "UPSC",
+  },
+  2020: {
+    gs1: "https://www.upsc.gov.in/sites/default/files/CSP_2020_GS_Paper-1.pdf",
+    gs2: "https://www.upsc.gov.in/sites/default/files/CSP_2020_GS_Paper-2.pdf",
+    source: "UPSC",
+  },
+  2019: {
+    gs1: "https://www.upsc.gov.in/sites/default/files/csp-p1.pdf",
+    gs2: "https://www.upsc.gov.in/sites/default/files/csp-p2.pdf",
+    source: "UPSC",
+  },
+  2018: {
+    gs1: "https://www.upsc.gov.in/sites/default/files/QP-CSP-18-GS-I-C.pdf",
+    gs2: "https://www.upsc.gov.in/sites/default/files/QP-CSP-18-GS-II-C.pdf",
+    source: "UPSC",
+  },
+  2017: {
+    gs1: "https://www.upsc.gov.in/sites/default/files/CSP-17-GS_PAPER-1-C.pdf",
+    gs2: "https://www.upsc.gov.in/sites/default/files/CSP-17-GS_PAPER-II-C.pdf",
+    source: "UPSC",
+  },
+  2016: {
+    gs1: "https://www.upsc.gov.in/sites/default/files/GENERAL_STUDIES_PAPER-I.pdf",
+    gs2: "https://www.upsc.gov.in/sites/default/files/GENERAL_STUDIES_PAPER-II.pdf",
+    source: "UPSC",
+  },
+  2015: {
+    gs1: "https://iashelpdesk.in//pdf/year-papers//1396a0a7ef2e97901f63f51b79ea9a470a058a14.pdf",
+    gs2: "https://iashelpdesk.in//pdf/year-papers//f0bbd930e3bb4300fdefb56965ff9a9e377eed36.pdf",
+    source: "Archive mirror",
+  },
+  2014: {
+    gs1: "https://iashelpdesk.in//pdf/year-papers//35dee1b6dd5b3a147436e8dbcd69f99a2f08874a.pdf",
+    gs2: "https://iashelpdesk.in//pdf/year-papers//b5f7cb1a29e7af64982303437aca5ef9066e0750.pdf",
+    source: "Archive mirror",
+  },
+  2013: {
+    gs1: "https://iashelpdesk.in//pdf/year-papers//6989a64032794532f5ac325a596913659d5a07ae.pdf",
+    gs2: "https://iashelpdesk.in//pdf/year-papers//9defc990d01062f7ec22c5eb488a2eeb26364038.pdf",
+    source: "Archive mirror",
+  },
+  2012: {
+    gs1: "https://iashelpdesk.in//pdf/year-papers//989ae3597a13191fbb66aa135736cd8fa4a3836f.pdf",
+    gs2: "https://iashelpdesk.in//pdf/year-papers//c01562b8febe174b91e8d48d541639f9fc269000.pdf",
+    source: "Archive mirror",
+  },
+};
 
-const QUESTION_PATTERNS = [
-  { subject: "Polity & Governance", topic: "Constitutional institutions", skill: "Statement analysis", prompt: "Examine a set of statements about the powers, composition or accountability of a constitutional or statutory institution and identify the legally correct combination." },
-  { subject: "Polity & Governance", topic: "Federalism", skill: "Concept + elimination", prompt: "Use the constitutional distribution of powers to distinguish Union, State and shared responsibilities in a federal-governance situation." },
-  { subject: "Polity & Governance", topic: "Rights & governance", skill: "Principle application", prompt: "Apply a constitutional right, limitation or governance principle to decide which institutional action is legally consistent." },
-  { subject: "History & Culture", topic: "Ancient India", skill: "Pair matching", prompt: "Match an ancient text, school of thought, site, dynasty or cultural tradition with its most appropriate historical association." },
-  { subject: "History & Culture", topic: "Medieval India", skill: "Association", prompt: "Identify the correct relationship between a medieval institution, ruler, administrative practice, literary tradition or cultural development." },
-  { subject: "History & Culture", topic: "Modern India", skill: "Chronology", prompt: "Arrange or compare developments from colonial administration, reform movements or the freedom struggle using chronology and causation." },
-  { subject: "History & Culture", topic: "Art & Culture", skill: "Feature recognition", prompt: "Recognise the defining feature of an architectural, literary, religious, musical or performing-art tradition from descriptive clues." },
-  { subject: "Geography", topic: "Physical geography", skill: "Concept application", prompt: "Apply climatology, geomorphology or oceanography principles to infer the likely behaviour of a physical process." },
-  { subject: "Geography", topic: "Indian geography", skill: "Spatial reasoning", prompt: "Use location, drainage, soils, climate, agriculture or resource patterns to identify the correct Indian geographical relationship." },
-  { subject: "Geography", topic: "Mapping", skill: "Map elimination", prompt: "Use spatial clues to identify the correct river, mountain, border region, sea, strait, protected area or resource location." },
-  { subject: "Economy", topic: "Banking & monetary policy", skill: "Mechanism", prompt: "Infer the effect of a change in a banking or monetary-policy instrument on liquidity, credit, interest conditions or inflation." },
-  { subject: "Economy", topic: "Fiscal policy", skill: "Definition + application", prompt: "Distinguish fiscal concepts by their impact on government finances, deficits, taxation, expenditure or public debt." },
-  { subject: "Economy", topic: "External sector", skill: "Concept distinction", prompt: "Differentiate trade, exchange-rate and balance-of-payments concepts by their actual economic effect rather than by memorised terminology." },
-  { subject: "Economy", topic: "Development", skill: "Indicator interpretation", prompt: "Interpret a development, employment, poverty or inequality indicator and identify what it can and cannot establish." },
-  { subject: "Environment", topic: "Ecology", skill: "Principle-based elimination", prompt: "Use ecosystem, trophic, habitat or species-interaction principles to test a set of ecological statements." },
-  { subject: "Environment", topic: "Biodiversity", skill: "Species + habitat", prompt: "Relate a species, protected area, habitat condition or conservation category to the correct ecological context." },
-  { subject: "Environment", topic: "Climate & conventions", skill: "Institutional recall", prompt: "Match an environmental convention, climate mechanism or global conservation initiative with its objective or institutional arrangement." },
-  { subject: "Science & Technology", topic: "Space", skill: "Capability check", prompt: "Identify what a satellite, launch system, navigation platform or space technology can realistically do and eliminate overstated claims." },
-  { subject: "Science & Technology", topic: "Biotechnology", skill: "Process understanding", prompt: "Distinguish a biotechnology technique by mechanism, application, limitation or biological target." },
-  { subject: "Science & Technology", topic: "Digital technology", skill: "Conceptual current affairs", prompt: "Identify the genuine capability, use-case or limitation of an emerging digital, communication or computing technology." },
-  { subject: "Science & Technology", topic: "Health", skill: "Mechanism", prompt: "Use basic biological or public-health principles to distinguish diseases, therapies, diagnostics, immunity or health technologies." },
-  { subject: "International Relations", topic: "Global institutions", skill: "Membership + mandate", prompt: "Match an international organisation or grouping with its membership, mandate, institutional structure or India-related relevance." },
-  { subject: "International Relations", topic: "Treaties & groupings", skill: "Pair matching", prompt: "Identify the correct relationship between a treaty, regional grouping, strategic initiative and its stated purpose." },
-  { subject: "Agriculture", topic: "Crops & conditions", skill: "Applied static", prompt: "Connect crop requirements, soils, irrigation, seasonality or farm practices with the most likely agronomic outcome." },
-  { subject: "Agriculture", topic: "Food systems", skill: "Policy application", prompt: "Distinguish agricultural-market, procurement, storage, food-security or farm-support mechanisms by how they operate." },
-  { subject: "Society & Schemes", topic: "Welfare architecture", skill: "Scheme logic", prompt: "Identify the intended beneficiary, implementing level, entitlement or delivery mechanism of a public-policy intervention." },
-  { subject: "Current Affairs", topic: "Government initiatives", skill: "Static-current linkage", prompt: "Connect a recent government initiative with the constitutional, economic, environmental, scientific or social concept that underlies it." },
-  { subject: "Current Affairs", topic: "Reports & indices", skill: "Source awareness", prompt: "Identify the institution, broad purpose or interpretation of an important report, index or recurring official publication." },
-  { subject: "Question Skill", topic: "Multi-statement MCQ", skill: "Elimination", prompt: "Evaluate multiple statements one by one, discard the clearly impossible claim, and use partial knowledge to reach the strongest remaining option." },
-  { subject: "Question Skill", topic: "Pair-count question", skill: "Uncertainty management", prompt: "Estimate how many listed pairs are correctly matched by testing the strongest-known pair first and using option structure to reduce uncertainty." },
-];
-
-function buildQuestions(year: number) {
-  return Array.from({ length: 100 }, (_, index) => {
-    const base = QUESTION_PATTERNS[(index + year) % QUESTION_PATTERNS.length];
-    const cycle = Math.floor(index / QUESTION_PATTERNS.length) + 1;
-    return {
-      number: index + 1,
-      subject: base.subject,
-      topic: base.topic,
-      skill: base.skill,
-      difficulty: cycle % 3 === 0 ? "High" : cycle % 2 === 0 ? "Moderate" : "Standard",
-      text: `${base.prompt} Focus on the ${year} paper context and solve it as a ${base.skill.toLowerCase()} question.`,
-    };
-  });
-}
+const YEARS = Object.keys(PAPERS).map(Number).sort((a, b) => b - a);
 
 export function generateStaticParams() {
-  return YEARS.map(year => ({ year: String(year) }));
+  return YEARS.map((year) => ({ year: String(year) }));
 }
 
-export default async function UpscPrelimsYearPage({ params }: { params: Promise<{ year: string }> }) {
+export default async function UpscPrelimsYearPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ year: string }>;
+  searchParams: Promise<{ paper?: string }>;
+}) {
   const { year: rawYear } = await params;
+  const { paper } = await searchParams;
   const year = Number(rawYear);
-  if (!YEARS.includes(year)) notFound();
+  const paperSet = PAPERS[year];
+  if (!paperSet) notFound();
 
-  const questions = buildQuestions(year);
-  const subjects = Array.from(new Set(questions.map(q => q.subject)));
-  const officialHref = year === 2026 ? OFFICIAL_LINKS.upscPrelims2026 : OFFICIAL_LINKS.upscPyqArchive;
+  const activePaper = paper === "2" ? 2 : 1;
+  const pdfUrl = activePaper === 2 ? paperSet.gs2 : paperSet.gs1;
+  const paperTitle = activePaper === 1 ? "General Studies Paper I" : "General Studies Paper II (CSAT)";
+  const yearIndex = YEARS.indexOf(year);
+  const newerYear = yearIndex > 0 ? YEARS[yearIndex - 1] : null;
+  const olderYear = yearIndex < YEARS.length - 1 ? YEARS[yearIndex + 1] : null;
 
   return (
-    <main className="year-page">
-      <section className="hero">
-        <div className="shell hero-grid">
-          <div>
-            <Link href="/pyq#prelims" className="back">← UPSC Prelims 15-Year Desk</Link>
-            <span className="overline">UPSC CIVIL SERVICES PRELIMS · {year}</span>
-            <h1>{year} UPSC Prelims questions, organised on OneShot GS.</h1>
-            <p>This page keeps the student inside OneShot GS. Use the 100-question study desk below to revise by subject, topic, skill and difficulty. The wording is presented as a study reconstruction/paraphrase; the small source link is only for verification against the Commission paper.</p>
-            <div className="actions"><a href="#questions" className="primary">Open 100-Question Desk</a><Link href="/quizzes/static" className="secondary">Practice Static GS</Link></div>
+    <main className="paper-page">
+      <section className="paper-header">
+        <div className="shell">
+          <div className="crumbs">
+            <Link href="/pyq">PYQ Library</Link><span>/</span><Link href="/pyq#prelims">UPSC Prelims</Link><span>/</span><b>{year}</b>
           </div>
-          <aside className="paper-card"><span>PAPER VIEW</span><strong>{year}</strong><p>General Studies Paper I</p><dl><div><dt>Questions</dt><dd>100 study entries</dd></div><div><dt>Classification</dt><dd>Subject → Topic → Skill</dd></div><div><dt>Exam</dt><dd>UPSC CSE Prelims</dd></div></dl><a href={officialHref} target="_blank" rel="noopener noreferrer">Verify exact official paper ↗</a></aside>
+
+          <div className="title-row">
+            <div>
+              <span className="eyebrow">UNION PUBLIC SERVICE COMMISSION · CIVIL SERVICES PRELIMINARY EXAMINATION</span>
+              <h1>UPSC Prelims {year}</h1>
+              <p>Read the actual previous-year paper here on OneShot GS. Switch between GS Paper I and CSAT without leaving the year desk.</p>
+            </div>
+            <div className="year-nav">
+              {newerYear ? <Link href={`/pyq/upsc/prelims/${newerYear}`}>← {newerYear}</Link> : <span />}
+              {olderYear ? <Link href={`/pyq/upsc/prelims/${olderYear}`}>{olderYear} →</Link> : <span />}
+            </div>
+          </div>
+
+          <div className="paper-tabs" role="navigation" aria-label="Choose paper">
+            <Link href={`/pyq/upsc/prelims/${year}?paper=1`} className={activePaper === 1 ? "active" : ""}>
+              <span>Paper I</span><b>General Studies</b><small>100 questions · 200 marks</small>
+            </Link>
+            <Link href={`/pyq/upsc/prelims/${year}?paper=2`} className={activePaper === 2 ? "active" : ""}>
+              <span>Paper II</span><b>CSAT</b><small>Qualifying paper · 200 marks</small>
+            </Link>
+          </div>
         </div>
       </section>
 
-      <section className="subject-band"><div className="shell">{subjects.map(subject => <a key={subject} href={`#${subject.toLowerCase().replace(/[^a-z0-9]+/g,"-")}`}>{subject}</a>)}</div></section>
+      <section className="reader-shell shell">
+        <div className="reader-toolbar">
+          <div>
+            <span>{year} · {activePaper === 1 ? "PAPER I" : "PAPER II"}</span>
+            <h2>{paperTitle}</h2>
+          </div>
+          <div className="toolbar-actions">
+            <a href={pdfUrl} target="_blank" rel="noopener noreferrer">Open PDF ↗</a>
+            <Link href="/ask">Ask Tutor</Link>
+          </div>
+        </div>
 
-      <section id="questions" className="shell section">
-        <header><div><span className="overline">QUESTION BANK</span><h2>100 questions arranged for intelligent revision.</h2></div><p>Each entry shows the academic bucket and the skill UPSC is testing, so the paper becomes a revision map rather than a PDF dump.</p></header>
-        <div className="question-list">
-          {questions.map(q => <article key={q.number} id={q.number === 1 ? "first-question" : undefined}><div className="q-no">Q{q.number}</div><div className="q-main"><div className="tags"><span>{q.subject}</span><span>{q.topic}</span><span>{q.skill}</span><span>{q.difficulty}</span></div><p>{q.text}</p><div className="q-actions"><Link href="/ask">Ask Tutor about this topic →</Link><Link href="/quizzes/static">Practice related GS</Link></div></div></article>)}
+        <div className="paper-frame-wrap">
+          <iframe
+            src={`${pdfUrl}#toolbar=1&navpanes=0&view=FitH`}
+            title={`UPSC Prelims ${year} ${paperTitle}`}
+            className="paper-frame"
+          />
+          <noscript>
+            <p className="fallback">JavaScript is disabled. <a href={pdfUrl}>Open the paper PDF</a>.</p>
+          </noscript>
+        </div>
+
+        <div className="source-note">
+          <div><b>Paper source</b><span>{paperSet.source === "UPSC" ? "Official UPSC-hosted question paper" : "Archived paper mirror for an older UPSC paper"}</span></div>
+          <p>The paper is displayed inside the OneShot GS reader. The external PDF address is retained only as the source document.</p>
         </div>
       </section>
 
-      <section className="shell final"><div><span className="overline light">NEXT STEP</span><h2>Finish the paper, then revise only what the paper exposed.</h2><p>Move from this {year} desk into Free Study, Static GS practice or the complete UPSC 2027 program.</p></div><div className="actions"><Link href="/study" className="primary warm">Free Study →</Link><Link href="/courses/upsc-2027" className="secondary dark">UPSC 2027 Program</Link></div></section>
+      <section className="shell after-paper">
+        <div>
+          <span>AFTER THE PAPER</span>
+          <h2>Use your mistakes to decide the revision list.</h2>
+          <p>Go back to the exact subject you missed, practise it, then return to another UPSC/BPSC PYQ instead of collecting more material.</p>
+        </div>
+        <div className="after-actions">
+          <Link href="/quizzes/static">Free GS Quiz</Link>
+          <Link href="/study">Free Study</Link>
+          <Link href="/courses/upsc-2027" className="warm">UPSC 2027 Program</Link>
+        </div>
+      </section>
 
       <style>{`
-        .year-page{min-height:100vh;background:#f7f5f0;color:#172338}.shell{width:min(1080px,calc(100% - 32px));margin:0 auto}.overline{font-size:8px;letter-spacing:.16em;font-weight:850;color:#98502e}.overline.light{color:#e1b68f}.hero{padding:54px 0 42px;background:linear-gradient(180deg,#fdfcf9,#efebe4);border-bottom:1px solid #d9d5ce}.hero-grid{display:grid;grid-template-columns:minmax(0,1.45fr) 300px;gap:46px;align-items:end}.back{display:inline-block;margin-bottom:18px;text-decoration:none;color:#697583;font-size:8.5px;font-weight:800}.hero h1{font-family:var(--font-display);font-size:clamp(41px,6vw,66px);line-height:.96;letter-spacing:-.058em;margin:9px 0 14px;max-width:820px}.hero p{font-size:12.5px;line-height:1.8;color:#5b6877;max-width:760px}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:19px}.primary,.secondary{padding:10px 14px;border-radius:5px;text-decoration:none;font-size:9px;font-weight:850}.primary{background:#21324d;color:#fff}.secondary{background:#fff;border:1px solid #d0d6dd;color:#21324d}.paper-card{background:#fff;border:1px solid #d1d2cf;border-top:4px solid #9f3e1b;padding:18px}.paper-card>span{font-size:7px;letter-spacing:.14em;color:#98502e;font-weight:850}.paper-card>strong{display:block;font-family:var(--font-display);font-size:42px;margin:3px 0}.paper-card>p{font-size:9px;color:#667381}.paper-card dl{margin:11px 0}.paper-card dl>div{display:flex;justify-content:space-between;border-top:1px solid #e6e2dc;padding:7px 0}.paper-card dt,.paper-card dd{font-size:7.5px}.paper-card dd{font-weight:800;text-align:right}.paper-card>a{display:block;text-align:center;text-decoration:none;background:#f3efe8;color:#8f3f20;padding:9px;font-size:7.5px;font-weight:850}.subject-band{position:sticky;top:86px;z-index:60;background:rgba(250,249,246,.97);border-bottom:1px solid #d8d5cf}.subject-band>div{display:flex;gap:15px;overflow:auto;padding:9px 0}.subject-band a{white-space:nowrap;text-decoration:none;font-size:7.5px;font-weight:800;color:#697583}.section{padding:48px 0}.section header{display:flex;justify-content:space-between;align-items:end;gap:30px;margin-bottom:19px}.section header h2,.final h2{font-family:var(--font-display);font-size:clamp(28px,4vw,42px);line-height:1.04;letter-spacing:-.045em;margin-top:6px}.section header>p{max-width:390px;text-align:right;font-size:9.5px;line-height:1.65;color:#697583}.question-list{display:grid;gap:7px}.question-list article{display:grid;grid-template-columns:58px 1fr;background:#fff;border:1px solid #d9d6d0}.q-no{padding:15px 10px;border-right:1px solid #e4e0da;font-family:Georgia,serif;font-size:15px;color:#9a4422;text-align:center}.q-main{padding:14px 16px}.tags{display:flex;gap:5px;flex-wrap:wrap}.tags span{font-size:6.8px;letter-spacing:.05em;font-weight:800;color:#526273;background:#f0f3f6;border:1px solid #d9dee4;padding:4px 6px}.q-main>p{font-size:10px;line-height:1.72;color:#39495b;margin-top:9px}.q-actions{display:flex;gap:13px;flex-wrap:wrap;margin-top:9px}.q-actions a{text-decoration:none;font-size:7.5px;font-weight:800;color:#8f3f20}.final{margin-bottom:42px;padding:27px;background:#26364f;color:#fff;display:flex;justify-content:space-between;gap:28px;align-items:center}.final p{font-size:9px;color:#c7d1dd;max-width:650px}.primary.warm{background:#a34821}.secondary.dark{background:transparent;color:#fff;border-color:rgba(255,255,255,.24)}@media(max-width:800px){.hero-grid{grid-template-columns:1fr;gap:24px}.section header{flex-direction:column;align-items:flex-start;gap:7px}.section header>p{text-align:left}.final{flex-direction:column;align-items:flex-start}}@media(max-width:520px){.hero{padding:40px 0 30px}.question-list article{grid-template-columns:45px 1fr}.q-main{padding:12px}.q-no{padding:13px 6px}.final{width:calc(100% - 24px)}}
+        .paper-page{min-height:100vh;background:#f2f2ef;color:#172338}.shell{width:min(1180px,calc(100% - 28px));margin:0 auto}.paper-header{background:#fff;border-bottom:1px solid #d9dde2;padding:26px 0 22px}.crumbs{display:flex;gap:7px;align-items:center;font-size:9px;color:#7c8794;margin-bottom:23px}.crumbs a{text-decoration:none;color:#586879}.crumbs b{color:#172338}.title-row{display:flex;justify-content:space-between;align-items:end;gap:30px}.eyebrow{font-size:7px;letter-spacing:.15em;font-weight:850;color:#8f482a}.title-row h1{font-family:var(--font-display);font-size:clamp(35px,5vw,56px);line-height:.96;letter-spacing:-.05em;margin:7px 0 8px}.title-row p{max-width:720px;font-size:11px;line-height:1.65;color:#637080}.year-nav{display:flex;gap:6px}.year-nav a{min-width:68px;text-align:center;text-decoration:none;border:1px solid #d7dce2;background:#f8f9fa;color:#293b53;border-radius:5px;padding:8px 10px;font-size:8px;font-weight:800}.paper-tabs{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:24px;max-width:700px}.paper-tabs a{display:grid;grid-template-columns:auto 1fr;column-gap:11px;row-gap:1px;text-decoration:none;color:#435267;border:1px solid #d9dde3;background:#f7f8f9;border-radius:7px;padding:12px 14px}.paper-tabs a>span{grid-row:1/3;font-family:Georgia,serif;font-size:11px;color:#8a4a2e;padding-top:2px}.paper-tabs b{font-size:10px}.paper-tabs small{font-size:7.5px;color:#788493}.paper-tabs a.active{background:#172338;border-color:#172338;color:#fff}.paper-tabs a.active>span{color:#e7b98e}.paper-tabs a.active small{color:#bdc8d4}.reader-shell{padding:18px 0 0}.reader-toolbar{background:#fff;border:1px solid #d8dce1;border-bottom:0;border-radius:8px 8px 0 0;padding:12px 14px;display:flex;justify-content:space-between;align-items:center;gap:16px}.reader-toolbar>div:first-child>span{display:block;font-size:6.5px;letter-spacing:.12em;font-weight:850;color:#915033}.reader-toolbar h2{font-family:var(--font-display);font-size:15px;margin-top:2px}.toolbar-actions{display:flex;gap:6px}.toolbar-actions a{text-decoration:none;border:1px solid #d4d9df;background:#fff;color:#34465d;border-radius:4px;padding:7px 9px;font-size:7.5px;font-weight:800}.paper-frame-wrap{height:min(82vh,1040px);min-height:650px;background:#cfd2d5;border:1px solid #c9cdd2;box-shadow:0 8px 30px rgba(28,38,51,.08)}.paper-frame{width:100%;height:100%;border:0;background:#e4e4e4}.fallback{padding:30px}.source-note{display:grid;grid-template-columns:1fr 1.4fr;gap:20px;background:#fff;border:1px solid #d8dce1;border-top:0;border-radius:0 0 8px 8px;padding:11px 14px}.source-note b,.source-note span{display:block}.source-note b{font-size:7px;letter-spacing:.09em;color:#8c482c}.source-note span,.source-note p{font-size:7.5px;line-height:1.55;color:#75808d}.after-paper{margin-top:20px;margin-bottom:38px;background:#172338;color:#fff;padding:25px 27px;display:flex;justify-content:space-between;align-items:center;gap:26px}.after-paper>div:first-child>span{font-size:7px;letter-spacing:.14em;color:#dfb58e;font-weight:850}.after-paper h2{font-family:var(--font-display);font-size:clamp(24px,3.5vw,36px);letter-spacing:-.04em;margin:5px 0}.after-paper p{font-size:8.5px;line-height:1.65;color:#c4ceda;max-width:700px}.after-actions{display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}.after-actions a{text-decoration:none;background:#f2ede6;color:#26364f;padding:9px 10px;border-radius:4px;font-size:8px;font-weight:850;white-space:nowrap}.after-actions .warm{background:#a34821;color:#fff}@media(max-width:700px){.title-row{flex-direction:column;align-items:flex-start}.year-nav{width:100%;justify-content:space-between}.paper-tabs{grid-template-columns:1fr}.reader-toolbar{align-items:flex-start;flex-direction:column}.paper-frame-wrap{height:72vh;min-height:560px}.source-note{grid-template-columns:1fr}.after-paper{flex-direction:column;align-items:flex-start}.after-actions{justify-content:flex-start}}@media(max-width:430px){.shell{width:min(100% - 18px,1180px)}.paper-header{padding-top:18px}.paper-frame-wrap{height:68vh;min-height:500px}.paper-tabs a{padding:10px}.after-paper{padding:20px}}
       `}</style>
     </main>
   );
