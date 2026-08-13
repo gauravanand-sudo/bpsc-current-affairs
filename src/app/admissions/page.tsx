@@ -10,13 +10,13 @@ export default function AdmissionsPage() {
             <span className="overline">ADMISSIONS &amp; FEES</span>
             <h1>UPSC CSE 2027 &amp; 73rd BPSC</h1>
             <p>Both are complete programs covering Foundation, Prelims, Mains and Interview preparation.</p>
-            <div className="actions"><Link href="/courses" className="primary">Course Details</Link><Link href="/ask?intent=admission" className="secondary">Talk to Admissions</Link><Link href="/demo" className="text-link">Demo Class →</Link></div>
+            <div className="actions"><Link href="/courses" className="primary">Course Details</Link><Link href="/talk-to-us?intent=admission" className="secondary">Talk to Admissions</Link><Link href="/demo" className="text-link">Demo Class →</Link></div>
           </div>
           <aside className="status-card">
             <span>PAYMENT STATUS</span>
             <h2>Online payment is temporarily unavailable.</h2>
             <p>The payment flow is being fixed. For an admission or payment query, use Talk to Us.</p>
-            <Link href="/ask?intent=payment">Payment Help →</Link>
+            <Link href="/talk-to-us?intent=payment">Payment Help →</Link>
           </aside>
         </div>
       </section>
@@ -36,7 +36,7 @@ export default function AdmissionsPage() {
 
       <section className="shell links-section">
         <div><span className="overline">BEFORE ENROLLMENT</span><h2>Useful links</h2></div>
-        <div className="link-grid"><Link href="/ask?intent=admission">Admission Query <span>→</span></Link><Link href="/demo">Demo Class <span>→</span></Link><Link href="/pyq">Previous Papers <span>→</span></Link><Link href="/study">Free Study <span>→</span></Link></div>
+        <div className="link-grid"><Link href="/talk-to-us?intent=admission">Admission Query <span>→</span></Link><Link href="/demo">Demo Class <span>→</span></Link><Link href="/pyq">Previous Papers <span>→</span></Link><Link href="/study">Free Study <span>→</span></Link></div>
       </section>
 
       <style>{`
