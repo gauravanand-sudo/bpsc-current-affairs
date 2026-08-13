@@ -1,15 +1,20 @@
 # OneShot GS Talk to Us / Helpdesk setup
 
-The codebase now contains a private helpdesk chatbot at `/ask` with aliases at `/helpdesk`, `/talk-to-us`, `/query`, and `/support`.
+OneShot GS now has two separate assistants:
+
+- `/ask` — **Talk to Tutor**. Academic-only UPSC/BPSC tutoring. It does not collect lead/contact information and does not send conversations to the helpdesk mailbox.
+- `/talk-to-us` — **Talk to Us**. Private admissions/helpdesk flow for admissions, course/fee queries, payment help, technical support, callbacks and other administrative queries.
+
+Aliases `/helpdesk`, `/query`, and `/support` redirect to `/talk-to-us`.
 
 ## 1. Supabase conversation storage
 
 Run `supabase/helpdesk.sql` once in the Supabase SQL editor for the project used by OneShot GS.
 
-The table is append-only for public visitors:
+The helpdesk table is append-only for public visitors:
 - visitors can insert helpdesk events;
 - visitors cannot select, update, or delete helpdesk conversations;
-- each conversation is grouped by a UUID generated in the browser.
+- each Talk to Us conversation is grouped by a UUID generated in the browser.
 
 Existing environment variables used by the app:
 
@@ -26,7 +31,7 @@ SUPABASE_SERVICE_ROLE_KEY=
 
 ## 2. Helpdesk email delivery
 
-The API sends the full transcript-so-far after each completed assistant response through the Resend HTTP API.
+The `/api/helpdesk` endpoint can send the full Talk to Us transcript-so-far after each completed assistant response through the Resend HTTP API.
 
 Configure these Vercel environment variables:
 
@@ -38,12 +43,16 @@ HELPDESK_FROM_EMAIL=OneShot GS <verified-sender@your-verified-domain.com>
 
 `HELPDESK_EMAIL` must be a complete email address, not only a domain name.
 
+Talk to Tutor (`/api/ask`) does not use the helpdesk storage or email handoff.
+
 ## 3. AI
 
-The existing helpdesk/tutor API uses:
+Both assistants use:
 
 ```text
 GROQ_API_KEY=
 ```
 
-The assistant classifies each conversation as admission, course, payment, academic, technical, or general and collects only relevant information. It is instructed never to request passwords, OTPs, UPI PINs, CVV, full card details, banking credentials, Aadhaar, or PAN for ordinary helpdesk/admissions conversations.
+Talk to Us classifies each conversation as admission, course, payment, technical, or general and collects only information relevant to follow-up. It is instructed never to request passwords, OTPs, UPI PINs, CVV, full card details, banking credentials, Aadhaar, or PAN for ordinary helpdesk/admissions conversations.
+
+Talk to Tutor is academic-only and redirects administrative, admissions, payment or technical issues to `/talk-to-us`.
