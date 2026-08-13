@@ -143,7 +143,7 @@ export const FACULTY = [
     subject: "International Relations & Current Affairs",
     record: "IR Faculty · Current Affairs Discussion Lead",
     focus: "India's Foreign Policy · Global Institutions · Security · Issue Linkages",
-    image: "/faculty/sana-khan-v2.webp",
+    image: "/faculty/sana-khan-v3.webp",
   },
   {
     name: "Vivek Anand",
@@ -161,7 +161,7 @@ export const FACULTY = [
     subject: "Study Planning & Learner Support",
     record: "Academic Counsellor",
     focus: "Course Planning · Backlog Recovery · Revision Cycles · Progress Reviews",
-    image: "/faculty/ananya-rao-v2.webp",
+    image: "/faculty/ananya-rao-v3.webp",
   },
   {
     name: "Raghav Bhatia",
