@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
 
 export default function QueryPage() {
-  redirect("/ask?intent=general");
+  redirect("/talk-to-us?intent=general");
 }
