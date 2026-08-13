@@ -114,8 +114,6 @@ function SupportPageInner() {
 
   return (
     <main className="chat-shell" style={{ background: "var(--bg)", display: "flex", flexDirection: "column", overflow: "hidden" }}>
-
-      {/* ── Fixed header ── */}
       <div style={{
         flexShrink: 0,
         padding: "10px 14px",
@@ -134,7 +132,7 @@ function SupportPageInner() {
             </h1>
           </div>
           <p style={{ fontSize: 11, color: "var(--muted)", lineHeight: 1.4 }}>
-            Safe space · BPSC aspirants only
+            Safe space · UPSC / BPSC aspirants
           </p>
         </div>
         <div style={{
@@ -149,7 +147,6 @@ function SupportPageInner() {
         </div>
       </div>
 
-      {/* ── Messages ── */}
       <div style={{
         flex: 1, overflowY: "auto", padding: "12px 14px",
         display: "flex", flexDirection: "column", gap: 10,
@@ -177,7 +174,6 @@ function SupportPageInner() {
               )}
 
               <div style={{ maxWidth: "82%", display: "flex", flexDirection: "column", gap: 3 }}>
-                {/* Reply preview */}
                 {msg.reply_to_text && (
                   <div style={{
                     background: "rgba(120,80,30,0.07)",
@@ -194,7 +190,6 @@ function SupportPageInner() {
                   </div>
                 )}
 
-                {/* Bubble */}
                 <div
                   style={{
                     background: isMe ? "linear-gradient(135deg, #c06010, #d97706)" : "var(--card)",
@@ -209,7 +204,6 @@ function SupportPageInner() {
                 </div>
               </div>
 
-              {/* Time + Reply tap */}
               <div style={{
                 display: "flex", alignItems: "center", gap: 8, marginTop: 3,
                 flexDirection: isMe ? "row-reverse" : "row",
@@ -235,7 +229,6 @@ function SupportPageInner() {
         <div ref={bottomRef} />
       </div>
 
-      {/* ── Input bar ── */}
       <div style={{
         flexShrink: 0,
         borderTop: "1px solid var(--line)",
@@ -321,7 +314,6 @@ function SupportPageInner() {
           </>
         )}
       </div>
-
     </main>
   );
 }
