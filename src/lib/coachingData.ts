@@ -68,7 +68,7 @@ export const FACULTY = [
     name: "Ira Jain",
     role: "Teaching Faculty",
     subject: "Polity & Governance · UPSC / BPSC",
-    record: "Ex-PCS Officer · Governance Faculty",
+    record: "Governance Faculty",
     focus: "Constitution · Governance · Social Justice · Current Issues",
     image: "/faculty/ira-hd.webp",
   },
@@ -76,7 +76,7 @@ export const FACULTY = [
     name: "Gargi Gupta",
     role: "Teaching Faculty",
     subject: "Geography & Environment · UPSC / BPSC",
-    record: "Ex-IRS Officer · Geography Faculty",
+    record: "Geography Faculty",
     focus: "India · Bihar · World Geography · Environment",
     image: "/faculty/gargi-hd.webp",
   },
@@ -162,10 +162,10 @@ export const FACULTY = [
   },
   {
     name: "Ruhani Chauhan",
-    role: "Teaching Faculty",
-    subject: "Bihar Special · Polity · History",
-    record: "Preparing for UPSC/BPSC while teaching",
-    focus: "Bihar Special · Indian Polity · Ancient, Medieval & Modern History",
+    role: "Mains Copy Evaluator",
+    subject: "Polity",
+    record: "Polity · Mains Copy Evaluator",
+    focus: "Indian Polity · Mains Answer Evaluation",
     image: "/faculty/ruhani.webp",
   },
 ];
@@ -193,7 +193,7 @@ export const FREE_RESOURCES = [
   { href: "/study", title: "Free Study", eyebrow: "OPEN LIBRARY", description: "NCERT, General Studies, Bihar GS, Current Affairs and subject-wise study rooms for UPSC / BPSC." },
   { href: "/quizzes", title: "Free Quiz", eyebrow: "PRACTICE", description: "Current Affairs and static GS practice for UPSC / BPSC." },
   { href: "/pyq", title: "UPSC / BPSC PYQs", eyebrow: "QUESTION PAPERS", description: "Open and download UPSC Prelims GS-I papers from 2014–2026, with BPSC paper sources alongside." },
-  { href: "/ask", title: "Talk to Us", eyebrow: "HELPDESK & ACADEMIC QUERY", description: "Admissions, course and fee queries, academic doubts, payment help and technical support." },
+  { href: "/ask", title: "Ask Tutor", eyebrow: "DOUBT SUPPORT", description: "UPSC / BPSC concept and study-plan support." },
   { href: "/partner", title: "Study Buddy", eyebrow: "ACCOUNTABILITY", description: "Find a study buddy for UPSC / BPSC preparation." },
 ];
 
@@ -251,9 +251,8 @@ export const BPSC_PYQ: PyqGroup[] = [
 ];
 
 export const FAQ = [
-  ["Can I use OneShot GS without buying a course?", "Yes. Free Study, Free Quiz, UPSC previous papers, Talk to Us and Study Buddy are available without buying a course."],
+  ["Can I use OneShot GS without buying a course?", "Yes. Free Study, Free Quiz, UPSC previous papers, Ask Tutor and Study Buddy are available without buying a course."],
   ["What does the complete program fee include?", "UPSC 2027 at ₹1,60,000 and 73rd BPSC at ₹87,000 both cover Foundation, Prelims, Mains and Interview preparation."],
   ["Can I see a demo before enrolling?", "Yes. Use the Demo Class page before enrollment."],
-  ["How do I contact OneShot GS?", "Open Talk to Us for admissions, course and fee queries, academic doubts, payment help or technical support."],
   ["How are UPSC previous papers handled?", "UPSC Prelims General Studies Paper I PDFs for 2014–2026 are hosted year-wise on OneShot GS with separate Open PDF and Download PDF actions. BPSC papers link to the BPSC question-booklet archive."],
 ];
