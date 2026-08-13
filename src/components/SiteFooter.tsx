@@ -54,19 +54,21 @@ export default function SiteFooter() {
 
   return (
     <footer className={styles.footer}>
-      <div className={styles.counselling}>
-        <div className={styles.counsellingInner}>
-          <div>
-            <span>PROGRAMS &amp; FEES</span>
-            <h2>UPSC CSE 2027 · ₹1,60,000 &nbsp;|&nbsp; 73rd BPSC · ₹87,000</h2>
-            <p>Both programs cover Foundation, Prelims, Mains and Interview preparation.</p>
-          </div>
-          <div>
-            <Link href="/admissions">Admissions &amp; Fees</Link>
-            <Link href="/demo">Demo Class</Link>
+      {pathname !== "/" && (
+        <div className={styles.counselling}>
+          <div className={styles.counsellingInner}>
+            <div>
+              <span>PROGRAMS &amp; FEES</span>
+              <h2>UPSC CSE 2027 · ₹1,60,000 &nbsp;|&nbsp; 73rd BPSC · ₹87,000</h2>
+              <p>Both programs cover Foundation, Prelims, Mains and Interview preparation.</p>
+            </div>
+            <div>
+              <Link href="/admissions">Admissions &amp; Fees</Link>
+              <Link href="/demo">Demo Class</Link>
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
       <div className={styles.footerMain}>
         <div className={styles.brandColumn}>
