@@ -151,13 +151,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
-      <section className={styles.finalCta}>
-        <div className={`${styles.shell} ${styles.finalGrid}`}>
-          <div><span>PROGRAM FEES</span><h2>UPSC 2027 ₹1,60,000 · 73rd BPSC ₹87,000</h2><p>Foundation + Prelims + Mains + Interview.</p></div>
-          <div><Link href="/courses">Courses</Link><Link href="/admissions">Admissions &amp; Fees</Link></div>
-        </div>
-      </section>
     </main>
   );
 }
