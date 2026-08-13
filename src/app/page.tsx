@@ -19,6 +19,11 @@ const RESOURCES = [
   { title: "Demo Class", copy: "View the available OneShot GS demo class before enrollment.", href: "/demo", tag: "DEMO" },
 ];
 
+const FEATURED_FACULTY = [
+  ...FACULTY.slice(0, 5),
+  FACULTY[FACULTY.length - 1],
+];
+
 export default function HomePage() {
   return (
     <main className={styles.home}>
@@ -128,15 +133,15 @@ export default function HomePage() {
       <section className={styles.facultySection}>
         <div className={styles.shell}>
           <div className={styles.sectionHead}>
-            <div><span>FACULTY</span><h2>Faculty team</h2></div>
-            <Link href="/faculty" className={styles.textLink}>Faculty details →</Link>
+            <div><span>FACULTY, MENTORS & GUIDANCE</span><h2>A specialist team for every exam stage</h2></div>
+            <Link href="/faculty" className={styles.textLink}>View all 13 profiles →</Link>
           </div>
           <div className={styles.facultyGrid}>
-            {FACULTY.map((faculty) => (
+            {FEATURED_FACULTY.map((faculty) => (
               <article key={faculty.name}>
-                <div className={styles.facultyImage}><Image src={faculty.image} alt={faculty.name} width={340} height={390} /></div>
+                <div className={styles.facultyImage}><Image src={faculty.image} alt={faculty.name} width={360} height={450} sizes="(max-width: 640px) 100vw, (max-width: 980px) 50vw, 33vw" /></div>
                 <div className={styles.facultyBody}>
-                  <span>{faculty.subject}</span>
+                  <span>{faculty.role} · {faculty.subject}</span>
                   <h3>{faculty.name}</h3>
                   <b>{faculty.record}</b>
                   <p>{faculty.focus}</p>
