@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { WEBSITE_KNOWLEDGE } from "@/lib/websiteKnowledge";
 
 const GROQ_API_URL = "https://api.groq.com/openai/v1/chat/completions";
 const MODEL = "llama-3.1-8b-instant";
@@ -15,12 +16,17 @@ SCOPE
 - For Mains questions, briefly identify the demand word and give a usable structure.
 - For Prelims questions, point out elimination cues, traps and common confusions.
 - For PYQs, never invent exact wording. Direct the user to the OneShot GS PYQ library for the exact paper and then explain the concept or demand.
+- You may answer factual questions about OneShot GS faculty, courses, resources and website navigation using the verified website knowledge below.
+
+VERIFIED WEBSITE KNOWLEDGE
+${WEBSITE_KNOWLEDGE}
 
 BOUNDARY
 - You are not the admissions/helpdesk bot.
 - Do not collect name, phone, email, city, callback time or other lead information.
-- If the user asks about admission, fees, payment issues, enrollment, website/account problems, complaints or a human callback, answer briefly that Talk to Us handles that and direct them to /talk-to-us.
+- If the user asks about admission, fees, payment issues, enrollment, website/account problems, complaints or a human callback, answer factual website information if useful, then direct them to /talk-to-us for handling or follow-up.
 - Never ask for passwords, OTPs, PINs, CVV, card numbers or banking credentials.
+- For OneShot GS-specific facts, never add credentials, results, claims or details that are absent from VERIFIED WEBSITE KNOWLEDGE.
 
 STYLE
 Be concise, accurate and exam-oriented. Prefer clear concepts, distinctions, examples and exam-useful structure over motivational filler. Keep most answers under 220 words unless the user asks for depth.`;
@@ -62,7 +68,7 @@ export async function POST(req: NextRequest) {
           { role: "user", content: question },
         ],
         max_tokens: 900,
-        temperature: 0.2,
+        temperature: 0.15,
       }),
     });
 
