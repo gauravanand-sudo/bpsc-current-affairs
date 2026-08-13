@@ -1,148 +1,40 @@
 import Link from "next/link";
-import GlowLogo from "@/components/GlowLogo";
 
-const SUBJECTS = [
-  { key: "ancient",   label: "Ancient History",          emoji: "🏺",  yt: "", pdf: "" },
-  { key: "medieval",  label: "Medieval History",         emoji: "🕌",  yt: "", pdf: "" },
-  { key: "modern",    label: "Modern History",           emoji: "📜",  yt: "", pdf: "" },
-  { key: "geo-india", label: "Indian Geography",         emoji: "🗺️", yt: "", pdf: "" },
-  { key: "geo-world", label: "World Geography",          emoji: "🌍",  yt: "", pdf: "" },
-  { key: "polity",    label: "Indian Polity",            emoji: "⚖️",  yt: "", pdf: "" },
-  { key: "economy",   label: "Indian Economy",           emoji: "📊",  yt: "", pdf: "" },
-  { key: "sociology", label: "Sociology",                emoji: "🤝",  yt: "", pdf: "" },
-  { key: "physics",   label: "Physics",                  emoji: "⚡",  yt: "", pdf: "" },
-  { key: "chemistry", label: "Chemistry",                emoji: "🧪",  yt: "", pdf: "" },
-  { key: "biology",   label: "Biology",                  emoji: "🧬",  yt: "", pdf: "" },
-  { key: "environment", label: "Environment & Ecology",  emoji: "🌿",  yt: "", pdf: "" },
+const NCERT_BOOKS = "https://ncert.nic.in/textbook.php/textbook/textbook/pdf/index.php?ln=en";
+const EPATHSHALA = "https://epathshala.nic.in/wp-content/doc/book/gtextbook/textbook.htm";
+
+const PRIORITY = [
+  ["History", "Classes VI–XII", "Ancient, medieval, modern India and themes in world history."],
+  ["Geography", "Classes VI–XII", "Physical geography, India, resources, human geography and maps."],
+  ["Polity & Society", "Classes IX–XII", "Democracy, Constitution, political theory, society and social change."],
+  ["Economy", "Classes IX–XII", "Basic development concepts, macroeconomics and Indian economic development."],
+  ["Science", "Classes VI–X", "Core Physics, Chemistry and Biology concepts for general science questions."],
+  ["Environment", "Science + Geography", "Ecology, resources, biodiversity, climate and human-environment interaction."],
+];
+
+const METHOD = [
+  ["01", "Read selectively", "Do not read every chapter equally. Map the chapter to the UPSC/BPSC syllabus first."],
+  ["02", "Make margin notes", "Record only definitions, processes, maps, examples and recurring factual anchors."],
+  ["03", "Check PYQs", "After a subject block, open previous papers to see how basic concepts are actually tested."],
+  ["04", "Test recall", "Use Static GS quizzes without reopening the chapter until after the attempt."],
 ];
 
 export default function NCERTPage() {
   return (
-    <main style={{ minHeight: "100vh", background: "var(--bg)", color: "var(--ink)" }}>
-      {/* Header */}
-      <div style={{ maxWidth: 960, margin: "0 auto", padding: "16px 16px 0", textAlign: "center", position: "relative" }}>
-        <Link href="/study" style={{ position: "absolute", right: 16, top: 20, fontSize: 12.5, fontWeight: 600, color: "var(--muted)", textDecoration: "none" }}>← Back</Link>
-        <GlowLogo style={{ margin: "0 auto 6px" }} />
-        <h1 style={{
-          fontFamily: "var(--font-display)", fontWeight: 800,
-          fontSize: 20, letterSpacing: "-0.025em",
-          color: "var(--ink-strong)", marginBottom: 4,
-        }}>NCERT</h1>
-        <p style={{ fontSize: 12.5, color: "var(--muted)", fontWeight: 600, letterSpacing: "0.01em" }}>
-          Only what scores. Zero fluff, zero filler.
-        </p>
-      </div>
+    <main className="page">
+      <section className="hero"><div className="shell hero-grid"><div><Link href="/study" className="back">← Free Study</Link><span className="overline">NCERT FOUNDATION</span><h1>Build the base from official NCERT textbooks.</h1><p>Use NCERT for clean concepts, not endless highlighting. The links below open the official NCERT textbook services; the study map tells you where each subject fits into civil-services preparation.</p><div className="actions"><a href={NCERT_BOOKS} target="_blank" rel="noopener noreferrer" className="primary">Open Official NCERT Textbooks ↗</a><a href={EPATHSHALA} target="_blank" rel="noopener noreferrer" className="secondary">Open ePathshala ↗</a></div></div><aside><span>FOUNDATION RULE</span><strong>Read → map → recall → PYQ</strong><p>NCERT is strongest when it gives you vocabulary and conceptual clarity that later sources can build on.</p></aside></div></section>
 
-      <section style={{ maxWidth: 960, margin: "0 auto", padding: "14px 16px 72px" }}>
-        <div className="subjects-grid">
-          {SUBJECTS.map((sub) => {
-            const hasYt = !!sub.yt;
-            const hasPdf = !!sub.pdf;
-            return (
-              <div key={sub.key} className="subject-card">
-                <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
-                  <span style={{
-                    fontSize: 24, width: 46, height: 46,
-                    borderRadius: 13, display: "grid", placeItems: "center",
-                    background: "color-mix(in srgb, #0891b2 10%, transparent)",
-                    border: "1px solid color-mix(in srgb, #0891b2 20%, transparent)",
-                    flexShrink: 0,
-                  }}>{sub.emoji}</span>
-                  <p style={{
-                    fontFamily: "var(--font-display)",
-                    fontSize: 15.5, fontWeight: 800,
-                    color: "var(--ink-strong)",
-                    letterSpacing: "-0.025em",
-                    lineHeight: 1.3,
-                  }}>{sub.label}</p>
-                </div>
+      <section className="shell section"><header><div><span className="overline">PRIORITY MAP</span><h2>What to use NCERT for.</h2></div><p>The exact book choice can vary by preparation level; start with the subject and class bands below, then use the official textbook selector.</p></header><div className="priority-grid">{PRIORITY.map(([title,classes,copy]) => <article key={title}><span>{classes}</span><h3>{title}</h3><p>{copy}</p><div><a href={NCERT_BOOKS} target="_blank" rel="noopener noreferrer">Open NCERT ↗</a><Link href="/quizzes/static">Practice GS →</Link></div></article>)}</div></section>
 
-                <div style={{ display: "flex", gap: 8 }}>
-                  {hasYt ? (
-                    <a href={sub.yt} target="_blank" rel="noopener noreferrer" className="btn-yt">
-                      <YtIcon /> Watch Lecture
-                    </a>
-                  ) : (
-                    <span className="btn-yt btn-off"><YtIcon /> Coming Soon</span>
-                  )}
-                  {hasPdf ? (
-                    <a href={sub.pdf} target="_blank" rel="noopener noreferrer" className="btn-pdf">
-                      <DlIcon /> Download PDF
-                    </a>
-                  ) : (
-                    <span className="btn-pdf btn-off"><DlIcon /> Coming Soon</span>
-                  )}
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </section>
+      <section className="method-wrap"><div className="shell section"><header className="light"><div><span className="overline light-text">HOW TO READ NCERT FOR AN EXAM</span><h2>Four steps are enough.</h2></div><p>Reading is only useful when it changes recall and question-solving.</p></header><div className="method-grid">{METHOD.map(([n,title,copy]) => <article key={n}><span>{n}</span><h3>{title}</h3><p>{copy}</p></article>)}</div></div></section>
+
+      <section className="shell practice"><div><span className="overline">AFTER EACH SUBJECT BLOCK</span><h2>Move from reading to questions.</h2><p>Use official PYQs to calibrate depth, then test yourself in Static GS and ask the tutor about the exact concept you missed.</p></div><div className="links"><Link href="/pyq">Official PYQs →</Link><Link href="/quizzes/static">Static GS Quiz</Link><Link href="/ask">Ask Tutor</Link></div></section>
+
+      <section className="shell final"><div><span className="overline light-text">NEED A FULL FOUNDATION SEQUENCE?</span><h2>Complete programs connect NCERT to advanced GS, tests, Mains writing and revision.</h2></div><div className="actions"><Link href="/courses" className="primary warm">View Programs →</Link><Link href="/demo" className="secondary dark">Demo Class</Link></div></section>
 
       <style>{`
-        .subjects-grid {
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 12px;
-        }
-        @media (min-width: 500px) {
-          .subjects-grid { grid-template-columns: 1fr 1fr; gap: 13px; }
-        }
-        @media (min-width: 780px) {
-          .subjects-grid { grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
-        }
-        .subject-card {
-          background: var(--card);
-          border: 1px solid var(--line);
-          border-radius: 20px;
-          padding: 20px 18px 18px;
-          transition: transform 0.15s ease, box-shadow 0.15s ease;
-        }
-        @media (hover: hover) {
-          .subject-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 32px rgba(8,145,178,0.10);
-          }
-        }
-        .btn-yt, .btn-pdf {
-          display: inline-flex; align-items: center; gap: 6px;
-          padding: 8px 13px; border-radius: 10px;
-          font-size: 12.5px; font-weight: 700; text-decoration: none;
-          flex: 1; justify-content: center; white-space: nowrap;
-          transition: opacity 0.12s ease, transform 0.12s ease;
-        }
-        .btn-yt { background: #ff2a2a; color: #fff; }
-        @media (hover: hover) {
-          .btn-yt:not(.btn-off):hover { opacity: 0.85; transform: translateY(-1px); }
-        }
-        .btn-pdf {
-          background: color-mix(in srgb, #0891b2 12%, transparent);
-          color: #0891b2;
-          border: 1px solid color-mix(in srgb, #0891b2 25%, transparent);
-        }
-        @media (hover: hover) {
-          .btn-pdf:not(.btn-off):hover { opacity: 0.78; transform: translateY(-1px); }
-        }
-        .btn-off { opacity: 0.35; cursor: default; pointer-events: none; }
+        .page{min-height:100vh;background:#f7f5f0;color:#172338}.shell{width:min(1050px,calc(100% - 32px));margin:0 auto}.overline{font-size:8px;letter-spacing:.16em;font-weight:850;color:#99502f}.light-text{color:#e0b58e}.hero{padding:55px 0 42px;background:linear-gradient(180deg,#fdfcf9,#efebe4);border-bottom:1px solid #d9d5ce}.hero-grid{display:grid;grid-template-columns:minmax(0,1.4fr) 290px;gap:43px;align-items:end}.back{display:block;width:max-content;text-decoration:none;color:#6e7986;font-size:8px;font-weight:800;margin-bottom:18px}.hero h1{font-family:var(--font-display);font-size:clamp(42px,6vw,66px);line-height:.96;letter-spacing:-.058em;margin:9px 0 14px;max-width:800px}.hero p{font-size:12px;line-height:1.8;color:#596676;max-width:710px}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:19px}.primary,.secondary{padding:10px 13px;border-radius:6px;text-decoration:none;font-size:9px;font-weight:850}.primary{background:#21324d;color:#fff}.secondary{background:#fff;border:1px solid #d0d6dd;color:#21324d}.hero aside{background:#fff;border:1px solid #d2d2ce;border-top:4px solid #1f6f78;padding:17px}.hero aside>span{font-size:7px;letter-spacing:.13em;color:#356a6e;font-weight:850}.hero aside strong{display:block;font-family:var(--font-display);font-size:20px;margin:8px 0}.hero aside p{font-size:8.5px;line-height:1.6;color:#697583}.section{padding:49px 0}.section header{display:flex;justify-content:space-between;align-items:end;gap:26px;margin-bottom:20px}.section header h2,.practice h2{font-family:var(--font-display);font-size:clamp(28px,4vw,40px);line-height:1.04;letter-spacing:-.044em;margin-top:7px}.section header>p{max-width:390px;text-align:right;font-size:9.5px;line-height:1.65;color:#687482}.priority-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.priority-grid article{background:#fff;border:1px solid #d9d6d0;padding:15px;display:flex;flex-direction:column;min-height:205px}.priority-grid article>span{font-size:7px;letter-spacing:.08em;color:#397278;font-weight:850}.priority-grid h3{font-family:var(--font-display);font-size:19px;margin:6px 0}.priority-grid p{font-size:8.5px;line-height:1.6;color:#687482;flex:1}.priority-grid article>div{display:flex;gap:6px;margin-top:12px}.priority-grid a{flex:1;text-align:center;text-decoration:none;background:#21324d;color:#fff;padding:8px 6px;border-radius:4px;font-size:7.5px;font-weight:850}.priority-grid a:last-child{background:#fff;color:#21324d;border:1px solid #d1d6dc}.method-wrap{background:#172338;color:#fff}.light>p{color:#c6d0dc!important}.method-grid{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid rgba(255,255,255,.13)}.method-grid article{padding:17px;border-right:1px solid rgba(255,255,255,.12)}.method-grid article:last-child{border-right:0}.method-grid span{font-family:Georgia,serif;color:#d8a776;font-size:18px}.method-grid h3{font-family:var(--font-display);font-size:15px;margin:9px 0 4px}.method-grid p{font-size:8px;line-height:1.6;color:#c5d0dc}.practice{padding:47px 0;display:grid;grid-template-columns:.8fr 1.2fr;gap:32px;align-items:center}.practice>div>p{font-size:9.5px;line-height:1.65;color:#687482;margin-top:7px}.links{display:grid;grid-template-columns:repeat(3,1fr);gap:7px}.links a{text-align:center;text-decoration:none;background:#fff;border:1px solid #d9d6d0;color:#21324d;padding:12px 8px;font-size:8.5px;font-weight:850}.final{margin-bottom:40px;padding:25px;background:#26364f;color:#fff;display:flex;justify-content:space-between;align-items:center;gap:24px}.final h2{font-family:var(--font-display);font-size:clamp(26px,4vw,38px);line-height:1.04;letter-spacing:-.04em;margin-top:6px;max-width:700px}.primary.warm{background:#a34821}.secondary.dark{background:transparent;color:#fff;border-color:rgba(255,255,255,.24)}@media(max-width:780px){.hero-grid{grid-template-columns:1fr;gap:22px}.priority-grid{grid-template-columns:1fr 1fr}.section header{flex-direction:column;align-items:flex-start;gap:7px}.section header>p{text-align:left}.practice{grid-template-columns:1fr}.final{flex-direction:column;align-items:flex-start}}@media(max-width:500px){.priority-grid,.method-grid,.links{grid-template-columns:1fr}.hero{padding:40px 0 30px}.final{width:calc(100% - 24px)}}
       `}</style>
     </main>
-  );
-}
-
-function YtIcon() {
-  return (
-    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style={{ flexShrink: 0 }}>
-      <path d="M21.543 6.498C22 8.28 22 12 22 12s0 3.72-.457 5.502c-.254.985-.997 1.76-1.938 2.022C17.896 20 12 20 12 20s-5.893 0-7.605-.476c-.945-.266-1.687-1.04-1.938-2.022C2 15.72 2 12 2 12s0-3.72.457-5.502c.254-.985.997-1.76 1.938-2.022C6.107 4 12 4 12 4s5.896 0 7.605.476c.945.266 1.687 1.04 1.938 2.022zM10 15.5l6-3.5-6-3.5v7z"/>
-    </svg>
-  );
-}
-
-function DlIcon() {
-  return (
-    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
-      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-      <polyline points="7 10 12 15 17 10"/>
-      <line x1="12" y1="15" x2="12" y2="3"/>
-    </svg>
   );
 }
