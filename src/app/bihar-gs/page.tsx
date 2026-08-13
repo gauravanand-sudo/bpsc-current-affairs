@@ -1,152 +1,47 @@
 import Link from "next/link";
-import GlowLogo from "@/components/GlowLogo";
 
-const SUBJECTS = [
-  { key: "geo",      label: "Bihar Geography",  emoji: "🗺️", yt: "", pdf: "" },
-  { key: "economy",  label: "Bihar Economy",    emoji: "📊",  yt: "", pdf: "" },
-  { key: "polity",   label: "Bihar Polity",     emoji: "⚖️",  yt: "", pdf: "" },
+const SOURCES = [
+  { code: "FIN", title: "Bihar Finance Department", use: "Economy, budget, state profile and governance documents", href: "https://state.bihar.gov.in/finance/CitizenHome.html" },
+  { code: "GOV", title: "Government of Bihar Portal", use: "Departments, schemes, administration and state-sector updates", href: "https://state.bihar.gov.in/biharprd/CitizenHome.html" },
+  { code: "PR", title: "Bihar Government Press Releases", use: "Current schemes, development projects and state current affairs", href: "https://state.bihar.gov.in/lrc/SectionInformation.html?editForm=&rowId=8929" },
+  { code: "CEN", title: "Census of India Data", use: "Population, districts, migration and demographic reference data", href: "https://censusindia.gov.in/census.website/en/data" },
+  { code: "BPSC", title: "BPSC Question Booklets", use: "Previous papers to calibrate Bihar-specific depth and recurring themes", href: "https://bpsc.bihar.gov.in/question-booklets/" },
+];
+
+const TOPICS = [
+  ["Bihar History & Culture", "Ancient sites, movements, personalities, art, literature and cultural geography"],
+  ["Bihar Geography", "Physiography, rivers, soils, agriculture, floods, districts, resources and environment"],
+  ["Bihar Economy", "State finances, agriculture, industry, infrastructure, employment, poverty and development"],
+  ["Bihar Polity & Administration", "State institutions, local government, administration and governance issues"],
+  ["Bihar Current Affairs", "Schemes, infrastructure, education, health, social welfare and state policy"],
+  ["Data & Reports", "Census, budget/economic material, department reports and factual state indicators"],
+];
+
+const METHOD = [
+  ["01", "Build static Bihar", "Complete geography, history, economy and administrative basics before memorising schemes."],
+  ["02", "Add official data", "Use Bihar Finance, Census and department portals for reliable state facts and trends."],
+  ["03", "Track current issues", "Link state schemes and development news to the static Bihar topic they belong to."],
+  ["04", "Use BPSC PYQs", "Let previous papers decide which facts deserve repeated revision."],
 ];
 
 export default function BiharGSPage() {
   return (
-    <main style={{ minHeight: "100vh", background: "var(--bg)", color: "var(--ink)" }}>
-      {/* Header */}
-      <div style={{ maxWidth: 860, margin: "0 auto", padding: "16px 16px 0", textAlign: "center", position: "relative" }}>
-        <Link href="/study" style={{ position: "absolute", right: 16, top: 20, fontSize: 12.5, fontWeight: 600, color: "var(--muted)", textDecoration: "none" }}>← Back</Link>
-        <GlowLogo style={{ margin: "0 auto 6px" }} />
-        <h1 style={{
-          fontFamily: "var(--font-display)", fontWeight: 800,
-          fontSize: 20, letterSpacing: "-0.025em",
-          color: "var(--ink-strong)", marginBottom: 4,
-        }}>Bihar GS</h1>
-        <p style={{ fontSize: 12.5, color: "var(--muted)", fontWeight: 600, letterSpacing: "0.01em" }}>
-          Only what scores. Zero fluff, zero filler.
-        </p>
-      </div>
+    <main className="page">
+      <section className="hero"><div className="shell hero-grid"><div><Link href="/study" className="back">← Free Study</Link><span className="overline">BIHAR GENERAL STUDIES</span><h1>Build Bihar Special from official state sources and BPSC PYQs.</h1><p>This desk organises Bihar history, geography, economy, governance and current affairs around working government/Census sources and the official BPSC question-booklet archive.</p><div className="actions"><a href="#topics" className="primary">Open Bihar GS Map</a><Link href="/pyq" className="secondary">BPSC PYQs</Link><Link href="/quizzes/static" className="text-link">Practice GS →</Link></div></div><aside><span>BPSC RULE</span><strong>Static Bihar + data + current issues + PYQs</strong><p>State-specific preparation becomes manageable when every fact sits under a clear Bihar GS theme and is checked against previous papers.</p></aside></div></section>
 
-      {/* Subject cards */}
-      <section style={{ maxWidth: 860, margin: "0 auto", padding: "14px 16px 72px" }}>
-        <div className="subjects-grid">
-          {SUBJECTS.map((sub) => {
-            const hasYt = !!sub.yt;
-            const hasPdf = !!sub.pdf;
-            return (
-              <div key={sub.key} className="subject-card">
-                <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
-                  <span style={{
-                    fontSize: 26, width: 48, height: 48,
-                    borderRadius: 13, display: "grid", placeItems: "center",
-                    background: "color-mix(in srgb, #b91c1c 10%, transparent)",
-                    border: "1px solid color-mix(in srgb, #b91c1c 20%, transparent)",
-                    flexShrink: 0,
-                  }}>{sub.emoji}</span>
-                  <p style={{
-                    fontFamily: "var(--font-display)",
-                    fontSize: 17, fontWeight: 800,
-                    color: "var(--ink-strong)",
-                    letterSpacing: "-0.025em",
-                  }}>{sub.label}</p>
-                </div>
+      <section id="topics" className="shell section"><header><div><span className="overline">BIHAR GS SYLLABUS MAP</span><h2>Six blocks cover the core revision system.</h2></div><p>Use the topic blocks to organise notes; use official sources for facts and the PYQ library to decide depth.</p></header><div className="topic-grid">{TOPICS.map(([title,copy],i) => <article key={title}><span>0{i+1}</span><h3>{title}</h3><p>{copy}</p><div><Link href="/pyq">BPSC PYQs →</Link><Link href="/ask" className="outline">Ask Tutor</Link></div></article>)}</div></section>
 
-                <div style={{ display: "flex", gap: 8 }}>
-                  {hasYt ? (
-                    <a href={sub.yt} target="_blank" rel="noopener noreferrer" className="btn-yt">
-                      <YtIcon /> Watch Lecture
-                    </a>
-                  ) : (
-                    <span className="btn-yt btn-off"><YtIcon /> Coming Soon</span>
-                  )}
-                  {hasPdf ? (
-                    <a href={sub.pdf} target="_blank" rel="noopener noreferrer" className="btn-pdf">
-                      <DlIcon /> Download PDF
-                    </a>
-                  ) : (
-                    <span className="btn-pdf btn-off"><DlIcon /> Coming Soon</span>
-                  )}
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </section>
+      <section className="source-wrap"><div className="shell section"><header className="light"><div><span className="overline light-text">OFFICIAL SOURCE DESK</span><h2>Use primary sources for Bihar facts.</h2></div><p>Every button below opens a working government or commission source.</p></header><div className="source-grid">{SOURCES.map(source => <a key={source.code} href={source.href} target="_blank" rel="noopener noreferrer"><div>{source.code}</div><span>OFFICIAL / PRIMARY SOURCE</span><h3>{source.title}</h3><p>{source.use}</p><b>Open Source ↗</b></a>)}</div></div></section>
+
+      <section className="shell section method"><div><span className="overline">HOW TO PREPARE BIHAR SPECIAL</span><h2>Use one repeatable sequence.</h2></div><div className="method-grid">{METHOD.map(([n,title,copy]) => <article key={n}><span>{n}</span><h3>{title}</h3><p>{copy}</p></article>)}</div></section>
+
+      <section className="shell practice-band"><div><span className="overline light-text">FROM SOURCE TO QUESTION</span><h2>Do not leave Bihar GS as a reading subject.</h2><p>After each topic, use BPSC papers and Static GS practice. Keep an error list for state-specific facts you repeatedly miss.</p></div><div className="practice-links"><Link href="/pyq">BPSC PYQ Library →</Link><Link href="/quizzes/static">Static GS Quiz</Link><Link href="/ca/lectures">Current Affairs Desk</Link></div></section>
+
+      <section className="shell final"><div><span className="overline light-text">BPSC COMPLETE PREPARATION</span><h2>72nd and 73rd BPSC programs connect Bihar GS to Prelims, Mains and Interview.</h2></div><div className="actions"><Link href="/courses/bpsc-72" className="primary warm">72nd BPSC →</Link><Link href="/courses/bpsc-73" className="secondary dark">73rd BPSC</Link></div></section>
 
       <style>{`
-        .subjects-grid {
-          display: grid;
-          grid-template-columns: 1fr;
-          gap: 12px;
-        }
-        @media (min-width: 500px) {
-          .subjects-grid { grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
-        }
-
-        .subject-card {
-          background: var(--card);
-          border: 1px solid var(--line);
-          border-radius: 20px;
-          padding: 20px 18px 18px;
-          transition: transform 0.15s ease, box-shadow 0.15s ease;
-        }
-        @media (hover: hover) {
-          .subject-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 32px rgba(185,28,28,0.10);
-          }
-        }
-
-        .btn-yt, .btn-pdf {
-          display: inline-flex;
-          align-items: center;
-          gap: 6px;
-          padding: 8px 13px;
-          border-radius: 10px;
-          font-size: 12.5px;
-          font-weight: 700;
-          text-decoration: none;
-          flex: 1;
-          justify-content: center;
-          white-space: nowrap;
-          transition: opacity 0.12s ease, transform 0.12s ease;
-        }
-        .btn-yt {
-          background: #ff2a2a;
-          color: #fff;
-        }
-        @media (hover: hover) {
-          .btn-yt:not(.btn-off):hover { opacity: 0.85; transform: translateY(-1px); }
-        }
-        .btn-pdf {
-          background: color-mix(in srgb, #b91c1c 12%, transparent);
-          color: #b91c1c;
-          border: 1px solid color-mix(in srgb, #b91c1c 25%, transparent);
-        }
-        @media (hover: hover) {
-          .btn-pdf:not(.btn-off):hover { opacity: 0.78; transform: translateY(-1px); }
-        }
-        .btn-off {
-          opacity: 0.35;
-          cursor: default;
-          pointer-events: none;
-        }
+        .page{min-height:100vh;background:#f7f5f0;color:#172338}.shell{width:min(1060px,calc(100% - 32px));margin:0 auto}.overline{font-size:8px;letter-spacing:.16em;font-weight:850;color:#99502f}.light-text{color:#e0b58e}.hero{padding:55px 0 42px;background:linear-gradient(180deg,#fdfcf9,#efebe4);border-bottom:1px solid #d9d5ce}.hero-grid{display:grid;grid-template-columns:minmax(0,1.4fr) 295px;gap:44px;align-items:end}.back{display:block;width:max-content;text-decoration:none;color:#6e7986;font-size:8px;font-weight:800;margin-bottom:18px}.hero h1{font-family:var(--font-display);font-size:clamp(41px,6vw,66px);line-height:.96;letter-spacing:-.058em;margin:9px 0 14px;max-width:800px}.hero p{font-size:12px;line-height:1.8;color:#596676;max-width:720px}.actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:19px}.primary,.secondary{padding:10px 14px;border-radius:6px;text-decoration:none;font-size:9px;font-weight:850}.primary{background:#21324d;color:#fff}.secondary{background:#fff;border:1px solid #d0d6dd;color:#21324d}.text-link{text-decoration:none;color:#91401f;font-size:9px;font-weight:850;padding:9px}.hero aside{background:#fff;border:1px solid #d2d2ce;border-top:4px solid #a83d2b;padding:17px}.hero aside>span{font-size:7px;letter-spacing:.13em;color:#9b432f;font-weight:850}.hero aside strong{display:block;font-family:var(--font-display);font-size:20px;line-height:1.15;margin:8px 0}.hero aside p{font-size:8.5px;line-height:1.6;color:#697583}.section{padding:49px 0}.section header{display:flex;justify-content:space-between;align-items:end;gap:26px;margin-bottom:20px}.section header h2,.method h2,.practice-band h2{font-family:var(--font-display);font-size:clamp(28px,4vw,41px);line-height:1.04;letter-spacing:-.045em;margin-top:7px}.section header>p{max-width:390px;text-align:right;font-size:9.5px;line-height:1.65;color:#687482}.topic-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}.topic-grid article{background:#fff;border:1px solid #d9d6d0;padding:15px;display:flex;flex-direction:column;min-height:190px}.topic-grid article>span{font-family:Georgia,serif;color:#a3422c;font-size:16px}.topic-grid h3{font-family:var(--font-display);font-size:17px;margin:7px 0 5px}.topic-grid p{font-size:8.2px;line-height:1.58;color:#687482;flex:1}.topic-grid article>div{display:flex;gap:5px;margin-top:10px}.topic-grid a{flex:1;text-align:center;text-decoration:none;background:#21324d;color:#fff;padding:8px 5px;border-radius:4px;font-size:7.2px;font-weight:850}.topic-grid .outline{background:#fff;color:#21324d;border:1px solid #d1d6dc}.source-wrap{background:#172338;color:#fff}.light>p{color:#c6d0dc!important}.source-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}.source-grid>a{text-decoration:none;color:#fff;border:1px solid rgba(255,255,255,.14);padding:14px;display:flex;flex-direction:column;min-height:200px;background:rgba(255,255,255,.035)}.source-grid>a>div{width:38px;height:38px;display:grid;place-items:center;border:1px solid rgba(255,255,255,.18);font-family:var(--font-display);font-size:9px;color:#e3b78f}.source-grid span{font-size:6.3px;letter-spacing:.07em;color:#aeb9c5;margin-top:10px}.source-grid h3{font-family:var(--font-display);font-size:14px;line-height:1.15;margin:6px 0}.source-grid p{font-size:7.5px;line-height:1.55;color:#bdc8d5;flex:1}.source-grid b{font-size:7.3px;color:#e3b78f;margin-top:8px}.method{display:grid;grid-template-columns:.7fr 1.3fr;gap:32px;align-items:start}.method-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}.method-grid article{background:#fff;border:1px solid #d9d6d0;padding:14px}.method-grid span{font-family:Georgia,serif;color:#a34821;font-size:17px}.method-grid h3{font-family:var(--font-display);font-size:14px;margin:8px 0 4px}.method-grid p{font-size:7.8px;line-height:1.58;color:#687482}.practice-band{padding:25px;background:#26364f;color:#fff;display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center}.practice-band p{font-size:9px;line-height:1.6;color:#c6d0dc;margin-top:7px}.practice-links{display:grid;gap:6px;min-width:195px}.practice-links a{text-align:center;text-decoration:none;background:#f1ece5;color:#26364f;padding:9px;font-size:8px;font-weight:850}.final{margin:40px auto;padding:25px;background:#26364f;color:#fff;display:flex;justify-content:space-between;align-items:center;gap:24px}.final h2{font-family:var(--font-display);font-size:clamp(26px,4vw,38px);line-height:1.04;letter-spacing:-.04em;margin-top:6px;max-width:700px}.primary.warm{background:#a34821}.secondary.dark{background:transparent;color:#fff;border-color:rgba(255,255,255,.24)}@media(max-width:850px){.hero-grid{grid-template-columns:1fr;gap:22px}.source-grid{grid-template-columns:1fr 1fr 1fr}.method{grid-template-columns:1fr}.section header{flex-direction:column;align-items:flex-start;gap:7px}.section header>p{text-align:left}.practice-band{grid-template-columns:1fr}.final{flex-direction:column;align-items:flex-start}}@media(max-width:560px){.topic-grid,.source-grid,.method-grid{grid-template-columns:1fr}.hero{padding:40px 0 30px}.final{width:calc(100% - 24px)}}
       `}</style>
     </main>
-  );
-}
-
-function YtIcon() {
-  return (
-    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor" style={{ flexShrink: 0 }}>
-      <path d="M21.543 6.498C22 8.28 22 12 22 12s0 3.72-.457 5.502c-.254.985-.997 1.76-1.938 2.022C17.896 20 12 20 12 20s-5.893 0-7.605-.476c-.945-.266-1.687-1.04-1.938-2.022C2 15.72 2 12 2 12s0-3.72.457-5.502c.254-.985.997-1.76 1.938-2.022C6.107 4 12 4 12 4s5.896 0 7.605.476c.945.266 1.687 1.04 1.938 2.022zM10 15.5l6-3.5-6-3.5v7z"/>
-    </svg>
-  );
-}
-
-function DlIcon() {
-  return (
-    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
-      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-      <polyline points="7 10 12 15 17 10"/>
-      <line x1="12" y1="15" x2="12" y2="3"/>
-    </svg>
   );
 }
