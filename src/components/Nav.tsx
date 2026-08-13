@@ -15,13 +15,13 @@ const MENUS = [
       {
         title: "UPSC CSE 2027",
         links: [
-          ["Complete Foundation Program", "/courses/upsc-2027"],
-          ["Admissions & Counselling", "/admissions"],
+          ["Complete Program", "/courses/upsc-2027"],
+          ["Admissions & Fees", "/admissions"],
           ["Demo Class", "/demo"],
         ],
       },
       {
-        title: "Preparation",
+        title: "Resources",
         links: [
           ["UPSC Previous Papers", "/pyq"],
           ["Current Affairs", "/ca"],
@@ -37,16 +37,16 @@ const MENUS = [
       {
         title: "73rd BPSC",
         links: [
-          ["Complete Foundation Program", "/courses/bpsc-73"],
-          ["Admissions & Counselling", "/admissions"],
+          ["Complete Program", "/courses/bpsc-73"],
+          ["Admissions & Fees", "/admissions"],
           ["Demo Class", "/demo"],
         ],
       },
       {
-        title: "Bihar Preparation",
+        title: "Resources",
         links: [
           ["Bihar GS", "/bihar-gs"],
-          ["BPSC Previous Papers", "/pyq#bpsc"],
+          ["BPSC PYQs", "/pyq#bpsc"],
           ["Current Affairs", "/ca"],
           ["Free Quiz", "/quizzes"],
         ],
@@ -59,8 +59,8 @@ const MENUS = [
       {
         title: "Study",
         links: [
-          ["Free Study Library", "/study"],
-          ["NCERT Desk", "/ncert"],
+          ["Free Study", "/study"],
+          ["NCERT", "/ncert"],
           ["Bihar GS", "/bihar-gs"],
           ["Lucent GK Revision", "/lucent-gk"],
         ],
@@ -68,7 +68,7 @@ const MENUS = [
       {
         title: "Practice & Support",
         links: [
-          ["Free Quizzes", "/quizzes"],
+          ["Free Quiz", "/quizzes"],
           ["Previous Year Papers", "/pyq"],
           ["Ask Tutor", "/ask"],
           ["Study Buddy", "/partner"],
@@ -133,9 +133,9 @@ export default function Nav() {
     <>
       <div className={styles.utility}>
         <div className={styles.utilityInner}>
-          <p><b>Admissions Open:</b> UPSC CSE 2027 &amp; 73rd BPSC</p>
+          <p><b>Programs:</b> UPSC CSE 2027 ₹1,60,000 · 73rd BPSC ₹87,000</p>
           <div>
-            <Link href="/admissions">Academic Counselling</Link>
+            <Link href="/admissions">Admissions &amp; Fees</Link>
             <Link href="/demo">Demo Class</Link>
             <Link href="/faculty">Faculty</Link>
             {user ? (
@@ -156,12 +156,12 @@ export default function Nav() {
             <Image src="/logo4.png" alt="OneShot GS" width={190} height={66} priority />
           </Link>
           <div className={styles.instituteLabel}>
-            <span>UPSC &amp; BPSC PREPARATION</span>
+            <span>UPSC &amp; BPSC</span>
             <b>Foundation · Prelims · Mains · Interview</b>
           </div>
           <div className={styles.headerActions}>
             <Link href="/ask" className={styles.ask}>Ask Tutor</Link>
-            <Link href="/admissions" className={styles.admission}>Admissions <span>→</span></Link>
+            <Link href="/admissions" className={styles.admission}>Admissions &amp; Fees <span>→</span></Link>
             {user && (
               <Link href="/profile" className={styles.profile} aria-label="Open profile">
                 {user.user_metadata?.avatar_url ? <Image src={user.user_metadata.avatar_url} alt="Profile" width={34} height={34} unoptimized /> : <span>{(user.user_metadata?.full_name ?? user.email ?? "U")[0].toUpperCase()}</span>}
