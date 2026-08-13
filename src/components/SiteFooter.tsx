@@ -13,7 +13,7 @@ const FOOTER_LINKS = [
       ["73rd BPSC", "/courses/bpsc-73"],
       ["Courses", "/courses"],
       ["Admissions & Fees", "/admissions"],
-      ["Talk to Admissions", "/ask?intent=admission"],
+      ["Talk to Admissions", "/talk-to-us?intent=admission"],
     ],
   },
   {
@@ -27,30 +27,30 @@ const FOOTER_LINKS = [
     ],
   },
   {
-    title: "BPSC",
+    title: "Academic Support",
     links: [
-      ["73rd BPSC Program", "/courses/bpsc-73"],
+      ["Talk to Tutor", "/ask"],
       ["Bihar GS", "/bihar-gs"],
       ["BPSC PYQs", "/pyq#bpsc"],
-      ["Current Affairs", "/ca"],
-      ["Lucent GK Revision", "/lucent-gk"],
+      ["Study Buddy", "/partner"],
+      ["Faculty", "/faculty"],
     ],
   },
   {
-    title: "Help & Support",
+    title: "Helpdesk",
     links: [
-      ["Talk to Us", "/ask"],
-      ["Academic Query", "/ask?intent=academic"],
-      ["Payment Help", "/ask?intent=payment"],
-      ["Technical Help", "/ask?intent=technical"],
-      ["Study Buddy", "/partner"],
+      ["Talk to Us", "/talk-to-us"],
+      ["Admission Query", "/talk-to-us?intent=admission"],
+      ["Payment Help", "/talk-to-us?intent=payment"],
+      ["Technical Help", "/talk-to-us?intent=technical"],
+      ["Other Query", "/talk-to-us?intent=general"],
     ],
   },
 ];
 
 export default function SiteFooter() {
   const pathname = usePathname();
-  if (["/support", "/partner", "/ask"].includes(pathname) || pathname.endsWith("/quiz")) return null;
+  if (["/support", "/partner", "/ask", "/talk-to-us"].includes(pathname) || pathname.endsWith("/quiz")) return null;
 
   return (
     <footer className={styles.footer}>
@@ -59,12 +59,12 @@ export default function SiteFooter() {
           <div className={styles.counsellingInner}>
             <div>
               <span>NEED HELP?</span>
-              <h2>Admissions, academic query or technical help</h2>
-              <p>Open Talk to Us and choose the type of query. The assistant will collect only the relevant details for follow-up.</p>
+              <h2>Academic doubt or helpdesk query?</h2>
+              <p>Use Talk to Tutor for study questions. Use Talk to Us for admissions, payment and technical support.</p>
             </div>
             <div>
-              <Link href="/ask">Talk to Us</Link>
-              <Link href="/ask?intent=admission">Admission Query</Link>
+              <Link href="/ask">Talk to Tutor</Link>
+              <Link href="/talk-to-us">Talk to Us</Link>
             </div>
           </div>
         </div>
@@ -75,7 +75,7 @@ export default function SiteFooter() {
           <Link href="/" className={styles.logo} aria-label="OneShot GS home">
             <Image src="/logo4.png" alt="OneShot GS" width={210} height={72} />
           </Link>
-          <p>UPSC CSE 2027 and 73rd BPSC preparation, plus Current Affairs, PYQs, quizzes, study resources and helpdesk support.</p>
+          <p>UPSC CSE 2027 and 73rd BPSC preparation, plus Current Affairs, PYQs, quizzes, study resources, academic tutoring and helpdesk support.</p>
           <div className={styles.programMini}>
             <Link href="/courses/upsc-2027"><b>UPSC CSE 2027</b><span>₹1,60,000</span></Link>
             <Link href="/courses/bpsc-73"><b>73rd BPSC</b><span>₹87,000</span></Link>
@@ -94,12 +94,12 @@ export default function SiteFooter() {
 
       <div className={styles.studentStrip}>
         <div><b>Quick Links</b></div>
-        <div><Link href="/study">Free Study</Link><Link href="/quizzes">Free Quiz</Link><Link href="/pyq">PYQs</Link><Link href="/ca">Current Affairs</Link><Link href="/ask">Talk to Us</Link></div>
+        <div><Link href="/study">Free Study</Link><Link href="/quizzes">Free Quiz</Link><Link href="/pyq">PYQs</Link><Link href="/ask">Talk to Tutor</Link><Link href="/talk-to-us">Talk to Us</Link></div>
       </div>
 
       <div className={styles.footerBottom}>
         <p>© 2026 OneShot GS · UPSC / BPSC</p>
-        <div><Link href="/courses">Courses</Link><Link href="/faculty">Faculty</Link><Link href="/admissions">Admissions</Link><Link href="/ask">Helpdesk</Link></div>
+        <div><Link href="/courses">Courses</Link><Link href="/faculty">Faculty</Link><Link href="/admissions">Admissions</Link><Link href="/talk-to-us">Helpdesk</Link></div>
       </div>
     </footer>
   );
