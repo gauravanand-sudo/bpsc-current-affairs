@@ -13,15 +13,15 @@ export default function GlowLogo({
     <div style={{ position: "relative", display: "inline-block", ...style }}>
       <div style={{
         position: "absolute", inset: "-8px -24px",
-        background: "radial-gradient(ellipse, rgba(192,96,16,0.28) 0%, transparent 70%)",
+        background: "radial-gradient(ellipse, rgba(36,89,161,0.2) 0%, transparent 70%)",
         pointerEvents: "none",
       }} />
       <Image
-        src="/logo3.png"
+        src="/logo4.png"
         alt="OneShot GS"
         width={width}
         height={height}
-        style={{ objectFit: "contain", display: "block", mixBlendMode: "darken", position: "relative" }}
+        style={{ objectFit: "contain", display: "block", position: "relative", filter: "brightness(1.06) saturate(1.05)" }}
         priority
       />
     </div>

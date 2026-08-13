@@ -1,66 +1,250 @@
 import Image from "next/image";
 import Link from "next/link";
-import GlowLogo from "@/components/GlowLogo";
+import styles from "./home.module.css";
 import { FACULTY, FAQ, FREE_RESOURCES, PROGRAMS, TESTIMONIALS } from "@/lib/coachingData";
 
 const SYSTEM = [
-  ["01", "Foundation", "Build NCERT, core GS and exam-specific basics in sequence."],
-  ["02", "PYQ mapping", "Study previous papers by subject, subtopic, demand and recurring theme."],
-  ["03", "Prelims", "MCQs, elimination, sectional tests, full mocks and revision cycles."],
-  ["04", "Mains", "Answer-writing, Essay, Ethics, evaluation and value addition."],
-  ["05", "Interview", "Profile work, current issues, mocks and final-stage mentoring."],
+  { step: "01", title: "Build the base", copy: "NCERTs, core GS and exam-specific foundations taught in a clear sequence." },
+  { step: "02", title: "Decode PYQs", copy: "Understand recurring themes, demand patterns and what the exam actually rewards." },
+  { step: "03", title: "Master Prelims", copy: "Daily MCQs, elimination drills, sectional tests and full-length mock cycles." },
+  { step: "04", title: "Write for Mains", copy: "Answer-writing, Essay, Ethics, evaluation and structured value addition." },
+  { step: "05", title: "Face the board", copy: "Profile work, current issues, mock interviews and final-stage mentoring." },
+];
+
+const RESOURCE_ICONS: Record<string, string> = {
+  "/study": "01",
+  "/quizzes": "02",
+  "/pyq": "03",
+  "/ask": "04",
+  "/partner": "05",
+};
+
+const HERO_STATS = [
+  ["15 years", "UPSC PYQs mapped"],
+  ["5 stages", "Foundation to interview"],
+  ["2 tracks", "UPSC + BPSC"],
 ];
 
 export default function HomePage() {
   return (
-    <main className="home">
-      <section className="hero">
-        <div className="shell hero-grid">
-          <div className="hero-copy">
-            <span className="overline">ONESHOT GS · UPSC / BPSC COACHING</span>
-            <GlowLogo width={250} height={88} />
-            <h1>One institute. Two flagship programs. <em>Complete preparation.</em></h1>
-            <p>Prepare UPSC CSE 2027 or 73rd BPSC from foundation to interview with faculty classes, on-site PYQ study, tests, answer-writing, evaluation, revision planning, mentoring and student support.</p>
-            <div className="actions"><Link href="/courses" className="primary">Explore Courses</Link><Link href="/demo" className="secondary">View Demo Class</Link><Link href="/pyq" className="text-link">Open UPSC / BPSC PYQs →</Link></div>
-            <div className="trust-row"><span>Foundation</span><span>Prelims</span><span>Mains</span><span>Interview</span><span>PYQ analysis</span><span>Tests</span><span>Mentoring</span></div>
+    <main className={styles.home}>
+      <section className={styles.hero}>
+        <div className={styles.heroGlow} />
+        <div className={`${styles.shell} ${styles.heroGrid}`}>
+          <div className={styles.heroCopy}>
+            <div className={styles.heroBadge}>
+              <span /> Admissions open for 2027–28
+            </div>
+            <h1>
+              Prepare once.
+              <br />
+              <span>Clear with confidence.</span>
+            </h1>
+            <p className={styles.heroLead}>
+              A complete UPSC and BPSC learning system that brings classes, current affairs,
+              PYQs, tests, answer-writing and personal mentoring into one focused journey.
+            </p>
+            <div className={styles.heroActions}>
+              <Link href="/courses" className={styles.primaryButton}>
+                Explore programs <span>→</span>
+              </Link>
+              <Link href="/demo" className={styles.playButton}>
+                <i>▶</i> Watch a demo class
+              </Link>
+            </div>
+            <div className={styles.heroTrust}>
+              <div className={styles.avatarStack} aria-hidden="true">
+                {FACULTY.map((faculty) => (
+                  <Image key={faculty.name} src={faculty.image} alt="" width={34} height={34} />
+                ))}
+              </div>
+              <p><b>Learn with exam-experienced faculty</b><span>Concepts, practice and mentorship in one place</span></p>
+            </div>
           </div>
-          <aside className="admission-card">
-            <span>2027–28 ADMISSIONS</span>
-            {PROGRAMS.map(program => <div key={program.slug}><b>{program.exam}</b><strong>{program.price}</strong><small>{program.target}</small></div>)}
-            <Link href="/courses">Compare both flagship programs →</Link>
-            <Link href="/admissions" className="quiet">Admissions & counselling</Link>
-          </aside>
+
+          <div className={styles.heroVisual} aria-label="Inside the OneShot GS learning platform">
+            <div className={styles.visualDots} />
+            <div className={styles.dashboardCard}>
+              <div className={styles.dashboardTop}>
+                <div>
+                  <span>YOUR LEARNING DESK</span>
+                  <h2>Today&apos;s focused plan</h2>
+                </div>
+                <div className={styles.streak}><b>12</b><span>day streak</span></div>
+              </div>
+
+              <div className={styles.progressBlock}>
+                <div><span>Daily progress</span><b>68%</b></div>
+                <div className={styles.progressTrack}><span /></div>
+              </div>
+
+              <div className={styles.taskList}>
+                <div className={styles.taskDone}><i>✓</i><p><b>Polity foundation</b><span>Fundamental Rights · 42 min</span></p><em>Done</em></div>
+                <div className={styles.taskActive}><i>▶</i><p><b>June Current Affairs</b><span>Study Set 06 · Bihar focus</span></p><em>Resume</em></div>
+                <div><i>03</i><p><b>Prelims practice</b><span>30 MCQs · negative marking</span></p><em>Start</em></div>
+              </div>
+
+              <div className={styles.mentorNote}>
+                <span>MENTOR NOTE</span>
+                <p>Revise the PYQ pattern before attempting today&apos;s test.</p>
+                <Link href="/ask">Ask tutor →</Link>
+              </div>
+            </div>
+            <div className={styles.floatingResult}>
+              <span>Weekly accuracy</span><strong>+18%</strong><small>Improving steadily</small>
+            </div>
+            <div className={styles.floatingClass}>
+              <i>●</i><div><b>Live class</b><span>Polity · 7:00 PM</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div className={`${styles.shell} ${styles.heroStats}`}>
+          {HERO_STATS.map(([value, label]) => <div key={label}><strong>{value}</strong><span>{label}</span></div>)}
+          <Link href="/admissions">Book free counselling <span>↗</span></Link>
         </div>
       </section>
 
-      <section className="quick-band"><div className="shell"><Link href="/study"><b>Free Study</b><span>UPSC / BPSC academic library →</span></Link><Link href="/quizzes"><b>Free Quiz</b><span>Static + Current Affairs practice →</span></Link><Link href="/pyq"><b>15-Year UPSC PYQ Desk</b><span>On-site taxonomy + official papers →</span></Link><Link href="/ask"><b>Ask Tutor</b><span>UPSC / BPSC doubt support →</span></Link></div></section>
+      <section className={styles.programSection}>
+        <div className={styles.shell}>
+          <div className={styles.sectionHeading}>
+            <div><span className={styles.eyebrow}>FLAGSHIP PROGRAMS</span><h2>One serious program for one serious attempt.</h2></div>
+            <p>Choose your exam. We connect every stage—from learning the basics to facing the interview board.</p>
+          </div>
 
-      <section className="shell section programs-section">
-        <header><div><span className="overline">FLAGSHIP PROGRAMS</span><h2>Choose the exam you are actually preparing for.</h2></div><p>No discontinued batches, stage-wise bundles or confusing add-ons. Each fee is for an end-to-end preparation pathway.</p></header>
-        <div className="program-grid">
-          {PROGRAMS.map(program => <article key={program.slug}><div className="program-top"><span>{program.exam}</span><strong>{program.price}</strong></div><h3>{program.title}</h3><p>{program.note}</p><b className="cycle">{program.target}</b><ul>{program.includes.slice(0,7).map(item => <li key={item}>✓ {item}</li>)}</ul><div className="program-actions"><Link href={`/courses/${program.slug}`}>View Complete Program →</Link><Link href="/demo" className="outline">Demo</Link></div></article>)}
+          <div className={styles.programGrid}>
+            {PROGRAMS.map((program, index) => (
+              <article key={program.slug} className={index === 0 ? styles.programFeatured : styles.programCard}>
+                <div className={styles.programHeader}>
+                  <div><span>{index === 0 ? "MOST POPULAR" : "BIHAR FOCUSED"}</span><h3>{program.exam}</h3></div>
+                  <div><strong>{program.price}</strong><small>Complete program</small></div>
+                </div>
+                <p>{program.note}</p>
+                <div className={styles.programPill}>{program.target}</div>
+                <ul>{program.includes.slice(0, 6).map(item => <li key={item}><i>✓</i>{item}</li>)}</ul>
+                <div className={styles.programActions}>
+                  <Link href={`/courses/${program.slug}`}>View full program <span>→</span></Link>
+                  <Link href="/demo">Try demo</Link>
+                </div>
+              </article>
+            ))}
+          </div>
         </div>
       </section>
 
-      <section className="method-wrap"><div className="shell section"><header className="light"><div><span className="overline light-text">THE ONESHOT GS SYSTEM</span><h2>UPSC / BPSC preparation should move through stages, not random resources.</h2></div><p>The same academic system connects learning, PYQs, tests, writing, revision and final-stage preparation.</p></header><div className="system-grid">{SYSTEM.map(([n,t,d]) => <article key={n}><span>{n}</span><h3>{t}</h3><p>{d}</p></article>)}</div></div></section>
+      <section className={styles.ecosystemSection}>
+        <div className={styles.shell}>
+          <div className={styles.centerHeading}>
+            <span className={styles.eyebrow}>THE ONESHOT ADVANTAGE</span>
+            <h2>Everything your preparation needs.<br /><span>Nothing that distracts you.</span></h2>
+            <p>Use the academic ecosystem before you enroll. The free layer stays open to every serious aspirant.</p>
+          </div>
+          <div className={styles.resourceGrid}>
+            {FREE_RESOURCES.map((resource) => (
+              <Link href={resource.href} key={resource.href} className={styles.resourceCard}>
+                <div><span>{RESOURCE_ICONS[resource.href]}</span><i>↗</i></div>
+                <small>{resource.eyebrow}</small>
+                <h3>{resource.title}</h3>
+                <p>{resource.description}</p>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
 
-      <section className="pyq-callout"><div className="shell pyq-grid"><div><span className="overline light-text">UPSC / BPSC PREVIOUS YEAR QUESTIONS</span><h2>Do not study PYQs as PDFs. Study them as data.</h2><p>The new PYQ desk is organised by year, stage, paper, subject, topic, subtopic, demand type and recurring theme. UPSC has a 15-year Prelims/Mains study map, while exact official wording remains linked to the Commission source.</p><div className="actions"><Link href="/pyq" className="primary warm">Open PYQ Intelligence Desk</Link><Link href="/quizzes/pyq" className="secondary dark">PYQ Practice</Link></div></div><div className="pyq-list"><div><b>UPSC Prelims</b><span>2012–2026 · GS I + CSAT</span></div><div><b>UPSC Mains</b><span>2011–2025 · Essay + GS I-IV</span></div><div><b>BPSC</b><span>Official CCE archive + 73rd preparation mapping</span></div></div></div></section>
+      <section className={styles.journeySection}>
+        <div className={styles.shell}>
+          <div className={styles.sectionHeading}>
+            <div><span className={styles.eyebrow}>YOUR PREPARATION JOURNEY</span><h2>A clear path from day one to final selection.</h2></div>
+            <p>No random resource hopping. Every learning activity moves you towards the next exam stage.</p>
+          </div>
+          <div className={styles.journeyGrid}>
+            {SYSTEM.map((item, index) => (
+              <article key={item.step}>
+                <div><span>{item.step}</span>{index < SYSTEM.length - 1 && <i />}</div>
+                <h3>{item.title}</h3>
+                <p>{item.copy}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
 
-      <section className="shell section faculty-section"><header><div><span className="overline">FACULTY</span><h2>Small faculty team. Clear subject ownership.</h2></div><p>Profiles focus on subject responsibility, exam experience and what each faculty member teaches for UPSC / BPSC.</p></header><div className="faculty-grid">{FACULTY.map(f => <article key={f.name}><div className="faculty-photo"><Image src={f.image} alt={`${f.name}, ${f.subject}`} width={170} height={210} /></div><div><span>{f.subject}</span><h3>{f.name}</h3><b>{f.record}</b><p>{f.focus}</p></div></article>)}</div><Link href="/faculty" className="section-link">Faculty profiles & Prof. Kumar Sir guest lecture →</Link></section>
+      <section className={styles.pyqSection}>
+        <div className={`${styles.shell} ${styles.pyqGrid}`}>
+          <div className={styles.pyqCopy}>
+            <span className={styles.eyebrowLight}>PYQ INTELLIGENCE DESK</span>
+            <h2>Don&apos;t just solve past papers. <span>Decode the exam.</span></h2>
+            <p>Study UPSC and BPSC questions by year, subject, topic, demand and recurring theme—then practise the pattern inside the same platform.</p>
+            <ul>
+              <li><i>✓</i> UPSC Prelims 2012–2026</li>
+              <li><i>✓</i> UPSC Mains 2011–2025</li>
+              <li><i>✓</i> Official BPSC CCE archive</li>
+            </ul>
+            <div className={styles.pyqActions}><Link href="/pyq">Explore PYQ desk →</Link><Link href="/quizzes/pyq">Practice PYQs</Link></div>
+          </div>
+          <div className={styles.insightPanel}>
+            <div className={styles.insightTop}><div><span>UPSC PRELIMS · POLITY</span><h3>Topic recurrence</h3></div><b>15Y</b></div>
+            <div className={styles.chart}>
+              {[72, 48, 85, 62, 92].map((height, index) => <div key={height}><span style={{ height: `${height}%` }} /><small>{["FR", "Parl.", "Bodies", "Gov.", "Const."][index]}</small></div>)}
+            </div>
+            <div className={styles.insightFooter}><span><i /> High-frequency theme</span><b>View 128 mapped questions →</b></div>
+          </div>
+        </div>
+      </section>
 
-      <section className="shell section free-section"><header><div><span className="overline">FREE UPSC / BPSC LAYER</span><h2>Use the institute before you enroll.</h2></div><p>Study, practice, PYQs, tutor support and accountability tools remain available without purchasing a course.</p></header><div className="resource-grid">{FREE_RESOURCES.map(resource => <Link href={resource.href} key={resource.href}><span>{resource.eyebrow}</span><h3>{resource.title}</h3><p>{resource.description}</p><b>Open →</b></Link>)}</div></section>
+      <section className={styles.facultySection}>
+        <div className={styles.shell}>
+          <div className={styles.sectionHeading}>
+            <div><span className={styles.eyebrow}>MEET YOUR FACULTY</span><h2>Learn from mentors who understand the exam.</h2></div>
+            <Link href="/faculty" className={styles.textLink}>View all faculty →</Link>
+          </div>
+          <div className={styles.facultyGrid}>
+            {FACULTY.map((faculty, index) => (
+              <article key={faculty.name}>
+                <div className={styles.facultyImage}>
+                  <span>{String(index + 1).padStart(2, "0")}</span>
+                  <Image src={faculty.image} alt={`${faculty.name}, ${faculty.subject}`} width={360} height={410} />
+                </div>
+                <div className={styles.facultyBody}><small>{faculty.subject}</small><h3>{faculty.name}</h3><b>{faculty.record}</b><p>{faculty.focus}</p></div>
+              </article>
+            ))}
+            <article className={styles.guestCard}>
+              <div className={styles.guestIcon}>IPS</div><small>SPECIAL GUEST SESSION</small><h3>Prof. Kumar Sir</h3><b>Retd. IPS</b><p>Administration, Ethics and Decision-Making for Mains and Interview.</p><Link href="/faculty">View session details →</Link>
+            </article>
+          </div>
+        </div>
+      </section>
 
-      <section className="guest-wrap"><div className="shell guest"><div className="guest-mark">IPS</div><div><span className="overline light-text">SPECIAL GUEST LECTURE</span><h2>Prof. Kumar Sir · Retd. IPS</h2><p>Administration, Ethics and Decision-Making for UPSC / BPSC Mains and Interview, with a public-service perspective on governance and judgement.</p></div><Link href="/faculty">Faculty & Guest Sessions →</Link></div></section>
+      <section className={styles.testimonialSection}>
+        <div className={styles.shell}>
+          <div className={styles.centerHeading}>
+            <span className={styles.eyebrow}>LEARNER STORIES</span>
+            <h2>Structure changes preparation.</h2>
+            <p>What aspirants experience when classes, practice and revision finally work together.</p>
+          </div>
+          <div className={styles.testimonialGrid}>
+            {TESTIMONIALS.slice(0, 3).map((item, index) => (
+              <article key={item.quote} className={index === 1 ? styles.testimonialFeatured : ""}>
+                <div className={styles.quoteMark}>“</div><div className={styles.stars}>★★★★★</div><blockquote>{item.quote}</blockquote><div className={styles.learner}><span>{String(index + 1).padStart(2, "0")}</span><p><b>Verified learner</b><small>{item.meta}</small></p></div>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
 
-      <section className="shell section testimonials-section"><header><div><span className="overline">LEARNER FEEDBACK</span><h2>What structured preparation changes.</h2></div><p>Feedback across UPSC / BPSC preparation, PYQs, writing and revision.</p></header><div className="testimonials">{TESTIMONIALS.map(item => <article key={item.quote}><div>★★★★★</div><blockquote>“{item.quote}”</blockquote><span>{item.meta}</span></article>)}</div></section>
+      <section className={styles.faqSection}>
+        <div className={`${styles.shell} ${styles.faqGrid}`}>
+          <div><span className={styles.eyebrow}>FREQUENTLY ASKED</span><h2>Questions before you begin?</h2><p>Explore the free learning layer, attend a demo or speak with the admissions team.</p><Link href="/admissions">Talk to a counsellor →</Link></div>
+          <div className={styles.faqList}>{FAQ.map(([question, answer], index) => <details key={question} open={index === 0}><summary>{question}<span>+</span></summary><p>{answer}</p></details>)}</div>
+        </div>
+      </section>
 
-      <section className="faq-wrap"><div className="shell section"><header><div><span className="overline">COMMON QUESTIONS</span><h2>Before you enroll.</h2></div><p>Take the demo, use the free layer and review the complete program page first.</p></header><div className="faq-list">{FAQ.map(([q,a],i) => <details key={q} open={i===0}><summary>{q}</summary><p>{a}</p></details>)}</div></div></section>
-
-      <section className="shell final-cta"><div><span className="overline light-text">TWO PROGRAMS · END TO END</span><h2>UPSC 2027 or 73rd BPSC. Build one serious attempt.</h2><p>UPSC CSE 2027 ₹1,60,000 · 73rd BPSC ₹87,000 · Foundation + Prelims + Mains + Interview.</p></div><div className="actions"><Link href="/demo" className="primary warm">View Demo →</Link><Link href="/admissions" className="secondary dark">Admissions</Link></div></section>
-
-      <style>{`
-        .home{min-height:100vh;background:#f7f5f0;color:#172338}.shell{width:min(1100px,calc(100% - 32px));margin:0 auto}.overline{font-size:8px;letter-spacing:.16em;font-weight:850;color:#98502e}.light-text{color:#e1b68f}.hero{padding:64px 0 50px;background:linear-gradient(180deg,#fdfcf9,#efebe4);border-bottom:1px solid #d9d5ce}.hero-grid{display:grid;grid-template-columns:minmax(0,1.48fr) 330px;gap:50px;align-items:end}.hero-copy>div{margin:7px 0 -4px}.hero h1{font-family:var(--font-display);font-size:clamp(45px,6.7vw,74px);line-height:.94;letter-spacing:-.063em;max-width:850px}.hero h1 em{font-style:normal;color:#9f3e1b}.hero-copy>p{max-width:760px;margin-top:17px;font-size:13.5px;line-height:1.8;color:#596676}.actions{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:20px}.primary,.secondary{padding:11px 15px;border-radius:6px;text-decoration:none;font-size:10px;font-weight:850}.primary{background:#21324d;color:#fff}.secondary{background:#fff;border:1px solid #d0d6dd;color:#21324d}.text-link{padding:10px;text-decoration:none;color:#91401f;font-size:10px;font-weight:850}.trust-row{display:flex;gap:6px;flex-wrap:wrap;margin-top:16px}.trust-row span{font-size:7.5px;font-weight:800;color:#5c6876;padding:5px 7px;background:rgba(255,255,255,.75);border:1px solid #dbd8d2}.admission-card{background:#fff;border:1px solid #d1d2cf;border-top:4px solid #9f3e1b;padding:18px}.admission-card>span{font-size:7px;letter-spacing:.14em;color:#98502e;font-weight:850}.admission-card>div{padding:14px 0;border-bottom:1px solid #e4e1db;display:grid;grid-template-columns:1fr auto}.admission-card b,.admission-card small{display:block}.admission-card b{font-size:8.5px}.admission-card strong{font-family:var(--font-display);font-size:22px;grid-column:2;grid-row:1/3}.admission-card small{font-size:7.4px;color:#77818d;max-width:160px}.admission-card>a{display:block;text-decoration:none;text-align:center;background:#21324d;color:#fff;padding:10px;border-radius:4px;font-size:8.5px;font-weight:850;margin-top:12px}.admission-card>a.quiet{background:#fff;border:1px solid #d2d6dc;color:#21324d;margin-top:6px}.quick-band{background:#172338;color:#fff}.quick-band>div{display:grid;grid-template-columns:repeat(4,1fr)}.quick-band a{padding:17px;border-right:1px solid rgba(255,255,255,.12);text-decoration:none;color:#fff}.quick-band a:last-child{border-right:0}.quick-band b,.quick-band span{display:block}.quick-band b{font-family:var(--font-display);font-size:13px}.quick-band span{font-size:7.8px;color:#bcc8d5;margin-top:4px}.section{padding:53px 0}.section header{display:flex;justify-content:space-between;align-items:end;gap:28px;margin-bottom:22px}.section header h2,.pyq-callout h2{font-family:var(--font-display);font-size:clamp(29px,4vw,43px);line-height:1.04;letter-spacing:-.045em;margin-top:7px}.section header>p{max-width:390px;text-align:right;font-size:10px;line-height:1.65;color:#687482}.program-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}.program-grid article{background:#fff;border:1px solid #d8d5cf;border-top:3px solid #31445f;padding:20px;display:flex;flex-direction:column;min-height:390px}.program-top{display:flex;justify-content:space-between;gap:10px;align-items:start}.program-top span{font-size:8px;letter-spacing:.09em;font-weight:850;color:#965033}.program-top strong{font-family:var(--font-display);font-size:25px}.program-grid h3{font-family:var(--font-display);font-size:24px;margin:8px 0 4px}.program-grid article>p{font-size:9.3px;line-height:1.6;color:#697583}.cycle{font-size:8px;color:#245b3e;margin-top:8px}.program-grid ul{list-style:none;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:7px;margin:15px 0;flex:1;font-size:8.5px;color:#586575}.program-actions{display:flex;gap:6px}.program-actions a{flex:1;text-align:center;text-decoration:none;background:#21324d;color:#fff;padding:10px 6px;border-radius:4px;font-size:8.2px;font-weight:850}.program-actions .outline{background:#fff;color:#21324d;border:1px solid #d1d6dc}.method-wrap{background:#172338;color:#fff}.light>p{color:#c5d0dc!important}.system-grid{display:grid;grid-template-columns:repeat(5,1fr);border:1px solid rgba(255,255,255,.13)}.system-grid article{padding:18px;border-right:1px solid rgba(255,255,255,.12)}.system-grid article:last-child{border-right:0}.system-grid span{font-family:Georgia,serif;color:#d9a777;font-size:18px}.system-grid h3{font-family:var(--font-display);font-size:15px;margin:10px 0 5px}.system-grid p{font-size:8.4px;line-height:1.6;color:#bcc8d5}.pyq-callout{background:#26364f;color:#fff;padding:48px 0}.pyq-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:45px;align-items:center}.pyq-callout p{font-size:10px;line-height:1.7;color:#c5d0dc;max-width:680px}.pyq-list{border:1px solid rgba(255,255,255,.14)}.pyq-list div{padding:13px;border-bottom:1px solid rgba(255,255,255,.12)}.pyq-list div:last-child{border:0}.pyq-list b,.pyq-list span{display:block}.pyq-list b{font-size:9px}.pyq-list span{font-size:8px;color:#b9c6d3;margin-top:3px}.primary.warm{background:#a34821}.secondary.dark{background:transparent;color:#fff;border-color:rgba(255,255,255,.24)}.faculty-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px}.faculty-grid article{background:#fff;border:1px solid #d9d6d0;padding:12px;display:grid;grid-template-columns:72px 1fr;gap:12px}.faculty-photo{width:72px;height:88px;overflow:hidden;background:#ddd}.faculty-photo img{width:100%;height:100%;object-fit:cover;object-position:center 24%;filter:brightness(.72) saturate(.62) contrast(.95)}.faculty-grid article>div:last-child>span{font-size:7px;letter-spacing:.08em;color:#95502f;font-weight:850}.faculty-grid h3{font-family:var(--font-display);font-size:17px;margin:4px 0}.faculty-grid b{display:block;font-size:7.5px;line-height:1.45;color:#394b62}.faculty-grid p{font-size:7.8px;line-height:1.55;color:#697481;margin-top:5px}.section-link{display:inline-block;margin-top:14px;font-size:9px;color:#8f3f20;font-weight:850;text-decoration:none}.resource-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}.resource-grid a{text-decoration:none;background:#fff;border:1px solid #d9d6d0;padding:15px;color:#172338}.resource-grid span{font-size:6.8px;letter-spacing:.1em;color:#945033;font-weight:850}.resource-grid h3{font-family:var(--font-display);font-size:16px;margin:7px 0 5px}.resource-grid p{font-size:7.8px;line-height:1.55;color:#697482;min-height:58px}.resource-grid b{font-size:8px;color:#91401f}.guest-wrap{background:#172338;padding:0 0 48px;color:#fff}.guest{border:1px solid rgba(255,255,255,.14);padding:22px;display:grid;grid-template-columns:65px 1fr auto;gap:18px;align-items:center}.guest-mark{width:65px;height:65px;border:1px solid rgba(255,255,255,.2);display:grid;place-items:center;font-family:Georgia,serif;color:#e0b487}.guest h2{font-family:var(--font-display);font-size:25px;margin:4px 0}.guest p{font-size:9px;color:#c7d0dc}.guest>a{background:#f1ece5;color:#26364f;text-decoration:none;padding:10px;font-size:8px;font-weight:850}.testimonials{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.testimonials article{background:#fff;border:1px solid #d9d6cf;padding:15px}.testimonials article>div{font-size:7px;color:#a75a30}.testimonials blockquote{font-family:Georgia,serif;font-size:12px;line-height:1.55;margin:10px 0;color:#334156}.testimonials span{font-size:7.5px;color:#77818d}.faq-wrap{background:#efede8}.faq-list details{border-top:1px solid #d1cec7;padding:13px 0}.faq-list summary{font-size:9px;font-weight:850;cursor:pointer}.faq-list p{font-size:8.5px;line-height:1.65;color:#687482;margin-top:6px;max-width:780px}.final-cta{margin-top:42px;margin-bottom:42px;padding:28px;background:#26364f;color:#fff;display:flex;justify-content:space-between;gap:30px;align-items:center}.final-cta h2{font-family:var(--font-display);font-size:clamp(28px,4vw,42px);line-height:1.03;letter-spacing:-.04em;margin:6px 0}.final-cta p{font-size:9.5px;color:#c8d1dd}@media(max-width:850px){.hero-grid,.pyq-grid{grid-template-columns:1fr;gap:26px}.quick-band>div{grid-template-columns:1fr 1fr}.system-grid{grid-template-columns:1fr 1fr}.system-grid article{border-bottom:1px solid rgba(255,255,255,.12)}.resource-grid{grid-template-columns:1fr 1fr}.testimonials{grid-template-columns:1fr 1fr}.section header{align-items:flex-start;flex-direction:column;gap:8px}.section header>p{text-align:left}.final-cta{flex-direction:column;align-items:flex-start}}@media(max-width:600px){.program-grid,.faculty-grid{grid-template-columns:1fr}.program-grid ul{grid-template-columns:1fr}.guest{grid-template-columns:55px 1fr}.guest>a{grid-column:1/3;text-align:center}.hero{padding:44px 0 34px}}@media(max-width:430px){.quick-band>div,.system-grid,.resource-grid,.testimonials{grid-template-columns:1fr}.final-cta{width:calc(100% - 24px)}}
-      `}</style>
+      <section className={`${styles.shell} ${styles.finalCta}`}>
+        <div className={styles.ctaOrb} />
+        <div><span>YOUR SERIOUS ATTEMPT STARTS HERE</span><h2>Turn preparation into progress.</h2><p>Choose UPSC CSE 2027 or 73rd BPSC and get a complete path from foundation to interview.</p></div>
+        <div><Link href="/courses">Explore programs →</Link><Link href="/demo">Watch demo</Link></div>
+      </section>
     </main>
   );
 }
