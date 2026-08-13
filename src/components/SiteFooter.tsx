@@ -13,7 +13,7 @@ const FOOTER_LINKS = [
       ["73rd BPSC", "/courses/bpsc-73"],
       ["Courses", "/courses"],
       ["Admissions & Fees", "/admissions"],
-      ["Demo Class", "/demo"],
+      ["Talk to Admissions", "/ask?intent=admission"],
     ],
   },
   {
@@ -37,13 +37,13 @@ const FOOTER_LINKS = [
     ],
   },
   {
-    title: "Support",
+    title: "Help & Support",
     links: [
-      ["Faculty", "/faculty"],
-      ["Ask Tutor", "/ask"],
+      ["Talk to Us", "/ask"],
+      ["Academic Query", "/ask?intent=academic"],
+      ["Payment Help", "/ask?intent=payment"],
+      ["Technical Help", "/ask?intent=technical"],
       ["Study Buddy", "/partner"],
-      ["Support Desk", "/support"],
-      ["Student Profile", "/profile"],
     ],
   },
 ];
@@ -58,13 +58,13 @@ export default function SiteFooter() {
         <div className={styles.counselling}>
           <div className={styles.counsellingInner}>
             <div>
-              <span>PROGRAMS &amp; FEES</span>
-              <h2>UPSC CSE 2027 · ₹1,60,000 &nbsp;|&nbsp; 73rd BPSC · ₹87,000</h2>
-              <p>Both programs cover Foundation, Prelims, Mains and Interview preparation.</p>
+              <span>NEED HELP?</span>
+              <h2>Admissions, academic query or technical help</h2>
+              <p>Open Talk to Us and choose the type of query. The assistant will collect only the relevant details for follow-up.</p>
             </div>
             <div>
-              <Link href="/admissions">Admissions &amp; Fees</Link>
-              <Link href="/demo">Demo Class</Link>
+              <Link href="/ask">Talk to Us</Link>
+              <Link href="/ask?intent=admission">Admission Query</Link>
             </div>
           </div>
         </div>
@@ -75,7 +75,7 @@ export default function SiteFooter() {
           <Link href="/" className={styles.logo} aria-label="OneShot GS home">
             <Image src="/logo4.png" alt="OneShot GS" width={210} height={72} />
           </Link>
-          <p>UPSC CSE 2027 and 73rd BPSC preparation, plus Current Affairs, PYQs, quizzes, study resources and student support.</p>
+          <p>UPSC CSE 2027 and 73rd BPSC preparation, plus Current Affairs, PYQs, quizzes, study resources and helpdesk support.</p>
           <div className={styles.programMini}>
             <Link href="/courses/upsc-2027"><b>UPSC CSE 2027</b><span>₹1,60,000</span></Link>
             <Link href="/courses/bpsc-73"><b>73rd BPSC</b><span>₹87,000</span></Link>
@@ -94,12 +94,12 @@ export default function SiteFooter() {
 
       <div className={styles.studentStrip}>
         <div><b>Quick Links</b></div>
-        <div><Link href="/study">Free Study</Link><Link href="/quizzes">Free Quiz</Link><Link href="/pyq">PYQs</Link><Link href="/ca">Current Affairs</Link><Link href="/ask">Ask Tutor</Link></div>
+        <div><Link href="/study">Free Study</Link><Link href="/quizzes">Free Quiz</Link><Link href="/pyq">PYQs</Link><Link href="/ca">Current Affairs</Link><Link href="/ask">Talk to Us</Link></div>
       </div>
 
       <div className={styles.footerBottom}>
         <p>© 2026 OneShot GS · UPSC / BPSC</p>
-        <div><Link href="/courses">Courses</Link><Link href="/faculty">Faculty</Link><Link href="/admissions">Admissions</Link><Link href="/support">Contact</Link></div>
+        <div><Link href="/courses">Courses</Link><Link href="/faculty">Faculty</Link><Link href="/admissions">Admissions</Link><Link href="/ask">Helpdesk</Link></div>
       </div>
     </footer>
   );
