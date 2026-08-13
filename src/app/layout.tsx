@@ -13,13 +13,13 @@ const displayFont = Space_Grotesk({ variable: "--font-display", subsets: ["latin
 export const viewport: Viewport = { themeColor: "#172338", width: "device-width", initialScale: 1, maximumScale: 1 };
 
 export const metadata: Metadata = {
-  title: "OneShot GS — UPSC & BPSC Coaching | Prelims, Mains & Interview",
-  description: "OneShot GS offers complete UPSC 2027/2028 and 72nd/73rd BPSC coaching for Prelims, Mains and Interview, with faculty-led programs, demo class, official-source PYQs, Free Study and Free Quiz.",
+  title: "OneShot GS — UPSC 2027 & 73rd BPSC Coaching",
+  description: "OneShot GS offers two complete end-to-end programs: UPSC CSE 2027 and 73rd BPSC, covering Foundation, Prelims, Mains and Interview with faculty teaching, PYQs, tests, answer writing, evaluation and mentoring.",
   manifest: "/manifest.json",
   appleWebApp: { capable: true, statusBarStyle: "default", title: "OneShot GS" },
   openGraph: {
-    title: "OneShot GS — Complete UPSC & BPSC Coaching",
-    description: "UPSC and BPSC preparation from Prelims to Interview, plus demo class, PYQs, Free Study, Free Quiz and student support.",
+    title: "OneShot GS — Complete UPSC / BPSC Coaching",
+    description: "UPSC 2027 and 73rd BPSC preparation from Foundation to Interview, plus on-site PYQ study, demo class, Free Study, Free Quiz and student support.",
     type: "website",
   },
 };
