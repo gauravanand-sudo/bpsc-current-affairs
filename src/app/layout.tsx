@@ -6,11 +6,12 @@ import ServiceWorkerRegistrar from "@/components/ServiceWorkerRegistrar";
 import SiteFooter from "@/components/SiteFooter";
 import SupportButton from "@/components/SupportButton";
 import "./globals.css";
+import "./institutional-theme.css";
 
 const bodyFont = Plus_Jakarta_Sans({ variable: "--font-body", subsets: ["latin"] });
 const displayFont = Space_Grotesk({ variable: "--font-display", subsets: ["latin"], weight: ["500", "700"] });
 
-export const viewport: Viewport = { themeColor: "#172338", width: "device-width", initialScale: 1, maximumScale: 1 };
+export const viewport: Viewport = { themeColor: "#12345b", width: "device-width", initialScale: 1, maximumScale: 1 };
 
 export const metadata: Metadata = {
   title: "OneShot GS — UPSC 2027 & 73rd BPSC Coaching",
