@@ -25,12 +25,12 @@ export const PROGRAMS: Program[] = [
     title: "End-to-End Complete Program",
     price: "₹1,60,000",
     target: "Foundation + Prelims + Mains + Interview",
-    note: "One flagship UPSC pathway from foundation to Personality Test, built around teaching, PYQs, tests, evaluation, revision and mentoring.",
+    note: "Complete UPSC CSE 2027 preparation covering General Studies, Current Affairs, CSAT, PYQs, tests, answer-writing, Essay, Ethics and Interview preparation.",
     includes: [
       "NCERT + complete General Studies foundation",
       "Advanced GS coverage and integrated Current Affairs",
       "CSAT classes, drills and sectional tests",
-      "15-year UPSC PYQ analysis and topic mapping",
+      "UPSC PYQ analysis and topic mapping",
       "Prelims sectional tests + full-length mocks",
       "Mains GS I-IV answer-writing and evaluation",
       "Essay + Ethics classes, practice and feedback",
@@ -38,7 +38,7 @@ export const PROGRAMS: Program[] = [
       "DAF/profile work + Personality Test guidance",
       "Interview mocks and final-stage mentoring",
     ],
-    bestFor: ["UPSC CSE 2027 focused aspirants", "First serious attempt", "Repeat aspirants rebuilding end-to-end strategy"],
+    bestFor: ["UPSC CSE 2027 aspirants", "Foundation-to-interview preparation", "Integrated Prelims + Mains preparation"],
   },
   {
     slug: "bpsc-73",
@@ -46,7 +46,7 @@ export const PROGRAMS: Program[] = [
     title: "End-to-End Complete Program",
     price: "₹87,000",
     target: "Foundation + Prelims + Mains + Interview",
-    note: "One complete BPSC pathway combining Bihar Special, General Studies, Current Affairs, PYQs, tests, Mains writing and Interview preparation.",
+    note: "Complete 73rd BPSC preparation covering General Studies, Bihar Special, Current Affairs, PYQs, tests, Mains writing and Interview preparation.",
     includes: [
       "Complete General Studies foundation",
       "Bihar History, Geography, Economy, Polity and Current Issues",
@@ -59,7 +59,7 @@ export const PROGRAMS: Program[] = [
       "Interview preparation + Bihar issue discussions",
       "Profile-based mocks and final-stage mentoring",
     ],
-    bestFor: ["73rd BPSC focused aspirants", "First-time BPSC candidates", "Repeat candidates seeking a complete structured attempt"],
+    bestFor: ["73rd BPSC aspirants", "Bihar-focused GS preparation", "Integrated Prelims + Mains preparation"],
   },
 ];
 
@@ -108,10 +108,10 @@ export const TESTIMONIALS = [
 
 export const FREE_RESOURCES = [
   { href: "/study", title: "Free Study", eyebrow: "OPEN LIBRARY", description: "NCERT, General Studies, Bihar GS, Current Affairs and subject-wise study rooms for UPSC / BPSC." },
-  { href: "/quizzes", title: "Free Quiz", eyebrow: "PRACTICE", description: "Current Affairs, static GS and PYQ-oriented practice for UPSC / BPSC recall and elimination." },
-  { href: "/pyq", title: "UPSC / BPSC PYQs", eyebrow: "QUESTION PAPERS", description: "Open and download original UPSC Prelims GS-I papers year-wise on OneShot GS, with BPSC paper sources alongside." },
-  { href: "/ask", title: "Ask Tutor", eyebrow: "DOUBT SUPPORT", description: "Clarify UPSC / BPSC concepts and structure your next study step." },
-  { href: "/partner", title: "Study Buddy", eyebrow: "ACCOUNTABILITY", description: "Find a study buddy for UPSC / BPSC preparation and add accountability to self-study." },
+  { href: "/quizzes", title: "Free Quiz", eyebrow: "PRACTICE", description: "Current Affairs and static GS practice for UPSC / BPSC." },
+  { href: "/pyq", title: "UPSC / BPSC PYQs", eyebrow: "QUESTION PAPERS", description: "Open and download UPSC Prelims GS-I papers from 2014–2026, with BPSC paper sources alongside." },
+  { href: "/ask", title: "Ask Tutor", eyebrow: "DOUBT SUPPORT", description: "UPSC / BPSC concept and study-plan support." },
+  { href: "/partner", title: "Study Buddy", eyebrow: "ACCOUNTABILITY", description: "Find a study buddy for UPSC / BPSC preparation." },
 ];
 
 export type PyqGroup = {
@@ -132,7 +132,7 @@ export const UPSC_PYQ: PyqGroup[] = [
     papers: ["General Studies Paper I"],
     href: "/pyq/upsc/prelims/2026.pdf",
     source: "OneShot GS hosted paper",
-    note: "Original General Studies Paper I PDF available to open or download directly on OneShot GS.",
+    note: "General Studies Paper I PDF available to open or download directly on OneShot GS.",
   },
   ...Array.from({ length: 12 }, (_, index) => {
     const year = String(2025 - index);
@@ -143,7 +143,7 @@ export const UPSC_PYQ: PyqGroup[] = [
       papers: ["General Studies Paper I"],
       href: `/pyq/upsc/prelims/${year}.pdf`,
       source: "OneShot GS hosted paper",
-      note: "Original General Studies Paper I PDF available to open or download directly on OneShot GS.",
+      note: "General Studies Paper I PDF available to open or download directly on OneShot GS.",
     } satisfies PyqGroup;
   }),
 ];
@@ -152,10 +152,10 @@ export const BPSC_PYQ: PyqGroup[] = [
   {
     label: "73rd BPSC preparation archive",
     stage: "Previous CCE papers",
-    papers: ["Prelims General Studies", "Mains papers", "Bihar-focused recurring themes"],
+    papers: ["Prelims General Studies", "Mains papers"],
     href: OFFICIAL_LINKS.bpscQuestionBooklets,
     source: "BPSC Question Booklets",
-    note: "Use the latest available CCE papers to prepare for the 73rd BPSC cycle.",
+    note: "BPSC question-booklet archive.",
   },
   {
     label: "71st–64th BPSC CCE",
@@ -168,8 +168,8 @@ export const BPSC_PYQ: PyqGroup[] = [
 ];
 
 export const FAQ = [
-  ["Can I use OneShot GS without buying a course?", "Yes. Free Study, Free Quiz, UPSC previous papers, Ask Tutor and Study Buddy remain available as open UPSC / BPSC preparation tools."],
-  ["What does the complete program fee include?", "UPSC 2027 at ₹1,60,000 and 73rd BPSC at ₹87,000 are both end-to-end programs covering Foundation, Prelims, Mains and Interview preparation."],
-  ["Can I see the teaching experience before enrolling?", "Yes. The Demo Class page and free academic layer are available before enrollment."],
-  ["How are UPSC previous papers handled on OneShot GS?", "UPSC Prelims General Studies Paper I PDFs for 2014–2026 are hosted year-wise on OneShot GS, with separate actions to open the full paper or download it. BPSC papers remain linked to the commission's question-booklet archive."],
+  ["Can I use OneShot GS without buying a course?", "Yes. Free Study, Free Quiz, UPSC previous papers, Ask Tutor and Study Buddy are available without buying a course."],
+  ["What does the complete program fee include?", "UPSC 2027 at ₹1,60,000 and 73rd BPSC at ₹87,000 both cover Foundation, Prelims, Mains and Interview preparation."],
+  ["Can I see a demo before enrolling?", "Yes. Use the Demo Class page before enrollment."],
+  ["How are UPSC previous papers handled?", "UPSC Prelims General Studies Paper I PDFs for 2014–2026 are hosted year-wise on OneShot GS with separate Open PDF and Download PDF actions. BPSC papers link to the BPSC question-booklet archive."],
 ];
