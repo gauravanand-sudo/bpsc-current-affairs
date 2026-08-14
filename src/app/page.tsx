@@ -21,11 +21,11 @@ const RESOURCES = [
   { title: "Talk to Us", copy: "Admissions, courses, payment help, technical support and callbacks.", href: "/talk-to-us", tag: "HELP" },
 ];
 
-const FEATURED_FACULTY = [
-  ...FACULTY.filter((faculty) => faculty.tier === "Founder"),
-  ...FACULTY.filter((faculty) => faculty.tier === "Senior Faculty").slice(0, 3),
-  FACULTY[FACULTY.length - 1],
-];
+const FACULTY_GROUPS = [
+  { tier: "Founder", title: "Founders", note: "Academic leadership, program direction and teaching standards." },
+  { tier: "Senior Faculty", title: "Senior Faculty", note: "Core subjects, mentoring, counselling and interview guidance." },
+  { tier: "Junior Faculty", title: "Junior Faculty", note: "Practice, evaluation and focused classroom support." },
+] as const;
 
 function TickerGroup({ academic = false }: { academic?: boolean }) {
   return (
@@ -185,33 +185,38 @@ export default function HomePage() {
         <div className={styles.shell}>
           <div className={styles.sectionHead}>
             <div><span>FOUNDERS · SENIOR · JUNIOR FACULTY</span><h2>A 15-member academic team</h2></div>
-            <Link href="/faculty" className={styles.textLink}>View all 15 profiles →</Link>
+            <Link href="/faculty" className={styles.textLink}>Open faculty page →</Link>
           </div>
-          <div className={styles.facultyGrid}>
-            {FEATURED_FACULTY.map((faculty) => (
-              <article className="home-faculty-card" key={faculty.name}>
-                <div className={`${styles.facultyImage} home-faculty-image`}><Image src={faculty.image} alt={faculty.name} width={360} height={450} sizes="(max-width: 430px) 74px, 78px" /></div>
-                <div className={styles.facultyBody}>
-                  <span>{faculty.tier} · {faculty.subject}</span>
-                  <h3>{faculty.name}</h3>
-                  <b>{faculty.record}</b>
-                  <p>{faculty.focus}</p>
-                </div>
-              </article>
-            ))}
+          <div className={styles.facultyGroups}>
+            {FACULTY_GROUPS.map((group) => {
+              const members = FACULTY.filter((faculty) => faculty.tier === group.tier);
+              return (
+                <section className={styles.facultyGroup} key={group.tier}>
+                  <div className={styles.facultyGroupHead}>
+                    <div><span>{String(members.length).padStart(2, "0")}</span><h3>{group.title}</h3></div>
+                    <p>{group.note}</p>
+                  </div>
+                  <div className={styles.facultyGrid}>
+                    {members.map((faculty) => (
+                      <article className={styles.facultyCard} data-tier={faculty.tier} key={faculty.name}>
+                        <div className={styles.facultyImage}><Image src={faculty.image} alt={`${faculty.name}, ${faculty.subject}`} width={360} height={450} sizes="(max-width: 430px) 80px, 72px" /></div>
+                        <div className={styles.facultyBody}>
+                          <div className={styles.facultyRole}>{faculty.role}</div>
+                          <span>{faculty.subject}</span>
+                          <h3>{faculty.name}</h3>
+                          <b>{faculty.record}</b>
+                          <p>{faculty.focus}</p>
+                          <div className={styles.facultyActions}><Link href="/demo">View Teaching Demo →</Link><Link href="/courses">Programs</Link></div>
+                        </div>
+                      </article>
+                    ))}
+                  </div>
+                </section>
+              );
+            })}
           </div>
         </div>
       </section>
-
-      <style>{`
-        .home-faculty-card.home-faculty-card{grid-template-columns:78px 1fr;min-height:120px}
-        .home-faculty-image.home-faculty-image{height:120px;min-height:120px}
-        .home-faculty-image img{object-fit:contain;object-position:center;background:#eef2f5}
-        @media(max-width:430px){
-          .home-faculty-card.home-faculty-card{grid-template-columns:74px 1fr;min-height:112px}
-          .home-faculty-image.home-faculty-image{height:112px;min-height:112px}
-        }
-      `}</style>
 
       <BatchUpdatePopup />
     </main>
