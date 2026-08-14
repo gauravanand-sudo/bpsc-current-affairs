@@ -173,6 +173,15 @@ export const FACULTY = [
     image: "/faculty/raghav-bhatia.webp",
   },
   {
+    name: "Ruhani Chauhan",
+    tier: "Junior Faculty",
+    role: "Junior Faculty · Mains Copy Evaluator",
+    subject: "Bihar Special · Polity",
+    record: "Bihar Special · Polity · Mains Copy Evaluator",
+    focus: "Bihar History · Geography · Economy · Polity · Mains Answer Evaluation",
+    image: "/faculty/ruhani.webp",
+  },
+  {
     name: "Kavya Joshi",
     tier: "Junior Faculty",
     role: "Junior Faculty · Mains Copy Evaluator",
@@ -189,15 +198,6 @@ export const FACULTY = [
     record: "Current Affairs · MCQ Practice",
     focus: "Current Affairs · Prelims Elimination · Practice Discussions",
     image: "/faculty/nisha-verma-v2.webp",
-  },
-  {
-    name: "Ruhani Chauhan",
-    tier: "Junior Faculty",
-    role: "Junior Faculty · Mains Copy Evaluator",
-    subject: "Bihar Special · Polity",
-    record: "Bihar Special · Polity · Mains Copy Evaluator",
-    focus: "Bihar History · Geography · Economy · Polity · Mains Answer Evaluation",
-    image: "/faculty/ruhani.webp",
   },
 ];
 
